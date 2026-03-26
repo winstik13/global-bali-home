@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://winstik13.github.io/global-bali-home/sitemap.xml
