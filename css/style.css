@@ -1764,7 +1764,8 @@ p {
 
   .nav-dropdown__menu a {
     padding: 4px 0;
-    font-size: 0.85rem !important;
+    font-size: 0.75rem !important;
+    color: var(--color-text-muted) !important;
   }
 
   .hamburger {
@@ -1803,5 +1804,15 @@ p {
 
   .hero__content {
     padding-bottom: 40px;
+  }
+
+  .logo-watermark::after {
+    width: 400px;
+    height: 400px;
+  }
+
+  .logo-watermark--large::after {
+    width: 500px;
+    height: 500px;
   }
 }

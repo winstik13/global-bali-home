@@ -82,21 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroVideo = document.querySelector('.hero__video');
   const heroSection = document.querySelector('.hero');
   if (heroVideo && heroSection) {
-    if (window.innerWidth < 768) {
-      // На мобильных — не загружать видео, показать poster как фон
-      heroVideo.querySelectorAll('source').forEach(s => s.remove());
-      heroVideo.removeAttribute('src');
-      heroVideo.load();
-      // Создаём poster-фон
-      const poster = document.createElement('div');
-      poster.className = 'hero__poster';
-      heroSection.insertBefore(poster, heroSection.children[1]);
+    heroVideo.addEventListener('canplay', () => {
       heroSection.classList.add('loaded');
-    } else {
-      heroVideo.addEventListener('canplay', () => {
-        heroSection.classList.add('loaded');
-      }, { once: true });
-    }
+    }, { once: true });
   }
 
   // --- Hero Parallax (disabled for home hero) ---
