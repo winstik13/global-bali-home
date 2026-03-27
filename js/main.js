@@ -766,14 +766,17 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const hero = document.querySelector('.hero') || document.querySelector('.page-hero');
+  const waBtn = document.querySelector('.whatsapp-float');
   if (hero) {
     const showSticky = () => {
       const heroBottom = hero.getBoundingClientRect().bottom;
       const isOverlayOpen = quizOverlay.classList.contains('active');
       if (heroBottom < 0 && !isOverlayOpen) {
         stickyCTA.classList.add('visible');
+        if (waBtn) waBtn.classList.add('lifted');
       } else {
         stickyCTA.classList.remove('visible');
+        if (waBtn) waBtn.classList.remove('lifted');
       }
     };
     window.addEventListener('scroll', showSticky);

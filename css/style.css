@@ -2364,13 +2364,28 @@ p {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(26, 26, 20, 0.98);
-    backdrop-filter: blur(20px);
+    background: rgba(26, 26, 20, 0.75);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 28px;
     z-index: -1;
+    overflow: hidden;
+  }
+
+  .header__nav::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    right: -100px;
+    bottom: -80px;
+    background: url('../images/common/LOGO.png') no-repeat center / contain;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 0;
   }
 
   .header__nav.active {
@@ -2533,7 +2548,7 @@ p {
     text-align: center;
   }
 
-  .whatsapp-float {
+  .whatsapp-float.lifted {
     bottom: 75px;
   }
 }
