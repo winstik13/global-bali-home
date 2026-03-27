@@ -6,8 +6,8 @@
 
 | Role     | Family            | Fallback          | Google Fonts |
 |----------|-------------------|-------------------|--------------|
-| Headings | Playfair Display  | Georgia, serif    | Weights: 400, 500, 600, 700 |
-| Body     | Montserrat        | sans-serif        | Weights: 300, 400, 500, 600, 700 |
+| Headings | Playfair Display  | Georgia, serif    | Weights: 400, 600 |
+| Body     | Montserrat        | sans-serif        | Weights: 400, 500, 600 |
 
 CSS variables:
 ```
@@ -54,23 +54,22 @@ CSS variables:
 
 ## Font Size Scale
 
-6 unified steps for small/body text + clamp() for headings:
+4 unified steps for small/body text + clamp() for headings:
 
-| Step     | Value   | px (at 18px base) | Role                                        |
-|----------|---------|--------------------|---------------------------------------------|
-| xs       | 0.65rem | 11.7px             | Small uppercase labels, badges, table heads  |
-| sm       | 0.7rem  | 12.6px             | Buttons, tags, social links, copyright       |
-| base-sm  | 0.85rem | 15.3px             | Descriptions, footer text, meta info         |
-| base     | 0.9rem  | 16.2px             | Form inputs, table data, feature headings    |
-| body     | 1rem    | 18px               | Navigation, hero text, body                  |
-| md       | 1.1rem  | 19.8px             | FAQ questions                                |
+| Step  | Value   | px (at 18px base) | Role                                           |
+|-------|---------|--------------------|------------------------------------------------|
+| xs    | 0.75rem | 13.5px             | Labels, buttons, tags, badges, form labels     |
+| sm    | 0.85rem | 15.3px             | Nav, descriptions, forms, footer, meta, tables |
+| body  | 1rem    | 18px               | Hero text, body                                |
+| md    | 1.1rem  | 19.8px             | FAQ questions, mobile nav, pre-sale banner     |
 
-Larger sizes (not consolidated):
+Larger sizes:
 
 | Value     | Role                          |
 |-----------|-------------------------------|
 | 1.125rem  | h4, card prices               |
 | 1.25rem   | Showcase prices, service titles, timeline |
+| 2rem      | Why Bali stat numbers         |
 | 1.6rem    | Hero stat numbers             |
 | 1.75rem   | Founder name, card titles     |
 
@@ -95,114 +94,56 @@ Larger sizes (not consolidated):
 | Element       | Size    | Weight | Color              | Line Height | Max Width |
 |---------------|---------|--------|--------------------|-------------|-----------|
 | body          | 18px    | 400    | --color-text       | 1.6         | -         |
-| p             | inherit | 300    | --color-text-muted | -           | 65ch      |
+| p             | inherit | 400    | --color-text-muted | -           | 65ch      |
+
+---
+
+## Font Weights
+
+| Weight | Usage                                         |
+|--------|-----------------------------------------------|
+| 400    | Body text, headings (h1-h3), footer, hero     |
+| 500    | Navigation, stat labels                       |
+| 600    | h4-h6, buttons, labels, tags, badges, banners |
+
+---
+
+## Letter Spacing
+
+| Value  | Usage                                  |
+|--------|----------------------------------------|
+| 0.05em | Pre-sale banner                        |
+| 0.1em  | Hero stat labels, service stats, social|
+| 0.15em | Buttons, nav, labels, badges, tables   |
+| 0.2em  | Footer headings, mobile nav            |
+| 0.3em  | Section tags, hero subtitle/tag        |
 
 ---
 
 ## Component Typography
 
 ### Header Navigation
-| Property       | Value                |
-|----------------|----------------------|
-| Font size      | 1rem                 |
-| Font weight    | 500                  |
-| Letter spacing | 0.15em               |
-| Text transform | uppercase            |
-| Color          | --color-text-muted   |
-| Color (hover)  | --color-text         |
-
-### Hero Section
-| Element          | Size      | Weight | Spacing  | Transform | Color              |
-|------------------|-----------|--------|----------|-----------|--------------------|
-| Subtitle         | 0.7rem    | 600    | 0.3em    | uppercase | --color-accent     |
-| Tag              | 0.7rem    | 500    | 0.3em    | uppercase | --color-accent     |
-| Description      | 1rem      | 300    | -        | -         | --color-text-muted |
-| Stat number      | 1.6rem    | -      | -        | -         | --color-cream      |
-| Stat label       | 0.85rem   | 400    | 0.12em   | uppercase | --color-text       |
-
-### Section Headers
-| Element          | Size      | Weight | Spacing  | Transform | Color              |
-|------------------|-----------|--------|----------|-----------|--------------------|
-| Tag (.section-header__tag) | 0.65rem | 600 | 0.3em | uppercase | --color-accent |
-
-### Stats Section (Large Numbers)
-| Element          | Size                        | Weight | Color          |
-|------------------|-----------------------------|--------|----------------|
-| Number           | clamp(2.5rem, 4vw, 4rem)    | -      | --color-cream  |
-| Label            | 0.7rem                      | 500    | --color-text-muted |
+| Property       | Desktop | Mobile (768px) |
+|----------------|---------|----------------|
+| Font size      | 0.85rem | 1.1rem         |
+| Font weight    | 500     | 500            |
+| Letter spacing | 0.15em  | 0.2em          |
 
 ### Buttons
-| Variant      | Size    | Weight | Spacing | Transform | Padding      |
-|--------------|---------|--------|---------|-----------|--------------|
-| Base (.btn)  | 0.7rem  | 600    | 0.15em  | uppercase | 14px 36px    |
+| Size     | Weight | Spacing | Padding   | Border Radius |
+|----------|--------|---------|-----------|---------------|
+| 0.75rem  | 600    | 0.15em  | 14px 36px | 2px           |
 
-| Variant        | Background      | Text Color     | Border Color         |
-|----------------|-----------------|----------------|----------------------|
-| --primary      | --color-beige   | --color-bg     | --color-beige        |
-| --outline      | transparent     | --color-text   | --color-border-hover |
-| --accent       | --color-accent  | --color-cream  | --color-accent       |
+| Variant   | Background      | Text           | Border               |
+|-----------|-----------------|----------------|----------------------|
+| --primary | --color-beige   | --color-bg     | --color-beige        |
+| --outline | transparent     | --color-text   | --color-border-hover |
+| --accent  | --color-accent  | --color-cream  | --color-accent       |
 
-### Badges
-| Element               | Size    | Weight | Spacing | Transform |
-|-----------------------|---------|--------|---------|-----------|
-| Project badge         | 0.65rem | 600    | 0.15em  | uppercase |
-| Project card badge    | 0.65rem | 600    | 0.15em  | uppercase |
-
-### Project Showcase
-| Element          | Size    | Weight | Color              | Line Height |
-|------------------|---------|--------|--------------------|-------------|
-| Description      | 0.9rem  | -      | --color-text-muted | 1.7         |
-| Meta values      | 0.85rem | -      | -                  | -           |
-| Meta strong      | -       | 600    | -                  | -           |
-| Price            | 1.25rem | -      | -                  | -           |
-
-### Project Detail Pages
-| Element            | Size      | Weight | Color              | Line Height |
-|--------------------|-----------|--------|--------------------|-------------|
-| Feature label      | 0.65rem   | 600    | --color-text-dim   | -           |
-| Feature value      | 0.85rem   | 300    | -                  | -           |
-| Highlight title    | 1.75rem   | -      | -                  | -           |
-| Highlight tag      | 0.7rem    | 600    | --color-accent     | -           |
-| Description text   | 0.85rem   | 300    | --color-text-muted | 1.7         |
-| Unit table data    | 0.85rem   | -      | -                  | -           |
-| Unit table header  | 0.65rem   | 600    | --color-text-dim   | -           |
-
-### Gallery
-| Element          | Size    | Weight | Spacing | Color              |
-|------------------|---------|--------|---------|--------------------|
-| Filter button    | 0.65rem | 600    | 0.15em  | --color-text-dim   |
-| Filter (active)  | -       | -      | -       | --color-text       |
-| Empty message    | 1.2rem  | -      | 0.1em   | --color-text-muted |
-
-### Footer
-| Element          | Size    | Weight | Spacing | Color              |
-|------------------|---------|--------|---------|---------------------|
-| Heading          | 0.65rem | 600    | 0.2em   | --color-text-muted  |
-| Links            | 0.85rem | 300    | -       | --color-text-muted  |
-| Contact item     | 0.85rem | 300    | 0.1em   | --color-text-muted  |
-| Social links     | 0.7rem  | 500    | 0.1em   | --color-text-muted  |
-| Brand text       | 0.85rem | 300    | -       | --color-text-muted  |
-| Bottom text      | 0.7rem  | 300    | -       | --color-text-dim    |
-
-### Services
-| Element          | Size    | Weight | Color              |
-|------------------|---------|--------|--------------------|
-| Icon             | 40×40px SVG | -  | --color-accent     |
-| Title            | 1.25rem | -      | --color-text       |
-| Description      | 0.85rem | -      | --color-text-muted |
-| Stat label       | 0.65rem | 600    | --color-accent     |
-
-### Form Elements
-| Element          | Size    | Weight | Color              |
-|------------------|---------|--------|--------------------|
-| Input/Textarea   | 0.9rem  | -      | --color-text       |
-| Label            | 0.65rem | -      | --color-text-muted |
-
-### FAQ Accordion
-| Element          | Size      | Weight | Color              |
-|------------------|-----------|--------|--------------------|
-| Question         | 1.1rem    | 400    | --color-text       |
-| Answer           | -         | 300    | --color-text-muted |
+### Pre-Sale Banner
+| Font size | Weight | Spacing | Background     | Color      |
+|-----------|--------|---------|----------------|------------|
+| 1.1rem    | 600    | 0.05em  | --color-accent | --color-bg |
 
 ---
 
@@ -221,6 +162,7 @@ Larger sizes (not consolidated):
 | --side-padding   | 20px    |
 | --section-padding| 60px    |
 | --header-height  | 64px    |
+| Logo height      | 39px    |
 
 ---
 

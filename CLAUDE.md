@@ -54,7 +54,7 @@ Compress images with FFmpeg (max 1920px width, quality 85%):
 - **Decorative watermark**: add `.logo-watermark .logo-watermark--right` or `.logo-watermark--left` to sections for decorative lotus background. Use `--large` modifier for 40% bigger size.
 - **Component naming**: BEM-like (`block__element--modifier`), e.g. `.project-showcase__content`, `.project-card__badge--presale`
 - **All pages share**: identical header (with nav dropdown for Projects), footer (with SVG social icons), and WhatsApp floating button — changes must be replicated across all 9 HTML files
-- **Header nav order**: Home, Projects (dropdown with 3 sub-links), Gallery, Services, About, Contact
+- **Header nav order**: Home, Projects (dropdown with 3 sub-links), Services, About, Gallery, Contact
 - **Icons**: SVG line-art style (`stroke: var(--color-accent); stroke-width: 1.5; fill: none`) — used in service cards and project feature grids
 - **External links**: always use `target="_blank" rel="noopener noreferrer"`
 - **Images**: organized in `images/common/`, `images/home/`, `images/serenity-villas/`, `images/serenity-estates/`, `images/serenity-village/`. All below-fold images use `loading="lazy"`.

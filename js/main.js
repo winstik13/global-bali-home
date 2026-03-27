@@ -39,6 +39,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --- Active nav link ---
+  const navLinks = document.querySelectorAll('.header__nav a');
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href === currentPage || (currentPage.startsWith('project-') && href === 'projects.html')) {
+      link.classList.add('active');
+    }
+  });
+
   // --- Scroll Reveal Animations ---
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -163,9 +173,55 @@ document.addEventListener('DOMContentLoaded', () => {
   const galleryGrid = document.getElementById('gallery-grid');
   const galleryEmpty = document.getElementById('gallery-empty');
   const filterBtns = document.querySelectorAll('.gallery-filter');
+  const loadMoreWrap = document.getElementById('gallery-load-more');
+  const loadMoreBtn = document.getElementById('load-more-btn');
 
   if (galleryGrid) {
     const galleryData = typeof GALLERY_DATA !== 'undefined' ? GALLERY_DATA : {};
+    const INITIAL_COUNT = 20;
+    let allCurrentItems = [];
+    let visibleCount = 0;
+
+    const categoryNames = {
+      villas: 'Serenity Villas',
+      estates: 'Serenity Estates',
+      village: 'Serenity Village'
+    };
+
+    // Curated picks for "All" — best images from each project, fixed order
+    const curatedAll = [
+      { src: 'images/serenity-villas/aerial-view.jpg', category: 'villas' },
+      { src: 'images/serenity-estates/Static.0000.jpg', category: 'estates' },
+      { src: 'images/serenity-village/6House_Max.0001.jpg', category: 'village' },
+      { src: 'images/serenity-villas/R1_LR_K_ (1).jpg', category: 'villas' },
+      { src: 'images/serenity-estates/villa-a2.jpg', category: 'estates' },
+      { src: 'images/serenity-village/Pool_Max.0000.jpg', category: 'village' },
+      { src: 'images/serenity-villas/bathroom.jpg', category: 'villas' },
+      { src: 'images/serenity-estates/pool-villa-a1.jpg', category: 'estates' },
+      { src: 'images/serenity-village/Night.0000.jpg', category: 'village' },
+      { src: 'images/serenity-villas/R1_BR_ (1).jpg', category: 'villas' },
+      { src: 'images/serenity-estates/Static.0006.jpg', category: 'estates' },
+      { src: 'images/serenity-village/1BR S Village_Living room.jpg', category: 'village' },
+      { src: 'images/serenity-villas/exterior-view.jpg', category: 'villas' },
+      { src: 'images/serenity-estates/villa-a1.jpg', category: 'estates' },
+      { src: 'images/serenity-village/SunRise.0001.jpg', category: 'village' },
+      { src: 'images/serenity-villas/waterfall.jpg', category: 'villas' },
+      { src: 'images/serenity-estates/Static.0010.jpg', category: 'estates' },
+      { src: 'images/serenity-village/Restoran.0000.jpg', category: 'village' },
+    ];
+
+    // Add photo counts to filter buttons
+    const totalCount = Object.values(galleryData).reduce((sum, arr) => sum + arr.length, 0);
+    filterBtns.forEach(btn => {
+      const filter = btn.dataset.filter;
+      const count = filter === 'all' ? totalCount : (galleryData[filter] || []).length;
+      if (count > 0) {
+        const span = document.createElement('span');
+        span.className = 'filter-count';
+        span.textContent = count;
+        btn.appendChild(span);
+      }
+    });
 
     const createItem = (src, category) => {
       const div = document.createElement('div');
@@ -177,59 +233,79 @@ document.addEventListener('DOMContentLoaded', () => {
       img.loading = 'lazy';
       const overlay = document.createElement('div');
       overlay.className = 'gallery-item__overlay';
+      const label = document.createElement('span');
+      label.className = 'gallery-item__label';
+      label.textContent = categoryNames[category] || category;
+      overlay.appendChild(label);
       div.appendChild(img);
       div.appendChild(overlay);
       return div;
     };
 
-    const shuffle = (arr) => {
-      const a = [...arr];
-      for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
+    const resizeItem = (el) => {
+      const img = el.querySelector('img');
+      const imgHeight = img.naturalHeight / img.naturalWidth * el.offsetWidth;
+      const span = Math.round(imgHeight + 8); // 8px bottom margin baked into span
+      el.style.gridRowEnd = 'span ' + span;
+    };
+
+    const showItems = (startIndex, count) => {
+      const end = Math.min(startIndex + count, allCurrentItems.length);
+      for (let i = startIndex; i < end; i++) {
+        const item = allCurrentItems[i];
+        const el = createItem(item.src, item.category);
+        el.style.opacity = '0';
+        galleryGrid.appendChild(el);
+        const img = el.querySelector('img');
+        img.addEventListener('load', () => {
+          resizeItem(el);
+          el.style.transition = 'opacity 0.6s ease';
+          el.style.opacity = '1';
+        });
       }
-      return a;
+      visibleCount = end;
+      if (loadMoreWrap) {
+        loadMoreWrap.style.display = visibleCount < allCurrentItems.length ? '' : 'none';
+      }
     };
 
     const renderGallery = (filter) => {
       galleryGrid.innerHTML = '';
-      let items = [];
+      visibleCount = 0;
 
       if (filter === 'all') {
-        // Collect all images from all categories
-        const all = [];
+        // Start with curated picks, then add remaining photos
+        const curatedSrcs = new Set(curatedAll.map(i => i.src));
+        const remaining = [];
         for (const [cat, paths] of Object.entries(galleryData)) {
-          paths.forEach(p => all.push({ src: p, category: cat }));
+          paths.forEach(p => {
+            if (!curatedSrcs.has(p)) remaining.push({ src: p, category: cat });
+          });
         }
-        // Random selection of 15
-        items = shuffle(all).slice(0, 15);
+        allCurrentItems = [...curatedAll, ...remaining];
       } else {
         const paths = galleryData[filter] || [];
-        items = paths.map(p => ({ src: p, category: filter }));
+        allCurrentItems = paths.map(p => ({ src: p, category: filter }));
       }
 
-      if (items.length === 0) {
+      if (allCurrentItems.length === 0) {
         galleryGrid.style.display = 'none';
         galleryEmpty.style.display = '';
+        if (loadMoreWrap) loadMoreWrap.style.display = 'none';
         return;
       }
 
       galleryGrid.style.display = '';
       galleryEmpty.style.display = 'none';
-
-      items.forEach((item, i) => {
-        const el = createItem(item.src, item.category);
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        galleryGrid.appendChild(el);
-        // Stagger animation
-        setTimeout(() => {
-          el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-          el.style.opacity = '1';
-          el.style.transform = 'translateY(0)';
-        }, i * 80);
-      });
+      showItems(0, INITIAL_COUNT);
     };
+
+    // Load More
+    if (loadMoreBtn) {
+      loadMoreBtn.addEventListener('click', () => {
+        showItems(visibleCount, 20);
+      });
+    }
 
     // Filter buttons
     filterBtns.forEach(btn => {
@@ -240,9 +316,19 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Render initial view
+    // Render initial view (support hash filter: gallery.html#villas)
+    const hashFilter = window.location.hash.replace('#', '');
+    const validFilters = ['villas', 'estates', 'village'];
+    const initialFilter = validFilters.includes(hashFilter) ? hashFilter : 'all';
+
+    if (initialFilter !== 'all') {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      const target = [...filterBtns].find(b => b.dataset.filter === initialFilter);
+      if (target) target.classList.add('active');
+    }
+
     if (Object.keys(galleryData).length > 0) {
-      renderGallery('all');
+      renderGallery(initialFilter);
     } else {
       galleryGrid.innerHTML = '<p style="color: var(--color-text-muted); padding: 40px;">Gallery data not found. Run: powershell -File generate-gallery.ps1</p>';
     }
@@ -255,13 +341,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const lbClose = lightbox.querySelector('.lightbox__close');
     const lbPrev = lightbox.querySelector('.lightbox__prev');
     const lbNext = lightbox.querySelector('.lightbox__next');
+    const lbCounter = lightbox.querySelector('.lightbox__counter');
+    const lbCaption = lightbox.querySelector('.lightbox__caption');
     let currentIndex = 0;
     let lbImages = [];
+    let lbCategories = [];
 
-    const openLightbox = (index, images) => {
+    const categoryNames = {
+      villas: 'Serenity Villas',
+      estates: 'Serenity Estates',
+      village: 'Serenity Village'
+    };
+
+    const updateLightboxInfo = () => {
+      if (lbCounter) lbCounter.textContent = (currentIndex + 1) + ' / ' + lbImages.length;
+      if (lbCaption) lbCaption.textContent = categoryNames[lbCategories[currentIndex]] || '';
+    };
+
+    const openLightbox = (index, images, categories) => {
       lbImages = images;
+      lbCategories = categories || [];
       currentIndex = index;
       lbImg.src = lbImages[currentIndex];
+      updateLightboxInfo();
       lightbox.classList.add('active');
       document.body.style.overflow = 'hidden';
     };
@@ -269,6 +371,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeLightbox = () => {
       lightbox.classList.remove('active');
       document.body.style.overflow = '';
+    };
+
+    const navigate = (dir) => {
+      currentIndex = (currentIndex + dir + lbImages.length) % lbImages.length;
+      lbImg.src = lbImages[currentIndex];
+      updateLightboxInfo();
     };
 
     // Event delegation for dynamically created gallery items
@@ -279,8 +387,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!item) return;
         const allItems = Array.from(galleryGridEl.querySelectorAll('.gallery-item'));
         const images = allItems.map(i => i.querySelector('img').src);
+        const categories = allItems.map(i => i.dataset.category);
         const index = allItems.indexOf(item);
-        openLightbox(index >= 0 ? index : 0, images);
+        openLightbox(index >= 0 ? index : 0, images, categories);
       });
     }
 
@@ -289,21 +398,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.target === lightbox) closeLightbox();
     });
 
-    if (lbPrev) lbPrev.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + lbImages.length) % lbImages.length;
-      lbImg.src = lbImages[currentIndex];
-    });
-
-    if (lbNext) lbNext.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % lbImages.length;
-      lbImg.src = lbImages[currentIndex];
-    });
+    if (lbPrev) lbPrev.addEventListener('click', () => navigate(-1));
+    if (lbNext) lbNext.addEventListener('click', () => navigate(1));
 
     document.addEventListener('keydown', (e) => {
       if (!lightbox.classList.contains('active')) return;
       if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowLeft' && lbPrev) lbPrev.click();
-      if (e.key === 'ArrowRight' && lbNext) lbNext.click();
+      if (e.key === 'ArrowLeft') navigate(-1);
+      if (e.key === 'ArrowRight') navigate(1);
     });
   }
 
