@@ -114,7 +114,7 @@ p {
   position: absolute;
   width: 900px;
   height: 900px;
-  background: url('../images/common/LOGO.png') no-repeat center / contain;
+  background: url('../images/common/logo-transparent.png') no-repeat center / contain;
   opacity: 0.12;
   pointer-events: none;
   z-index: 0;
@@ -2382,7 +2382,7 @@ p {
     height: 400px;
     right: -100px;
     bottom: -80px;
-    background: url('../images/common/LOGO.png') no-repeat center / contain;
+    background: url('../images/common/logo-transparent.png') no-repeat center / contain;
     opacity: 0.3;
     pointer-events: none;
     z-index: 0;

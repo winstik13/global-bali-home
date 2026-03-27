@@ -18,7 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
     updateHeader();
-    window.addEventListener('scroll', updateHeader);
+    let headerTicking = false;
+    window.addEventListener('scroll', () => {
+      if (!headerTicking) {
+        requestAnimationFrame(() => { updateHeader(); headerTicking = false; });
+        headerTicking = true;
+      }
+    }, { passive: true });
   }
 
   // --- Mobile menu ---
@@ -116,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         ticking = true;
       }
-    });
+    }, { passive: true });
   }
 
   // --- Number Counter Animation ---
@@ -779,7 +785,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (waBtn) waBtn.classList.remove('lifted');
       }
     };
-    window.addEventListener('scroll', showSticky);
+    let stickyTicking = false;
+    window.addEventListener('scroll', () => {
+      if (!stickyTicking) {
+        requestAnimationFrame(() => { showSticky(); stickyTicking = false; });
+        stickyTicking = true;
+      }
+    }, { passive: true });
     showSticky();
   }
 
