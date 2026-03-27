@@ -36,6 +36,7 @@
         <a href="gallery.html">Gallery</a>
         <a href="contacts.html">Contact</a>
       </nav>
+      <button class="header__cta btn btn--outline" data-quiz>Get Started</button>
       <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </header>
@@ -68,6 +69,16 @@
     </div>
   </section>
 
+  <!-- Social Proof -->
+  <section class="social-proof reveal">
+    <div class="container">
+      <p class="social-proof__text">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span><span class="social-proof__number" data-counter>127</span>+ investors have already joined our projects</span>
+      </p>
+    </div>
+  </section>
+
   <!-- Project Showcases -->
   <section id="projects" class="section logo-watermark logo-watermark--right">
     <div class="container">
@@ -93,6 +104,15 @@
             <div><strong>Q2 2026</strong> Handover</div>
           </div>
           <p class="project-showcase__price">From $335,000</p>
+          <div class="availability-bar">
+            <div class="availability-bar__header">
+              <span class="availability-bar__label">8 of 12 units sold</span>
+              <span class="availability-bar__percent">67%</span>
+            </div>
+            <div class="availability-bar__track">
+              <div class="availability-bar__fill" style="width: 67%"></div>
+            </div>
+          </div>
           <a href="project-serenity-villas.html" class="btn btn--outline">View Details</a>
         </div>
       </div>
@@ -113,6 +133,15 @@
             <div><strong>Q1 2027</strong> Handover</div>
           </div>
           <p class="project-showcase__price">From $310,000</p>
+          <div class="availability-bar">
+            <div class="availability-bar__header">
+              <span class="availability-bar__label">1 of 4 units sold</span>
+              <span class="availability-bar__percent">25%</span>
+            </div>
+            <div class="availability-bar__track">
+              <div class="availability-bar__fill" style="width: 25%"></div>
+            </div>
+          </div>
           <a href="project-serenity-estates.html" class="btn btn--outline">View Details</a>
         </div>
       </div>
@@ -133,6 +162,11 @@
             <div><strong>Pre-Sale</strong> Now</div>
           </div>
           <p class="project-showcase__price">From $119,000</p>
+          <div class="availability-bar availability-bar--presale">
+            <div class="availability-bar__header">
+              <span class="availability-bar__label"><span class="availability-bar__dot"></span> Pre-Sale Open</span>
+            </div>
+          </div>
           <a href="project-serenity-village.html" class="btn btn--outline">View Details</a>
         </div>
       </div>
@@ -164,32 +198,71 @@
   </section>
 
   <!-- Why Bali -->
-  <section class="section logo-watermark logo-watermark--left">
-    <div class="container">
-      <div class="split-section reveal">
-        <div class="split-section__content">
-          <span class="section-header__tag">Why Bali</span>
-          <h2>A Global Destination for Investment</h2>
-          <p>Bali continues to be one of the most sought-after destinations for property investment. With a rapidly growing tourism industry, favorable regulations, and a lifestyle that attracts people from around the world — the island offers exceptional opportunities.</p>
-          <p>Our projects are located in Ubud — the cultural heart of Bali, surrounded by lush rice terraces, ancient temples, and a thriving international community.</p>
-          <div class="why-bali-stats">
-            <div class="why-bali-stat">
-              <strong>16M+</strong>
-              <span>Tourist arrivals to Bali annually</span>
-            </div>
-            <div class="why-bali-stat">
-              <strong>12-15%</strong>
-              <span>Average annual rental yield</span>
-            </div>
-            <div class="why-bali-stat">
-              <strong>8-12%</strong>
-              <span>Property value growth per year</span>
-            </div>
-          </div>
-          <a href="services.html" class="btn btn--outline">Our Services</a>
+  <section class="why-bali">
+    <video class="why-bali__video" autoplay muted loop playsinline preload="metadata" poster="images/common/rice-terraces.jpg">
+      <source src="images/home/wanayu-drone.mp4" type="video/mp4">
+    </video>
+    <div class="why-bali__overlay"></div>
+    <div class="container why-bali__content reveal">
+      <span class="section-header__tag">Why Bali</span>
+      <h2>A Global Destination for Investment</h2>
+      <p>Bali continues to be one of the most sought-after destinations for property investment. With a rapidly growing tourism industry, favorable regulations, and a lifestyle that attracts people from around the world — the island offers exceptional opportunities.</p>
+      <p>Our projects are located in Ubud — the cultural heart of Bali, surrounded by lush rice terraces, ancient temples, and a thriving international community.</p>
+      <div class="why-bali-stats">
+        <div class="why-bali-stat">
+          <strong data-counter>16M+</strong>
+          <span>Tourist arrivals to Bali annually</span>
         </div>
-        <div class="split-section__image">
-          <img src="images/common/rice-terraces.jpg" alt="Bali rice terraces" loading="lazy">
+        <div class="why-bali-stat">
+          <strong>12-15%</strong>
+          <span>Average annual rental yield</span>
+        </div>
+        <div class="why-bali-stat">
+          <strong>8-12%</strong>
+          <span>Property value growth per year</span>
+        </div>
+      </div>
+      <a href="services.html" class="btn btn--outline">Our Services</a>
+    </div>
+  </section>
+
+  <!-- ROI Calculator -->
+  <section class="section roi-calculator" id="roi-calculator">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-header__tag">Investment Calculator</span>
+        <h2>Calculate Your Returns</h2>
+        <p>See the potential of your Bali real estate investment</p>
+      </div>
+      <div class="roi-calculator__body reveal">
+        <div class="roi-calculator__input">
+          <label class="roi-calculator__label">Investment Amount</label>
+          <div class="roi-calculator__amount">$335,000</div>
+          <input type="range" class="roi-calculator__range" min="100000" max="1000000" step="10000" value="335000">
+          <label class="roi-calculator__label">Scenario</label>
+          <div class="roi-calculator__scenarios">
+            <button class="roi-calculator__scenario" data-yield="0.08" data-growth="0.06">Conservative<span>8% yield</span></button>
+            <button class="roi-calculator__scenario active" data-yield="0.12" data-growth="0.10">Normal<span>12% yield</span></button>
+            <button class="roi-calculator__scenario" data-yield="0.15" data-growth="0.12">Optimistic<span>15% yield</span></button>
+          </div>
+
+          <label class="roi-calculator__label">Occupancy Rate — <span id="occupancy-value">80%</span></label>
+          <input type="range" class="roi-calculator__range" id="roi-occupancy" min="50" max="95" step="5" value="80">
+        </div>
+        <div class="roi-calculator__results">
+          <div class="roi-calculator__result">
+            <span class="roi-calculator__result-label">Annual Rental Income</span>
+            <span class="roi-calculator__result-value" id="roi-annual">$36,180</span>
+          </div>
+          <div class="roi-calculator__result">
+            <span class="roi-calculator__result-label">5-Year Total Return</span>
+            <span class="roi-calculator__result-value" id="roi-5yr">$0</span>
+          </div>
+          <div class="roi-calculator__result">
+            <span class="roi-calculator__result-label">10-Year Total Return</span>
+            <span class="roi-calculator__result-value" id="roi-10yr">$0</span>
+          </div>
+          <p class="roi-calculator__disclaimer">*Projections based on current market data. Actual returns may vary.</p>
         </div>
       </div>
     </div>
@@ -223,6 +296,33 @@
       <div class="photo-mosaic" id="photo-mosaic"></div>
       <div style="text-align: center; margin-top: 48px;" class="reveal">
         <a href="gallery.html" class="btn btn--outline">View Full Gallery</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lead Magnet -->
+  <section class="section bg-alt lead-magnet">
+    <div class="container">
+      <div class="lead-magnet__body reveal">
+        <div class="lead-magnet__content">
+          <span class="section-header__tag">Free Download</span>
+          <h2>Bali Investment Guide 2026</h2>
+          <p>Our comprehensive guide covers market analysis, legal framework, ROI projections, and step-by-step buying process for foreign investors.</p>
+          <ul class="lead-magnet__list">
+            <li>Market overview &amp; growth trends</li>
+            <li>Legal structures for foreign buyers</li>
+            <li>ROI analysis across project types</li>
+            <li>Step-by-step investment process</li>
+          </ul>
+        </div>
+        <div class="lead-magnet__form-wrap">
+          <form class="lead-magnet__form">
+            <input type="text" class="lead-magnet__input" placeholder="Your name" required>
+            <input type="email" class="lead-magnet__input" placeholder="Email address" required>
+            <button type="submit" class="btn btn--primary" style="width:100%">Download Free Guide</button>
+          </form>
+          <p class="lead-magnet__privacy">We respect your privacy. No spam.</p>
+        </div>
       </div>
     </div>
   </section>

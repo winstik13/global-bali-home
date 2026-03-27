@@ -492,4 +492,344 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --- Quiz Popup ---
+  const quizSteps = [
+    {
+      question: 'What is your investment goal?',
+      options: [
+        { icon: '<svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><rect x="9" y="10" width="6" height="5" rx="0.5"/><path d="M12 15v6"/></svg>', label: 'Personal residence' },
+        { icon: '<svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="4"/></svg>', label: 'Rental income' },
+        { icon: '<svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>', label: 'Long-term investment' },
+        { icon: '<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>', label: 'All of the above' }
+      ]
+    },
+    {
+      question: 'What is your budget?',
+      options: [
+        { icon: '<svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>', label: 'Under $150K' },
+        { icon: '<svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>', label: '$150K – $350K' },
+        { icon: '<svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>', label: '$350K – $500K' },
+        { icon: '<svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>', label: '$500K+' }
+      ]
+    },
+    {
+      question: 'How many bedrooms do you need?',
+      options: [
+        { icon: '<svg viewBox="0 0 24 24"><path d="M2 16h20M4 16V8a4 4 0 018 0M20 16v-4a2 2 0 00-4 0v4M2 16v4M22 16v4"/></svg>', label: '1–2 bedrooms' },
+        { icon: '<svg viewBox="0 0 24 24"><path d="M2 16h20M2 16v4M22 16v4"/><path d="M4 16V9a3 3 0 016 0M14 16V9a3 3 0 00-6 0"/><path d="M14 16V9a3 3 0 016 0"/></svg>', label: '3 bedrooms' },
+        { icon: '<svg viewBox="0 0 24 24"><path d="M2 16h20M2 16v4M22 16v4"/><path d="M3 16V9a2.5 2.5 0 015 0M8 16V9a2.5 2.5 0 015 0M13 16V9a2.5 2.5 0 015 0"/><path d="M18 9a2.5 2.5 0 012.5 2.5V16"/></svg>', label: '4+ bedrooms' },
+        { icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 15s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>', label: 'Not sure yet' }
+      ]
+    },
+    {
+      question: 'When are you planning to buy?',
+      options: [
+        { icon: '<svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>', label: 'Ready to buy now' },
+        { icon: '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>', label: 'Within 6 months' },
+        { icon: '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>', label: 'Just exploring' }
+      ]
+    }
+  ];
+
+  const quizRecommend = (answers) => {
+    const budget = answers[1];
+    if (budget === 'Under $150K') return { project: 'Serenity Village', url: 'project-serenity-village.html', desc: 'Affordable 1-2 bedroom villas from $119,000 in a vibrant community setting.' };
+    if (budget === '$150K – $350K') return { project: 'Serenity Villas', url: 'project-serenity-villas.html', desc: 'Premium 2-3 bedroom villas from $335,000 with private pools and gardens.' };
+    if (budget === '$350K – $500K') return { project: 'Serenity Estates', url: 'project-serenity-estates.html', desc: 'Exclusive 2-4.5 bedroom estates with panoramic views and spacious design.' };
+    return { project: 'Serenity Estates', url: 'project-serenity-estates.html', desc: 'Our most exclusive properties — spacious estates designed for premium living.' };
+  };
+
+  // Build quiz DOM
+  const quizOverlay = document.createElement('div');
+  quizOverlay.className = 'quiz-overlay';
+  quizOverlay.innerHTML = `
+    <div class="quiz">
+      <button class="quiz__close">&times;</button>
+      <div class="quiz__progress"><div class="quiz__progress-bar"></div></div>
+      <div class="quiz__body"></div>
+    </div>
+  `;
+  document.body.appendChild(quizOverlay);
+
+  let quizStep = 0;
+  const quizAnswers = [];
+  const quizBody = quizOverlay.querySelector('.quiz__body');
+  const quizBar = quizOverlay.querySelector('.quiz__progress-bar');
+  const totalSteps = quizSteps.length + 1;
+
+  const updateProgress = () => {
+    quizBar.style.width = ((quizStep + 1) / (totalSteps + 1) * 100) + '%';
+  };
+
+  const renderStep = () => {
+    updateProgress();
+    const step = quizSteps[quizStep];
+    quizBody.innerHTML = `
+      <p class="quiz__step-label">Step ${quizStep + 1} of ${totalSteps}</p>
+      <h3 class="quiz__question">${step.question}</h3>
+      <div class="quiz__options">
+        ${step.options.map(opt => `<button class="quiz__option"><span class="quiz__option-icon">${opt.icon}</span><span>${opt.label}</span></button>`).join('')}
+      </div>
+      ${quizStep > 0 ? '<button class="quiz__back">&larr; Back</button>' : ''}
+    `;
+    quizBody.querySelectorAll('.quiz__option').forEach((btn, idx) => {
+      btn.addEventListener('click', () => {
+        quizAnswers[quizStep] = step.options[idx].label;
+        quizStep++;
+        if (quizStep < quizSteps.length) {
+          renderStep();
+        } else {
+          renderContactStep();
+        }
+      });
+    });
+    const backBtn = quizBody.querySelector('.quiz__back');
+    if (backBtn) {
+      backBtn.addEventListener('click', () => {
+        quizStep--;
+        renderStep();
+      });
+    }
+  };
+
+  const renderContactStep = () => {
+    updateProgress();
+    quizBody.innerHTML = `
+      <p class="quiz__step-label">Final step</p>
+      <h3 class="quiz__question">Where should we send your personalized recommendation?</h3>
+      <form class="quiz__form">
+        <input type="text" class="quiz__input" name="quiz-name" placeholder="Your name" required>
+        <input type="email" class="quiz__input" name="quiz-email" placeholder="Email address" required>
+        <input type="tel" class="quiz__input" name="quiz-phone" placeholder="WhatsApp / Phone (optional)">
+        <button type="submit" class="btn btn--primary" style="width:100%;">Get My Recommendation</button>
+      </form>
+      <button class="quiz__back">&larr; Back</button>
+    `;
+    quizBody.querySelector('.quiz__form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = quizBody.querySelector('[name="quiz-name"]').value.trim();
+      const email = quizBody.querySelector('[name="quiz-email"]').value.trim();
+      const phone = quizBody.querySelector('[name="quiz-phone"]').value.trim();
+
+      const rec = quizRecommend(quizAnswers);
+      const body = [
+        'New Quiz Lead',
+        '',
+        'Name: ' + name,
+        'Email: ' + email,
+        'Phone: ' + (phone || '—'),
+        '',
+        'Answers:',
+        '1. Goal: ' + (quizAnswers[0] || '—'),
+        '2. Budget: ' + (quizAnswers[1] || '—'),
+        '3. Bedrooms: ' + (quizAnswers[2] || '—'),
+        '4. Timeline: ' + (quizAnswers[3] || '—'),
+        '',
+        'Recommended: ' + rec.project
+      ].join('\n');
+
+      window.open('mailto:office@globalbalihome.com?subject=New Lead: ' + encodeURIComponent(name) + '&body=' + encodeURIComponent(body));
+      renderResult(rec);
+    });
+    quizBody.querySelector('.quiz__back').addEventListener('click', () => {
+      quizStep--;
+      renderStep();
+    });
+  };
+
+  const renderResult = (rec) => {
+    quizBar.style.width = '100%';
+    quizBody.innerHTML = `
+      <div class="quiz__result">
+        <p class="quiz__step-label">Your match</p>
+        <h3 class="quiz__question">${rec.project}</h3>
+        <p class="quiz__result-desc">${rec.desc}</p>
+        <a href="${rec.url}" class="btn btn--primary" style="width:100%;">View Project</a>
+      </div>
+    `;
+  };
+
+  const openQuiz = () => {
+    quizStep = 0;
+    quizAnswers.length = 0;
+    renderStep();
+    quizOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeQuiz = () => {
+    quizOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+
+  quizOverlay.querySelector('.quiz__close').addEventListener('click', closeQuiz);
+  quizOverlay.addEventListener('click', (e) => {
+    if (e.target === quizOverlay) closeQuiz();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && quizOverlay.classList.contains('active')) closeQuiz();
+  });
+
+  // Attach quiz to CTA section buttons and header CTA
+  document.querySelectorAll('.cta-section .btn--primary, [data-quiz]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openQuiz();
+    });
+  });
+
+  // --- Availability Bar animation ---
+  document.querySelectorAll('.availability-bar__fill').forEach(bar => {
+    const target = bar.style.width;
+    bar.dataset.percent = target;
+    bar.style.width = '0';
+    const observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        bar.style.width = bar.dataset.percent;
+        observer.unobserve(bar);
+      }
+    }, { threshold: 0.5 });
+    observer.observe(bar);
+  });
+
+  // --- ROI Calculator ---
+  const roiRange = document.querySelector('.roi-calculator__range:not(#roi-occupancy)');
+  if (roiRange) {
+    let rentalYield = 0.12;
+    let growthRate = 0.10;
+    const amountEl = document.querySelector('.roi-calculator__amount');
+    const annualEl = document.getElementById('roi-annual');
+    const yr5El = document.getElementById('roi-5yr');
+    const yr10El = document.getElementById('roi-10yr');
+    const occRange = document.getElementById('roi-occupancy');
+    const occValue = document.getElementById('occupancy-value');
+    const scenarioBtns = document.querySelectorAll('.roi-calculator__scenario');
+
+    const calculate = () => {
+      const inv = parseInt(roiRange.value);
+      const occupancy = parseInt(occRange.value) / 100;
+      const annualRental = inv * rentalYield * occupancy;
+      let rental5 = 0, rental10 = 0, pv = inv;
+      for (let y = 1; y <= 10; y++) {
+        rental10 += pv * rentalYield * occupancy;
+        pv *= (1 + growthRate);
+        if (y === 5) rental5 = rental10 + (pv - inv);
+      }
+      const total10 = rental10 + (pv - inv);
+      amountEl.textContent = '$' + inv.toLocaleString();
+      annualEl.textContent = '$' + Math.round(annualRental).toLocaleString();
+      yr5El.textContent = '$' + Math.round(rental5).toLocaleString();
+      yr10El.textContent = '$' + Math.round(total10).toLocaleString();
+    };
+
+    roiRange.addEventListener('input', calculate);
+    occRange.addEventListener('input', () => {
+      occValue.textContent = occRange.value + '%';
+      calculate();
+    });
+
+    scenarioBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        scenarioBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        rentalYield = parseFloat(btn.dataset.yield);
+        growthRate = parseFloat(btn.dataset.growth);
+        calculate();
+      });
+    });
+
+    calculate();
+  }
+
+  // --- Lead Magnet form ---
+  document.querySelectorAll('.lead-magnet__form').forEach(form => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = form.querySelector('input[type="text"]').value;
+      const email = form.querySelector('input[type="email"]').value;
+      const subject = encodeURIComponent('Investment Guide Request');
+      const body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\nPlease send me the Bali Investment Guide.');
+      window.location.href = 'mailto:office@globalbalihome.com?subject=' + subject + '&body=' + body;
+      sessionStorage.setItem('leadCaptured', 'true');
+      form.closest('.lead-magnet__form-wrap').innerHTML = '<div class="lead-magnet__success"><h3>Thank You!</h3><p>Check your email for the guide.</p></div>';
+    });
+  });
+
+  // --- Sticky CTA Bar (mobile) ---
+  const stickyCTA = document.createElement('div');
+  stickyCTA.className = 'sticky-cta';
+  stickyCTA.innerHTML = '<button class="sticky-cta__btn btn btn--primary" data-quiz>Get Started</button>';
+  document.body.appendChild(stickyCTA);
+  stickyCTA.querySelector('[data-quiz]').addEventListener('click', (e) => {
+    e.preventDefault();
+    openQuiz();
+  });
+
+  const hero = document.querySelector('.hero') || document.querySelector('.page-hero');
+  if (hero) {
+    const showSticky = () => {
+      const heroBottom = hero.getBoundingClientRect().bottom;
+      const isOverlayOpen = quizOverlay.classList.contains('active');
+      if (heroBottom < 0 && !isOverlayOpen) {
+        stickyCTA.classList.add('visible');
+      } else {
+        stickyCTA.classList.remove('visible');
+      }
+    };
+    window.addEventListener('scroll', showSticky);
+    showSticky();
+  }
+
+  // --- Exit Intent Popup ---
+  const exitOverlay = document.createElement('div');
+  exitOverlay.className = 'exit-overlay';
+  exitOverlay.innerHTML = `
+    <div class="exit-popup">
+      <button class="exit-popup__close">&times;</button>
+      <span class="section-header__tag">Free Guide</span>
+      <h3 class="exit-popup__title">Wait — Don't Miss Our Free Investment Guide</h3>
+      <p class="exit-popup__text">Download our comprehensive Bali Real Estate Investment Guide with market analysis, ROI projections, and expert insights.</p>
+      <form class="exit-popup__form">
+        <input type="email" class="exit-popup__input" placeholder="Your email address" required>
+        <button type="submit" class="btn btn--primary" style="width:100%">Download Free Guide</button>
+      </form>
+    </div>
+  `;
+  document.body.appendChild(exitOverlay);
+
+  const closeExit = () => {
+    exitOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+    sessionStorage.setItem('exitShown', 'true');
+  };
+
+  exitOverlay.querySelector('.exit-popup__close').addEventListener('click', closeExit);
+  exitOverlay.addEventListener('click', (e) => {
+    if (e.target === exitOverlay) closeExit();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && exitOverlay.classList.contains('active')) closeExit();
+  });
+
+  exitOverlay.querySelector('.exit-popup__form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = exitOverlay.querySelector('.exit-popup__input').value;
+    const subject = encodeURIComponent('Investment Guide Request');
+    const body = encodeURIComponent('Email: ' + email + '\n\nPlease send me the Bali Investment Guide.');
+    window.location.href = 'mailto:office@globalbalihome.com?subject=' + subject + '&body=' + body;
+    sessionStorage.setItem('leadCaptured', 'true');
+    closeExit();
+  });
+
+  const pageLoadTime = Date.now();
+  document.documentElement.addEventListener('mouseleave', (e) => {
+    if (e.clientY > 0) return;
+    if (Date.now() - pageLoadTime < 30000) return;
+    if (sessionStorage.getItem('exitShown')) return;
+    if (sessionStorage.getItem('leadCaptured')) return;
+    if (quizOverlay.classList.contains('active')) return;
+    exitOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  });
+
 });

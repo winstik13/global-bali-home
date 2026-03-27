@@ -69,7 +69,9 @@ Larger sizes:
 |-----------|-------------------------------|
 | 1.125rem  | h4, card prices               |
 | 1.25rem   | Showcase prices, service titles, timeline |
-| 2rem      | Why Bali stat numbers         |
+| 1.75rem   | ROI calculator result values   |
+| 2rem      | Why Bali stat numbers          |
+| 2.5rem    | ROI calculator amount, Why Bali stat numbers (video bg) |
 | 1.6rem    | Hero stat numbers             |
 | 1.75rem   | Founder name, card titles     |
 
@@ -138,7 +140,6 @@ Larger sizes:
 |-----------|-----------------|----------------|----------------------|
 | --primary | --color-beige   | --color-bg     | --color-beige        |
 | --outline | transparent     | --color-text   | --color-border-hover |
-| --accent  | --color-accent  | --color-cream  | --color-accent       |
 
 ### Pre-Sale Banner
 | Font size | Weight | Spacing | Background     | Color      |
