@@ -68,12 +68,14 @@ Larger sizes:
 | Value     | Role                          |
 |-----------|-------------------------------|
 | 1.125rem  | h4, card prices               |
-| 1.25rem   | Showcase prices, service titles, timeline |
+| 1.25rem   | Showcase prices, timeline |
 | 1.75rem   | ROI calculator result values   |
 | 2rem      | Why Bali stat numbers          |
 | 2.5rem    | ROI calculator amount, Why Bali stat numbers (video bg) |
 | 1.6rem    | Hero stat numbers             |
 | 1.75rem   | Founder name, card titles     |
+| 2rem      | Service card numbers (01-06)  |
+| 1.1rem    | Service card stats            |
 
 ---
 
@@ -141,6 +143,14 @@ Larger sizes:
 | --primary | --color-beige   | --color-bg     | --color-beige        |
 | --outline | transparent     | --color-text   | --color-border-hover |
 
+### Service Cards
+| Element          | Size    | Weight | Family         | Color              |
+|------------------|---------|--------|----------------|--------------------|
+| Number (01-06)   | 2rem    | 400    | --font-heading | --color-text-dim → --color-accent (hover) |
+| Title            | inherit | 400    | --font-heading | --color-text       |
+| Description      | 0.85rem | 400    | --font-body    | --color-text-muted |
+| Stat             | 1.1rem  | 400    | --font-heading | --color-cream      |
+
 ### Pre-Sale Banner
 | Font size | Weight | Spacing | Background     | Color      |
 |-----------|--------|---------|----------------|------------|
@@ -173,6 +183,15 @@ Larger sizes:
 |-------------------|-----------|----------------|
 | --transition      | 0.3s ease | Default        |
 | --transition-slow | 0.6s ease | Scroll reveals |
+
+---
+
+### Mobile Burger Menu
+| Property         | Value                        |
+|------------------|------------------------------|
+| Background       | rgba(26, 26, 20, 0.75)       |
+| Backdrop-filter  | blur(24px)                   |
+| Lotus watermark  | opacity 0.3, right-bottom    |
 
 ---
 

@@ -45,9 +45,9 @@ powershell -ExecutionPolicy Bypass -File generate-gallery.ps1
 
 ### Image optimization
 
-Compress images with FFmpeg (max 1920px width, quality 85%):
+Compress images with FFmpeg (max 1920px width, `-update 1` required for overwrite):
 ```
-"C:\Users\Winst\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.1-full_build\bin\ffmpeg.exe" -i input.jpg -vf "scale='min(1920,iw)':-1" -q:v 3 -y output.jpg
+"C:\Users\Winst\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.1-full_build\bin\ffmpeg.exe" -i input.jpg -vf "scale='min(1920,iw)':-1" -q:v 4 -update 1 -y output.jpg
 ```
 
 ## Key Conventions
@@ -68,6 +68,8 @@ Compress images with FFmpeg (max 1920px width, quality 85%):
 - **SEO**: every page has `<title>`, `<meta description>`, OG tags, Twitter Card tags, canonical link, and `<link rel="icon">`. Project pages and contacts have JSON-LD structured data.
 - **Availability bars**: project showcase cards and detail pages show unit sold progress bars. Village uses presale variant (pulsing dot, no progress bar). Data is hardcoded in HTML.
 - **ROI Calculator** (index.html): interactive with 3 scenarios (Conservative/Normal/Optimistic), adjustable occupancy slider, CTA button opening quiz.
+- **Performance**: scroll handlers throttled via `requestAnimationFrame`, all scroll listeners use `{ passive: true }`. Hero poster preloaded via `<link rel="preload">`. Decorative watermark uses `logo-transparent.png` (33KB) instead of `LOGO.png` (120KB). Videos use `-movflags +faststart` for progressive loading.
+- **Mobile burger menu**: frosted glass effect (`backdrop-filter: blur(24px)`, 75% opacity bg), lotus watermark at 30% opacity.
 
 ## Communication
 

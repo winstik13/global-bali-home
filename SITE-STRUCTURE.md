@@ -4,10 +4,10 @@
 
 - **Header** — логотип, навигация (Home, Projects, Services, About, Gallery, Contact), CTA "Get Started" (квиз), hamburger на мобильных
 - **Footer** — бренд, навигация, проекты, контакты, соцсети
-- **WhatsApp** — плавающая кнопка
+- **WhatsApp** — плавающая кнопка (на мобильном поднимается при видимости Sticky CTA)
 - **Квиз** — 4-шаговый попап (цель → бюджет → спальни → сроки → контактная форма → рекомендация проекта), DOM-инъекция из JS
 - **Exit Intent Popup** — попап при уходе со страницы, лид-магнит "Investment Guide", DOM-инъекция из JS
-- **Sticky CTA** — фиксированная кнопка "Get Started" внизу экрана (только мобильный)
+- **Sticky CTA** — фиксированная кнопка "Get Started" внизу экрана (только мобильный, появляется после прокрутки hero)
 
 ---
 
@@ -15,8 +15,7 @@
 
 ### index.html — Главная
 1. **Hero** — видео-фон, заголовок, CTA-кнопка, 3 стата
-2. **Social Proof** — "127+ investors have already joined our projects"
-3. **Projects** — 3 showcase-карточки проектов с availability bar
+2. **Projects** — 3 showcase-карточки проектов с availability bar
 4. **Stats** — 4 карточки с цифрами
 5. **Why Bali** — видео-фон (дрон), текст об инвестициях + 3 ключевые цифры
 6. **ROI Calculator** — интерактивный калькулятор доходности (3 сценария + occupancy)
@@ -41,7 +40,7 @@
 
 ### services.html — Услуги
 1. **Hero** — заголовок страницы
-2. **Services Grid** — 6 карточек услуг
+2. **Services Grid** — 6 карточек услуг (нумерация 01-06, иконки, без фона, border-top разделители)
 3. **Partners** — партнёрства
 4. **CTA**
 
