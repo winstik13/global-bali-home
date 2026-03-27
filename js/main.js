@@ -580,6 +580,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     quizBody.querySelectorAll('.quiz__option').forEach((btn, idx) => {
       btn.addEventListener('click', () => {
+        btn.blur();
         quizAnswers[quizStep] = step.options[idx].label;
         quizStep++;
         if (quizStep < quizSteps.length) {

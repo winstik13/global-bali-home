@@ -1468,7 +1468,18 @@ p {
   transition: all var(--transition);
 }
 
-.quiz__option:hover {
+@media (hover: hover) {
+  .quiz__option:hover {
+    border-color: var(--color-text);
+    color: var(--color-text);
+    background: rgba(225, 217, 201, 0.05);
+  }
+  .quiz__option:hover .quiz__option-icon svg {
+    stroke: var(--color-text);
+  }
+}
+
+.quiz__option:active {
   border-color: var(--color-text);
   color: var(--color-text);
   background: rgba(225, 217, 201, 0.05);
@@ -1488,9 +1499,7 @@ p {
   fill: none;
 }
 
-.quiz__option:hover .quiz__option-icon svg {
-  stroke: var(--color-text);
-}
+
 
 .quiz__back {
   background: none;
