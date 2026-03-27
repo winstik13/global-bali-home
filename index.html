@@ -226,18 +226,26 @@
       </div>
       <div class="roi-calculator__body reveal">
         <div class="roi-calculator__input">
-          <label class="roi-calculator__label">Investment Amount</label>
-          <div class="roi-calculator__amount">$335,000</div>
-          <input type="range" class="roi-calculator__range" min="100000" max="1000000" step="10000" value="335000">
-          <label class="roi-calculator__label">Scenario</label>
-          <div class="roi-calculator__scenarios">
-            <button class="roi-calculator__scenario" data-yield="0.08" data-growth="0.06">Conservative<span>8% yield</span></button>
-            <button class="roi-calculator__scenario active" data-yield="0.12" data-growth="0.10">Normal<span>12% yield</span></button>
-            <button class="roi-calculator__scenario" data-yield="0.15" data-growth="0.12">Optimistic<span>15% yield</span></button>
+          <div class="roi-calculator__group">
+            <label class="roi-calculator__label">Investment Amount</label>
+            <div class="roi-calculator__amount">$335,000</div>
+            <input type="range" class="roi-calculator__range" min="100000" max="1000000" step="10000" value="335000">
           </div>
 
-          <label class="roi-calculator__label">Occupancy Rate — <span id="occupancy-value">80%</span></label>
-          <input type="range" class="roi-calculator__range" id="roi-occupancy" min="50" max="95" step="5" value="80">
+          <div class="roi-calculator__group">
+            <label class="roi-calculator__label">Scenario</label>
+            <div class="roi-calculator__scenarios">
+              <button class="roi-calculator__scenario" data-yield="0.08" data-growth="0.06">Conservative<span>8% yield</span></button>
+              <button class="roi-calculator__scenario active" data-yield="0.12" data-growth="0.10">Normal<span>12% yield</span></button>
+              <button class="roi-calculator__scenario" data-yield="0.15" data-growth="0.12">Optimistic<span>15% yield</span></button>
+            </div>
+          </div>
+
+          <div class="roi-calculator__group">
+            <label class="roi-calculator__label">Occupancy Rate</label>
+            <div class="roi-calculator__occupancy-value" id="occupancy-value">80%</div>
+            <input type="range" class="roi-calculator__range" id="roi-occupancy" min="50" max="95" step="5" value="80">
+          </div>
         </div>
         <div class="roi-calculator__results">
           <div class="roi-calculator__result">
@@ -248,11 +256,12 @@
             <span class="roi-calculator__result-label">5-Year Total Return</span>
             <span class="roi-calculator__result-value" id="roi-5yr">$0</span>
           </div>
-          <div class="roi-calculator__result">
+          <div class="roi-calculator__result roi-calculator__result--highlight">
             <span class="roi-calculator__result-label">10-Year Total Return</span>
             <span class="roi-calculator__result-value" id="roi-10yr">$0</span>
           </div>
           <p class="roi-calculator__disclaimer">*Projections based on current market data. Actual returns may vary.</p>
+          <button class="btn btn--primary roi-calculator__cta" data-quiz>Discuss Your Investment</button>
         </div>
       </div>
     </div>
@@ -291,7 +300,7 @@
   </section>
 
   <!-- Lead Magnet -->
-  <section class="section bg-alt lead-magnet">
+  <section class="lead-magnet">
     <div class="container">
       <div class="lead-magnet__body reveal">
         <div class="lead-magnet__content">
