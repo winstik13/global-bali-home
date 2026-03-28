@@ -356,7 +356,7 @@ const PROJECTS_DATA = {
       ]
     },
     "availability": {
-      "sold": 2,
+      "sold": 1,
       "total": 4
     },
     "showcasePrice": {
@@ -426,7 +426,7 @@ const PROJECTS_DATA = {
         "floors": 2,
         "area": "155 m²",
         "land": "3.5 are",
-        "status": "sold",
+        "status": "available",
         "price": 310000,
         "badge": null
       }
