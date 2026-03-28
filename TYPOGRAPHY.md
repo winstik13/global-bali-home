@@ -54,27 +54,23 @@ CSS variables:
 
 ## Font Size Scale
 
-All font sizes use CSS custom properties defined in `:root`. After consolidation: 8 variables cover 80+ declarations.
+All font sizes use CSS custom properties defined in `:root`. 6 variables cover 85+ declarations.
 
-| Variable     | Value    | px (at 18px base) | Role                                           |
-|--------------|----------|--------------------|------------------------------------------------|
-| --font-xs    | 0.75rem  | 13.5px             | Labels, buttons, tags, badges, form labels, metadata |
-| --font-sm    | 0.85rem  | 15.3px             | Nav, descriptions, forms, footer, tables       |
-| --font-base  | 0.9rem   | 16.2px             | Inputs, availability bar, form text            |
-| --font-md    | 1.125rem | 20.25px            | h4, FAQ questions, presale banner, service stats, mobile nav |
-| --font-lg    | 1.25rem  | 22.5px             | Prices, timeline titles, card titles           |
-| --font-xl    | 1.75rem  | 31.5px             | Stat numbers, founder name, display text       |
-| --font-2xl   | 2rem     | 36px               | Decorative numbers (01-06), close buttons      |
-| --font-3xl   | 2.5rem   | 45px               | Large accent numbers (Why Bali, ROI)           |
+| Variable     | Value    | px (at 18px base) | Ratio  | Role                                           |
+|--------------|----------|--------------------|--------|-------------------------------------------------|
+| --font-xs    | 0.75rem  | 13.5px             | —      | Labels, buttons, tags, badges, metadata          |
+| --font-sm    | 0.85rem  | 15.3px             | 1.13x  | Nav, descriptions, inputs, body text, tables     |
+| --font-md    | 1.2rem   | 21.6px             | 1.41x  | h4, FAQ, prices, card titles, presale, service stats |
+| --font-xl    | 1.75rem  | 31.5px             | 1.46x  | Stat numbers, founder name, display text         |
+| --font-2xl   | 2rem     | 36px               | 1.14x  | Decorative numbers (01-06), close buttons        |
+| --font-3xl   | 2.5rem   | 45px               | 1.25x  | Large accent numbers (Why Bali, ROI)             |
 
 One-off sizes (no variable):
 
 | Value     | Role                          |
 |-----------|-------------------------------|
 | 18px      | Body base font-size           |
-| 1rem      | Hero text (body default)      |
 | 1.5rem    | Lightbox buttons, popup title |
-| 2.25rem   | ROI highlight value           |
 
 ---
 
@@ -146,9 +142,9 @@ One-off sizes (no variable):
 | Element          | Size            | Weight | Family         | Color              |
 |------------------|-----------------|--------|----------------|--------------------|
 | Number (01-06)   | var(--font-2xl) | 400    | --font-heading | --color-text-dim → --color-accent (hover) |
-| Title            | var(--font-lg)  | 400    | --font-heading | --color-text       |
+| Title            | var(--font-md)  | 400    | --font-heading | --color-text       |
 | Description      | var(--font-sm)  | 400    | --font-body    | --color-text-muted |
-| Stat             | var(--font-md)  | 400    | --font-heading | --color-cream      |
+| Stat             | var(--font-md)  | 600    | --font-heading | --color-cream      |
 
 ### Inline Hero Stats (`.hero-stats`)
 | Element           | Size                          | Weight | Family         | Color              | Spacing |

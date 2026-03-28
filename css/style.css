@@ -37,10 +37,8 @@
 
   /* Font Size Scale */
   --font-xs: 0.75rem;     /* 13.5px — labels, tags, buttons, metadata */
-  --font-sm: 0.85rem;     /* 15.3px — nav, descriptions, tables */
-  --font-base: 0.9rem;    /* 16.2px — inputs, form text */
-  --font-md: 1.125rem;    /* 20.25px — h4, FAQ, presale, service stats */
-  --font-lg: 1.25rem;     /* 22.5px — prices, card titles */
+  --font-sm: 0.85rem;     /* 15.3px — nav, descriptions, inputs, body text */
+  --font-md: 1.2rem;      /* 21.6px — h4, FAQ, prices, card titles, presale */
   --font-xl: 1.75rem;     /* 31.5px — stat numbers, display text */
   --font-2xl: 2rem;       /* 36px — decorative numbers, close buttons */
   --font-3xl: 2.5rem;     /* 45px — large accent numbers */
@@ -420,7 +418,7 @@ p {
 }
 
 .hero__text {
-  font-size: 1rem;
+  font-size: var(--font-sm);
   font-weight: 400;
   color: var(--color-text-muted);
   max-width: 500px;
@@ -633,7 +631,7 @@ p {
 
 .project-showcase__price {
   font-family: var(--font-heading);
-  font-size: var(--font-lg);
+  font-size: var(--font-md);
   color: var(--color-cream);
   margin-bottom: 24px;
 }
@@ -1140,7 +1138,7 @@ p {
 
 .timeline__title {
   font-family: var(--font-heading);
-  font-size: var(--font-lg);
+  font-size: var(--font-md);
   margin-bottom: 8px;
   color: var(--color-text);
 }
@@ -1315,7 +1313,7 @@ p {
 
 .service-card__title {
   font-family: var(--font-heading);
-  font-size: var(--font-lg);
+  font-size: var(--font-md);
   margin-bottom: 16px;
   color: var(--color-text);
 }
@@ -1330,6 +1328,7 @@ p {
 .service-card__stat {
   font-family: var(--font-heading);
   font-size: var(--font-md);
+  font-weight: 600;
   color: var(--color-cream);
   letter-spacing: 0;
 }
@@ -1430,7 +1429,7 @@ p {
   text-align: center;
   padding: 80px 20px;
   color: var(--color-text-muted);
-  font-size: var(--font-lg);
+  font-size: var(--font-md);
   letter-spacing: 0.1em;
 }
 
@@ -2045,7 +2044,7 @@ p {
 }
 
 .social-proof__text {
-  font-size: var(--font-base);
+  font-size: var(--font-sm);
   color: var(--color-text-muted);
   display: inline-flex;
   align-items: center;
@@ -2084,7 +2083,7 @@ p {
 }
 
 .availability-bar__label {
-  font-size: var(--font-base);
+  font-size: var(--font-sm);
   color: var(--color-text-muted);
 }
 
@@ -2285,7 +2284,7 @@ p {
 }
 
 .roi-calculator__result--highlight .roi-calculator__result-value {
-  font-size: 2.25rem;
+  font-size: var(--font-3xl);
   color: var(--color-accent);
 }
 
@@ -2321,7 +2320,7 @@ p {
 .lead-magnet__content p {
   color: var(--color-text-muted);
   margin-bottom: 20px;
-  font-size: var(--font-base);
+  font-size: var(--font-sm);
 }
 
 .lead-magnet__list {
@@ -2370,7 +2369,7 @@ p {
   border: 1px solid var(--color-border);
   color: var(--color-text);
   font-family: var(--font-body);
-  font-size: var(--font-base);
+  font-size: var(--font-sm);
   transition: border-color var(--transition);
 }
 
@@ -2466,7 +2465,7 @@ p {
   border: 1px solid var(--color-border);
   color: var(--color-text);
   font-family: var(--font-body);
-  font-size: var(--font-base);
+  font-size: var(--font-sm);
   transition: border-color var(--transition);
 }
 
