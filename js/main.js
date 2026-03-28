@@ -293,19 +293,30 @@ document.addEventListener('DOMContentLoaded', () => {
     hamburger.setAttribute('aria-expanded', 'false');
     hamburger.setAttribute('aria-controls', 'main-nav');
     nav.id = 'main-nav';
+
+    const openMenu = () => {
+      hamburger.classList.add('active');
+      nav.classList.add('active');
+      hamburger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+      // backdrop-filter on header creates a containing block that breaks
+      // position:fixed on the nav overlay — disable it while menu is open
+      if (header) header.classList.add('header--menu-open');
+    };
+
+    const closeMenu = () => {
+      hamburger.classList.remove('active');
+      nav.classList.remove('active');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      if (header) header.classList.remove('header--menu-open');
+    };
+
     hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      nav.classList.toggle('active');
-      const isOpen = nav.classList.contains('active');
-      hamburger.setAttribute('aria-expanded', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
+      nav.classList.contains('active') ? closeMenu() : openMenu();
     });
     nav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        nav.classList.remove('active');
-        document.body.style.overflow = '';
-      });
+      link.addEventListener('click', closeMenu);
     });
   }
 

@@ -55,7 +55,7 @@
         <nav class="page-hero__breadcrumbs"><a href="index.html">Home</a> <span>/</span> <a href="projects.html">Projects</a> <span>/</span> <span>Serenity Villas</span></nav>
         <p class="page-hero__subtitle">Unwinding in tropical surroundings</p>
         <h1>Serenity Villas</h1>
-        <div class="hero-stats">
+        <div class="hero-stats" data-project="serenity-villas">
           <div class="hero-stats__item"><div class="hero-stats__number">12</div><div class="hero-stats__label">Villas</div></div>
           <div class="hero-stats__item"><div class="hero-stats__number">2–3</div><div class="hero-stats__label">Bedrooms</div></div>
           <div class="hero-stats__item"><div class="hero-stats__number">Q2 2026</div><div class="hero-stats__label">Handover</div></div>
@@ -129,7 +129,7 @@
         <p>Find your ideal villa for living or investment. Only 4 units remaining.</p>
       </div>
 
-      <div class="availability-bar reveal">
+      <div class="availability-bar reveal" data-project="serenity-villas">
         <div class="availability-bar__header">
           <span class="availability-bar__label">8 of 12 units sold</span>
           <span class="availability-bar__percent">67%</span>
@@ -140,127 +140,23 @@
       </div>
 
       <div class="reveal">
-        <div class="table-wrap"><table class="unit-table">
+        <div class="table-wrap"><table class="unit-table" data-project="serenity-villas">
           <thead>
-            <tr>
-              <th>Unit</th>
-              <th>Type</th>
-              <th>Floors</th>
-              <th>Area</th>
-              <th>Land</th>
-              <th>Status</th>
-              <th>Price</th>
-            </tr>
+            <tr><th>Unit</th><th>Type</th><th>Floors</th><th>Area</th><th>Land</th><th>Status</th><th>Price</th></tr>
           </thead>
           <tbody>
-            <tr class="unit--premium">
-              <td>A1 <span class="unit__badge">Premium</span></td>
-              <td>2 Bedroom</td>
-              <td>1</td>
-              <td>122 m²</td>
-              <td>2.8 are</td>
-              <td class="status--booked">Booked</td>
-              <td>&mdash;</td>
-            </tr>
-            <tr class="unit--premium">
-              <td>A2 <span class="unit__badge">Premium</span></td>
-              <td>2 Bedroom</td>
-              <td>1</td>
-              <td>122 m²</td>
-              <td>2.6 are</td>
-              <td class="status--sold">Sold</td>
-              <td>&mdash;</td>
-            </tr>
-            <tr class="unit--premium">
-              <td>A3 <span class="unit__badge">Premium</span></td>
-              <td>2 Bedroom</td>
-              <td>1</td>
-              <td>122 m²</td>
-              <td>2.6 are</td>
-              <td class="status--available">Available</td>
-              <td>$399,000</td>
-            </tr>
-            <tr class="unit--premium">
-              <td>A4 <span class="unit__badge">Premium</span></td>
-              <td>2 Bedroom</td>
-              <td>1</td>
-              <td>122 m²</td>
-              <td>2.8 are</td>
-              <td class="status--available">Available</td>
-              <td>$399,000</td>
-            </tr>
-            <tr>
-              <td>B1</td>
-              <td>3 Bedroom</td>
-              <td>2</td>
-              <td>210 m²</td>
-              <td>2.3 are</td>
-              <td class="status--available">Available</td>
-              <td>$357,000</td>
-            </tr>
-            <tr>
-              <td>B2</td>
-              <td>2 Bedroom</td>
-              <td>2</td>
-              <td>184 m²</td>
-              <td>2.4 are</td>
-              <td class="status--sold">Sold</td>
-              <td>&mdash;</td>
-            </tr>
-            <tr>
-              <td>B3</td>
-              <td>2 Bedroom</td>
-              <td>2</td>
-              <td>184 m²</td>
-              <td>2.4 are</td>
-              <td class="status--sold">Sold</td>
-              <td>&mdash;</td>
-            </tr>
-            <tr>
-              <td>B4</td>
-              <td>3 Bedroom</td>
-              <td>2</td>
-              <td>210 m²</td>
-              <td>2.3 are</td>
-              <td class="status--sold">Sold</td>
-              <td>&mdash;</td>
-            </tr>
-            <tr>
-              <td>C1</td>
-              <td>2 Bedroom</td>
-              <td>2</td>
-              <td>168 m²</td>
-              <td>2.1 are</td>
-              <td class="status--sold">Sold</td>
-              <td>&mdash;</td>
-            </tr>
-            <tr>
-              <td>C2</td>
-              <td>2 Bedroom</td>
-              <td>2</td>
-              <td>168 m²</td>
-              <td>2.3 are</td>
-              <td class="status--sold">Sold</td>
-              <td>&mdash;</td>
-            </tr>
-            <tr>
-              <td>C3</td>
-              <td>2 Bedroom</td>
-              <td>2</td>
-              <td>168 m²</td>
-              <td>2.3 are</td>
-              <td class="status--resale">Resale</td>
-              <td>$335,000</td>
-            </tr>
-            <tr>
-              <td>C4</td>
-              <td>2 Bedroom</td>
-              <td>2</td>
-              <td>168 m²</td>
-              <td>2.4 are</td>
-              <td class="status--sold">Sold</td>
-              <td>&mdash;</td>
-            </tr>
+            <tr class="unit--premium"><td>A1 <span class="unit__badge">Premium</span></td><td>2 Bedroom</td><td>1</td><td>122 m²</td><td>2.8 are</td><td class="status--booked">Booked</td><td>&mdash;</td></tr>
+            <tr class="unit--premium"><td>A2 <span class="unit__badge">Premium</span></td><td>2 Bedroom</td><td>1</td><td>122 m²</td><td>2.6 are</td><td class="status--sold">Sold</td><td>&mdash;</td></tr>
+            <tr class="unit--premium"><td>A3 <span class="unit__badge">Premium</span></td><td>2 Bedroom</td><td>1</td><td>122 m²</td><td>2.6 are</td><td class="status--available">Available</td><td>$399,000</td></tr>
+            <tr class="unit--premium"><td>A4 <span class="unit__badge">Premium</span></td><td>2 Bedroom</td><td>1</td><td>122 m²</td><td>2.8 are</td><td class="status--available">Available</td><td>$399,000</td></tr>
+            <tr><td>B1</td><td>3 Bedroom</td><td>2</td><td>210 m²</td><td>2.3 are</td><td class="status--available">Available</td><td>$357,000</td></tr>
+            <tr><td>B2</td><td>2 Bedroom</td><td>2</td><td>184 m²</td><td>2.4 are</td><td class="status--sold">Sold</td><td>&mdash;</td></tr>
+            <tr><td>B3</td><td>2 Bedroom</td><td>2</td><td>184 m²</td><td>2.4 are</td><td class="status--sold">Sold</td><td>&mdash;</td></tr>
+            <tr><td>B4</td><td>3 Bedroom</td><td>2</td><td>210 m²</td><td>2.3 are</td><td class="status--sold">Sold</td><td>&mdash;</td></tr>
+            <tr><td>C1</td><td>2 Bedroom</td><td>2</td><td>168 m²</td><td>2.1 are</td><td class="status--sold">Sold</td><td>&mdash;</td></tr>
+            <tr><td>C2</td><td>2 Bedroom</td><td>2</td><td>168 m²</td><td>2.3 are</td><td class="status--sold">Sold</td><td>&mdash;</td></tr>
+            <tr><td>C3</td><td>2 Bedroom</td><td>2</td><td>168 m²</td><td>2.3 are</td><td class="status--resale">Resale</td><td>$335,000</td></tr>
+            <tr><td>C4</td><td>2 Bedroom</td><td>2</td><td>168 m²</td><td>2.4 are</td><td class="status--sold">Sold</td><td>&mdash;</td></tr>
           </tbody>
         </table></div>
       </div>
@@ -346,6 +242,7 @@
     }
   }
   </script>
+  <script src="data/projects-data.js" defer></script>
   <script src="js/main.js" defer></script>
 </body>
 </html>

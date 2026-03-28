@@ -32,7 +32,7 @@
 |-------|-------|------------|
 | `--color-text` | `#E1D9C9` | Заголовки, акцентный текст |
 | `--color-text-muted` | `rgba(225, 217, 201, 0.75)` | Body, описания, ссылки |
-| `--color-text-dim` | `rgba(225, 217, 201, 0.5)` | Лейблы, копирайт, мета |
+| `--color-text-dim` | `rgba(225, 217, 201, 0.5)` | Лейблы, копирайт, мета, breadcrumbs |
 
 ### Границы
 
@@ -541,4 +541,4 @@ JS-инъекция `.skip-link`: absolute top: -100px → focus: top: 0. Backgr
 ---
 
 *Auto-generated from css/style.css*
-*Last updated: 2026-03-28*
+*Last updated: 2026-03-29*

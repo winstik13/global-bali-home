@@ -55,7 +55,7 @@
         <nav class="page-hero__breadcrumbs"><a href="index.html">Home</a> <span>/</span> <a href="projects.html">Projects</a> <span>/</span> <span>Serenity Village</span></nav>
         <p class="page-hero__subtitle">Villa complex in the heart of Bali</p>
         <h1>Serenity Village</h1>
-        <div class="hero-stats">
+        <div class="hero-stats" data-project="serenity-village">
           <div class="hero-stats__item"><div class="hero-stats__number">26</div><div class="hero-stats__label">Villas</div></div>
           <div class="hero-stats__item"><div class="hero-stats__number">1–2</div><div class="hero-stats__label">Bedrooms</div></div>
           <div class="hero-stats__item"><div class="hero-stats__number">$119K</div><div class="hero-stats__label">From</div></div>
@@ -67,7 +67,7 @@
   </section>
 
   <!-- Pre-Sale Banner -->
-  <section class="presale-banner">
+  <section class="presale-banner" data-presale-banner>
     <div class="container">
       Pre-Sale Now Open &mdash; Register Your Interest Today
     </div>
@@ -134,7 +134,7 @@
         <h2>Unit Types</h2>
       </div>
 
-      <div class="availability-bar reveal">
+      <div class="availability-bar reveal" data-project="serenity-village">
         <div class="availability-bar__header">
           <span class="availability-bar__label">9 of 26 units sold</span>
           <span class="availability-bar__percent">36%</span>
@@ -145,7 +145,7 @@
       </div>
 
       <div class="reveal">
-        <div class="table-wrap"><table class="unit-table">
+        <div class="table-wrap"><table class="unit-table" data-village-types>
           <thead>
             <tr>
               <th>Type</th>
@@ -270,6 +270,7 @@
     }
   }
   </script>
+  <script src="data/projects-data.js" defer></script>
   <script src="js/main.js" defer></script>
 </body>
 </html>

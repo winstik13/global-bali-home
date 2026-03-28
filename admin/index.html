@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin Panel — Global Bali Home</title>
+  <link rel="icon" href="../images/common/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <!-- Login Screen -->
+  <div id="login-screen" class="login-screen">
+    <div class="login-card">
+      <div class="login-card__logo">
+        <img src="../images/common/LOGO.png" alt="Global Bali Home" height="60">
+      </div>
+      <h1 class="login-card__title">Admin Panel</h1>
+      <form id="login-form" class="login-form">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" placeholder="admin@example.com" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="Password" required autocomplete="current-password">
+        </div>
+        <div id="login-error" class="login-error" hidden></div>
+        <button type="submit" class="btn btn--primary btn--full">Sign In</button>
+      </form>
+    </div>
+    <div class="login-watermark">
+      <img src="../images/common/logo-transparent.png" alt="">
+    </div>
+  </div>
+
+  <!-- PAT Screen -->
+  <div id="pat-screen" class="login-screen" hidden>
+    <div class="login-card">
+      <div class="login-card__logo">
+        <img src="../images/common/LOGO.png" alt="Global Bali Home" height="60">
+      </div>
+      <h1 class="login-card__title">GitHub Access</h1>
+      <p class="login-card__desc">Enter your GitHub Personal Access Token to enable publishing.</p>
+      <form id="pat-form" class="login-form">
+        <div class="form-group">
+          <label for="pat-input">Personal Access Token</label>
+          <input type="password" id="pat-input" placeholder="github_pat_..." required>
+        </div>
+        <label class="checkbox-row">
+          <input type="checkbox" id="pat-remember"> Remember on this device
+        </label>
+        <div id="pat-error" class="login-error" hidden></div>
+        <button type="submit" class="btn btn--primary btn--full">Connect</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Panel -->
+  <div id="admin-app" class="admin-app" hidden>
+
+    <!-- Header -->
+    <header class="admin-header">
+      <div class="admin-header__left">
+        <img src="../images/common/LOGO.png" alt="Global Bali Home" height="36">
+        <span class="admin-header__title">Admin Panel</span>
+      </div>
+      <div class="admin-header__right">
+        <span id="admin-user" class="admin-header__user"></span>
+        <button id="btn-logout" class="btn btn--outline btn--sm">Sign Out</button>
+      </div>
+    </header>
+
+    <!-- Nav -->
+    <nav class="admin-nav">
+      <button class="admin-nav__btn active" data-tab="dashboard">Dashboard</button>
+      <button class="admin-nav__btn" data-tab="projects">Projects</button>
+      <button class="admin-nav__btn" data-tab="seo">SEO</button>
+      <button class="admin-nav__btn" data-tab="gallery">Gallery</button>
+    </nav>
+
+    <!-- Tab: Dashboard -->
+    <main class="admin-content">
+      <section id="tab-dashboard" class="admin-tab active">
+        <h2>Dashboard</h2>
+        <div id="dashboard-cards" class="dashboard-grid"></div>
+        <div class="dashboard-status">
+          <span id="last-update"></span>
+          <span id="rate-limit"></span>
+        </div>
+      </section>
+
+      <!-- Tab: Projects -->
+      <section id="tab-projects" class="admin-tab" hidden>
+        <h2>Project Editor</h2>
+        <div class="project-tabs">
+          <button class="project-tabs__btn active" data-proj="serenity-villas">Serenity Villas</button>
+          <button class="project-tabs__btn" data-proj="serenity-estates">Serenity Estates</button>
+          <button class="project-tabs__btn" data-proj="serenity-village">Serenity Village</button>
+        </div>
+        <div id="project-editor"></div>
+        <div class="editor-actions">
+          <button id="btn-publish" class="btn btn--primary">Publish Changes</button>
+          <span id="publish-status" class="publish-status"></span>
+        </div>
+      </section>
+
+      <!-- Tab: SEO -->
+      <section id="tab-seo" class="admin-tab" hidden>
+        <h2>SEO Editor</h2>
+        <div class="seo-controls">
+          <div class="form-group">
+            <label for="seo-page">Page</label>
+            <select id="seo-page">
+              <option value="index.html">Home</option>
+              <option value="about.html">About</option>
+              <option value="projects.html">Projects</option>
+              <option value="services.html">Services</option>
+              <option value="gallery.html">Gallery</option>
+              <option value="contacts.html">Contacts</option>
+              <option value="project-serenity-villas.html">Serenity Villas</option>
+              <option value="project-serenity-estates.html">Serenity Estates</option>
+              <option value="project-serenity-village.html">Serenity Village</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="seo-lang">Language</label>
+            <select id="seo-lang">
+              <option value="en">English</option>
+              <option value="ru">Russian</option>
+              <option value="id">Indonesian</option>
+              <option value="zh">Chinese</option>
+            </select>
+          </div>
+          <button id="btn-seo-load" class="btn btn--outline btn--sm">Load</button>
+        </div>
+        <div id="seo-editor"></div>
+      </section>
+
+      <!-- Tab: Gallery -->
+      <section id="tab-gallery" class="admin-tab" hidden>
+        <h2>Gallery Manager</h2>
+        <div class="gallery-controls">
+          <select id="gallery-project">
+            <option value="villas">Serenity Villas</option>
+            <option value="estates">Serenity Estates</option>
+            <option value="village">Serenity Village</option>
+          </select>
+          <button id="btn-gallery-upload" class="btn btn--primary btn--sm">Upload Photos</button>
+          <input type="file" id="gallery-file-input" accept="image/*" multiple hidden>
+        </div>
+        <div id="gallery-grid" class="admin-gallery-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Firebase Auth SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="../data/projects-data.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

@@ -55,7 +55,7 @@
         <nav class="page-hero__breadcrumbs"><a href="index.html">首页</a> <span>/</span> <a href="projects.html">项目</a> <span>/</span> <span>Serenity Village</span></nav>
         <p class="page-hero__subtitle">巴厘岛核心地段的别墅综合体</p>
         <h1>Serenity Village</h1>
-        <div class="hero-stats">
+        <div class="hero-stats" data-project="serenity-village">
           <div class="hero-stats__item"><div class="hero-stats__number">26</div><div class="hero-stats__label">别墅</div></div>
           <div class="hero-stats__item"><div class="hero-stats__number">1-2</div><div class="hero-stats__label">卧室</div></div>
           <div class="hero-stats__item"><div class="hero-stats__number">$119K</div><div class="hero-stats__label">起价</div></div>
@@ -67,7 +67,7 @@
   </section>
 
   <!-- Pre-Sale Banner -->
-  <section class="presale-banner">
+  <section class="presale-banner" data-presale-banner>
     <div class="container">
       预售已开启 &mdash; 立即登记您的意向
     </div>
@@ -134,7 +134,7 @@
         <h2>户型介绍</h2>
       </div>
 
-      <div class="availability-bar reveal">
+      <div class="availability-bar reveal" data-project="serenity-village">
         <div class="availability-bar__header">
           <span class="availability-bar__label">26套中已售出9套</span>
           <span class="availability-bar__percent">36%</span>
@@ -145,7 +145,7 @@
       </div>
 
       <div class="reveal">
-        <div class="table-wrap"><table class="unit-table">
+        <div class="table-wrap"><table class="unit-table" data-village-types>
           <thead>
             <tr>
               <th>类型</th>
@@ -271,6 +271,7 @@
     }
   }
   </script>
+  <script src="../data/projects-data.js" defer></script>
   <script src="../js/main.js" defer></script>
 </body>
 </html>

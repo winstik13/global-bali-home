@@ -42,7 +42,7 @@ CSS variables:
 |--------------------|------------------------------|--------------------------------|
 | --color-text       | #E1D9C9                      | Headings, accent text          |
 | --color-text-muted | rgba(225, 217, 201, 0.75)    | Body text, links, descriptions |
-| --color-text-dim   | rgba(225, 217, 201, 0.35)    | Small labels, copyright        |
+| --color-text-dim   | rgba(225, 217, 201, 0.5)     | Small labels, copyright        |
 
 ### Border Colors
 | Token                | Value                      | Usage                  |
@@ -208,4 +208,4 @@ Layout: flex row, items separated by `border-left: 1px solid rgba(225, 217, 201,
 ---
 
 *Auto-generated from css/style.css*
-*Last updated: 2026-03-28*
+*Last updated: 2026-03-29*
