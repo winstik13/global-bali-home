@@ -3,6 +3,6 @@ const SITE_DATA = {
   "investmentGuide": {
     "path": "assets/bali-investment-guide-2026.pdf",
     "version": "2026",
-    "updatedAt": ""
+    "updatedAt": "2026-03-28"
   }
 };
