@@ -8,7 +8,7 @@ Global Bali Home — a multi-page marketing website for a premium real estate de
 
 ## Architecture
 
-- **9 HTML pages** in root: `index.html` (home), `about.html`, `projects.html`, `services.html`, `gallery.html`, `contacts.html`, and 3 project detail pages (`project-serenity-villas.html`, `project-serenity-estates.html`, `project-serenity-village.html`)
+- **9 HTML pages** in root (EN) + **9 mirrored pages** in `ru/` (RU): `index.html` (home), `about.html`, `projects.html`, `services.html`, `gallery.html`, `contacts.html`, and 3 project detail pages (`project-serenity-villas.html`, `project-serenity-estates.html`, `project-serenity-village.html`). Header includes EN|RU language switcher linking to the corresponding page.
 - **`css/style.css`** — entire design system: CSS variables, dark theme, all components, responsive breakpoints (1024px, 768px)
 - **`css/reset.css`** — standard CSS reset
 - **`js/main.js`** — all interactivity: header scroll, hamburger menu, scroll reveal (IntersectionObserver), parallax, number counters, dynamic gallery rendering, lightbox, FAQ accordion, contact form validation, quiz popup, ROI calculator, exit intent popup, sticky CTA bar, lead magnet form
@@ -56,12 +56,14 @@ Compress images with FFmpeg (max 1920px width, `-update 1` required for overwrit
 - **Fonts**: Playfair Display (headings via `--font-heading`), Montserrat (body via `--font-body`), loaded via `<link>` from Google Fonts CDN with `preconnect`
 - **CSS classes for scroll animations**: `.reveal`, `.reveal-left`, `.reveal-right`, `.reveal-stagger` — triggered by IntersectionObserver adding `.visible`
 - **Number counter**: add `data-counter` attribute to elements with numeric text
-- **Section backgrounds**: default is `--color-bg`, use `.bg-alt` for alternate darker sections
+- **Section backgrounds**: default is `--color-bg`, use `.bg-alt` for alternate darker sections. Consecutive sections must alternate colors to avoid visual merging.
+- **Fullbleed hero** (`.fullbleed-hero`): used on about, contacts, services, and 3 project detail pages. Background image fades into content via gradient overlay. Structure: `__bg` (background image) + `__overlay` (gradient) + `__top` (breadcrumbs, subtitle, h1) + optional `__bottom` (first content section merged into hero). Replaces `.page-hero` on these pages.
+- **Inline hero-stats** (`.hero-stats`): compact horizontal stats row under h1 on project detail pages (pipe-separated items). Replaces the old separate stats card grid section.
 - **Video background sections**: hero, Why Bali, and Wanayu use `<video autoplay muted loop playsinline>` with overlay div for text readability
 - **Decorative watermark**: add `.logo-watermark .logo-watermark--right` or `.logo-watermark--left` to sections for decorative lotus background. Use `--large` modifier for 40% bigger size.
 - **Component naming**: BEM-like (`block__element--modifier`), e.g. `.project-showcase__content`, `.project-card__badge--presale`
-- **All pages share**: identical header (with "Get Started" CTA button), footer (with SVG social icons), and WhatsApp floating button — changes must be replicated across all 9 HTML files
-- **Header nav order**: Home, Projects, Services, About, Gallery, Contact + "Get Started" CTA button (opens quiz)
+- **All pages share**: identical header (with "Get Started" CTA button, EN|RU language switcher), footer (with SVG social icons), and WhatsApp floating button — changes must be replicated across all 18 HTML files (9 EN + 9 RU)
+- **Header nav order**: Home, Projects, Services, About, Gallery, Contact + "Get Started" CTA button (opens quiz) + EN|RU switcher
 - **Icons**: SVG line-art style (`stroke: var(--color-accent); stroke-width: 1.5; fill: none`) — used in service cards, project features, and quiz options
 - **External links**: always use `target="_blank" rel="noopener noreferrer"`
 - **Images**: organized in `images/common/`, `images/home/`, `images/serenity-villas/`, `images/serenity-estates/`, `images/serenity-village/`. All below-fold images use `loading="lazy"`.

@@ -54,28 +54,27 @@ CSS variables:
 
 ## Font Size Scale
 
-4 unified steps for small/body text + clamp() for headings:
+All font sizes use CSS custom properties defined in `:root`. After consolidation: 8 variables cover 80+ declarations.
 
-| Step  | Value   | px (at 18px base) | Role                                           |
-|-------|---------|--------------------|------------------------------------------------|
-| xs    | 0.75rem | 13.5px             | Labels, buttons, tags, badges, form labels     |
-| sm    | 0.85rem | 15.3px             | Nav, descriptions, forms, footer, meta, tables |
-| body  | 1rem    | 18px               | Hero text, body                                |
-| md    | 1.1rem  | 19.8px             | FAQ questions, mobile nav, pre-sale banner     |
+| Variable     | Value    | px (at 18px base) | Role                                           |
+|--------------|----------|--------------------|------------------------------------------------|
+| --font-xs    | 0.75rem  | 13.5px             | Labels, buttons, tags, badges, form labels, metadata |
+| --font-sm    | 0.85rem  | 15.3px             | Nav, descriptions, forms, footer, tables       |
+| --font-base  | 0.9rem   | 16.2px             | Inputs, availability bar, form text            |
+| --font-md    | 1.125rem | 20.25px            | h4, FAQ questions, presale banner, service stats, mobile nav |
+| --font-lg    | 1.25rem  | 22.5px             | Prices, timeline titles, card titles           |
+| --font-xl    | 1.75rem  | 31.5px             | Stat numbers, founder name, display text       |
+| --font-2xl   | 2rem     | 36px               | Decorative numbers (01-06), close buttons      |
+| --font-3xl   | 2.5rem   | 45px               | Large accent numbers (Why Bali, ROI)           |
 
-Larger sizes:
+One-off sizes (no variable):
 
 | Value     | Role                          |
 |-----------|-------------------------------|
-| 1.125rem  | h4, card prices               |
-| 1.25rem   | Showcase prices, timeline |
-| 1.75rem   | ROI calculator result values   |
-| 2rem      | Why Bali stat numbers          |
-| 2.5rem    | ROI calculator amount, Why Bali stat numbers (video bg) |
-| 1.6rem    | Hero stat numbers             |
-| 1.75rem   | Founder name, card titles     |
-| 2rem      | Service card numbers (01-06)  |
-| 1.1rem    | Service card stats            |
+| 18px      | Body base font-size           |
+| 1rem      | Hero text (body default)      |
+| 1.5rem    | Lightbox buttons, popup title |
+| 2.25rem   | ROI highlight value           |
 
 ---
 
@@ -127,16 +126,16 @@ Larger sizes:
 ## Component Typography
 
 ### Header Navigation
-| Property       | Desktop | Mobile (768px) |
-|----------------|---------|----------------|
-| Font size      | 0.85rem | 1.1rem         |
-| Font weight    | 500     | 500            |
-| Letter spacing | 0.15em  | 0.2em          |
+| Property       | Desktop        | Mobile (768px)  |
+|----------------|----------------|-----------------|
+| Font size      | var(--font-sm) | var(--font-md)  |
+| Font weight    | 500            | 500             |
+| Letter spacing | 0.15em         | 0.2em           |
 
 ### Buttons
-| Size     | Weight | Spacing | Padding   | Border Radius |
-|----------|--------|---------|-----------|---------------|
-| 0.75rem  | 600    | 0.15em  | 14px 36px | 2px           |
+| Size           | Weight | Spacing | Padding   | Border Radius |
+|----------------|--------|---------|-----------|---------------|
+| var(--font-xs) | 600    | 0.15em  | 14px 36px | 2px           |
 
 | Variant   | Background      | Text           | Border               |
 |-----------|-----------------|----------------|----------------------|
@@ -144,17 +143,34 @@ Larger sizes:
 | --outline | transparent     | --color-text   | --color-border-hover |
 
 ### Service Cards
-| Element          | Size    | Weight | Family         | Color              |
-|------------------|---------|--------|----------------|--------------------|
-| Number (01-06)   | 2rem    | 400    | --font-heading | --color-text-dim → --color-accent (hover) |
-| Title            | inherit | 400    | --font-heading | --color-text       |
-| Description      | 0.85rem | 400    | --font-body    | --color-text-muted |
-| Stat             | 1.1rem  | 400    | --font-heading | --color-cream      |
+| Element          | Size            | Weight | Family         | Color              |
+|------------------|-----------------|--------|----------------|--------------------|
+| Number (01-06)   | var(--font-2xl) | 400    | --font-heading | --color-text-dim → --color-accent (hover) |
+| Title            | var(--font-lg)  | 400    | --font-heading | --color-text       |
+| Description      | var(--font-sm)  | 400    | --font-body    | --color-text-muted |
+| Stat             | var(--font-md)  | 400    | --font-heading | --color-cream      |
+
+### Inline Hero Stats (`.hero-stats`)
+| Element           | Size                          | Weight | Family         | Color              | Spacing |
+|-------------------|-------------------------------|--------|----------------|--------------------|---------|
+| Number            | clamp(1.5rem, 2.5vw, 2rem)   | 400    | --font-heading | --color-cream      | —       |
+| Label             | var(--font-xs)                | 500    | --font-body    | --color-text-dim   | 0.12em  |
+
+Layout: flex row, items separated by `border-left: 1px solid rgba(225, 217, 201, 0.2)`, padding 0 28px. On mobile (768px): 2×2 grid.
+
+### Fullbleed Hero Breadcrumbs
+| Property       | Value          |
+|----------------|----------------|
+| Font size      | var(--font-xs) |
+| Font weight    | 500         |
+| Letter spacing | 0.15em      |
+| Text transform | uppercase   |
+| Color          | --color-text-dim (links: --color-accent) |
 
 ### Pre-Sale Banner
-| Font size | Weight | Spacing | Background     | Color      |
-|-----------|--------|---------|----------------|------------|
-| 1.1rem    | 600    | 0.05em  | --color-accent | --color-bg |
+| Font size      | Weight | Spacing | Background     | Color      |
+|----------------|--------|---------|----------------|------------|
+| var(--font-md) | 600    | 0.05em  | --color-accent | --color-bg |
 
 ---
 
@@ -196,4 +212,4 @@ Larger sizes:
 ---
 
 *Auto-generated from css/style.css*
-*Last updated: 2026-03-27*
+*Last updated: 2026-03-28*

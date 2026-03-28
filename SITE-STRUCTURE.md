@@ -1,13 +1,20 @@
 # Структура сайта Global Bali Home
 
-## Общие элементы (все 9 страниц)
+## Общие элементы (все 18 страниц: 9 EN + 9 RU)
 
-- **Header** — логотип, навигация (Home, Projects, Services, About, Gallery, Contact), CTA "Get Started" (квиз), hamburger на мобильных
+- **Header** — логотип, навигация (Home, Projects, Services, About, Gallery, Contact), CTA "Get Started" (квиз), EN|RU переключатель языка, hamburger на мобильных
 - **Footer** — бренд, навигация, проекты, контакты, соцсети
 - **WhatsApp** — плавающая кнопка (на мобильном поднимается при видимости Sticky CTA)
 - **Квиз** — 4-шаговый попап (цель → бюджет → спальни → сроки → контактная форма → рекомендация проекта), DOM-инъекция из JS
 - **Exit Intent Popup** — попап при уходе со страницы, лид-магнит "Investment Guide", DOM-инъекция из JS
 - **Sticky CTA** — фиксированная кнопка "Get Started" внизу экрана (только мобильный, появляется после прокрутки hero)
+
+## Мультиязычность
+
+- **EN** — корневая директория (`/index.html`, `/about.html`, ...)
+- **RU** — папка `/ru/` (`/ru/index.html`, `/ru/about.html`, ...)
+- Переключатель языка в header связывает EN↔RU версии каждой страницы
+- RU-версии идентичны по структуре, отличается только текстовый контент
 
 ---
 
@@ -25,9 +32,8 @@
 10. **CTA** — призыв к действию
 
 ### about.html — О компании
-1. **Hero** — заголовок страницы
-2. **Intro** — история компании
-3. **Mission & Vision** — миссия, видение, устойчивость
+1. **Fullbleed Hero** — фоновое изображение с градиентным затуханием, breadcrumbs (Home / About Us), subtitle, h1. `__bottom` содержит Our Story (split-section)
+2. **Mission & Vision** — миссия, видение, устойчивость
 4. **Timeline** — 2023–2026, ключевые этапы
 5. **Founder** — фото и биография основателя
 6. **CTA**
@@ -39,7 +45,7 @@
 4. **CTA**
 
 ### services.html — Услуги
-1. **Hero** — заголовок страницы
+1. **Fullbleed Hero** — фоновое изображение с градиентным затуханием, breadcrumbs (Home / Services), subtitle, h1. `__bottom` содержит Services Grid
 2. **Services Grid** — 6 карточек услуг (нумерация 01-06, иконки, без фона, border-top разделители)
 3. **Partners** — партнёрства
 4. **CTA**
@@ -50,36 +56,33 @@
 3. **CTA**
 
 ### contacts.html — Контакты
-1. **Hero** — заголовок страницы
-2. **FAQ** — 6 вопросов-ответов
-3. **Form + Info** — форма обратной связи + контакты + карта
+1. **Fullbleed Hero** — фоновое изображение с градиентным затуханием, breadcrumbs (Home / Contact), subtitle, h1. `__bottom` содержит FAQ
+2. **Form + Info** — форма обратной связи + контакты + карта
 
 ### project-serenity-villas.html
-1. **Hero** — заголовок проекта
-2. **Concept** — концепция + дата сдачи
-3. **Stats** — 12 вилл, 2-3 спальни, Q2 2026, от $335K
-4. **Features** — 6 особенностей вилл
+1. **Fullbleed Hero** — фоновое изображение, breadcrumbs (Home / Projects / Serenity Villas), subtitle, h1, инлайн hero-stats (12 Villas | 2-3 Bedrooms | Q2 2026 | $335K+)
+2. **Concept** (`bg-alt`) — концепция + дата сдачи
+3. **Features** — 6 особенностей вилл
 5. **Units** — availability bar (8/12 sold) + таблица доступности 12 юнитов
 6. **Gallery** — 5 фото мозаика + View More → gallery
 7. **CTA**
 
 ### project-serenity-estates.html
-1. **Hero** — заголовок проекта
-2. **Overview** — описание 4 вилл
-3. **Stats** — 4 виллы, 2-4.5 спальни, Q1 2027, от $310K
-4. **Features** — 8 особенностей
+1. **Fullbleed Hero** — фоновое изображение, breadcrumbs (Home / Projects / Serenity Estates), subtitle, h1, инлайн hero-stats (4 Villas | 2-4.5 Bedrooms | Q1 2027 | $310K+)
+2. **Overview** (`bg-alt`) — описание 4 вилл
+3. **Features** — 8 особенностей
 5. **Units** — availability bar (1/4 sold) + таблица 4 юнитов
 6. **Gallery** — 5 фото мозаика + View More → gallery
 7. **CTA**
 
 ### project-serenity-village.html
-1. **Hero** — заголовок проекта
+1. **Fullbleed Hero** — фоновое изображение, breadcrumbs (Home / Projects / Serenity Village), subtitle, h1, инлайн hero-stats (26 Villas | 1-2 Bedrooms | $119K | Pre-Sale)
 2. **Pre-Sale Banner** — баннер предпродажи
 3. **Overview** — концепция комьюнити
-4. **Stats** — 26 вилл, 1-2 спальни, от $119K
+4. **Concept** (`bg-alt`) — концепция дизайна
 5. **Features** — 6 особенностей
 6. **Units** — pre-sale индикатор + таблица типов юнитов
-7. **Vision** — 2 секции о дизайне
+7. **Vision + Interiors** — объединённая секция: архитектурное видение и интерьеры
 8. **Gallery** — 5 фото мозаика + View More → gallery
 9. **Register** — регистрация интереса
 10. **CTA**
