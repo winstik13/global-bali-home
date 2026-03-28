@@ -1399,6 +1399,8 @@ document.addEventListener('DOMContentLoaded', () => {
           '</div>' +
         '</div>';
       }).join('');
+      // Re-register dynamically created .reveal elements with IntersectionObserver
+      container.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
     });
 
     // --- Fallback: update existing showcase cards ---
