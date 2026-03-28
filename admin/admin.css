@@ -585,7 +585,7 @@ body {
 .admin-unit-table tr:hover { background: var(--color-bg-elevated); }
 
 .admin-unit-table select,
-.admin-unit-table input[type="number"] {
+.admin-unit-table input {
   background: var(--color-bg);
   border: 1px solid var(--color-border);
   border-radius: 3px;
