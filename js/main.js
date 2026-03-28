@@ -228,6 +228,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (galleryGrid) {
     const galleryData = typeof GALLERY_DATA !== 'undefined' ? GALLERY_DATA : {};
+    // Detect subfolder pages (ru/, id/, zh/) — they use ../css/style.css
+    const isSubfolder = !!document.querySelector('link[href^="../css/"]');
+    const imgPathPrefix = isSubfolder ? '../' : '';
     const INITIAL_COUNT = 20;
     let allCurrentItems = [];
     let visibleCount = 0;
@@ -278,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
       div.className = 'gallery-item';
       div.dataset.category = category;
       const img = document.createElement('img');
-      img.src = src;
+      img.src = imgPathPrefix + src;
       img.alt = src.split('/').pop().replace(/\.[^.]+$/, '').replace(/[_-]/g, ' ');
       img.loading = 'lazy';
       const overlay = document.createElement('div');
@@ -462,6 +465,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Photo Mosaic (index.html) ---
   const mosaicGrid = document.getElementById('photo-mosaic');
   if (mosaicGrid && typeof GALLERY_DATA !== 'undefined') {
+    const mosaicPathPrefix = !!document.querySelector('link[href^="../css/"]') ? '../' : '';
     const all = [];
     for (const paths of Object.values(GALLERY_DATA)) {
       paths.forEach(p => all.push(p));
@@ -475,7 +479,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const div = document.createElement('div');
       div.className = 'photo-mosaic__item';
       const img = document.createElement('img');
-      img.src = src;
+      img.src = mosaicPathPrefix + src;
       img.alt = src.split('/').pop().replace(/\.[^.]+$/, '').replace(/[_-]/g, ' ');
       img.loading = i > 1 ? 'lazy' : 'eager';
       div.appendChild(img);
