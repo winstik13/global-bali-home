@@ -379,15 +379,19 @@
     if (p.units) {
       html += `<div class="editor-section"><h3>Units</h3>
         <table class="admin-unit-table"><thead><tr>
-          <th>Unit</th><th>Type</th><th>Area</th><th>Land</th><th>Status</th><th>Price ($)</th>
+          <th>Unit</th><th>Type</th><th>Floors</th><th>Area</th><th>Land</th><th>Badge</th><th>Status</th><th>Price ($)</th>
         </tr></thead><tbody>`;
 
       p.units.forEach((u, i) => {
         html += `<tr>
-          <td>${u.id}${u.badge ? ` <span style="color:var(--color-accent);font-size:0.7rem">${u.badge}</span>` : ''}</td>
-          <td>${u.type}</td>
-          <td>${u.area}</td>
-          <td>${u.land}</td>
+          <td><input type="text" data-unit="${i}" data-field="id" class="unit-text" value="${u.id}" style="width:48px"></td>
+          <td><select data-unit="${i}" data-field="type" class="unit-text-sel">
+            ${['1 Bedroom', '2 Bedroom', '3 Bedroom', '4 Bedroom', '4.5 Bedroom', '5 Bedroom'].map(t => `<option value="${t}"${u.type === t ? ' selected' : ''}>${t}</option>`).join('')}
+          </select></td>
+          <td><input type="number" data-unit="${i}" data-field="floors" class="unit-text" value="${u.floors}" style="width:48px" min="1" max="5"></td>
+          <td><input type="text" data-unit="${i}" data-field="area" class="unit-text" value="${u.area}" style="width:72px"></td>
+          <td><input type="text" data-unit="${i}" data-field="land" class="unit-text" value="${u.land}" style="width:72px"></td>
+          <td><input type="text" data-unit="${i}" data-field="badge" class="unit-text" value="${u.badge || ''}" style="width:72px" placeholder="—"></td>
           <td><select data-unit="${i}" data-field="status" class="unit-status">
             ${['available', 'booked', 'sold', 'resale'].map(s => `<option value="${s}"${u.status === s ? ' selected' : ''}>${s.charAt(0).toUpperCase() + s.slice(1)}</option>`).join('')}
           </select></td>
@@ -401,15 +405,16 @@
     if (p.unitTypes) {
       html += `<div class="editor-section"><h3>Unit Types</h3>
         <table class="admin-unit-table"><thead><tr>
-          <th>Type</th><th>Area</th><th>Land</th><th>Units</th><th>Price ($)</th>
+          <th>Type</th><th>Floors</th><th>Area</th><th>Land</th><th>Units</th><th>Price ($)</th>
         </tr></thead><tbody>`;
 
       p.unitTypes.forEach((ut, i) => {
         html += `<tr>
-          <td>${ut.type}</td>
-          <td>${ut.area}</td>
-          <td>${ut.land}</td>
-          <td>${ut.count}</td>
+          <td><input type="text" data-utype="${i}" data-field="type" class="utype-text" value="${ut.type}" style="width:100px"></td>
+          <td><input type="number" data-utype="${i}" data-field="floors" class="utype-text" value="${ut.floors}" style="width:48px" min="1" max="5"></td>
+          <td><input type="text" data-utype="${i}" data-field="area" class="utype-text" value="${ut.area}" style="width:72px"></td>
+          <td><input type="text" data-utype="${i}" data-field="land" class="utype-text" value="${ut.land}" style="width:72px"></td>
+          <td><input type="number" data-utype="${i}" data-field="count" class="utype-text" value="${ut.count}" style="width:48px" min="0"></td>
           <td><input type="number" data-utype="${i}" data-field="price" class="utype-price" value="${ut.price || ''}" min="0" step="1000"></td>
         </tr>`;
       });
@@ -459,7 +464,30 @@
 
     editor.innerHTML = html;
 
-    // Bind change events
+    // Bind change events — unit fields
+    editor.querySelectorAll('.unit-text').forEach(inp => {
+      inp.addEventListener('input', () => {
+        const idx = +inp.dataset.unit;
+        const field = inp.dataset.field;
+        if (field === 'floors') {
+          p.units[idx][field] = +inp.value;
+        } else if (field === 'badge') {
+          p.units[idx][field] = inp.value || null;
+        } else {
+          p.units[idx][field] = inp.value;
+        }
+        markChanged();
+      });
+    });
+
+    editor.querySelectorAll('.unit-text-sel').forEach(sel => {
+      sel.addEventListener('change', () => {
+        const idx = +sel.dataset.unit;
+        p.units[idx][sel.dataset.field] = sel.value;
+        markChanged();
+      });
+    });
+
     editor.querySelectorAll('.unit-status').forEach(sel => {
       sel.addEventListener('change', () => {
         const idx = +sel.dataset.unit;
@@ -473,6 +501,20 @@
       inp.addEventListener('input', () => {
         const idx = +inp.dataset.unit;
         p.units[idx].price = inp.value ? +inp.value : null;
+        markChanged();
+      });
+    });
+
+    // Village unit type fields
+    editor.querySelectorAll('.utype-text').forEach(inp => {
+      inp.addEventListener('input', () => {
+        const idx = +inp.dataset.utype;
+        const field = inp.dataset.field;
+        if (field === 'floors' || field === 'count') {
+          p.unitTypes[idx][field] = +inp.value;
+        } else {
+          p.unitTypes[idx][field] = inp.value;
+        }
         markChanged();
       });
     });
