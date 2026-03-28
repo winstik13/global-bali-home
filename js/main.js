@@ -577,6 +577,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
+      const consentGroup = contactForm.querySelector('#consent-group');
+      const consentBox = contactForm.querySelector('#consent');
+      if (consentGroup && consentBox) {
+        consentGroup.classList.remove('error');
+        if (!consentBox.checked) {
+          consentGroup.classList.add('error');
+          valid = false;
+        }
+      }
+
       if (valid) {
         const formWrap = contactForm.parentElement;
         contactForm.style.display = 'none';
