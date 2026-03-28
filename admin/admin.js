@@ -616,80 +616,178 @@
   }
 
   // ─── SEO Editor ───
-  $('#btn-seo-load').addEventListener('click', loadSEO);
+  const LANGS = ['en', 'ru', 'id', 'zh'];
+  const LANG_NAMES = { en: 'English', ru: 'Russian', id: 'Indonesian', zh: 'Chinese' };
+  const BASE_URL = 'https://winstik13.github.io/global-bali-home';
+  let seoCache = {}; // { lang: { html, sha, fields } }
 
-  async function loadSEO() {
+  $('#seo-page').addEventListener('change', () => {
+    seoCache = {};
     const page = $('#seo-page').value;
-    const lang = $('#seo-lang').value;
-    const path = lang === 'en' ? page : `${lang}/${page}`;
+    if (page) loadAllSEO(page);
+    else $('#seo-editor').innerHTML = '';
+  });
 
+  async function loadAllSEO(page) {
     const editor = $('#seo-editor');
-    editor.innerHTML = '<p style="color:var(--color-text-dim)">Loading...</p>';
+    editor.innerHTML = '<p style="color:var(--color-text-dim)">Loading all languages...</p>';
 
     try {
-      const file = await fetchFile(path);
-      const html = atob(file.content);
-      const fields = extractSEO(html);
+      // Load all 4 languages in parallel
+      const results = await Promise.all(LANGS.map(async (lng) => {
+        const path = lng === 'en' ? page : `${lng}/${page}`;
+        const file = await fetchFile(path);
+        const html = atob(file.content);
+        const fields = extractSEO(html);
+        return { lng, path, html, sha: file.sha, fields };
+      }));
 
-      editor.innerHTML = `
-        <div class="editor-section">
-          <h3>${page} — ${lang.toUpperCase()}</h3>
-          ${seoFieldHTML('title', 'Page Title', fields.title, 60)}
-          ${seoFieldHTML('description', 'Meta Description', fields.description, 160)}
-          ${seoFieldHTML('ogTitle', 'OG Title', fields.ogTitle, 60)}
-          ${seoFieldHTML('ogDescription', 'OG Description', fields.ogDescription, 160)}
-          <div style="margin-top:16px">
-            <button id="btn-seo-save" class="btn btn--primary btn--sm">Save SEO</button>
-            <span id="seo-save-status" class="publish-status" style="margin-left:12px"></span>
+      results.forEach(r => { seoCache[r.lng] = r; });
+
+      // Build editor UI
+      let html = '';
+
+      // SERP Preview (EN)
+      const enFields = seoCache.en.fields;
+      const pageUrl = `${BASE_URL}/${page}`;
+      html += `<div class="editor-section seo-preview-section">
+        <h3>Google Search Preview</h3>
+        <div class="serp-preview">
+          <div class="serp-preview__title" id="serp-title">${escAttr(enFields.title)}</div>
+          <div class="serp-preview__url">${pageUrl}</div>
+          <div class="serp-preview__desc" id="serp-desc">${escAttr(enFields.description)}</div>
+        </div>
+        <h3 style="margin-top:20px">Social Share Preview</h3>
+        <div class="og-preview">
+          <div class="og-preview__image">${enFields.ogImage ? `<img src="${escAttr(enFields.ogImage)}" alt="">` : '<span>No OG Image</span>'}</div>
+          <div class="og-preview__text">
+            <div class="og-preview__site">winstik13.github.io</div>
+            <div class="og-preview__title" id="og-title">${escAttr(enFields.ogTitle || enFields.title)}</div>
+            <div class="og-preview__desc" id="og-desc">${escAttr(enFields.ogDescription || enFields.description)}</div>
           </div>
         </div>
-      `;
+      </div>`;
 
-      // Char counters
-      editor.querySelectorAll('.seo-input').forEach(inp => {
-        inp.addEventListener('input', () => updateSEOCounter(inp));
-        updateSEOCounter(inp);
+      // Fields per language
+      LANGS.forEach(lng => {
+        const f = seoCache[lng].fields;
+        html += `<div class="editor-section seo-lang-section">
+          <h3><span class="seo-lang-badge">${lng.toUpperCase()}</span> ${LANG_NAMES[lng]}</h3>
+          ${seoFieldHTML(lng, 'title', 'Page Title', f.title, 60)}
+          ${seoFieldHTML(lng, 'description', 'Meta Description', f.description, 160)}
+          ${seoFieldHTML(lng, 'ogTitle', 'OG Title', f.ogTitle, 60)}
+          ${seoFieldHTML(lng, 'ogDescription', 'OG Description', f.ogDescription, 160)}
+          ${seoFieldHTML(lng, 'ogImage', 'OG Image URL', f.ogImage, 0)}
+          ${seoFieldHTML(lng, 'canonical', 'Canonical URL', f.canonical, 0)}
+        </div>`;
       });
 
       // Save button
+      html += `<div class="editor-section" style="display:flex;align-items:center;gap:16px">
+        <button id="btn-seo-save" class="btn btn--primary">Save All Languages</button>
+        <span id="seo-save-status" class="publish-status"></span>
+      </div>`;
+
+      editor.innerHTML = html;
+
+      // Bind counters + live SERP preview update
+      editor.querySelectorAll('.seo-input').forEach(inp => {
+        inp.addEventListener('input', () => {
+          updateSEOCounter(inp);
+          // Update live previews from EN fields
+          if (inp.dataset.lang === 'en') {
+            const key = inp.dataset.seo;
+            if (key === 'title') {
+              const el = $('#serp-title');
+              if (el) el.textContent = inp.value || '(no title)';
+            }
+            if (key === 'description') {
+              const el = $('#serp-desc');
+              if (el) el.textContent = inp.value || '(no description)';
+            }
+            if (key === 'ogTitle') {
+              const el = $('#og-title');
+              if (el) el.textContent = inp.value || editor.querySelector('[data-lang="en"][data-seo="title"]').value || '(no title)';
+            }
+            if (key === 'ogDescription') {
+              const el = $('#og-desc');
+              if (el) el.textContent = inp.value || editor.querySelector('[data-lang="en"][data-seo="description"]').value || '';
+            }
+          }
+        });
+        updateSEOCounter(inp);
+      });
+
+      // Save all languages
       $('#btn-seo-save').addEventListener('click', async () => {
         const status = $('#seo-save-status');
-        status.textContent = 'Saving...';
-        try {
-          let updated = html;
-          updated = replaceMeta(updated, 'title', editor.querySelector('[data-seo="title"]').value);
-          updated = replaceMeta(updated, 'description', editor.querySelector('[data-seo="description"]').value);
-          updated = replaceMeta(updated, 'ogTitle', editor.querySelector('[data-seo="ogTitle"]').value);
-          updated = replaceMeta(updated, 'ogDescription', editor.querySelector('[data-seo="ogDescription"]').value);
+        const btn = $('#btn-seo-save');
+        btn.disabled = true;
+        status.textContent = 'Saving all languages...';
+        status.className = 'publish-status';
 
-          await commitFile(path, updated, `Update SEO: ${page} (${lang})`, file.sha);
-          status.textContent = 'Saved!';
-          status.className = 'publish-status success';
-        } catch (err) {
-          status.textContent = 'Error: ' + err.message;
-          status.className = 'publish-status error';
+        let saved = 0;
+        let errors = [];
+
+        for (const lng of LANGS) {
+          const cache = seoCache[lng];
+          if (!cache) continue;
+
+          try {
+            let updated = cache.html;
+            const getVal = (key) => editor.querySelector(`[data-lang="${lng}"][data-seo="${key}"]`).value;
+            updated = replaceMeta(updated, 'title', getVal('title'));
+            updated = replaceMeta(updated, 'description', getVal('description'));
+            updated = replaceMeta(updated, 'ogTitle', getVal('ogTitle'));
+            updated = replaceMeta(updated, 'ogDescription', getVal('ogDescription'));
+            updated = replaceMeta(updated, 'ogImage', getVal('ogImage'));
+            updated = replaceMeta(updated, 'canonical', getVal('canonical'));
+
+            const result = await commitFile(cache.path, updated, `Update SEO: ${page} (${lng})`, cache.sha);
+            // Update SHA for potential re-save
+            cache.sha = result.content.sha;
+            saved++;
+            status.textContent = `Saving... ${saved}/${LANGS.length}`;
+          } catch (err) {
+            errors.push(`${lng}: ${err.message}`);
+          }
         }
+
+        if (errors.length) {
+          status.textContent = `Saved ${saved}/${LANGS.length}. Errors: ${errors.join('; ')}`;
+          status.className = 'publish-status error';
+        } else {
+          status.textContent = `All ${saved} languages saved!`;
+          status.className = 'publish-status success';
+        }
+        btn.disabled = false;
+        updateRateLimit();
       });
+
     } catch (err) {
       editor.innerHTML = `<p style="color:var(--color-danger)">Error: ${err.message}</p>`;
     }
   }
 
-  function seoFieldHTML(key, label, value, maxLen) {
+  function seoFieldHTML(lng, key, label, value, maxLen) {
+    const counterAttr = maxLen ? `data-max="${maxLen}"` : '';
+    const counterHTML = maxLen ? `<span class="seo-field__counter" data-counter-for="${lng}-${key}" data-max="${maxLen}">0/${maxLen}</span>` : '';
     return `<div class="seo-field">
       <div class="seo-field__header">
         <span class="seo-field__label">${label}</span>
-        <span class="seo-field__counter" data-counter-for="${key}" data-max="${maxLen}">0/${maxLen}</span>
+        ${counterHTML}
       </div>
-      <div class="form-group"><input type="text" class="seo-input" data-seo="${key}" data-max="${maxLen}" value="${escAttr(value)}"></div>
+      <div class="form-group"><input type="text" class="seo-input" data-lang="${lng}" data-seo="${key}" ${counterAttr} value="${escAttr(value || '')}"></div>
     </div>`;
   }
 
   function updateSEOCounter(inp) {
+    const lng = inp.dataset.lang;
     const key = inp.dataset.seo;
     const max = +inp.dataset.max;
+    if (!max) return;
     const len = inp.value.length;
-    const counter = document.querySelector(`[data-counter-for="${key}"]`);
+    const counter = document.querySelector(`[data-counter-for="${lng}-${key}"]`);
     if (!counter) return;
     counter.textContent = `${len}/${max}`;
     counter.className = 'seo-field__counter' + (len > max ? ' over' : len > max * 0.9 ? ' warn' : '');
@@ -702,6 +800,8 @@
       description: get(/<meta\s+name="description"\s+content="([^"]*)"/),
       ogTitle: get(/<meta\s+property="og:title"\s+content="([^"]*)"/),
       ogDescription: get(/<meta\s+property="og:description"\s+content="([^"]*)"/),
+      ogImage: get(/<meta\s+property="og:image"\s+content="([^"]*)"/),
+      canonical: get(/<link\s+rel="canonical"\s+href="([^"]*)"/),
     };
   }
 
@@ -718,6 +818,12 @@
     }
     if (key === 'ogDescription') {
       return html.replace(/(<meta\s+property="og:description"\s+content=")[^"]*"/, `$1${safe}"`);
+    }
+    if (key === 'ogImage' && value) {
+      return html.replace(/(<meta\s+property="og:image"\s+content=")[^"]*"/, `$1${safe}"`);
+    }
+    if (key === 'canonical' && value) {
+      return html.replace(/(<link\s+rel="canonical"\s+href=")[^"]*"/, `$1${safe}"`);
     }
     return html;
   }

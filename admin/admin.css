@@ -662,6 +662,128 @@ body {
 .seo-field__counter.warn { color: var(--color-warning); }
 .seo-field__counter.over { color: var(--color-danger); }
 
+/* SEO language sections */
+.seo-lang-section h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.seo-lang-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  padding: 3px 10px;
+  border-radius: 2px;
+  background: rgba(107, 143, 78, 0.2);
+  color: var(--color-accent);
+  font-family: var(--font-body);
+}
+
+/* Google SERP Preview */
+.serp-preview {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 600px;
+}
+
+.serp-preview__title {
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  line-height: 1.3;
+  color: #1a0dab;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.serp-preview__url {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #006621;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.serp-preview__desc {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #545454;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* OG Social Share Preview */
+.og-preview {
+  background: #18191a;
+  border: 1px solid #3a3b3c;
+  border-radius: 8px;
+  overflow: hidden;
+  max-width: 500px;
+}
+
+.og-preview__image {
+  width: 100%;
+  height: 160px;
+  background: #242526;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #65676b;
+  font-size: 0.8rem;
+  overflow: hidden;
+}
+
+.og-preview__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.og-preview__text {
+  padding: 12px 16px;
+}
+
+.og-preview__site {
+  font-size: 0.7rem;
+  color: #65676b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.og-preview__title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #e4e6eb;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.og-preview__desc {
+  font-size: 0.8rem;
+  color: #b0b3b8;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.seo-preview-section {
+  border-left: 3px solid var(--color-accent);
+  padding-left: 20px;
+}
+
 /* ─── GALLERY MANAGER ─── */
 .gallery-controls {
   display: flex;
