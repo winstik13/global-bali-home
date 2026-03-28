@@ -702,6 +702,10 @@ document.addEventListener('DOMContentLoaded', () => {
         <input type="text" class="quiz__input" name="quiz-name" placeholder="Your name" required>
         <input type="email" class="quiz__input" name="quiz-email" placeholder="Email address" required>
         <input type="tel" class="quiz__input" name="quiz-phone" placeholder="WhatsApp / Phone (optional)">
+        <div class="form-consent" id="quiz-consent-group">
+          <input type="checkbox" class="form-consent__checkbox" id="quiz-consent" name="quiz-consent">
+          <label class="form-consent__text" for="quiz-consent">I agree to the processing of my personal data in accordance with the Privacy Policy</label>
+        </div>
         <button type="submit" class="btn btn--primary" style="width:100%;">Get Details & Contact Me</button>
       </form>
       <a href="${rec.url}" class="quiz__skip-link">View project without submitting &rarr;</a>
@@ -712,6 +716,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const name = quizBody.querySelector('[name="quiz-name"]').value.trim();
       const email = quizBody.querySelector('[name="quiz-email"]').value.trim();
       const phone = quizBody.querySelector('[name="quiz-phone"]').value.trim();
+
+      const quizConsentGroup = quizBody.querySelector('#quiz-consent-group');
+      const quizConsentBox = quizBody.querySelector('#quiz-consent');
+      if (quizConsentGroup && quizConsentBox && !quizConsentBox.checked) {
+        quizConsentGroup.classList.add('error');
+        return;
+      }
+
+      if (!name || !email) return;
 
       const body = [
         'New Quiz Lead',
