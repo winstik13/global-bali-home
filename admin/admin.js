@@ -63,11 +63,13 @@
 
   // ─── Auth State ───
   auth.onAuthStateChanged(user => {
+    console.log('[Admin] onAuthStateChanged:', user ? user.email : 'no user');
     if (user) {
       loginScreen.hidden = true;
       $('#admin-user').textContent = user.email;
       // Check for stored PAT
       githubPAT = localStorage.getItem('gbh_pat') || sessionStorage.getItem('gbh_pat') || '';
+      console.log('[Admin] Stored PAT:', githubPAT ? 'found' : 'none');
       if (githubPAT) {
         validatePAT(githubPAT).then(valid => {
           if (valid) {
@@ -126,6 +128,8 @@
 
   // ─── PAT Screen ───
   function showPATScreen() {
+    console.log('[Admin] Showing PAT screen');
+    loginScreen.hidden = true;
     patScreen.hidden = false;
     adminApp.hidden = true;
   }
