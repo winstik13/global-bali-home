@@ -14,18 +14,59 @@ const PROJECTS_DATA = {
     "showcaseSubtitle": {
       "en": "12 modern villas with jungle views and natural waterfalls in Ubud",
       "ru": "12 современных вилл с видом на джунгли и природными водопадами в Убуде",
-      "id": "12 villa modern dengan pemandangan hutan dan air terjun alami di Ubud",
-      "zh": "乌布12栋现代别墅，拥有丛林美景与天然瀑布"
+      "id": "12 villa modern dengan pemandangan hutan dan air terjun alami di Ubud"
     },
     "showcaseMeta": {
-      "en": [{"strong": "12", "label": "Villas"}, {"strong": "2-3", "label": "Bedrooms"}, {"strong": "Q2 2026", "label": "Handover"}],
-      "ru": [{"strong": "12", "label": "Вилл"}, {"strong": "2-3", "label": "Спальни"}, {"strong": "Q2 2026", "label": "Сдача"}],
-      "id": [{"strong": "12", "label": "Villa"}, {"strong": "2-3", "label": "Kamar Tidur"}, {"strong": "Q2 2026", "label": "Serah Terima"}],
-      "zh": [{"strong": "12", "label": "套别墅"}, {"strong": "2-3", "label": "间卧室"}, {"strong": "Q2 2026", "label": "交房"}]
+      "en": [
+        {
+          "strong": "12",
+          "label": "Villas"
+        },
+        {
+          "strong": "2-3",
+          "label": "Bedrooms"
+        },
+        {
+          "strong": "Q2 2026",
+          "label": "Handover"
+        }
+      ],
+      "ru": [
+        {
+          "strong": "12",
+          "label": "Вилл"
+        },
+        {
+          "strong": "2-3",
+          "label": "Спальни"
+        },
+        {
+          "strong": "Q2 2026",
+          "label": "Сдача"
+        }
+      ],
+      "id": [
+        {
+          "strong": "12",
+          "label": "Villa"
+        },
+        {
+          "strong": "2-3",
+          "label": "Kamar Tidur"
+        },
+        {
+          "strong": "Q2 2026",
+          "label": "Serah Terima"
+        }
+      ]
     },
     "compArea": "167–210 m²",
     "compLand": "2–3 are",
-    "compPool": {"en": "Private", "ru": "Приватный", "id": "Pribadi", "zh": "私人"},
+    "compPool": {
+      "en": "Private",
+      "ru": "Приватный",
+      "id": "Pribadi"
+    },
     "heroStats": {
       "en": [
         {
@@ -92,28 +133,6 @@ const PROJECTS_DATA = {
           "number": "12–15%",
           "label": "Imbal Hasil"
         }
-      ],
-      "zh": [
-        {
-          "number": "12",
-          "label": "别墅"
-        },
-        {
-          "number": "2–3",
-          "label": "卧室"
-        },
-        {
-          "number": "Q2 2026",
-          "label": "交房"
-        },
-        {
-          "number": "$335K+",
-          "label": "起价"
-        },
-        {
-          "number": "12–15%",
-          "label": "收益率"
-        }
       ]
     },
     "availability": {
@@ -123,32 +142,27 @@ const PROJECTS_DATA = {
     "showcasePrice": {
       "en": "From $335,000",
       "ru": "От $335,000",
-      "id": "From $335,000",
-      "zh": "From $335,000"
+      "id": "From $335,000"
     },
     "showcaseStatus": {
       "en": "In Progress",
       "ru": "Строится",
-      "id": "Dalam Pembangunan",
-      "zh": "建设中"
+      "id": "Dalam Pembangunan"
     },
     "showcaseAvailability": {
       "en": "Only 4 of 12 units left",
       "ru": "Осталось всего 4 из 12",
-      "id": "8 dari 12 unit terjual",
-      "zh": "12套仅剩4套"
+      "id": "8 dari 12 unit terjual"
     },
     "showcaseDesc": {
       "en": "Unwinding in tropical surroundings. 12 modernly designed villa residences with jungle views, natural waterfalls, and full privacy. 2-3 bedroom configurations.",
       "ru": "Отдых в тропическом окружении. 12 современных вилл-резиденций с видами на джунгли, природными водопадами и полной приватностью. Конфигурации с 2-3 спальнями.",
-      "id": "Bersantai di lingkungan tropis. 12 unit villa dengan desain modern, pemandangan hutan, air terjun alami, dan privasi penuh. Konfigurasi 2-3 kamar tidur.",
-      "zh": "热带环境中的惬意生活。12栋现代设计别墅，坐拥丛林美景、天然瀑布与完全私密空间。2-3卧室配置。"
+      "id": "Bersantai di lingkungan tropis. 12 unit villa dengan desain modern, pemandangan hutan, air terjun alami, dan privasi penuh. Konfigurasi 2-3 kamar tidur."
     },
     "showcaseCta": {
       "en": "View Details",
       "ru": "Подробнее",
-      "id": "Lihat Detail",
-      "zh": "查看详情"
+      "id": "Lihat Detail"
     },
     "units": [
       {
@@ -287,18 +301,59 @@ const PROJECTS_DATA = {
     "showcaseSubtitle": {
       "en": "4 exclusive villas with private pools and rice terrace views",
       "ru": "4 эксклюзивные виллы с бассейнами и видом на рисовые террасы",
-      "id": "4 villa eksklusif dengan kolam renang pribadi dan pemandangan sawah bertingkat",
-      "zh": "4套独享别墅，配备私人泳池，俯瞰稻田梯级美景"
+      "id": "4 villa eksklusif dengan kolam renang pribadi dan pemandangan sawah bertingkat"
     },
     "showcaseMeta": {
-      "en": [{"strong": "4", "label": "Villas"}, {"strong": "2–4.5", "label": "Bedrooms"}, {"strong": "Q1 2027", "label": "Handover"}],
-      "ru": [{"strong": "4", "label": "Виллы"}, {"strong": "2–4.5", "label": "Спальни"}, {"strong": "Q1 2027", "label": "Сдача"}],
-      "id": [{"strong": "4", "label": "Villa"}, {"strong": "2–4.5", "label": "Kamar Tidur"}, {"strong": "Q1 2027", "label": "Serah Terima"}],
-      "zh": [{"strong": "4", "label": "套别墅"}, {"strong": "2–4.5", "label": "间卧室"}, {"strong": "Q1 2027", "label": "交房"}]
+      "en": [
+        {
+          "strong": "4",
+          "label": "Villas"
+        },
+        {
+          "strong": "2–4.5",
+          "label": "Bedrooms"
+        },
+        {
+          "strong": "Q1 2027",
+          "label": "Handover"
+        }
+      ],
+      "ru": [
+        {
+          "strong": "4",
+          "label": "Виллы"
+        },
+        {
+          "strong": "2–4.5",
+          "label": "Спальни"
+        },
+        {
+          "strong": "Q1 2027",
+          "label": "Сдача"
+        }
+      ],
+      "id": [
+        {
+          "strong": "4",
+          "label": "Villa"
+        },
+        {
+          "strong": "2–4.5",
+          "label": "Kamar Tidur"
+        },
+        {
+          "strong": "Q1 2027",
+          "label": "Serah Terima"
+        }
+      ]
     },
     "compArea": "155–250 m²",
     "compLand": "3–14 are",
-    "compPool": {"en": "Private", "ru": "Приватный", "id": "Pribadi", "zh": "私人"},
+    "compPool": {
+      "en": "Private",
+      "ru": "Приватный",
+      "id": "Pribadi"
+    },
     "heroStats": {
       "en": [
         {
@@ -365,28 +420,6 @@ const PROJECTS_DATA = {
           "number": "12–15%",
           "label": "Imbal Hasil"
         }
-      ],
-      "zh": [
-        {
-          "number": "4",
-          "label": "别墅"
-        },
-        {
-          "number": "2–4.5",
-          "label": "卧室"
-        },
-        {
-          "number": "Q1 2027",
-          "label": "交房"
-        },
-        {
-          "number": "$310K",
-          "label": "起价"
-        },
-        {
-          "number": "12–15%",
-          "label": "收益率"
-        }
       ]
     },
     "availability": {
@@ -396,32 +429,27 @@ const PROJECTS_DATA = {
     "showcasePrice": {
       "en": "From $310,000",
       "ru": "От $310,000",
-      "id": "From $310,000",
-      "zh": "From $310,000"
+      "id": "From $310,000"
     },
     "showcaseStatus": {
       "en": "In Progress",
       "ru": "Строится",
-      "id": "Dalam Pembangunan",
-      "zh": "建设中"
+      "id": "Dalam Pembangunan"
     },
     "showcaseAvailability": {
       "en": "1 of 4 units sold",
       "ru": "1 из 4 продано",
-      "id": "1 dari 4 unit terjual",
-      "zh": "4套中已售1套"
+      "id": "1 dari 4 unit terjual"
     },
     "showcaseDesc": {
       "en": "Where nature and design blend seamlessly. A boutique complex of only 4 exclusive villas with private pools, fish ponds, and stunning rice terrace views.",
       "ru": "Где природа и дизайн сливаются воедино. Бутик-комплекс из 4 эксклюзивных вилл с частными бассейнами, рыбными прудами и потрясающими видами на рисовые террасы.",
-      "id": "Di mana alam dan desain berpadu sempurna. Kompleks butik hanya 4 villa eksklusif dengan kolam renang pribadi, kolam ikan, dan pemandangan sawah bertingkat yang menakjubkan.",
-      "zh": "自然与设计完美融合。仅4栋独享别墅的精品项目，配备私人泳池、鱼塘及令人惊叹的梯田美景。"
+      "id": "Di mana alam dan desain berpadu sempurna. Kompleks butik hanya 4 villa eksklusif dengan kolam renang pribadi, kolam ikan, dan pemandangan sawah bertingkat yang menakjubkan."
     },
     "showcaseCta": {
       "en": "View Details",
       "ru": "Подробнее",
-      "id": "Lihat Detail",
-      "zh": "查看详情"
+      "id": "Lihat Detail"
     },
     "units": [
       {
@@ -480,18 +508,59 @@ const PROJECTS_DATA = {
     "showcaseSubtitle": {
       "en": "Complex of 26 villas with shared pool and cafe — from $119K",
       "ru": "Комплекс из 26 вилл с общим бассейном и кафе — от $119K",
-      "id": "Kompleks 26 villa dengan kolam renang bersama dan kafe — mulai $119 ribu",
-      "zh": "26套别墅综合体，设有共享泳池和咖啡厅 — 起价$119K"
+      "id": "Kompleks 26 villa dengan kolam renang bersama dan kafe — mulai $119 ribu"
     },
     "showcaseMeta": {
-      "en": [{"strong": "26", "label": "Villas"}, {"strong": "1-2", "label": "Bedrooms"}, {"strong": "Pre-Sale", "label": "Now"}],
-      "ru": [{"strong": "26", "label": "Вилл"}, {"strong": "1-2", "label": "Спальни"}, {"strong": "Предпродажа", "label": ""}],
-      "id": [{"strong": "26", "label": "Villa"}, {"strong": "1-2", "label": "Kamar Tidur"}, {"strong": "Pra-Penjualan", "label": "Sekarang"}],
-      "zh": [{"strong": "26", "label": "套别墅"}, {"strong": "1-2", "label": "间卧室"}, {"strong": "预售", "label": "进行中"}]
+      "en": [
+        {
+          "strong": "26",
+          "label": "Villas"
+        },
+        {
+          "strong": "1-2",
+          "label": "Bedrooms"
+        },
+        {
+          "strong": "Pre-Sale",
+          "label": "Now"
+        }
+      ],
+      "ru": [
+        {
+          "strong": "26",
+          "label": "Вилл"
+        },
+        {
+          "strong": "1-2",
+          "label": "Спальни"
+        },
+        {
+          "strong": "Предпродажа",
+          "label": ""
+        }
+      ],
+      "id": [
+        {
+          "strong": "26",
+          "label": "Villa"
+        },
+        {
+          "strong": "1-2",
+          "label": "Kamar Tidur"
+        },
+        {
+          "strong": "Pra-Penjualan",
+          "label": "Sekarang"
+        }
+      ]
     },
     "compArea": "51–86 m²",
     "compLand": "1–1.5 are",
-    "compPool": {"en": "Private + Shared", "ru": "Приватный + Общий", "id": "Pribadi + Bersama", "zh": "私人 + 共享"},
+    "compPool": {
+      "en": "Private + Shared",
+      "ru": "Приватный + Общий",
+      "id": "Pribadi + Bersama"
+    },
     "heroStats": {
       "en": [
         {
@@ -558,28 +627,6 @@ const PROJECTS_DATA = {
           "number": "Pre-Sale",
           "label": "Status"
         }
-      ],
-      "zh": [
-        {
-          "number": "26",
-          "label": "别墅"
-        },
-        {
-          "number": "1-2",
-          "label": "卧室"
-        },
-        {
-          "number": "$119K",
-          "label": "起价"
-        },
-        {
-          "number": "12–15%",
-          "label": "收益率"
-        },
-        {
-          "number": "预售中",
-          "label": "状态"
-        }
       ]
     },
     "availability": {
@@ -589,38 +636,32 @@ const PROJECTS_DATA = {
     "preSaleBanner": {
       "en": "Pre-Sale Now Open — Register Your Interest Today",
       "ru": "Предпродажа открыта — Зарегистрируйте ваш интерес",
-      "id": "Pra-Penjualan Dibuka — Daftarkan Minat Anda Hari Ini",
-      "zh": "预售已开启 — 立即登记您的意向"
+      "id": "Pra-Penjualan Dibuka — Daftarkan Minat Anda Hari Ini"
     },
     "showcasePrice": {
       "en": "From $119,000",
       "ru": "От $119,000",
-      "id": "From $119,000",
-      "zh": "起价 $119,000"
+      "id": "From $119,000"
     },
     "showcaseStatus": {
       "en": "Pre-Sale",
       "ru": "Предпродажа",
-      "id": "Pra-Penjualan",
-      "zh": "预售"
+      "id": "Pra-Penjualan"
     },
     "showcaseAvailability": {
       "en": "Pre-Sale Open",
       "ru": "Предпродажа открыта",
-      "id": "Pra-Penjualan Dibuka",
-      "zh": "预售开放"
+      "id": "Pra-Penjualan Dibuka"
     },
     "showcaseDesc": {
       "en": "Complex of 26 villas with 1 and 2 bedroom options. Shared amenities include a large swimming pool and cafe. Maximum investment potential.",
       "ru": "Комплекс из 26 вилл с вариантами на 1 и 2 спальни. Общая инфраструктура включает большой бассейн и кафе. Максимальный инвестиционный потенциал.",
-      "id": "Kompleks 26 villa dengan pilihan 1 dan 2 kamar tidur. Fasilitas bersama mencakup kolam renang besar dan kafe kompleks. Potensi investasi maksimal.",
-      "zh": "由26栋别墅组成的活力综合体，提供1卧室和2卧室户型选择。共享设施包括大型游泳池和咖啡厅。我们最具投资潜力的项目。"
+      "id": "Kompleks 26 villa dengan pilihan 1 dan 2 kamar tidur. Fasilitas bersama mencakup kolam renang besar dan kafe kompleks. Potensi investasi maksimal."
     },
     "showcaseCta": {
       "en": "View Details",
       "ru": "Подробнее",
-      "id": "Lihat Detail",
-      "zh": "了解详情"
+      "id": "Lihat Detail"
     },
     "unitTypes": [
       {
@@ -674,17 +715,6 @@ const PROJECTS_DATA = {
       "handover": "Serah Terima",
       "status": "Status",
       "cta": "Lihat Detail"
-    },
-    "zh": {
-      "price": "起价",
-      "bedrooms": "卧室",
-      "area": "面积",
-      "land": "土地",
-      "units": "总套数",
-      "pool": "泳池",
-      "handover": "交房",
-      "status": "状态",
-      "cta": "查看详情"
     }
   },
   "comparisonData": {
@@ -695,8 +725,7 @@ const PROJECTS_DATA = {
       "pool": {
         "en": "Private",
         "ru": "Приватный",
-        "id": "Pribadi",
-        "zh": "私人"
+        "id": "Pribadi"
       }
     },
     "serenity-estates": {
@@ -706,8 +735,7 @@ const PROJECTS_DATA = {
       "pool": {
         "en": "Private",
         "ru": "Приватный",
-        "id": "Pribadi",
-        "zh": "私人"
+        "id": "Pribadi"
       }
     },
     "serenity-village": {
@@ -717,8 +745,7 @@ const PROJECTS_DATA = {
       "pool": {
         "en": "Private + Shared",
         "ru": "Приватный + Общий",
-        "id": "Pribadi + Bersama",
-        "zh": "私人 + 共享"
+        "id": "Pribadi + Bersama"
       }
     }
   },
@@ -749,15 +776,6 @@ const PROJECTS_DATA = {
       "land": "Lahan",
       "status": "Status",
       "price": "Harga"
-    },
-    "zh": {
-      "unit": "单元",
-      "type": "类型",
-      "floors": "楼层",
-      "area": "面积",
-      "land": "土地",
-      "status": "状态",
-      "price": "价格"
     }
   },
   "statusLabels": {
@@ -778,12 +796,6 @@ const PROJECTS_DATA = {
       "sold": "Terjual",
       "booked": "Dipesan",
       "resale": "Dijual Kembali"
-    },
-    "zh": {
-      "available": "可购买",
-      "sold": "已售",
-      "booked": "已预订",
-      "resale": "转售"
     }
   },
   "availabilityLabels": {
@@ -807,13 +819,6 @@ const PROJECTS_DATA = {
       "unitsSold": "unit terjual",
       "unitsLeft": "unit tersisa",
       "preSale": "Pra-Penjualan Dibuka"
-    },
-    "zh": {
-      "sold": "已售",
-      "of": "套中",
-      "unitsSold": "套已售",
-      "unitsLeft": "套可售",
-      "preSale": "预售开放"
     }
   },
   "villageTableHeaders": {
@@ -840,14 +845,6 @@ const PROJECTS_DATA = {
       "land": "Lahan",
       "units": "Unit",
       "price": "Harga mulai"
-    },
-    "zh": {
-      "type": "类型",
-      "floors": "楼层",
-      "area": "面积",
-      "land": "土地",
-      "units": "套数",
-      "price": "起价"
     }
   }
 };

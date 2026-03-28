@@ -1,8 +1,8 @@
 # Структура сайта Global Bali Home
 
-## Общие элементы (все 36 страниц: 9 EN + 9 RU + 9 ID + 9 ZH)
+## Общие элементы (все 27 страниц: 9 EN + 9 RU + 9 ID)
 
-- **Header** — логотип, навигация (Home, Projects, Services, About, Gallery, Contact), CTA "Find My Villa" (`data-quiz`), языковой дропдаун (EN/RU/ID/中文), hamburger на мобильных
+- **Header** — логотип, навигация (Home, Projects, Services, About, Gallery, Contact), CTA "Find My Villa" (`data-quiz`), языковой дропдаун (EN/RU/ID), hamburger на мобильных
 - **Footer** — бренд, навигация, проекты, контакты, соцсети (SVG-иконки), honeycomb-паттерн
 - **WhatsApp** — плавающая кнопка (класс `.lifted` при видимости Sticky CTA на мобильном)
 - **Квиз** — 3-шаговый попап (цель → бюджет → сроки → рекомендация проекта + контактная форма), DOM-инъекция из JS
@@ -14,8 +14,7 @@
 - **EN** — корневая директория (`/index.html`, `/about.html`, ...)
 - **RU** — папка `/ru/` (`/ru/index.html`, `/ru/about.html`, ...)
 - **ID** — папка `/id/` (`/id/index.html`, `/id/about.html`, ...)
-- **ZH** — папка `/zh/` (`/zh/index.html`, `/zh/about.html`, ...)
-- Языковой дропдаун в header: English, Русский, Bahasa Indonesia, 简体中文
+- Языковой дропдаун в header: English, Русский, Bahasa Indonesia
 - Все версии идентичны по структуре, отличается только текстовый контент
 - Подпапки используют `../` для CSS, JS, изображений, видео
 

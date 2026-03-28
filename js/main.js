@@ -187,66 +187,6 @@ document.addEventListener('DOMContentLoaded', () => {
           'default': 'Estat eksklusif 2–4.5 kamar mulai $310K dengan kolam pribadi dan pemandangan panoramik.'
         }
       }
-    },
-    zh: {
-      quizSteps: [
-        {
-          question: '您的投资目标是什么？',
-          options: ['自住', '租金收入', '长期投资', '以上皆是']
-        },
-        {
-          question: '您的预算是多少？',
-          options: ['了解选择', '$150K – $350K', '$350K – $500K', '$500K+']
-        },
-        {
-          question: '您计划何时购买？',
-          options: ['准备立即购买', '6个月内', '仅了解一下']
-        }
-      ],
-      quizRec: '我们为您推荐',
-      quizMatch: '匹配',
-      quizName: '您的姓名',
-      quizEmail: '电子邮箱',
-      quizPhone: '微信 / 电话（选填）',
-      quizConsent: '我同意按照隐私政策处理我的个人数据',
-      quizSubmit: '发送详细信息',
-      quizSkip: '直接查看项目',
-      quizBack: '返回',
-      quizThankTitle: '谢谢！',
-      quizThankText: '我们将尽快与您联系',
-      quizThankDesc: '同时，欢迎了解推荐项目：',
-      quizThankBtn: '查看',
-      stepOf: '第',
-      of: '步，共',
-      stickyCta: '找到您的别墅',
-      exitTag: '独家指南',
-      exitTitle: '离开前 — 免费资源',
-      exitText: '获取我们全面的巴厘岛房产投资指南，包含市场分析、投资回报预测和专家见解。',
-      exitPlaceholder: '您的电子邮箱',
-      exitSubmit: '获取投资指南',
-      exitSuccess: '谢谢！请查收邮件获取指南。',
-      leadThankTitle: '谢谢！',
-      leadThankText: '请查收邮件获取指南。',
-      descs: {
-        village: {
-          'Rental income': '紧凑型别墅，起价$119K — 适合短租，入住率高，入门成本低。',
-          'Personal residence': '舒适的1–2卧别墅，起价$119K，位于活力综合体，配有共享泳池和咖啡厅。',
-          'Long-term investment': '最具性价比的入门选择，起价$119K — 租赁需求旺盛，资本增长潜力强劲。',
-          'default': '经济实惠的1–2卧别墅，起价$119K，位于配套完善的综合体。'
-        },
-        villas: {
-          'Rental income': '高端2–3卧别墅，起价$335K — 丛林景观、私人泳池，年租金回报12–15%。',
-          'Personal residence': '宽敞的2–3卧别墅，起价$335K，环绕丛林和天然瀑布 — 您的巴厘岛之家。',
-          'Long-term investment': '2–3卧别墅，起价$335K，位于高需求地段 — 67%已售出，预期强劲升值。',
-          'default': '高端2–3卧别墅，起价$335K，丛林景观、私人泳池、全程托管。'
-        },
-        estates: {
-          'Rental income': '独家庄园，起价$310K，私人泳池，面积达250m² — 高端客群，优质租金回报。',
-          'Personal residence': '宽敞庄园，起价$310K，私人泳池、鱼塘和全景稻田景观 — 奢华生活。',
-          'Long-term investment': '仅4套独家庄园，起价$310K — 限量珍藏，巴厘岛顶级地段，增值潜力显著。',
-          'default': '独家2–4.5卧庄园，起价$310K，私人泳池和全景景观。'
-        }
-      }
     }
   };
 
@@ -511,7 +451,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (galleryGrid) {
     const galleryData = typeof GALLERY_DATA !== 'undefined' ? GALLERY_DATA : {};
-    // Detect subfolder pages (ru/, id/, zh/) — they use ../css/style.css
+    // Detect subfolder pages (ru/, id/) — they use ../css/style.css
     const isSubfolder = !!document.querySelector('link[href^="../css/"]');
     const imgPathPrefix = isSubfolder ? '../' : '';
     const INITIAL_COUNT = 20;
@@ -782,7 +722,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof FAQ_DATA !== 'undefined') {
     const faqList = document.querySelector('.faq-list');
     if (faqList) {
-      const faqLang = lang.startsWith('zh') ? 'zh' : lang;
+      const faqLang = lang;
       const sorted = FAQ_DATA.slice().sort((a, b) => (a.order || 99) - (b.order || 99));
       faqList.innerHTML = sorted.map(item => {
         const q = (item.question[faqLang] || item.question.en || '');
@@ -1286,7 +1226,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ─── Dynamic Render from PROJECTS_DATA ───
   if (typeof PROJECTS_DATA !== 'undefined') {
     const PD = PROJECTS_DATA;
-    const dataLang = lang.startsWith('zh') ? 'zh' : lang;
+    const dataLang = lang;
     const pathPrefix = (lang !== 'en') ? '../' : '';
 
     // Helper: format price

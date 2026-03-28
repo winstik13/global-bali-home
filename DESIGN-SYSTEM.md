@@ -232,7 +232,7 @@ Primary кнопка в hero пульсирует: `scale 1 → 1.06`, 4s ease-i
 - JS логика: клик на toggle → `.open`, клик вне → закрыть, Escape → закрыть + вернуть фокус
 - ARIA: `aria-expanded`, `aria-haspopup="true"` на toggle
 
-**Языки (4):** English (EN), Русский (RU), Bahasa Indonesia (ID), 简体中文 (中文)
+**Языки (3):** English (EN), Русский (RU), Bahasa Indonesia (ID)
 
 **Mobile menu (768px):** position: fixed, backdrop-filter: blur(24px), bg: rgba(26,26,20,0.75), lotus watermark 400×400 at 0.3 opacity.
 

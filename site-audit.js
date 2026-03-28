@@ -26,7 +26,7 @@ const PAGES = [
   'contacts.html','project-serenity-villas.html','project-serenity-estates.html',
   'project-serenity-village.html'
 ];
-const LANGS = ['', 'ru', 'id', 'zh'];
+const LANGS = ['', 'ru', 'id'];
 const ALL_FILES = LANGS.flatMap(lang =>
   PAGES.map(p => lang ? `${lang}/${p}` : p)
 );
@@ -44,12 +44,6 @@ const LANG_CHECKS = {
     cta:    'Mulai',
     footer: 'Navigasi',
     lang_toggle: '>ID ',  // space before svg
-  },
-  zh: {
-    nav:    ['首页', '项目', '服务', '关于我们', '画廊', '联系我们'],
-    cta:    '开始咨询',
-    footer: '导航',
-    lang_toggle: '中文 ',  // space before svg
   },
 };
 
@@ -101,7 +95,7 @@ function testFileExistence() {
 }
 
 // ─── TEST 2: HTML LANG ATTRIBUTE ─────────────────────────────────────────────
-const EXPECTED_LANG = { '': 'en', ru: 'ru', id: 'id', zh: 'zh-CN' };
+const EXPECTED_LANG = { '': 'en', ru: 'ru', id: 'id' };
 
 function testHtmlLang() {
   const cat = 'HTML Lang Attribute';
@@ -198,8 +192,8 @@ function testLangSwitcher() {
       // From root: links to subfolders use no prefix (ru/page.html)
       // From subfolder: link to EN uses ../ prefix, links to other subfolders use ../xx/
       const langLinks = lang
-        ? { '': `../${page}`, ru: `../ru/${page}`, id: `../id/${page}`, zh: `../zh/${page}` }
-        : { '': page, ru: `ru/${page}`, id: `id/${page}`, zh: `zh/${page}` };
+        ? { '': `../${page}`, ru: `../ru/${page}`, id: `../id/${page}` }
+        : { '': page, ru: `ru/${page}`, id: `id/${page}` };
 
       for (const [targetLang, expectedHref] of Object.entries(langLinks)) {
         if (targetLang === lang) continue; // active lang is span, not link

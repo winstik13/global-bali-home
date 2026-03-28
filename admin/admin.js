@@ -492,7 +492,7 @@
 
     // Hero Stats (4 languages)
     html += `<div class="editor-section"><h3>Hero Stats</h3>`;
-    ['en', 'ru', 'id', 'zh'].forEach(lng => {
+    ['en', 'ru', 'id'].forEach(lng => {
       const stats = p.heroStats[lng] || [];
       html += `<div style="margin-bottom:16px"><div class="hero-stat-field__lang">${lng.toUpperCase()}</div>
         <div class="hero-stats-grid">`;
@@ -508,7 +508,7 @@
 
     // Showcase Text (4 languages)
     html += `<div class="editor-section"><h3>Showcase Card</h3>`;
-    ['en', 'ru', 'id', 'zh'].forEach(lng => {
+    ['en', 'ru', 'id'].forEach(lng => {
       html += `<div style="margin-bottom:16px"><div class="hero-stat-field__lang">${lng.toUpperCase()}</div>
         <div class="form-group"><label>Price</label><input type="text" class="showcase-input" data-lang="${lng}" data-field="showcasePrice" value="${(p.showcasePrice[lng] || '')}"></div>
         <div class="form-group" style="margin-top:8px"><label>Description</label><textarea class="showcase-input" data-lang="${lng}" data-field="showcaseDesc" rows="2">${(p.showcaseDesc[lng] || '')}</textarea></div>
@@ -710,8 +710,8 @@
   }
 
   // ─── SEO Editor ───
-  const LANGS = ['en', 'ru', 'id', 'zh'];
-  const LANG_NAMES = { en: 'English', ru: 'Russian', id: 'Indonesian', zh: 'Chinese' };
+  const LANGS = ['en', 'ru', 'id'];
+  const LANG_NAMES = { en: 'English', ru: 'Russian', id: 'Indonesian' };
   const BASE_URL = 'https://winstik13.github.io/global-bali-home';
   let seoCache = {}; // { lang: { html, sha, fields } }
 
@@ -1199,7 +1199,6 @@
           { lang: 'en', langFull: 'English', prefix: '', htmlLang: 'en', path: p.page },
           { lang: 'ru', langFull: 'Русский', prefix: '../', htmlLang: 'ru', path: `ru/${p.page}` },
           { lang: 'id', langFull: 'Bahasa Indonesia', prefix: '../', htmlLang: 'id', path: `id/${p.page}` },
-          { lang: 'zh', langFull: '简体中文', prefix: '../', htmlLang: 'zh-CN', path: `zh/${p.page}` }
         ];
 
         let generated = 0;
@@ -1228,7 +1227,6 @@
     en: { home: 'Home', projects: 'Projects', services: 'Services', about: 'About', gallery: 'Gallery', contact: 'Contact', findVilla: 'Find My Villa', nav: 'Navigation', concept: 'The Concept', conceptTitle: 'About This Project', availability: 'Availability', unitSelection: 'Unit Selection', galleryTitle: 'Project Images', viewPhotos: 'View Photos', interested: 'Interested in', getConsult: 'Get a Consultation', footer: 'Global Bali Home is an international real estate company focused on the development of high-quality properties in Bali.', copyright: '&copy; 2024–2026 Global Bali Home. All rights reserved.' },
     ru: { home: 'Главная', projects: 'Проекты', services: 'Услуги', about: 'О нас', gallery: 'Галерея', contact: 'Контакты', findVilla: 'Найти виллу', nav: 'Навигация', concept: 'Концепция', conceptTitle: 'О проекте', availability: 'Доступность', unitSelection: 'Выбор юнитов', galleryTitle: 'Фотографии проекта', viewPhotos: 'Смотреть фото', interested: 'Интересует', getConsult: 'Получить консультацию', footer: 'Global Bali Home — международная компания по строительству премиальной недвижимости на Бали.', copyright: '&copy; 2024–2026 Global Bali Home. Все права защищены.' },
     id: { home: 'Beranda', projects: 'Proyek', services: 'Layanan', about: 'Tentang', gallery: 'Galeri', contact: 'Kontak', findVilla: 'Temukan Villa', nav: 'Navigasi', concept: 'Konsep', conceptTitle: 'Tentang Proyek Ini', availability: 'Ketersediaan', unitSelection: 'Pilihan Unit', galleryTitle: 'Galeri Proyek', viewPhotos: 'Lihat Foto', interested: 'Tertarik dengan', getConsult: 'Hubungi Kami', footer: 'Global Bali Home adalah perusahaan real estate internasional yang fokus pada pengembangan properti berkualitas tinggi di Bali.', copyright: '&copy; 2024–2026 Global Bali Home. Hak cipta dilindungi.' },
-    zh: { home: '首页', projects: '项目', services: '服务', about: '关于', gallery: '画廊', contact: '联系', findVilla: '找到我的别墅', nav: '导航', concept: '概念', conceptTitle: '关于本项目', availability: '可用性', unitSelection: '房型选择', galleryTitle: '项目图片', viewPhotos: '查看照片', interested: '感兴趣', getConsult: '获取咨询', footer: 'Global Bali Home 是一家专注于巴厘岛高品质房产开发的国际房地产公司。', copyright: '&copy; 2024–2026 Global Bali Home. 版权所有。' }
   };
 
   function buildDetailPage(proj, slug, cfg) {
@@ -1245,9 +1243,8 @@
       { lang: 'en', label: 'English', href: `${p}${proj.page}` },
       { lang: 'id', label: 'Bahasa Indonesia', href: `${cfg.lang === 'en' ? 'id/' : (cfg.lang === 'id' ? '' : '../id/')}${proj.page}` },
       { lang: 'ru', label: 'Русский', href: `${cfg.lang === 'en' ? 'ru/' : (cfg.lang === 'ru' ? '' : '../ru/')}${proj.page}` },
-      { lang: 'zh', label: '简体中文', href: `${cfg.lang === 'en' ? 'zh/' : (cfg.lang === 'zh' ? '' : '../zh/')}${proj.page}` }
     ];
-    const langToggleLabel = cfg.lang === 'en' ? 'EN' : cfg.lang === 'ru' ? 'RU' : cfg.lang === 'id' ? 'ID' : '中文';
+    const langToggleLabel = cfg.lang === 'en' ? 'EN' : cfg.lang === 'ru' ? 'RU' : 'ID';
     const langDropdown = langLinks.map(l =>
       l.lang === cfg.lang ? `<span class="active">${l.label}</span>` : `<a href="${l.href}">${l.label}</a>`
     ).join('');
@@ -1264,7 +1261,6 @@
   <link rel="alternate" hreflang="en" href="${BASE_URL}/${proj.page}">
   <link rel="alternate" hreflang="ru" href="${BASE_URL}/ru/${proj.page}">
   <link rel="alternate" hreflang="id" href="${BASE_URL}/id/${proj.page}">
-  <link rel="alternate" hreflang="zh-CN" href="${BASE_URL}/zh/${proj.page}">
   <link rel="alternate" hreflang="x-default" href="${BASE_URL}/${proj.page}">
   <meta property="og:type" content="website">
   <meta property="og:title" content="${escAttr(proj.name)} — Global Bali Home">
@@ -1497,38 +1493,34 @@
         status: status,
         startingPrice: price,
         showcaseImage: image,
-        showcaseSubtitle: { en: subtitle, ru: subtitle, id: subtitle, zh: subtitle },
+        showcaseSubtitle: { en: subtitle, ru: subtitle, id: subtitle },
         showcaseMeta: {
           en: [{ strong: String(totalUnits), label: 'Villas' }, { strong: bedrooms, label: 'Bedrooms' }, { strong: handover || status, label: handover ? 'Handover' : 'Status' }],
           ru: [{ strong: String(totalUnits), label: 'Вилл' }, { strong: bedrooms, label: 'Спальни' }, { strong: handover || status, label: handover ? 'Сдача' : 'Статус' }],
           id: [{ strong: String(totalUnits), label: 'Villa' }, { strong: bedrooms, label: 'Kamar Tidur' }, { strong: handover || status, label: handover ? 'Serah Terima' : 'Status' }],
-          zh: [{ strong: String(totalUnits), label: '套别墅' }, { strong: bedrooms, label: '间卧室' }, { strong: handover || status, label: handover ? '交房' : '状态' }]
         },
         compArea: area,
         compLand: land,
-        compPool: { en: pool, ru: pool, id: pool, zh: pool },
+        compPool: { en: pool, ru: pool, id: pool },
         heroStats: {
           en: [{ number: String(totalUnits), label: 'Villas' }, { number: bedrooms, label: 'Bedrooms' }, { number: priceLabel ? '$' + (price / 1000 | 0) + 'K' : '', label: 'From' }],
           ru: [{ number: String(totalUnits), label: 'Вилл' }, { number: bedrooms, label: 'Спальни' }, { number: priceLabel ? '$' + (price / 1000 | 0) + 'K' : '', label: 'От' }],
           id: [{ number: String(totalUnits), label: 'Vila' }, { number: bedrooms, label: 'Kamar Tidur' }, { number: priceLabel ? '$' + (price / 1000 | 0) + 'K' : '', label: 'Mulai Dari' }],
-          zh: [{ number: String(totalUnits), label: '别墅' }, { number: bedrooms, label: '卧室' }, { number: priceLabel ? '$' + (price / 1000 | 0) + 'K' : '', label: '起价' }]
         },
         availability: { sold: 0, total: totalUnits },
-        showcasePrice: { en: priceLabel, ru: priceLabel.replace('From', 'От'), id: priceLabel, zh: priceLabel.replace('From', '起价') },
+        showcasePrice: { en: priceLabel, ru: priceLabel.replace('From', 'От'), id: priceLabel },
         showcaseStatus: {
           en: status === 'pre-sale' ? 'Pre-Sale' : status === 'completed' ? 'Completed' : 'In Progress',
           ru: status === 'pre-sale' ? 'Предпродажа' : status === 'completed' ? 'Завершён' : 'Строится',
           id: status === 'pre-sale' ? 'Pra-Penjualan' : status === 'completed' ? 'Selesai' : 'Dalam Pembangunan',
-          zh: status === 'pre-sale' ? '预售' : status === 'completed' ? '已完工' : '建设中'
         },
         showcaseAvailability: {
           en: status === 'pre-sale' ? 'Pre-Sale Open' : '0 of ' + totalUnits + ' units sold',
           ru: status === 'pre-sale' ? 'Предпродажа открыта' : '0 из ' + totalUnits + ' продано',
           id: status === 'pre-sale' ? 'Pra-Penjualan Dibuka' : '0 dari ' + totalUnits + ' unit terjual',
-          zh: status === 'pre-sale' ? '预售开放' : totalUnits + '套中已售0套'
         },
-        showcaseDesc: { en: desc, ru: desc, id: desc, zh: desc },
-        showcaseCta: { en: 'View Details', ru: 'Подробнее', id: 'Lihat Detail', zh: '查看详情' },
+        showcaseDesc: { en: desc, ru: desc, id: desc },
+        showcaseCta: { en: 'View Details', ru: 'Подробнее', id: 'Lihat Detail' },
         units: []
       };
 
@@ -1543,7 +1535,6 @@
           en: 'Pre-Sale Now Open — Register Your Interest Today',
           ru: 'Предпродажа открыта — Зарегистрируйте ваш интерес',
           id: 'Pra-Penjualan Dibuka — Daftarkan Minat Anda Hari Ini',
-          zh: '预售已开启 — 立即登记您的意向'
         };
       }
 
@@ -1749,8 +1740,8 @@
       const maxOrder = faqData.reduce((m, it) => Math.max(m, it.order || 0), 0);
       faqData.push({
         order: maxOrder + 1,
-        question: { en: '', ru: '', id: '', zh: '' },
-        answer: { en: '', ru: '', id: '', zh: '' }
+        question: { en: '', ru: '', id: '' },
+        answer: { en: '', ru: '', id: '' }
       });
       faqChanged = true;
       renderFaqEditor();
