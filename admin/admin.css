@@ -634,7 +634,24 @@ body {
   flex-wrap: wrap;
 }
 
-.seo-controls .form-group { min-width: 180px; }
+.seo-controls .form-group { min-width: 280px; }
+
+.seo-controls select {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--color-text);
+  width: 100%;
+  cursor: pointer;
+}
+
+.seo-controls select:focus {
+  border-color: var(--color-accent);
+  outline: none;
+}
 
 .seo-field {
   margin-bottom: 16px;
