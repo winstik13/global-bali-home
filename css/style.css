@@ -1163,6 +1163,8 @@ p {
 .timeline {
   position: relative;
   padding-left: 40px;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .timeline::before {
