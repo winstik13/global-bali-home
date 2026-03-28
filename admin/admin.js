@@ -38,8 +38,28 @@
   const patError = $('#pat-error');
 
   // ─── Init Firebase ───
-  firebase.initializeApp(FIREBASE_CONFIG);
-  const auth = firebase.auth();
+  if (typeof firebase === 'undefined') {
+    loginError.textContent = 'Firebase SDK failed to load. Check your internet connection.';
+    loginError.hidden = false;
+    return;
+  }
+
+  // Warn if opened via file:// (Firebase requires http/https)
+  if (location.protocol === 'file:') {
+    loginError.innerHTML = 'Admin panel requires a web server.<br>Use <b>Live Server</b> in VS Code or open from GitHub Pages.';
+    loginError.hidden = false;
+  }
+
+  let auth;
+  try {
+    firebase.initializeApp(FIREBASE_CONFIG);
+    auth = firebase.auth();
+  } catch (err) {
+    console.error('Firebase init error:', err);
+    loginError.textContent = 'Firebase init error: ' + err.message;
+    loginError.hidden = false;
+    return;
+  }
 
   // ─── Auth State ───
   auth.onAuthStateChanged(user => {
@@ -58,6 +78,9 @@
             githubPAT = '';
             showPATScreen();
           }
+        }).catch(err => {
+          console.error('PAT validation error:', err);
+          showPATScreen();
         });
       } else {
         showPATScreen();
@@ -75,11 +98,18 @@
     loginError.hidden = true;
     const email = $('#login-email').value;
     const password = $('#login-password').value;
+    const btn = loginForm.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'Signing in...';
     try {
       await auth.signInWithEmailAndPassword(email, password);
     } catch (err) {
+      console.error('Login error:', err);
       loginError.textContent = friendlyError(err.code);
       loginError.hidden = false;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Sign In';
     }
   });
 
