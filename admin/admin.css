@@ -323,9 +323,45 @@ body {
 }
 
 /* ─── DASHBOARD ─── */
+
+/* Summary row */
+.dash-summary {
+  display: flex;
+  gap: 0;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.dash-summary__item {
+  flex: 1;
+  text-align: center;
+  padding: 20px 16px;
+  border-right: 1px solid var(--color-border);
+}
+
+.dash-summary__item:last-child { border-right: none; }
+
+.dash-summary__value {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  color: var(--color-cream);
+  margin-bottom: 4px;
+}
+
+.dash-summary__label {
+  font-size: 0.65rem;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Project cards grid */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 20px;
   margin-bottom: 24px;
 }
@@ -335,13 +371,15 @@ body {
   border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .dash-card__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
 }
 
 .dash-card__name {
@@ -350,7 +388,7 @@ body {
 }
 
 .dash-card__badge {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -361,21 +399,112 @@ body {
 .dash-card__badge--presale  { background: rgba(243, 156, 18, 0.2); color: var(--color-warning); }
 
 .dash-card__stats {
-  display: flex;
-  gap: 24px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
 }
 
 .dash-card__stat-value {
   font-family: var(--font-heading);
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   color: var(--color-cream);
 }
 
 .dash-card__stat-label {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: var(--color-text-dim);
   text-transform: uppercase;
   letter-spacing: 0.1em;
+}
+
+/* Mini progress bar */
+.dash-card__bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dash-card__bar-track {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.dash-card__bar-fill {
+  height: 100%;
+  background: var(--color-accent);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.dash-card__bar-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  min-width: 36px;
+}
+
+/* Unit breakdown */
+.dash-card__breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dash-break {
+  font-size: 0.7rem;
+  padding: 3px 10px;
+  border-radius: 2px;
+  font-weight: 500;
+}
+
+.dash-break--available { background: rgba(107, 143, 78, 0.15); color: #8db86e; }
+.dash-break--booked    { background: rgba(243, 156, 18, 0.15); color: #f0b643; }
+.dash-break--sold      { background: rgba(255, 255, 255, 0.06); color: var(--color-text-dim); }
+.dash-break--resale    { background: rgba(52, 152, 219, 0.15); color: #5dade2; }
+
+.dash-card__edit {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+/* Recent commits */
+.dash-commits {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.dash-commits h3 {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 16px;
+}
+
+.dash-commit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.dash-commit:last-child { border-bottom: none; }
+
+.dash-commit__msg {
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+.dash-commit__time {
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+  white-space: nowrap;
+  margin-left: 16px;
 }
 
 .dashboard-status {
@@ -383,6 +512,7 @@ body {
   gap: 24px;
   font-size: 0.8rem;
   color: var(--color-text-dim);
+  margin-top: 16px;
 }
 
 /* ─── PROJECT EDITOR ─── */

@@ -208,28 +208,162 @@
   // ─── Dashboard ───
   function renderDashboard() {
     if (!projectsData) return;
-    const cards = $('#dashboard-cards');
+    const container = $('#dashboard-cards');
     const projects = ['serenity-villas', 'serenity-estates', 'serenity-village'];
 
-    cards.innerHTML = projects.map(key => {
+    // Compute totals
+    let totalUnits = 0, totalSold = 0, totalAvailable = 0, totalRevenue = 0;
+    const projectStats = projects.map(key => {
       const p = projectsData[key];
       const { sold, total } = p.availability;
       const pct = Math.round((sold / total) * 100);
+      const left = total - sold;
+      totalUnits += total;
+      totalSold += sold;
+      totalAvailable += left;
+
+      // Estimate revenue from sold units
+      let revenue = 0;
+      if (p.units) {
+        p.units.forEach(u => {
+          if (u.status === 'sold' || u.status === 'booked') {
+            revenue += u.price || p.startingPrice;
+          }
+        });
+      } else if (p.unitTypes) {
+        // Village: estimate from types proportionally
+        const soldCount = sold;
+        let assigned = 0;
+        p.unitTypes.forEach(ut => {
+          const share = Math.min(Math.round(soldCount * ut.count / total), ut.count);
+          revenue += share * ut.price;
+          assigned += share;
+        });
+        if (assigned < soldCount) revenue += (soldCount - assigned) * p.startingPrice;
+      }
+      totalRevenue += revenue;
+
+      return { key, p, sold, total, pct, left, revenue };
+    });
+
+    // Summary row
+    const totalPct = totalUnits ? Math.round((totalSold / totalUnits) * 100) : 0;
+    let html = `<div class="dash-summary">
+      <div class="dash-summary__item">
+        <div class="dash-summary__value">${totalUnits}</div>
+        <div class="dash-summary__label">Total Units</div>
+      </div>
+      <div class="dash-summary__item">
+        <div class="dash-summary__value">${totalSold}</div>
+        <div class="dash-summary__label">Sold / Booked</div>
+      </div>
+      <div class="dash-summary__item">
+        <div class="dash-summary__value">${totalAvailable}</div>
+        <div class="dash-summary__label">Available</div>
+      </div>
+      <div class="dash-summary__item">
+        <div class="dash-summary__value">${totalPct}%</div>
+        <div class="dash-summary__label">Overall Progress</div>
+      </div>
+      <div class="dash-summary__item">
+        <div class="dash-summary__value">$${(totalRevenue / 1000000).toFixed(1)}M</div>
+        <div class="dash-summary__label">Est. Revenue</div>
+      </div>
+    </div>`;
+
+    // Project cards
+    html += '<div class="dashboard-grid">';
+    projectStats.forEach(({ key, p, sold, total, pct, left, revenue }) => {
       const badgeClass = p.status === 'pre-sale' ? 'presale' : 'progress';
       const badgeText = p.status === 'pre-sale' ? 'Pre-Sale' : 'In Progress';
 
-      return `<div class="dash-card">
+      // Unit breakdown for Villas/Estates
+      let breakdown = '';
+      if (p.units) {
+        const counts = { available: 0, booked: 0, sold: 0, resale: 0 };
+        p.units.forEach(u => { counts[u.status] = (counts[u.status] || 0) + 1; });
+        breakdown = `<div class="dash-card__breakdown">
+          ${counts.available ? `<span class="dash-break dash-break--available">${counts.available} available</span>` : ''}
+          ${counts.booked ? `<span class="dash-break dash-break--booked">${counts.booked} booked</span>` : ''}
+          ${counts.sold ? `<span class="dash-break dash-break--sold">${counts.sold} sold</span>` : ''}
+          ${counts.resale ? `<span class="dash-break dash-break--resale">${counts.resale} resale</span>` : ''}
+        </div>`;
+      }
+
+      html += `<div class="dash-card" data-card-project="${key}">
         <div class="dash-card__header">
           <span class="dash-card__name">${p.name}</span>
           <span class="dash-card__badge dash-card__badge--${badgeClass}">${badgeText}</span>
         </div>
         <div class="dash-card__stats">
           <div><div class="dash-card__stat-value">${sold}/${total}</div><div class="dash-card__stat-label">Sold</div></div>
-          <div><div class="dash-card__stat-value">${pct}%</div><div class="dash-card__stat-label">Progress</div></div>
+          <div><div class="dash-card__stat-value">${left}</div><div class="dash-card__stat-label">Left</div></div>
           <div><div class="dash-card__stat-value">$${(p.startingPrice / 1000).toFixed(0)}K</div><div class="dash-card__stat-label">From</div></div>
+          <div><div class="dash-card__stat-value">$${revenue >= 1000000 ? (revenue / 1000000).toFixed(1) + 'M' : (revenue / 1000).toFixed(0) + 'K'}</div><div class="dash-card__stat-label">Revenue</div></div>
         </div>
+        <div class="dash-card__bar">
+          <div class="dash-card__bar-track"><div class="dash-card__bar-fill" style="width:${pct}%"></div></div>
+          <span class="dash-card__bar-label">${pct}%</span>
+        </div>
+        ${breakdown}
+        <button class="dash-card__edit btn btn--outline btn--sm" data-goto="${key}">Edit Project →</button>
       </div>`;
-    }).join('');
+    });
+    html += '</div>';
+
+    // Recent commits
+    html += '<div class="dash-commits"><h3>Recent Changes</h3><div id="dash-commits-list"><span style="color:var(--color-text-dim)">Loading...</span></div></div>';
+
+    container.innerHTML = html;
+
+    // Quick edit buttons
+    container.querySelectorAll('[data-goto]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentProject = btn.dataset.goto;
+        $$('.admin-nav__btn').forEach(b => b.classList.remove('active'));
+        $$('.admin-nav__btn').forEach(b => { if (b.dataset.tab === 'projects') b.classList.add('active'); });
+        $$('.admin-tab').forEach(t => t.hidden = true);
+        $('#tab-projects').hidden = false;
+        $$('.project-tabs__btn').forEach(b => b.classList.remove('active'));
+        $$('.project-tabs__btn').forEach(b => { if (b.dataset.proj === currentProject) b.classList.add('active'); });
+        renderProjectEditor();
+      });
+    });
+
+    // Load recent commits
+    loadRecentCommits();
+  }
+
+  async function loadRecentCommits() {
+    try {
+      const res = await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/commits?per_page=5&path=data/projects-data.js`, {
+        headers: { 'Authorization': `token ${githubPAT}` }
+      });
+      const commits = await res.json();
+      const list = $('#dash-commits-list');
+      if (!commits.length || !Array.isArray(commits)) {
+        list.innerHTML = '<span style="color:var(--color-text-dim)">No recent changes to project data.</span>';
+        return;
+      }
+      list.innerHTML = commits.map(c => {
+        const date = new Date(c.commit.author.date);
+        const ago = timeAgo(date);
+        return `<div class="dash-commit">
+          <span class="dash-commit__msg">${escAttr(c.commit.message.split('\n')[0])}</span>
+          <span class="dash-commit__time">${ago}</span>
+        </div>`;
+      }).join('');
+    } catch {
+      $('#dash-commits-list').innerHTML = '<span style="color:var(--color-text-dim)">Could not load commit history.</span>';
+    }
+  }
+
+  function timeAgo(date) {
+    const s = Math.floor((Date.now() - date.getTime()) / 1000);
+    if (s < 60) return 'just now';
+    if (s < 3600) return Math.floor(s / 60) + 'm ago';
+    if (s < 86400) return Math.floor(s / 3600) + 'h ago';
+    return Math.floor(s / 86400) + 'd ago';
   }
 
   // ─── Project Editor ───
