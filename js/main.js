@@ -61,6 +61,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- Language dropdown ---
+  // Auto-assign section IDs by index so lang switcher can preserve scroll position.
+  // All language versions have identical section order, so sec-N maps to same section.
+  document.querySelectorAll('section').forEach((sec, i) => {
+    if (!sec.id) sec.id = 'sec-' + i;
+  });
+
+  function getCurrentSectionHash() {
+    const sections = Array.from(document.querySelectorAll('section[id]'));
+    const threshold = window.scrollY + window.innerHeight * 0.35;
+    let current = sections[0];
+    for (const sec of sections) {
+      if (sec.offsetTop <= threshold) current = sec;
+      else break;
+    }
+    return current ? '#' + current.id : '';
+  }
+
   const langWidget = document.querySelector('.header__lang');
   const langToggle = document.querySelector('.header__lang-toggle');
   if (langWidget && langToggle) {
@@ -71,6 +88,12 @@ document.addEventListener('DOMContentLoaded', () => {
       e.stopPropagation();
       const isOpen = langWidget.classList.toggle('open');
       langToggle.setAttribute('aria-expanded', isOpen);
+      if (isOpen) {
+        const hash = getCurrentSectionHash();
+        langWidget.querySelectorAll('.header__lang-dropdown a').forEach(a => {
+          a.href = a.href.split('#')[0] + hash;
+        });
+      }
     });
 
     document.addEventListener('click', (e) => {
