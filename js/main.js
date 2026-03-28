@@ -5,6 +5,255 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // --- Localisation ---
+  const lang = document.documentElement.lang || 'en';
+  const i18n = {
+    en: {
+      quizSteps: [
+        {
+          question: 'What is your investment goal?',
+          options: ['Personal residence', 'Rental income', 'Long-term investment', 'All of the above']
+        },
+        {
+          question: 'What is your budget?',
+          options: ['Exploring Options', '$150K – $350K', '$350K – $500K', '$500K+']
+        },
+        {
+          question: 'When are you planning to buy?',
+          options: ['Ready to buy now', 'Within 6 months', 'Just exploring']
+        }
+      ],
+      quizRec: 'Our Recommendation for You',
+      quizMatch: 'match',
+      quizName: 'Your name',
+      quizEmail: 'Email address',
+      quizPhone: 'WhatsApp / Phone (optional)',
+      quizConsent: 'I agree to the processing of my personal data in accordance with the Privacy Policy',
+      quizSubmit: 'Send Me Full Details',
+      quizSkip: 'View project without submitting',
+      quizBack: 'Back',
+      quizThankTitle: 'Thank you!',
+      quizThankText: "We'll be in touch soon",
+      quizThankDesc: 'In the meantime, explore your recommended project:',
+      quizThankBtn: 'View',
+      stepOf: 'Step',
+      of: 'of',
+      stickyCta: 'Explore Villas',
+      exitTag: 'Exclusive Guide',
+      exitTitle: 'Before You Go — A Complimentary Resource',
+      exitText: 'Access our comprehensive Bali Real Estate Investment Guide with market analysis, ROI projections, and expert insights.',
+      exitPlaceholder: 'Your email address',
+      exitSubmit: 'Access the Investment Guide',
+      exitSuccess: 'Thank you! Check your email for the guide.',
+      leadThankTitle: 'Thank You!',
+      leadThankText: 'Check your email for the guide.',
+      descs: {
+        village: {
+          'Rental income': 'Compact villas from $119K — ideal for short-term rental with strong occupancy rates and low entry cost.',
+          'Personal residence': 'Cozy 1-2 bedroom villas from $119K in a vibrant complex with shared pool and café.',
+          'Long-term investment': 'Our most accessible entry point from $119K — high rental demand and strong capital growth potential.',
+          'default': 'Affordable 1-2 bedroom villas from $119K in a vibrant complex with shared amenities.'
+        },
+        villas: {
+          'Rental income': 'Premium 2-3 bedroom villas from $335K — jungle views, private pools, and proven 12-15% rental yields.',
+          'Personal residence': 'Spacious 2-3 bedroom villas from $335K surrounded by jungle and natural waterfalls — your Bali home.',
+          'Long-term investment': '2-3 bedroom villas from $335K in a high-demand location — 67% already sold, strong appreciation expected.',
+          'default': 'Premium 2-3 bedroom villas from $335K with jungle views, private pools, and full management.'
+        },
+        estates: {
+          'Rental income': 'Exclusive estates from $310K with private pools and up to 250m² — premium nightly rates and high-end guests.',
+          'Personal residence': 'Spacious estates from $310K with private pools, fish ponds, and panoramic rice terrace views — luxury living.',
+          'Long-term investment': 'Only 4 exclusive estates from $310K — limited collection with strong value appreciation in Bali\'s top location.',
+          'default': 'Exclusive 2-4.5 bedroom estates from $310K with private pools and panoramic views.'
+        }
+      }
+    },
+    ru: {
+      quizSteps: [
+        {
+          question: 'Какова ваша цель инвестиции?',
+          options: ['Личная резиденция', 'Арендный доход', 'Долгосрочная инвестиция', 'Все вышеперечисленное']
+        },
+        {
+          question: 'Какой у вас бюджет?',
+          options: ['Изучаю варианты', '$150K – $350K', '$350K – $500K', '$500K+']
+        },
+        {
+          question: 'Когда планируете покупку?',
+          options: ['Готов купить сейчас', 'В ближайшие 6 месяцев', 'Просто изучаю']
+        }
+      ],
+      quizRec: 'Наша рекомендация для вас',
+      quizMatch: 'совпадение',
+      quizName: 'Ваше имя',
+      quizEmail: 'Email',
+      quizPhone: 'WhatsApp / Телефон (необязательно)',
+      quizConsent: 'Я согласен на обработку персональных данных в соответствии с Политикой конфиденциальности',
+      quizSubmit: 'Получить подробности',
+      quizSkip: 'Смотреть проект без отправки',
+      quizBack: 'Назад',
+      quizThankTitle: 'Спасибо!',
+      quizThankText: 'Мы свяжемся с вами в ближайшее время',
+      quizThankDesc: 'А пока — изучите рекомендованный проект:',
+      quizThankBtn: 'Смотреть',
+      stepOf: 'Шаг',
+      of: 'из',
+      stickyCta: 'Подобрать виллу',
+      exitTag: 'Эксклюзивный гид',
+      exitTitle: 'Прежде чем уйти — бесплатный ресурс',
+      exitText: 'Получите наш подробный гид по инвестициям в недвижимость Бали с анализом рынка, прогнозами доходности и экспертными оценками.',
+      exitPlaceholder: 'Ваш email',
+      exitSubmit: 'Получить инвестиционный гид',
+      exitSuccess: 'Спасибо! Проверьте вашу почту.',
+      leadThankTitle: 'Спасибо!',
+      leadThankText: 'Проверьте вашу почту.',
+      descs: {
+        village: {
+          'Rental income': 'Компактные виллы от $119K — идеально для краткосрочной аренды с высокой заполняемостью и низким порогом входа.',
+          'Personal residence': 'Уютные виллы 1–2 спальни от $119K в живом комплексе с общим бассейном и кафе.',
+          'Long-term investment': 'Самый доступный вход от $119K — высокий спрос на аренду и сильный потенциал роста капитала.',
+          'default': 'Доступные виллы 1–2 спальни от $119K в комплексе с общими удобствами.'
+        },
+        villas: {
+          'Rental income': 'Премиальные виллы 2–3 спальни от $335K — вид на джунгли, приватные бассейны и подтверждённая доходность 12–15%.',
+          'Personal residence': 'Просторные виллы 2–3 спальни от $335K в окружении джунглей и водопадов — ваш дом на Бали.',
+          'Long-term investment': 'Виллы 2–3 спальни от $335K в востребованной локации — 67% уже продано, ожидается рост стоимости.',
+          'default': 'Премиальные виллы 2–3 спальни от $335K с видом на джунгли, приватными бассейнами и полным управлением.'
+        },
+        estates: {
+          'Rental income': 'Эксклюзивные эстейты от $310K с приватными бассейнами и площадью до 250 м² — премиальные ставки аренды.',
+          'Personal residence': 'Просторные эстейты от $310K с приватными бассейнами, прудами и панорамным видом на рисовые террасы.',
+          'Long-term investment': 'Всего 4 эксклюзивных эстейта от $310K — лимитированная коллекция с высоким потенциалом роста.',
+          'default': 'Эксклюзивные эстейты 2–4.5 спален от $310K с приватными бассейнами и панорамными видами.'
+        }
+      }
+    },
+    id: {
+      quizSteps: [
+        {
+          question: 'Apa tujuan investasi Anda?',
+          options: ['Hunian pribadi', 'Pendapatan sewa', 'Investasi jangka panjang', 'Semua di atas']
+        },
+        {
+          question: 'Berapa anggaran Anda?',
+          options: ['Menjelajahi opsi', '$150K – $350K', '$350K – $500K', '$500K+']
+        },
+        {
+          question: 'Kapan Anda berencana membeli?',
+          options: ['Siap membeli sekarang', 'Dalam 6 bulan', 'Sekadar melihat-lihat']
+        }
+      ],
+      quizRec: 'Rekomendasi Kami untuk Anda',
+      quizMatch: 'kecocokan',
+      quizName: 'Nama Anda',
+      quizEmail: 'Alamat email',
+      quizPhone: 'WhatsApp / Telepon (opsional)',
+      quizConsent: 'Saya menyetujui pemrosesan data pribadi saya sesuai dengan Kebijakan Privasi',
+      quizSubmit: 'Kirimkan Detail Lengkap',
+      quizSkip: 'Lihat proyek tanpa mengirim',
+      quizBack: 'Kembali',
+      quizThankTitle: 'Terima kasih!',
+      quizThankText: 'Kami akan segera menghubungi Anda',
+      quizThankDesc: 'Sementara itu, jelajahi proyek yang direkomendasikan:',
+      quizThankBtn: 'Lihat',
+      stepOf: 'Langkah',
+      of: 'dari',
+      stickyCta: 'Temukan Vila Anda',
+      exitTag: 'Panduan Eksklusif',
+      exitTitle: 'Sebelum Anda Pergi — Sumber Daya Gratis',
+      exitText: 'Akses panduan investasi properti Bali kami yang komprehensif dengan analisis pasar, proyeksi ROI, dan wawasan ahli.',
+      exitPlaceholder: 'Alamat email Anda',
+      exitSubmit: 'Akses Panduan Investasi',
+      exitSuccess: 'Terima kasih! Cek email Anda untuk panduan.',
+      leadThankTitle: 'Terima Kasih!',
+      leadThankText: 'Cek email Anda untuk panduan.',
+      descs: {
+        village: {
+          'Rental income': 'Vila kompak mulai $119K — ideal untuk sewa jangka pendek dengan tingkat hunian tinggi dan biaya masuk rendah.',
+          'Personal residence': 'Vila nyaman 1–2 kamar mulai $119K di kompleks dinamis dengan kolam renang bersama dan kafe.',
+          'Long-term investment': 'Titik masuk paling terjangkau mulai $119K — permintaan sewa tinggi dan potensi pertumbuhan modal kuat.',
+          'default': 'Vila terjangkau 1–2 kamar mulai $119K di kompleks dengan fasilitas bersama.'
+        },
+        villas: {
+          'Rental income': 'Vila premium 2–3 kamar mulai $335K — pemandangan hutan, kolam pribadi, dan imbal hasil sewa 12–15%.',
+          'Personal residence': 'Vila luas 2–3 kamar mulai $335K dikelilingi hutan dan air terjun alami — rumah Bali Anda.',
+          'Long-term investment': 'Vila 2–3 kamar mulai $335K di lokasi permintaan tinggi — 67% sudah terjual, apresiasi kuat diharapkan.',
+          'default': 'Vila premium 2–3 kamar mulai $335K dengan pemandangan hutan, kolam pribadi, dan manajemen penuh.'
+        },
+        estates: {
+          'Rental income': 'Estat eksklusif mulai $310K dengan kolam pribadi dan luas hingga 250m² — tarif sewa premium.',
+          'Personal residence': 'Estat luas mulai $310K dengan kolam pribadi, kolam ikan, dan pemandangan sawah panoramik — hunian mewah.',
+          'Long-term investment': 'Hanya 4 estat eksklusif mulai $310K — koleksi terbatas dengan potensi apresiasi tinggi di lokasi terbaik Bali.',
+          'default': 'Estat eksklusif 2–4.5 kamar mulai $310K dengan kolam pribadi dan pemandangan panoramik.'
+        }
+      }
+    },
+    zh: {
+      quizSteps: [
+        {
+          question: '您的投资目标是什么？',
+          options: ['自住', '租金收入', '长期投资', '以上皆是']
+        },
+        {
+          question: '您的预算是多少？',
+          options: ['了解选择', '$150K – $350K', '$350K – $500K', '$500K+']
+        },
+        {
+          question: '您计划何时购买？',
+          options: ['准备立即购买', '6个月内', '仅了解一下']
+        }
+      ],
+      quizRec: '我们为您推荐',
+      quizMatch: '匹配',
+      quizName: '您的姓名',
+      quizEmail: '电子邮箱',
+      quizPhone: '微信 / 电话（选填）',
+      quizConsent: '我同意按照隐私政策处理我的个人数据',
+      quizSubmit: '发送详细信息',
+      quizSkip: '直接查看项目',
+      quizBack: '返回',
+      quizThankTitle: '谢谢！',
+      quizThankText: '我们将尽快与您联系',
+      quizThankDesc: '同时，欢迎了解推荐项目：',
+      quizThankBtn: '查看',
+      stepOf: '第',
+      of: '步，共',
+      stickyCta: '找到您的别墅',
+      exitTag: '独家指南',
+      exitTitle: '离开前 — 免费资源',
+      exitText: '获取我们全面的巴厘岛房产投资指南，包含市场分析、投资回报预测和专家见解。',
+      exitPlaceholder: '您的电子邮箱',
+      exitSubmit: '获取投资指南',
+      exitSuccess: '谢谢！请查收邮件获取指南。',
+      leadThankTitle: '谢谢！',
+      leadThankText: '请查收邮件获取指南。',
+      descs: {
+        village: {
+          'Rental income': '紧凑型别墅，起价$119K — 适合短租，入住率高，入门成本低。',
+          'Personal residence': '舒适的1–2卧别墅，起价$119K，位于活力综合体，配有共享泳池和咖啡厅。',
+          'Long-term investment': '最具性价比的入门选择，起价$119K — 租赁需求旺盛，资本增长潜力强劲。',
+          'default': '经济实惠的1–2卧别墅，起价$119K，位于配套完善的综合体。'
+        },
+        villas: {
+          'Rental income': '高端2–3卧别墅，起价$335K — 丛林景观、私人泳池，年租金回报12–15%。',
+          'Personal residence': '宽敞的2–3卧别墅，起价$335K，环绕丛林和天然瀑布 — 您的巴厘岛之家。',
+          'Long-term investment': '2–3卧别墅，起价$335K，位于高需求地段 — 67%已售出，预期强劲升值。',
+          'default': '高端2–3卧别墅，起价$335K，丛林景观、私人泳池、全程托管。'
+        },
+        estates: {
+          'Rental income': '独家庄园，起价$310K，私人泳池，面积达250m² — 高端客群，优质租金回报。',
+          'Personal residence': '宽敞庄园，起价$310K，私人泳池、鱼塘和全景稻田景观 — 奢华生活。',
+          'Long-term investment': '仅4套独家庄园，起价$310K — 限量珍藏，巴厘岛顶级地段，增值潜力显著。',
+          'default': '独家2–4.5卧庄园，起价$310K，私人泳池和全景景观。'
+        }
+      }
+    }
+  };
+
+  const t = i18n[lang] || i18n[lang.split('-')[0]] || i18n.en;
+  // Map localised option labels back to EN keys for scoring
+  const enOptions = i18n.en.quizSteps.map(s => s.options);
+
   // --- Skip navigation & main landmark ---
   const skipLink = document.createElement('a');
   skipLink.className = 'skip-link';
@@ -615,7 +864,7 @@ document.addEventListener('DOMContentLoaded', () => {
         contactForm.style.display = 'none';
         const success = document.createElement('div');
         success.className = 'form-success';
-        success.innerHTML = '<h3>Thank you!</h3><p>We will get back to you within 24 hours.</p>';
+        success.innerHTML = '<h3>Thank you!</h3><p>Our advisors will get back to you as soon as possible.</p>';
         formWrap.appendChild(success);
         contactForm.reset();
       }
@@ -623,41 +872,76 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- Quiz Popup ---
-  const quizSteps = [
-    {
-      question: 'What is your investment goal?',
-      options: [
-        { icon: '<svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><rect x="9" y="10" width="6" height="5" rx="0.5"/><path d="M12 15v6"/></svg>', label: 'Personal residence' },
-        { icon: '<svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="4"/></svg>', label: 'Rental income' },
-        { icon: '<svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>', label: 'Long-term investment' },
-        { icon: '<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>', label: 'All of the above' }
-      ]
-    },
-    {
-      question: 'What is your budget?',
-      options: [
-        { icon: '<svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>', label: 'Exploring Options' },
-        { icon: '<svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>', label: '$150K – $350K' },
-        { icon: '<svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>', label: '$350K – $500K' },
-        { icon: '<svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>', label: '$500K+' }
-      ]
-    },
-    {
-      question: 'When are you planning to buy?',
-      options: [
-        { icon: '<svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>', label: 'Ready to buy now' },
-        { icon: '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>', label: 'Within 6 months' },
-        { icon: '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>', label: 'Just exploring' }
-      ]
-    }
+  const quizIcons = [
+    [
+      '<svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><rect x="9" y="10" width="6" height="5" rx="0.5"/><path d="M12 15v6"/></svg>',
+      '<svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="4"/></svg>',
+      '<svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>',
+      '<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>'
+    ],
+    [
+      '<svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',
+      '<svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',
+      '<svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',
+      '<svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>'
+    ],
+    [
+      '<svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>',
+      '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>',
+      '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>'
+    ]
   ];
+  const quizSteps = t.quizSteps.map((step, i) => ({
+    question: step.question,
+    options: step.options.map((label, j) => ({ icon: quizIcons[i][j], label }))
+  }));
 
   const quizRecommend = (answers) => {
-    const budget = answers[1];
-    if (budget === 'Exploring Options') return { project: 'Serenity Village', url: 'project-serenity-village.html', desc: 'Affordable 1-2 bedroom villas from $119,000 in a vibrant community setting.' };
-    if (budget === '$150K – $350K') return { project: 'Serenity Villas', url: 'project-serenity-villas.html', desc: 'Premium 2-3 bedroom villas from $335,000 with private pools and gardens.' };
-    if (budget === '$350K – $500K') return { project: 'Serenity Estates', url: 'project-serenity-estates.html', desc: 'Exclusive 2-4.5 bedroom estates with panoramic views and spacious design.' };
-    return { project: 'Serenity Estates', url: 'project-serenity-estates.html', desc: 'Our most exclusive properties — spacious estates designed for premium living.' };
+    // Map localised answers back to EN keys for scoring
+    const toEn = (stepIdx, localLabel) => {
+      const localOpts = t.quizSteps[stepIdx].options;
+      const idx = localOpts.indexOf(localLabel);
+      return idx >= 0 ? enOptions[stepIdx][idx] : localLabel;
+    };
+    const goal = toEn(0, answers[0]);
+    const budget = toEn(1, answers[1]);
+    const timeline = toEn(2, answers[2]);
+
+    // Score each project: Village, Villas, Estates
+    const scores = { village: 0, villas: 0, estates: 0 };
+
+    // Budget (60% weight)
+    if (budget === 'Exploring Options')    { scores.village += 60; scores.villas += 15; scores.estates += 10; }
+    else if (budget === '$150K – $350K')   { scores.village += 30; scores.villas += 60; scores.estates += 35; }
+    else if (budget === '$350K – $500K')   { scores.village += 5;  scores.villas += 35; scores.estates += 60; }
+    else /* $500K+ */                      { scores.village += 0;  scores.villas += 20; scores.estates += 60; }
+
+    // Goal (25% weight)
+    if (goal === 'Rental income')          { scores.village += 25; scores.villas += 20; scores.estates += 15; }
+    else if (goal === 'Personal residence') { scores.village += 5;  scores.villas += 20; scores.estates += 25; }
+    else if (goal === 'Long-term investment') { scores.village += 20; scores.villas += 25; scores.estates += 20; }
+    else /* All of the above */            { scores.village += 15; scores.villas += 25; scores.estates += 20; }
+
+    // Timeline (15% weight)
+    if (timeline === 'Ready to buy now')   { scores.village += 5;  scores.villas += 15; scores.estates += 10; }
+    else if (timeline === 'Within 6 months') { scores.village += 10; scores.villas += 15; scores.estates += 12; }
+    else /* Just exploring */              { scores.village += 15; scores.villas += 10; scores.estates += 10; }
+
+    // Determine winner
+    const best = Object.entries(scores).sort((a, b) => b[1] - a[1])[0];
+    const matchPct = best[1];
+
+    const projects = {
+      village: { project: 'Serenity Village', url: 'project-serenity-village.html' },
+      villas:  { project: 'Serenity Villas',  url: 'project-serenity-villas.html' },
+      estates: { project: 'Serenity Estates',  url: 'project-serenity-estates.html' }
+    };
+
+    const winner = projects[best[0]];
+    const descs = t.descs[best[0]];
+    const desc = descs[goal] || descs['default'];
+
+    return { project: winner.project, url: winner.url, desc: desc, match: matchPct };
   };
 
   // Build quiz DOM
@@ -686,12 +970,12 @@ document.addEventListener('DOMContentLoaded', () => {
     updateProgress();
     const step = quizSteps[quizStep];
     quizBody.innerHTML = `
-      <p class="quiz__step-label">Step ${quizStep + 1} of ${totalSteps}</p>
+      <p class="quiz__step-label">${t.stepOf} ${quizStep + 1} ${t.of} ${totalSteps}</p>
       <h3 class="quiz__question">${step.question}</h3>
       <div class="quiz__options">
         ${step.options.map(opt => `<button class="quiz__option"><span class="quiz__option-icon">${opt.icon}</span><span>${opt.label}</span></button>`).join('')}
       </div>
-      ${quizStep > 0 ? '<button class="quiz__back">&larr; Back</button>' : ''}
+      ${quizStep > 0 ? `<button class="quiz__back">&larr; ${t.quizBack}</button>` : ''}
     `;
     quizBody.querySelectorAll('.quiz__option').forEach((btn, idx) => {
       btn.addEventListener('click', () => {
@@ -718,21 +1002,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const rec = quizRecommend(quizAnswers);
     updateProgress();
     quizBody.innerHTML = `
-      <p class="quiz__step-label">Our Recommendation for You</p>
-      <h3 class="quiz__question">${rec.project}</h3>
+      <p class="quiz__step-label">${t.quizRec}</p>
+      <h3 class="quiz__question">${rec.project} <span class="quiz__match">${rec.match}% ${t.quizMatch}</span></h3>
       <p class="quiz__result-desc">${rec.desc}</p>
       <form class="quiz__form">
-        <input type="text" class="quiz__input" name="quiz-name" placeholder="Your name" required>
-        <input type="email" class="quiz__input" name="quiz-email" placeholder="Email address" required>
-        <input type="tel" class="quiz__input" name="quiz-phone" placeholder="WhatsApp / Phone (optional)">
+        <input type="text" class="quiz__input" name="quiz-name" placeholder="${t.quizName}" required>
+        <input type="email" class="quiz__input" name="quiz-email" placeholder="${t.quizEmail}" required>
+        <input type="tel" class="quiz__input" name="quiz-phone" placeholder="${t.quizPhone}">
         <div class="form-consent" id="quiz-consent-group">
           <input type="checkbox" class="form-consent__checkbox" id="quiz-consent" name="quiz-consent">
-          <label class="form-consent__text" for="quiz-consent">I agree to the processing of my personal data in accordance with the Privacy Policy</label>
+          <label class="form-consent__text" for="quiz-consent">${t.quizConsent}</label>
         </div>
-        <button type="submit" class="btn btn--primary" style="width:100%;">Send Me Full Details</button>
+        <button type="submit" class="btn btn--primary" style="width:100%;">${t.quizSubmit}</button>
       </form>
-      <a href="${rec.url}" class="quiz__skip-link">View project without submitting &rarr;</a>
-      <button class="quiz__back">&larr; Back</button>
+      <a href="${rec.url}" class="quiz__skip-link">${t.quizSkip} &rarr;</a>
+      <button class="quiz__back">&larr; ${t.quizBack}</button>
     `;
     quizBody.querySelector('.quiz__form').addEventListener('submit', (e) => {
       e.preventDefault();
@@ -749,30 +1033,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (!name || !email) return;
 
-      const body = [
-        'New Quiz Lead',
-        '',
-        'Name: ' + name,
-        'Email: ' + email,
-        'Phone: ' + (phone || '—'),
-        '',
-        'Answers:',
-        '1. Goal: ' + (quizAnswers[0] || '—'),
-        '2. Budget: ' + (quizAnswers[1] || '—'),
-        '3. Timeline: ' + (quizAnswers[2] || '—'),
-        '',
-        'Recommended: ' + rec.project
-      ].join('\n');
-
-      window.open('mailto:office@globalbalihome.com?subject=New Lead: ' + encodeURIComponent(name) + '&body=' + encodeURIComponent(body));
+      // TODO: Connect to backend when ready for production
+      // Currently in test mode — no data is sent anywhere
+      console.log('Quiz lead (test mode):', { name, email, phone, answers: quizAnswers, recommended: rec.project });
       sessionStorage.setItem('leadCaptured', 'true');
       quizBar.style.width = '100%';
       quizBody.innerHTML = `
         <div class="quiz__result">
-          <p class="quiz__step-label">Thank you!</p>
-          <h3 class="quiz__question">We'll be in touch soon</h3>
-          <p class="quiz__result-desc">In the meantime, explore your recommended project:</p>
-          <a href="${rec.url}" class="btn btn--primary" style="width:100%;">View ${rec.project}</a>
+          <p class="quiz__step-label">${t.quizThankTitle}</p>
+          <h3 class="quiz__question">${t.quizThankText}</h3>
+          <p class="quiz__result-desc">${t.quizThankDesc}</p>
+          <a href="${rec.url}" class="btn btn--primary" style="width:100%;">${t.quizThankBtn} ${rec.project}</a>
         </div>
       `;
     });
@@ -880,18 +1151,17 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const name = form.querySelector('input[type="text"]').value;
       const email = form.querySelector('input[type="email"]').value;
-      const subject = encodeURIComponent('Investment Guide Request');
-      const body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\nPlease send me the Bali Investment Guide.');
-      window.location.href = 'mailto:office@globalbalihome.com?subject=' + subject + '&body=' + body;
+      // TODO: Connect to backend when ready for production
+      console.log('Lead magnet (test mode):', { name, email });
       sessionStorage.setItem('leadCaptured', 'true');
-      form.closest('.lead-magnet__form-wrap').innerHTML = '<div class="lead-magnet__success"><h3>Thank You!</h3><p>Check your email for the guide.</p></div>';
+      form.closest('.lead-magnet__form-wrap').innerHTML = `<div class="lead-magnet__success"><h3>${t.leadThankTitle}</h3><p>${t.leadThankText}</p></div>`;
     });
   });
 
   // --- Sticky CTA Bar (mobile) ---
   const stickyCTA = document.createElement('div');
   stickyCTA.className = 'sticky-cta';
-  stickyCTA.innerHTML = '<button class="sticky-cta__btn btn btn--primary" data-quiz>Explore Villas</button>';
+  stickyCTA.innerHTML = `<button class="sticky-cta__btn btn btn--primary" data-quiz>${t.stickyCta}</button>`;
   document.body.appendChild(stickyCTA);
   stickyCTA.querySelector('[data-quiz]').addEventListener('click', (e) => {
     e.preventDefault();
@@ -928,12 +1198,12 @@ document.addEventListener('DOMContentLoaded', () => {
   exitOverlay.innerHTML = `
     <div class="exit-popup" role="dialog" aria-modal="true" aria-labelledby="exit-popup-title">
       <button class="exit-popup__close" aria-label="Close popup">&times;</button>
-      <span class="section-header__tag">Exclusive Guide</span>
-      <h3 class="exit-popup__title" id="exit-popup-title">Before You Go — A Complimentary Resource</h3>
-      <p class="exit-popup__text">Access our comprehensive Bali Real Estate Investment Guide with market analysis, ROI projections, and expert insights.</p>
+      <span class="section-header__tag">${t.exitTag}</span>
+      <h3 class="exit-popup__title" id="exit-popup-title">${t.exitTitle}</h3>
+      <p class="exit-popup__text">${t.exitText}</p>
       <form class="exit-popup__form">
-        <input type="email" class="exit-popup__input" placeholder="Your email address" required>
-        <button type="submit" class="btn btn--primary" style="width:100%">Access the Investment Guide</button>
+        <input type="email" class="exit-popup__input" placeholder="${t.exitPlaceholder}" required>
+        <button type="submit" class="btn btn--primary" style="width:100%">${t.exitSubmit}</button>
       </form>
     </div>
   `;
@@ -956,11 +1226,11 @@ document.addEventListener('DOMContentLoaded', () => {
   exitOverlay.querySelector('.exit-popup__form').addEventListener('submit', (e) => {
     e.preventDefault();
     const email = exitOverlay.querySelector('.exit-popup__input').value;
-    const subject = encodeURIComponent('Investment Guide Request');
-    const body = encodeURIComponent('Email: ' + email + '\n\nPlease send me the Bali Investment Guide.');
-    window.location.href = 'mailto:office@globalbalihome.com?subject=' + subject + '&body=' + body;
+    // TODO: Connect to backend when ready for production
+    console.log('Exit popup lead (test mode):', { email });
     sessionStorage.setItem('leadCaptured', 'true');
-    closeExit();
+    exitOverlay.querySelector('.exit-popup__form').innerHTML = `<p style="text-align:center;color:var(--color-accent);font-weight:600;padding:12px 0;">${t.exitSuccess}</p>`;
+    setTimeout(closeExit, 3000);
   });
 
   const pageLoadTime = Date.now();

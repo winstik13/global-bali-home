@@ -296,7 +296,8 @@ p {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 10px;
+  padding: 10px 12px;
+  min-height: 44px;
   background: none;
   border: 1px solid var(--color-border);
   color: var(--color-text-muted);
@@ -392,7 +393,7 @@ p {
   display: none;
   flex-direction: column;
   gap: 5px;
-  padding: 4px;
+  padding: 10px;
 }
 
 .hamburger span {
@@ -466,7 +467,11 @@ p {
 .hero h1 {
   color: var(--color-cream);
   margin-bottom: 20px;
-  max-width: 700px;
+  max-width: 800px;
+}
+
+.hero h1 .text-accent {
+  color: var(--color-accent);
 }
 
 .hero__subtitle {
@@ -479,10 +484,10 @@ p {
 }
 
 .hero__text {
-  font-size: var(--font-sm);
+  font-size: var(--font-base);
   font-weight: 400;
   color: var(--color-text-muted);
-  max-width: 500px;
+  max-width: 600px;
   margin-bottom: 40px;
   line-height: 1.7;
 }
@@ -1008,6 +1013,7 @@ p {
 
 .footer__brand img {
   height: 48px;
+  width: auto;
   margin-bottom: 20px;
   filter: brightness(0) invert(0.9) sepia(0.3) saturate(0.5) hue-rotate(10deg);
 }
@@ -1768,6 +1774,20 @@ p {
   text-align: center;
 }
 
+.quiz__match {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--font-xs);
+  font-weight: 600;
+  color: var(--color-accent);
+  background: rgba(107, 143, 78, 0.15);
+  padding: 4px 12px;
+  border-radius: 20px;
+  vertical-align: middle;
+  margin-left: 8px;
+  letter-spacing: 0.02em;
+}
+
 .quiz__result-desc {
   color: var(--color-text-muted);
   font-size: var(--font-sm);
@@ -2035,7 +2055,7 @@ p {
 
 /* --- FAQ Accordion --- */
 .faq-list {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
@@ -2087,7 +2107,7 @@ p {
 
 .faq-answer__inner {
   padding-bottom: 28px;
-  font-size: var(--font-sm);
+  font-size: var(--font-base);
   color: var(--color-text-muted);
   line-height: 1.8;
 }
@@ -2123,6 +2143,25 @@ p {
 .unit-table .status--available { color: var(--color-accent); font-weight: 600; }
 .unit-table .status--booked { color: #8B7355; font-weight: 600; }
 .unit-table .status--resale { color: #C4A44A; font-weight: 600; }
+
+.unit-table tr.unit--premium td {
+  background: rgba(107, 143, 78, 0.06);
+  border-bottom-color: rgba(107, 143, 78, 0.15);
+}
+
+.unit-table .unit__badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  font-size: var(--font-xs);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  background: rgba(107, 143, 78, 0.12);
+  border-radius: 3px;
+  vertical-align: middle;
+}
 
 /* --- Features --- */
 .features-grid {
@@ -2236,6 +2275,102 @@ p {
 .social-proof__number {
   color: var(--color-accent);
   font-weight: 600;
+}
+
+/* --- Table Wrapper (responsive overflow) --- */
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* --- Comparison Table --- */
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 14px 20px;
+  text-align: center;
+  font-size: var(--font-sm);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.comparison-table th {
+  font-family: var(--font-heading);
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--color-text);
+  padding-bottom: 20px;
+}
+
+.comparison-table td:first-child {
+  text-align: left;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.comparison-table tr:last-child td {
+  border-bottom: none;
+}
+
+.comparison-table__value--accent {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.comparison-table__badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: var(--font-xs);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.comparison-table__badge--hot {
+  background: rgba(107, 143, 78, 0.15);
+  color: var(--color-accent);
+}
+
+.comparison-table__badge--presale {
+  background: rgba(217, 147, 49, 0.15);
+  color: #d99331;
+}
+
+.comparison-table__cta {
+  padding-top: 8px;
+}
+
+.comparison-table__cta .btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 24px;
+  font-size: var(--font-xs);
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 768px) {
+  .comparison-table th,
+  .comparison-table td {
+    padding: 10px 8px;
+    font-size: var(--font-xs);
+  }
+  .comparison-table th {
+    font-size: var(--font-sm);
+  }
+  .comparison-table__cta .btn {
+    padding: 8px 14px;
+    font-size: var(--font-xs);
+  }
+  .comparison-table td:first-child {
+    white-space: normal;
+  }
 }
 
 /* --- Availability Bar --- */
@@ -2936,6 +3071,16 @@ p {
   .whatsapp-float.lifted {
     bottom: 75px;
   }
+
+  /* [3.5] Fix iOS auto-zoom on input focus (requires >= 16px) */
+  .quiz__input,
+  .form-group input,
+  .form-group select,
+  .form-group textarea,
+  .lead-magnet__input,
+  .exit-popup__input {
+    font-size: 16px;
+  }
 }
 
 /* --- Testimonials --- */
@@ -3011,8 +3156,16 @@ p {
   color: var(--color-text-dim);
 }
 
+.testimonials__grid--duo {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 @media (max-width: 1024px) {
-  .testimonials__grid {
+  .testimonials__grid,
+  .testimonials__grid--duo {
     grid-template-columns: 1fr;
     max-width: 600px;
     margin-left: auto;
