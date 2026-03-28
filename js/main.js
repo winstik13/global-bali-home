@@ -1255,4 +1255,153 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = 'hidden';
   });
 
+  // ─── Dynamic Render from PROJECTS_DATA ───
+  if (typeof PROJECTS_DATA !== 'undefined') {
+    const PD = PROJECTS_DATA;
+
+    // Helper: format price
+    function fmtPrice(p) {
+      if (!p) return '\u2014';
+      return '$' + p.toLocaleString('en-US');
+    }
+
+    // --- Hero Stats ---
+    document.querySelectorAll('.hero-stats[data-project]').forEach(el => {
+      const key = el.dataset.project;
+      const proj = PD[key];
+      if (!proj || !proj.heroStats) return;
+      const stats = proj.heroStats[lang] || proj.heroStats.en;
+      el.innerHTML = stats.map(s =>
+        '<div class="hero-stats__item"><div class="hero-stats__number">' + s.number + '</div><div class="hero-stats__label">' + s.label + '</div></div>'
+      ).join('');
+    });
+
+    // --- Availability Bar ---
+    document.querySelectorAll('.availability-bar[data-project]').forEach(el => {
+      const key = el.dataset.project;
+      const proj = PD[key];
+      if (!proj || !proj.availability) return;
+      const av = proj.availability;
+      const labels = PD.availabilityLabels[lang] || PD.availabilityLabels.en;
+
+      if (proj.status === 'pre-sale') {
+        el.innerHTML =
+          '<div class="availability-bar__header"><span class="availability-bar__label availability-bar__label--presale"><span class="presale-dot"></span> ' + labels.preSale + '</span></div>';
+      } else {
+        const pct = Math.round((av.sold / av.total) * 100);
+        const left = av.total - av.sold;
+        el.innerHTML =
+          '<div class="availability-bar__header"><span class="availability-bar__label">' + av.sold + ' ' + labels.of + ' ' + av.total + ' ' + labels.unitsSold + '</span><span class="availability-bar__percent">' + pct + '%</span></div>' +
+          '<div class="availability-bar__track"><div class="availability-bar__fill" style="width:' + pct + '%"></div></div>';
+      }
+    });
+
+    // --- Unit Table (Villas / Estates) ---
+    document.querySelectorAll('.unit-table[data-project]').forEach(el => {
+      const key = el.dataset.project;
+      const proj = PD[key];
+      if (!proj || !proj.units) return;
+      const h = PD.unitTableHeaders[lang] || PD.unitTableHeaders.en;
+      const sl = PD.statusLabels[lang] || PD.statusLabels.en;
+
+      let html = '<thead><tr><th>' + h.unit + '</th><th>' + h.type + '</th><th>' + h.floors + '</th><th>' + h.area + '</th><th>' + h.land + '</th><th>' + h.status + '</th><th>' + h.price + '</th></tr></thead><tbody>';
+      proj.units.forEach(u => {
+        const cls = u.badge ? ' class="unit--premium"' : '';
+        const badge = u.badge ? ' <span class="unit__badge">' + u.badge + '</span>' : '';
+        html += '<tr' + cls + '><td>' + u.id + badge + '</td><td>' + u.type + '</td><td>' + u.floors + '</td><td>' + u.area + '</td><td>' + u.land + '</td><td class="status--' + u.status + '">' + (sl[u.status] || u.status) + '</td><td>' + fmtPrice(u.price) + '</td></tr>';
+      });
+      html += '</tbody>';
+      el.innerHTML = html;
+    });
+
+    // --- Village Unit Types Table ---
+    document.querySelectorAll('.unit-table[data-village-types]').forEach(el => {
+      const proj = PD['serenity-village'];
+      if (!proj || !proj.unitTypes) return;
+      const h = PD.villageTableHeaders[lang] || PD.villageTableHeaders.en;
+
+      let html = '<thead><tr><th>' + h.type + '</th><th>' + h.floors + '</th><th>' + h.area + '</th><th>' + h.land + '</th><th>' + h.units + '</th><th>' + h.price + '</th></tr></thead><tbody>';
+      proj.unitTypes.forEach(u => {
+        html += '<tr><td>' + u.type + '</td><td>' + u.floors + '</td><td>' + u.area + '</td><td>' + u.land + '</td><td>' + u.count + '</td><td>' + fmtPrice(u.price) + '</td></tr>';
+      });
+      html += '</tbody>';
+      el.innerHTML = html;
+    });
+
+    // --- Pre-sale Banner ---
+    document.querySelectorAll('[data-presale-banner]').forEach(el => {
+      const proj = PD['serenity-village'];
+      if (!proj || !proj.preSaleBanner) return;
+      const text = proj.preSaleBanner[lang] || proj.preSaleBanner.en;
+      const p = el.querySelector('.presale-banner__text, p');
+      if (p) p.textContent = text;
+    });
+
+    // --- Showcase Cards ---
+    document.querySelectorAll('.project-showcase[data-project]').forEach(el => {
+      const key = el.dataset.project;
+      const proj = PD[key];
+      if (!proj) return;
+
+      const price = el.querySelector('.project-showcase__price');
+      if (price && proj.showcasePrice) price.textContent = proj.showcasePrice[lang] || proj.showcasePrice.en;
+
+      const desc = el.querySelector('.project-showcase__desc');
+      if (desc && proj.showcaseDesc) desc.textContent = proj.showcaseDesc[lang] || proj.showcaseDesc.en;
+
+      const avail = el.querySelector('.project-showcase__availability');
+      if (avail && proj.showcaseAvailability) avail.textContent = proj.showcaseAvailability[lang] || proj.showcaseAvailability.en;
+
+      const badge = el.querySelector('.project-showcase__badge');
+      if (badge && proj.showcaseStatus) badge.textContent = proj.showcaseStatus[lang] || proj.showcaseStatus.en;
+
+      const cta = el.querySelector('.project-showcase__cta, .btn');
+      if (cta && proj.showcaseCta) cta.textContent = proj.showcaseCta[lang] || proj.showcaseCta.en;
+
+      // Availability bar inside showcase
+      const bar = el.querySelector('.availability-bar');
+      if (bar && proj.availability) {
+        const av = proj.availability;
+        const labels = PD.availabilityLabels[lang] || PD.availabilityLabels.en;
+        if (proj.status === 'pre-sale') {
+          bar.innerHTML = '<div class="availability-bar__header"><span class="availability-bar__label availability-bar__label--presale"><span class="presale-dot"></span> ' + labels.preSale + '</span></div>';
+        } else {
+          const pct = Math.round((av.sold / av.total) * 100);
+          bar.innerHTML = '<div class="availability-bar__header"><span class="availability-bar__label">' + av.sold + ' ' + labels.of + ' ' + av.total + ' ' + labels.unitsSold + '</span><span class="availability-bar__percent">' + pct + '%</span></div><div class="availability-bar__track"><div class="availability-bar__fill" style="width:' + pct + '%"></div></div>';
+        }
+      }
+    });
+
+    // --- Comparison Table on projects.html ---
+    document.querySelectorAll('table[data-dynamic]').forEach(el => {
+      const labels = PD.comparisonLabels[lang] || PD.comparisonLabels.en;
+      const comp = PD.comparisonData;
+      const projects = ['serenity-villas', 'serenity-estates', 'serenity-village'];
+      let html = '<thead><tr><th></th>';
+      projects.forEach(k => { html += '<th>' + PD[k].name + '</th>'; });
+      html += '</tr></thead><tbody>';
+      const rows = [
+        { key: 'price', fn: k => comp[k].price },
+        { key: 'bedrooms', fn: k => PD[k].bedrooms },
+        { key: 'area', fn: k => comp[k].area },
+        { key: 'land', fn: k => comp[k].land },
+        { key: 'units', fn: k => PD[k].totalUnits },
+        { key: 'pool', fn: k => { const p = comp[k].pool; return (typeof p === 'object') ? (p[lang] || p.en) : p; } },
+        { key: 'handover', fn: k => PD[k].handover || '\u2014' },
+        { key: 'status', fn: k => { const s = PD[k].showcaseStatus; return s ? (s[lang] || s.en) : '\u2014'; } }
+      ];
+      rows.forEach(r => {
+        html += '<tr><td>' + labels[r.key] + '</td>';
+        projects.forEach(k => { html += '<td>' + r.fn(k) + '</td>'; });
+        html += '</tr>';
+      });
+      html += '<tr><td></td>';
+      projects.forEach(k => {
+        html += '<td><a href="' + PD[k].page + '" class="btn btn--primary btn--sm">' + labels.cta + '</a></td>';
+      });
+      html += '</tr></tbody>';
+      el.innerHTML = html;
+    });
+  }
+
 });
