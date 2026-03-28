@@ -778,6 +778,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --- Dynamic FAQ Rendering from FAQ_DATA ---
+  if (typeof FAQ_DATA !== 'undefined') {
+    const faqList = document.querySelector('.faq-list');
+    if (faqList) {
+      const faqLang = lang.startsWith('zh') ? 'zh' : lang;
+      const sorted = FAQ_DATA.slice().sort((a, b) => (a.order || 99) - (b.order || 99));
+      faqList.innerHTML = sorted.map(item => {
+        const q = (item.question[faqLang] || item.question.en || '');
+        const a = (item.answer[faqLang] || item.answer.en || '');
+        return '<div class="faq-item"><button class="faq-question">' + q + '</button><div class="faq-answer"><div class="faq-answer__inner">' + a + '</div></div></div>';
+      }).join('');
+    }
+  }
+
   // --- FAQ Accordion ---
   document.querySelectorAll('.faq-question').forEach((btn, idx) => {
     const item = btn.parentElement;
@@ -1157,15 +1171,26 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- Lead Magnet form ---
+  function getGuidePath() {
+    if (typeof SITE_DATA !== 'undefined' && SITE_DATA.investmentGuide && SITE_DATA.investmentGuide.path) {
+      var prefix = (lang !== 'en') ? '../' : '';
+      return prefix + SITE_DATA.investmentGuide.path;
+    }
+    return '';
+  }
+
   document.querySelectorAll('.lead-magnet__form').forEach(form => {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const name = form.querySelector('input[type="text"]').value;
       const email = form.querySelector('input[type="email"]').value;
-      // TODO: Connect to backend when ready for production
-      console.log('Lead magnet (test mode):', { name, email });
+      console.log('Lead magnet:', { name, email });
       sessionStorage.setItem('leadCaptured', 'true');
       form.closest('.lead-magnet__form-wrap').innerHTML = `<div class="lead-magnet__success"><h3>${t.leadThankTitle}</h3><p>${t.leadThankText}</p></div>`;
+      var guidePath = getGuidePath();
+      if (guidePath) {
+        setTimeout(function() { window.open(guidePath, '_blank'); }, 500);
+      }
     });
   });
 
@@ -1237,10 +1262,13 @@ document.addEventListener('DOMContentLoaded', () => {
   exitOverlay.querySelector('.exit-popup__form').addEventListener('submit', (e) => {
     e.preventDefault();
     const email = exitOverlay.querySelector('.exit-popup__input').value;
-    // TODO: Connect to backend when ready for production
-    console.log('Exit popup lead (test mode):', { email });
+    console.log('Exit popup lead:', { email });
     sessionStorage.setItem('leadCaptured', 'true');
     exitOverlay.querySelector('.exit-popup__form').innerHTML = `<p style="text-align:center;color:var(--color-accent);font-weight:600;padding:12px 0;">${t.exitSuccess}</p>`;
+    var guidePath = getGuidePath();
+    if (guidePath) {
+      setTimeout(function() { window.open(guidePath, '_blank'); }, 500);
+    }
     setTimeout(closeExit, 3000);
   });
 
@@ -1258,11 +1286,25 @@ document.addEventListener('DOMContentLoaded', () => {
   // ─── Dynamic Render from PROJECTS_DATA ───
   if (typeof PROJECTS_DATA !== 'undefined') {
     const PD = PROJECTS_DATA;
+    const dataLang = lang.startsWith('zh') ? 'zh' : lang;
+    const pathPrefix = (lang !== 'en') ? '../' : '';
 
     // Helper: format price
     function fmtPrice(p) {
       if (!p) return '\u2014';
       return '$' + p.toLocaleString('en-US');
+    }
+
+    // Helper: get project keys sorted by order
+    function getProjectKeys() {
+      return Object.keys(PD).filter(function(k) { return PD[k] && PD[k].slug; })
+        .sort(function(a, b) { return (PD[a].order || 99) - (PD[b].order || 99); });
+    }
+
+    // Helper: get localized value
+    function loc(obj) {
+      if (!obj) return '';
+      return obj[dataLang] || obj.en || '';
     }
 
     // --- Hero Stats ---
@@ -1337,70 +1379,112 @@ document.addEventListener('DOMContentLoaded', () => {
       if (p) p.textContent = text;
     });
 
-    // --- Showcase Cards ---
-    document.querySelectorAll('.project-showcase[data-project]').forEach(el => {
-      const key = el.dataset.project;
-      const proj = PD[key];
+    // --- Helper: build availability bar HTML ---
+    function buildAvailBar(proj) {
+      if (!proj.availability) return '';
+      var av = proj.availability;
+      var labels = PD.availabilityLabels[dataLang] || PD.availabilityLabels.en;
+      if (proj.status === 'pre-sale') {
+        return '<div class="availability-bar availability-bar--presale"><div class="availability-bar__header"><span class="availability-bar__label"><span class="availability-bar__dot"></span> ' + labels.preSale + '</span></div></div>';
+      }
+      var pct = Math.round((av.sold / av.total) * 100);
+      return '<div class="availability-bar"><div class="availability-bar__header"><span class="availability-bar__label">' + loc(proj.showcaseAvailability) + '</span><span class="availability-bar__percent">' + pct + '%</span></div><div class="availability-bar__track"><div class="availability-bar__fill" style="width:' + pct + '%"></div></div></div>';
+    }
+
+    // --- Helper: badge CSS class from status ---
+    function badgeClass(status) {
+      if (status === 'pre-sale') return 'project-card__badge--presale';
+      if (status === 'completed') return 'project-card__badge--completed';
+      return 'project-card__badge--construction';
+    }
+
+    // --- Generate Showcase Cards from data-projects-container ---
+    document.querySelectorAll('[data-projects-container]').forEach(function(container) {
+      var useShort = container.hasAttribute('data-projects-short');
+      var keys = getProjectKeys();
+      container.innerHTML = keys.map(function(key, i) {
+        var proj = PD[key];
+        var num = String(i + 1).padStart(2, '0');
+        var meta = proj.showcaseMeta ? (proj.showcaseMeta[dataLang] || proj.showcaseMeta.en) : [];
+        var text = useShort ? loc(proj.showcaseSubtitle) : loc(proj.showcaseDesc);
+        if (!text) text = loc(proj.showcaseSubtitle) || loc(proj.showcaseDesc);
+        var metaHtml = meta.map(function(m) { return '<div><strong>' + m.strong + '</strong> ' + m.label + '</div>'; }).join('');
+        return '<div class="project-showcase reveal" data-project="' + key + '">' +
+          '<a href="' + proj.page + '" class="project-showcase__image">' +
+            '<img src="' + pathPrefix + (proj.showcaseImage || '') + '" alt="' + proj.name + '" loading="lazy" width="1920" height="1080">' +
+            '<span class="project-showcase__badge ' + badgeClass(proj.status) + '">' + loc(proj.showcaseStatus) + '</span>' +
+          '</a>' +
+          '<div class="project-showcase__content">' +
+            '<span class="section-header__tag">' + num + '</span>' +
+            '<h3>' + proj.name + '</h3>' +
+            '<p>' + text + '</p>' +
+            '<div class="project-showcase__meta">' + metaHtml + '</div>' +
+            '<p class="project-showcase__price">' + loc(proj.showcasePrice) + '</p>' +
+            buildAvailBar(proj) +
+            '<a href="' + proj.page + '" class="btn btn--outline">' + loc(proj.showcaseCta) + '</a>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    });
+
+    // --- Fallback: update existing showcase cards ---
+    document.querySelectorAll('.project-showcase[data-project]').forEach(function(el) {
+      var key = el.dataset.project;
+      var proj = PD[key];
       if (!proj) return;
 
-      const price = el.querySelector('.project-showcase__price');
-      if (price && proj.showcasePrice) price.textContent = proj.showcasePrice[lang] || proj.showcasePrice.en;
+      var price = el.querySelector('.project-showcase__price');
+      if (price && proj.showcasePrice) price.textContent = loc(proj.showcasePrice);
 
-      const desc = el.querySelector('.project-showcase__desc');
-      if (desc && proj.showcaseDesc) desc.textContent = proj.showcaseDesc[lang] || proj.showcaseDesc.en;
+      var badge = el.querySelector('.project-showcase__badge');
+      if (badge && proj.showcaseStatus) badge.textContent = loc(proj.showcaseStatus);
 
-      const avail = el.querySelector('.project-showcase__availability');
-      if (avail && proj.showcaseAvailability) avail.textContent = proj.showcaseAvailability[lang] || proj.showcaseAvailability.en;
+      var cta = el.querySelector('.btn');
+      if (cta && proj.showcaseCta) cta.textContent = loc(proj.showcaseCta);
 
-      const badge = el.querySelector('.project-showcase__badge');
-      if (badge && proj.showcaseStatus) badge.textContent = proj.showcaseStatus[lang] || proj.showcaseStatus.en;
-
-      const cta = el.querySelector('.project-showcase__cta, .btn');
-      if (cta && proj.showcaseCta) cta.textContent = proj.showcaseCta[lang] || proj.showcaseCta.en;
-
-      // Availability bar inside showcase
-      const bar = el.querySelector('.availability-bar');
+      var bar = el.querySelector('.availability-bar');
       if (bar && proj.availability) {
-        const av = proj.availability;
-        const labels = PD.availabilityLabels[lang] || PD.availabilityLabels.en;
-        if (proj.status === 'pre-sale') {
-          bar.innerHTML = '<div class="availability-bar__header"><span class="availability-bar__label availability-bar__label--presale"><span class="presale-dot"></span> ' + labels.preSale + '</span></div>';
-        } else {
-          const pct = Math.round((av.sold / av.total) * 100);
-          bar.innerHTML = '<div class="availability-bar__header"><span class="availability-bar__label">' + av.sold + ' ' + labels.of + ' ' + av.total + ' ' + labels.unitsSold + '</span><span class="availability-bar__percent">' + pct + '%</span></div><div class="availability-bar__track"><div class="availability-bar__fill" style="width:' + pct + '%"></div></div>';
-        }
+        bar.outerHTML = buildAvailBar(proj);
       }
     });
 
     // --- Comparison Table on projects.html ---
-    document.querySelectorAll('table[data-dynamic]').forEach(el => {
-      const labels = PD.comparisonLabels[lang] || PD.comparisonLabels.en;
-      const comp = PD.comparisonData;
-      const projects = ['serenity-villas', 'serenity-estates', 'serenity-village'];
-      let html = '<thead><tr><th></th>';
-      projects.forEach(k => { html += '<th>' + PD[k].name + '</th>'; });
+    document.querySelectorAll('table[data-dynamic]').forEach(function(el) {
+      var labels = PD.comparisonLabels[dataLang] || PD.comparisonLabels.en;
+      var projects = getProjectKeys();
+      var html = '<thead><tr><th></th>';
+      projects.forEach(function(k) { html += '<th>' + PD[k].name + '</th>'; });
       html += '</tr></thead><tbody>';
-      const rows = [
-        { key: 'price', fn: k => comp[k].price },
-        { key: 'bedrooms', fn: k => PD[k].bedrooms },
-        { key: 'area', fn: k => comp[k].area },
-        { key: 'land', fn: k => comp[k].land },
-        { key: 'units', fn: k => PD[k].totalUnits },
-        { key: 'pool', fn: k => { const p = comp[k].pool; return (typeof p === 'object') ? (p[lang] || p.en) : p; } },
-        { key: 'handover', fn: k => PD[k].handover || '\u2014' },
-        { key: 'status', fn: k => { const s = PD[k].showcaseStatus; return s ? (s[lang] || s.en) : '\u2014'; } }
+      var comp = PD.comparisonData || {};
+      var rows = [
+        { key: 'price', fn: function(k) { return (comp[k] && comp[k].price) || ('$' + (PD[k].startingPrice / 1000 | 0) + 'K'); } },
+        { key: 'bedrooms', fn: function(k) { return PD[k].bedrooms; } },
+        { key: 'area', fn: function(k) { return PD[k].compArea || (comp[k] && comp[k].area) || '\u2014'; } },
+        { key: 'land', fn: function(k) { return PD[k].compLand || (comp[k] && comp[k].land) || '\u2014'; } },
+        { key: 'units', fn: function(k) { return PD[k].totalUnits; } },
+        { key: 'pool', fn: function(k) { var p = PD[k].compPool || (comp[k] && comp[k].pool); if (!p) return '\u2014'; return (typeof p === 'object') ? (p[dataLang] || p.en) : p; } },
+        { key: 'handover', fn: function(k) { return PD[k].handover || '\u2014'; } },
+        { key: 'status', fn: function(k) { return loc(PD[k].showcaseStatus) || '\u2014'; } }
       ];
-      rows.forEach(r => {
+      rows.forEach(function(r) {
         html += '<tr><td>' + labels[r.key] + '</td>';
-        projects.forEach(k => { html += '<td>' + r.fn(k) + '</td>'; });
+        projects.forEach(function(k) { html += '<td>' + r.fn(k) + '</td>'; });
         html += '</tr>';
       });
       html += '<tr><td></td>';
-      projects.forEach(k => {
+      projects.forEach(function(k) {
         html += '<td><a href="' + PD[k].page + '" class="btn btn--primary btn--sm">' + labels.cta + '</a></td>';
       });
       html += '</tr></tbody>';
       el.innerHTML = html;
+    });
+
+    // --- Dynamic Footer Project Links ---
+    document.querySelectorAll('[data-footer-projects]').forEach(function(container) {
+      var keys = getProjectKeys();
+      container.innerHTML = keys.map(function(k) {
+        return '<a href="' + PD[k].page + '">' + PD[k].name + '</a>';
+      }).join('');
     });
   }
 

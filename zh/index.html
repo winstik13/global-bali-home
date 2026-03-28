@@ -85,88 +85,7 @@
         <p>位于乌布中心的三个高端别墅开发项目</p>
       </div>
 
-      <!-- Serenity Villas -->
-      <div class="project-showcase reveal" data-project="serenity-villas">
-        <a href="project-serenity-villas.html" class="project-showcase__image">
-          <img src="../images/serenity-villas/complex-overview.jpg" alt="Serenity Villas" loading="lazy" width="1920" height="1080">
-          <span class="project-showcase__badge project-card__badge--construction">建设中</span>
-        </a>
-        <div class="project-showcase__content">
-          <span class="section-header__tag">01</span>
-          <h3>Serenity Villas</h3>
-          <p>乌布12栋现代别墅，拥有丛林美景与天然瀑布</p>
-          <div class="project-showcase__meta">
-            <div><strong>12</strong> 套别墅</div>
-            <div><strong>2-3</strong> 间卧室</div>
-            <div><strong>Q2 2026</strong> 交房</div>
-          </div>
-          <p class="project-showcase__price">From $335,000</p>
-          <div class="availability-bar">
-            <div class="availability-bar__header">
-              <span class="availability-bar__label">仅剩4套（共12套）</span>
-              <span class="availability-bar__percent">67%</span>
-            </div>
-            <div class="availability-bar__track">
-              <div class="availability-bar__fill" style="width: 67%"></div>
-            </div>
-          </div>
-          <a href="project-serenity-villas.html" class="btn btn--outline">探索 Serenity Villas</a>
-        </div>
-      </div>
-
-      <!-- Serenity Estates -->
-      <div class="project-showcase reveal" data-project="serenity-estates">
-        <a href="project-serenity-estates.html" class="project-showcase__image">
-          <img src="../images/home/estates-birds-eye.jpg" alt="Serenity Estates" loading="lazy" width="1680" height="945">
-          <span class="project-showcase__badge project-card__badge--construction">建设中</span>
-        </a>
-        <div class="project-showcase__content">
-          <span class="section-header__tag">02</span>
-          <h3>Serenity Estates</h3>
-          <p>4套独享别墅，配备私人泳池，俯瞰稻田梯级美景</p>
-          <div class="project-showcase__meta">
-            <div><strong>4</strong> 套别墅</div>
-            <div><strong>2–4.5</strong> 间卧室</div>
-            <div><strong>Q1 2027</strong> 交房</div>
-          </div>
-          <p class="project-showcase__price">From $310,000</p>
-          <div class="availability-bar">
-            <div class="availability-bar__header">
-              <span class="availability-bar__label">4套中已售1套</span>
-              <span class="availability-bar__percent">25%</span>
-            </div>
-            <div class="availability-bar__track">
-              <div class="availability-bar__fill" style="width: 25%"></div>
-            </div>
-          </div>
-          <a href="project-serenity-estates.html" class="btn btn--outline">探索 Serenity Estates</a>
-        </div>
-      </div>
-
-      <!-- Serenity Village -->
-      <div class="project-showcase reveal" data-project="serenity-village">
-        <a href="project-serenity-village.html" class="project-showcase__image">
-          <img src="../images/serenity-village/6House_Max.0001.jpg" alt="Serenity Village" loading="lazy" width="1920" height="1080">
-          <span class="project-showcase__badge project-card__badge--presale">预售</span>
-        </a>
-        <div class="project-showcase__content">
-          <span class="section-header__tag">03</span>
-          <h3>Serenity Village</h3>
-          <p>26套别墅综合体，设有共享泳池和咖啡厅 — 起价$119K</p>
-          <div class="project-showcase__meta">
-            <div><strong>26</strong> 套别墅</div>
-            <div><strong>1-2</strong> 间卧室</div>
-            <div><strong>预售</strong> 进行中</div>
-          </div>
-          <p class="project-showcase__price">From $119,000</p>
-          <div class="availability-bar availability-bar--presale">
-            <div class="availability-bar__header">
-              <span class="availability-bar__label"><span class="availability-bar__dot"></span> 预售开放</span>
-            </div>
-          </div>
-          <a href="project-serenity-village.html" class="btn btn--outline">探索 Serenity Village</a>
-        </div>
-      </div>
+      <div data-projects-container data-projects-short></div>
     </div>
   </section>
 
@@ -398,7 +317,7 @@
         </div>
         <div>
           <h4 class="footer__heading">项目</h4>
-          <div class="footer__links"><a href="project-serenity-villas.html">Serenity Villas</a><a href="project-serenity-estates.html">Serenity Estates</a><a href="project-serenity-village.html">Serenity Village</a></div>
+          <div class="footer__links" data-footer-projects><a href="project-serenity-villas.html">Serenity Villas</a><a href="project-serenity-estates.html">Serenity Estates</a><a href="project-serenity-village.html">Serenity Village</a></div>
         </div>
         <div>
           <h4 class="footer__heading">联系方式</h4>
@@ -444,6 +363,7 @@
   </script>
   <script src="../gallery-data.js" defer></script>
   <script src="../data/projects-data.js" defer></script>
+  <script src="../data/site-data.js" defer></script>
   <script src="../js/main.js" defer></script>
 </body>
 </html>

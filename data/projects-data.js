@@ -4,11 +4,28 @@ const PROJECTS_DATA = {
     "slug": "serenity-villas",
     "page": "project-serenity-villas.html",
     "name": "Serenity Villas",
+    "order": 1,
     "totalUnits": 12,
     "bedrooms": "2–3",
     "handover": "Q2 2026",
     "status": "in-progress",
     "startingPrice": 335000,
+    "showcaseImage": "images/serenity-villas/complex-overview.jpg",
+    "showcaseSubtitle": {
+      "en": "12 modern villas with jungle views and natural waterfalls in Ubud",
+      "ru": "12 современных вилл с видом на джунгли и природными водопадами в Убуде",
+      "id": "12 villa modern dengan pemandangan hutan dan air terjun alami di Ubud",
+      "zh": "乌布12栋现代别墅，拥有丛林美景与天然瀑布"
+    },
+    "showcaseMeta": {
+      "en": [{"strong": "12", "label": "Villas"}, {"strong": "2-3", "label": "Bedrooms"}, {"strong": "Q2 2026", "label": "Handover"}],
+      "ru": [{"strong": "12", "label": "Вилл"}, {"strong": "2-3", "label": "Спальни"}, {"strong": "Q2 2026", "label": "Сдача"}],
+      "id": [{"strong": "12", "label": "Villa"}, {"strong": "2-3", "label": "Kamar Tidur"}, {"strong": "Q2 2026", "label": "Serah Terima"}],
+      "zh": [{"strong": "12", "label": "套别墅"}, {"strong": "2-3", "label": "间卧室"}, {"strong": "Q2 2026", "label": "交房"}]
+    },
+    "compArea": "167–210 m²",
+    "compLand": "2–3 are",
+    "compPool": {"en": "Private", "ru": "Приватный", "id": "Pribadi", "zh": "私人"},
     "heroStats": {
       "en": [
         {
@@ -260,11 +277,28 @@ const PROJECTS_DATA = {
     "slug": "serenity-estates",
     "page": "project-serenity-estates.html",
     "name": "Serenity Estates",
+    "order": 2,
     "totalUnits": 4,
     "bedrooms": "2–4.5",
     "handover": "Q1 2027",
     "status": "in-progress",
     "startingPrice": 310000,
+    "showcaseImage": "images/home/estates-birds-eye.jpg",
+    "showcaseSubtitle": {
+      "en": "4 exclusive villas with private pools and rice terrace views",
+      "ru": "4 эксклюзивные виллы с бассейнами и видом на рисовые террасы",
+      "id": "4 villa eksklusif dengan kolam renang pribadi dan pemandangan sawah bertingkat",
+      "zh": "4套独享别墅，配备私人泳池，俯瞰稻田梯级美景"
+    },
+    "showcaseMeta": {
+      "en": [{"strong": "4", "label": "Villas"}, {"strong": "2–4.5", "label": "Bedrooms"}, {"strong": "Q1 2027", "label": "Handover"}],
+      "ru": [{"strong": "4", "label": "Виллы"}, {"strong": "2–4.5", "label": "Спальни"}, {"strong": "Q1 2027", "label": "Сдача"}],
+      "id": [{"strong": "4", "label": "Villa"}, {"strong": "2–4.5", "label": "Kamar Tidur"}, {"strong": "Q1 2027", "label": "Serah Terima"}],
+      "zh": [{"strong": "4", "label": "套别墅"}, {"strong": "2–4.5", "label": "间卧室"}, {"strong": "Q1 2027", "label": "交房"}]
+    },
+    "compArea": "155–250 m²",
+    "compLand": "3–14 are",
+    "compPool": {"en": "Private", "ru": "Приватный", "id": "Pribadi", "zh": "私人"},
     "heroStats": {
       "en": [
         {
@@ -436,11 +470,28 @@ const PROJECTS_DATA = {
     "slug": "serenity-village",
     "page": "project-serenity-village.html",
     "name": "Serenity Village",
+    "order": 3,
     "totalUnits": 26,
     "bedrooms": "1–2",
     "handover": "Q3 2027",
     "status": "pre-sale",
     "startingPrice": 119000,
+    "showcaseImage": "images/serenity-village/6House_Max.0001.jpg",
+    "showcaseSubtitle": {
+      "en": "Complex of 26 villas with shared pool and cafe — from $119K",
+      "ru": "Комплекс из 26 вилл с общим бассейном и кафе — от $119K",
+      "id": "Kompleks 26 villa dengan kolam renang bersama dan kafe — mulai $119 ribu",
+      "zh": "26套别墅综合体，设有共享泳池和咖啡厅 — 起价$119K"
+    },
+    "showcaseMeta": {
+      "en": [{"strong": "26", "label": "Villas"}, {"strong": "1-2", "label": "Bedrooms"}, {"strong": "Pre-Sale", "label": "Now"}],
+      "ru": [{"strong": "26", "label": "Вилл"}, {"strong": "1-2", "label": "Спальни"}, {"strong": "Предпродажа", "label": ""}],
+      "id": [{"strong": "26", "label": "Villa"}, {"strong": "1-2", "label": "Kamar Tidur"}, {"strong": "Pra-Penjualan", "label": "Sekarang"}],
+      "zh": [{"strong": "26", "label": "套别墅"}, {"strong": "1-2", "label": "间卧室"}, {"strong": "预售", "label": "进行中"}]
+    },
+    "compArea": "51–86 m²",
+    "compLand": "1–1.5 are",
+    "compPool": {"en": "Private + Shared", "ru": "Приватный + Общий", "id": "Pribadi + Bersama", "zh": "私人 + 共享"},
     "heroStats": {
       "en": [
         {

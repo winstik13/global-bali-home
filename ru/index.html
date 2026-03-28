@@ -85,88 +85,7 @@
         <p>Три премиальных комплекса вилл в сердце Убуда</p>
       </div>
 
-      <!-- Serenity Villas -->
-      <div class="project-showcase reveal" data-project="serenity-villas">
-        <a href="project-serenity-villas.html" class="project-showcase__image">
-          <img src="../images/serenity-villas/complex-overview.jpg" alt="Serenity Villas" loading="lazy" width="1920" height="1080">
-          <span class="project-showcase__badge project-card__badge--construction">Строится</span>
-        </a>
-        <div class="project-showcase__content">
-          <span class="section-header__tag">01</span>
-          <h3>Serenity Villas</h3>
-          <p>12 современных вилл с видом на джунгли и природными водопадами в Убуде</p>
-          <div class="project-showcase__meta">
-            <div><strong>12</strong> Вилл</div>
-            <div><strong>2-3</strong> Спальни</div>
-            <div><strong>Q2 2026</strong> Сдача</div>
-          </div>
-          <p class="project-showcase__price">От $335,000</p>
-          <div class="availability-bar">
-            <div class="availability-bar__header">
-              <span class="availability-bar__label">Осталось только 4 из 12</span>
-              <span class="availability-bar__percent">67%</span>
-            </div>
-            <div class="availability-bar__track">
-              <div class="availability-bar__fill" style="width: 67%"></div>
-            </div>
-          </div>
-          <a href="project-serenity-villas.html" class="btn btn--outline">Смотреть Serenity Villas</a>
-        </div>
-      </div>
-
-      <!-- Serenity Estates -->
-      <div class="project-showcase reveal" data-project="serenity-estates">
-        <a href="project-serenity-estates.html" class="project-showcase__image">
-          <img src="../images/home/estates-birds-eye.jpg" alt="Serenity Estates" loading="lazy" width="1680" height="945">
-          <span class="project-showcase__badge project-card__badge--construction">Строится</span>
-        </a>
-        <div class="project-showcase__content">
-          <span class="section-header__tag">02</span>
-          <h3>Serenity Estates</h3>
-          <p>4 эксклюзивные виллы с бассейнами и видом на рисовые террасы</p>
-          <div class="project-showcase__meta">
-            <div><strong>4</strong> Виллы</div>
-            <div><strong>2–4.5</strong> Спальни</div>
-            <div><strong>Q1 2027</strong> Сдача</div>
-          </div>
-          <p class="project-showcase__price">От $310,000</p>
-          <div class="availability-bar">
-            <div class="availability-bar__header">
-              <span class="availability-bar__label">1 из 4 продано</span>
-              <span class="availability-bar__percent">25%</span>
-            </div>
-            <div class="availability-bar__track">
-              <div class="availability-bar__fill" style="width: 25%"></div>
-            </div>
-          </div>
-          <a href="project-serenity-estates.html" class="btn btn--outline">Смотреть Serenity Estates</a>
-        </div>
-      </div>
-
-      <!-- Serenity Village -->
-      <div class="project-showcase reveal" data-project="serenity-village">
-        <a href="project-serenity-village.html" class="project-showcase__image">
-          <img src="../images/serenity-village/6House_Max.0001.jpg" alt="Serenity Village" loading="lazy" width="1920" height="1080">
-          <span class="project-showcase__badge project-card__badge--presale">Предпродажа</span>
-        </a>
-        <div class="project-showcase__content">
-          <span class="section-header__tag">03</span>
-          <h3>Serenity Village</h3>
-          <p>Комплекс из 26 вилл с общим бассейном и кафе — от $119K</p>
-          <div class="project-showcase__meta">
-            <div><strong>26</strong> Вилл</div>
-            <div><strong>1-2</strong> Спальни</div>
-            <div><strong>Предпродажа</strong></div>
-          </div>
-          <p class="project-showcase__price">От $119,000</p>
-          <div class="availability-bar availability-bar--presale">
-            <div class="availability-bar__header">
-              <span class="availability-bar__label"><span class="availability-bar__dot"></span> Предпродажа открыта</span>
-            </div>
-          </div>
-          <a href="project-serenity-village.html" class="btn btn--outline">Смотреть Serenity Village</a>
-        </div>
-      </div>
+      <div data-projects-container data-projects-short></div>
     </div>
   </section>
 
@@ -398,7 +317,7 @@
         </div>
         <div>
           <h4 class="footer__heading">Проекты</h4>
-          <div class="footer__links"><a href="project-serenity-villas.html">Serenity Villas</a><a href="project-serenity-estates.html">Serenity Estates</a><a href="project-serenity-village.html">Serenity Village</a></div>
+          <div class="footer__links" data-footer-projects><a href="project-serenity-villas.html">Serenity Villas</a><a href="project-serenity-estates.html">Serenity Estates</a><a href="project-serenity-village.html">Serenity Village</a></div>
         </div>
         <div>
           <h4 class="footer__heading">Контакты</h4>
@@ -417,6 +336,7 @@
   </a>
   <script src="../gallery-data.js" defer></script>
   <script src="../data/projects-data.js" defer></script>
+  <script src="../data/site-data.js" defer></script>
   <script src="../js/main.js" defer></script>
 </body>
 </html>

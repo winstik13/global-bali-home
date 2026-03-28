@@ -172,7 +172,10 @@
     patScreen.hidden = true;
     adminApp.hidden = false;
     loadProjectsData();
+    loadSiteData();
+    buildDynamicUI();
     renderDashboard();
+    renderGuideInfo();
     renderProjectEditor();
     updateRateLimit();
   }
@@ -187,15 +190,7 @@
     });
   });
 
-  // ─── Project Tabs ───
-  $$('.project-tabs__btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      $$('.project-tabs__btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentProject = btn.dataset.proj;
-      renderProjectEditor();
-    });
-  });
+  // Project tabs are now generated dynamically in buildDynamicUI()
 
   // ─── Load Projects Data ───
   function loadProjectsData() {
@@ -205,11 +200,68 @@
     }
   }
 
+  // Helper: get project keys sorted by order
+  function getProjectKeys() {
+    if (!projectsData) return [];
+    return Object.keys(projectsData)
+      .filter(k => projectsData[k] && projectsData[k].slug)
+      .sort((a, b) => (projectsData[a].order || 99) - (projectsData[b].order || 99));
+  }
+
+  // Build dynamic tabs/selectors from project data
+  function buildDynamicUI() {
+    const keys = getProjectKeys();
+    if (!keys.length) return;
+
+    // Project tabs + "New Project" button
+    const tabsContainer = $('.project-tabs');
+    if (tabsContainer) {
+      tabsContainer.innerHTML = keys.map((k, i) =>
+        `<button class="project-tabs__btn${i === 0 ? ' active' : ''}" data-proj="${k}">${projectsData[k].name}</button>`
+      ).join('') + '<button class="project-tabs__btn project-tabs__btn--add" id="btn-new-project">+ New Project</button>';
+      tabsContainer.querySelectorAll('.project-tabs__btn[data-proj]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabsContainer.querySelectorAll('.project-tabs__btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentProject = btn.dataset.proj;
+          renderProjectEditor();
+        });
+      });
+      const newProjBtn = $('#btn-new-project');
+      if (newProjBtn) newProjBtn.addEventListener('click', showNewProjectModal);
+    }
+
+    // SEO page select — add project pages dynamically
+    const seoSelect = $('#seo-page');
+    if (seoSelect) {
+      // Remove old project options
+      seoSelect.querySelectorAll('option[data-dynamic]').forEach(o => o.remove());
+      keys.forEach(k => {
+        const opt = document.createElement('option');
+        opt.value = projectsData[k].page;
+        opt.textContent = projectsData[k].name;
+        opt.setAttribute('data-dynamic', '');
+        seoSelect.appendChild(opt);
+      });
+    }
+
+    // Gallery project select
+    const galSelect = $('#gallery-project');
+    if (galSelect) {
+      galSelect.innerHTML = keys.map(k => {
+        const shortName = k.replace('serenity-', '');
+        return `<option value="${shortName}">${projectsData[k].name}</option>`;
+      }).join('');
+    }
+
+    currentProject = keys[0];
+  }
+
   // ─── Dashboard ───
   function renderDashboard() {
     if (!projectsData) return;
     const container = $('#dashboard-cards');
-    const projects = ['serenity-villas', 'serenity-estates', 'serenity-village'];
+    const projects = getProjectKeys();
 
     // Compute totals
     let totalUnits = 0, totalSold = 0, totalAvailable = 0, totalRevenue = 0;
@@ -379,7 +431,7 @@
     if (p.units) {
       html += `<div class="editor-section"><h3>Units</h3>
         <table class="admin-unit-table"><thead><tr>
-          <th>Unit</th><th>Type</th><th>Floors</th><th>Area</th><th>Land</th><th>Badge</th><th>Status</th><th>Price ($)</th>
+          <th>Unit</th><th>Type</th><th>Floors</th><th>Area</th><th>Land</th><th>Badge</th><th>Status</th><th>Price ($)</th><th></th>
         </tr></thead><tbody>`;
 
       p.units.forEach((u, i) => {
@@ -396,16 +448,17 @@
             ${['available', 'booked', 'sold', 'resale'].map(s => `<option value="${s}"${u.status === s ? ' selected' : ''}>${s.charAt(0).toUpperCase() + s.slice(1)}</option>`).join('')}
           </select></td>
           <td><input type="number" data-unit="${i}" data-field="price" class="unit-price" value="${u.price || ''}" placeholder="—" min="0" step="1000"></td>
+          <td><button class="btn--icon btn--danger" data-delete-unit="${i}" title="Delete unit">&times;</button></td>
         </tr>`;
       });
-      html += '</tbody></table></div>';
+      html += '</tbody></table><button class="btn btn--outline btn--sm" id="btn-add-unit" style="margin-top:8px">+ Add Unit</button></div>';
     }
 
     // Village Unit Types
     if (p.unitTypes) {
       html += `<div class="editor-section"><h3>Unit Types</h3>
         <table class="admin-unit-table"><thead><tr>
-          <th>Type</th><th>Floors</th><th>Area</th><th>Land</th><th>Units</th><th>Price ($)</th>
+          <th>Type</th><th>Floors</th><th>Area</th><th>Land</th><th>Units</th><th>Price ($)</th><th></th>
         </tr></thead><tbody>`;
 
       p.unitTypes.forEach((ut, i) => {
@@ -416,9 +469,10 @@
           <td><input type="text" data-utype="${i}" data-field="land" class="utype-text" value="${ut.land}" style="width:72px"></td>
           <td><input type="number" data-utype="${i}" data-field="count" class="utype-text" value="${ut.count}" style="width:48px" min="0"></td>
           <td><input type="number" data-utype="${i}" data-field="price" class="utype-price" value="${ut.price || ''}" min="0" step="1000"></td>
+          <td><button class="btn--icon btn--danger" data-delete-utype="${i}" title="Delete type">&times;</button></td>
         </tr>`;
       });
-      html += '</tbody></table></div>';
+      html += '</tbody></table><button class="btn btn--outline btn--sm" id="btn-add-utype" style="margin-top:8px">+ Add Type</button></div>';
     }
 
     // Availability
@@ -546,10 +600,59 @@
       });
     });
 
+    // Add/Delete units
+    const addUnitBtn = $('#btn-add-unit');
+    if (addUnitBtn) {
+      addUnitBtn.addEventListener('click', () => {
+        p.units.push({ id: 'NEW', type: '2 Bedroom', floors: 1, area: '', land: '', status: 'available', price: null, badge: null });
+        p.availability.total = p.units.length;
+        recalcAvailability();
+        markChanged();
+        renderProjectEditor();
+      });
+    }
+
+    editor.querySelectorAll('[data-delete-unit]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = +btn.dataset.deleteUnit;
+        if (!confirm(`Delete unit ${p.units[idx].id}?`)) return;
+        p.units.splice(idx, 1);
+        p.availability.total = p.units.length;
+        recalcAvailability();
+        markChanged();
+        renderProjectEditor();
+      });
+    });
+
+    // Add/Delete unit types (Village)
+    const addUtypeBtn = $('#btn-add-utype');
+    if (addUtypeBtn) {
+      addUtypeBtn.addEventListener('click', () => {
+        p.unitTypes.push({ type: '1 Bedroom', floors: 1, area: '', land: '', count: 0, price: null });
+        p.availability.total = p.unitTypes.reduce((s, ut) => s + ut.count, 0);
+        markChanged();
+        renderProjectEditor();
+      });
+    }
+
+    editor.querySelectorAll('[data-delete-utype]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = +btn.dataset.deleteUtype;
+        if (!confirm(`Delete type "${p.unitTypes[idx].type}"?`)) return;
+        p.unitTypes.splice(idx, 1);
+        p.availability.total = p.unitTypes.reduce((s, ut) => s + ut.count, 0);
+        markChanged();
+        renderProjectEditor();
+      });
+    });
+
     $('#avail-sold').addEventListener('input', (e) => {
       p.availability.sold = +e.target.value;
       markChanged();
     });
+
+    // Add generate pages button
+    addGeneratePagesButton();
   }
 
   function recalcAvailability() {
@@ -593,24 +696,15 @@
   });
 
   function buildProjectsDataJS() {
-    // Rebuild the JS file preserving the exact format
+    // Rebuild the JS file — copy all projects + global fields
     const data = {};
-    ['serenity-villas', 'serenity-estates', 'serenity-village'].forEach(key => {
-      data[key] = {};
-      const src = projectsData[key];
-      // Copy all fields except comparison/labels (those are global)
-      for (const k of Object.keys(src)) {
-        data[key][k] = src[k];
-      }
+    getProjectKeys().forEach(key => {
+      data[key] = projectsData[key];
     });
 
     // Copy global fields
-    data.comparisonLabels = projectsData.comparisonLabels;
-    data.comparisonData = projectsData.comparisonData;
-    data.unitTableHeaders = projectsData.unitTableHeaders;
-    data.statusLabels = projectsData.statusLabels;
-    data.availabilityLabels = projectsData.availabilityLabels;
-    data.villageTableHeaders = projectsData.villageTableHeaders;
+    const globalKeys = ['comparisonLabels', 'comparisonData', 'unitTableHeaders', 'statusLabels', 'availabilityLabels', 'villageTableHeaders'];
+    globalKeys.forEach(gk => { if (projectsData[gk]) data[gk] = projectsData[gk]; });
 
     return '/* eslint-disable */\nconst PROJECTS_DATA = ' + JSON.stringify(data, null, 2) + ';\n';
   }
@@ -916,8 +1010,9 @@
     if (!files.length) return;
 
     const cat = galleryProject.value;
-    const folderMap = { villas: 'serenity-villas', estates: 'serenity-estates', village: 'serenity-village' };
-    const folder = `images/${folderMap[cat]}`;
+    // Build folder from project slug: "villas" → "serenity-villas" → "images/serenity-villas"
+    const matchKey = getProjectKeys().find(k => k.replace('serenity-', '') === cat) || ('serenity-' + cat);
+    const folder = `images/${matchKey}`;
     const data = getGalleryData();
 
     galleryProgress.hidden = false;
@@ -1065,6 +1160,639 @@
       const limit = data.resources.core.limit;
       $('#rate-limit').textContent = `API: ${remaining}/${limit} requests remaining`;
     } catch { /* ignore */ }
+  }
+
+  // ─── Generate Detail Pages ───
+  function addGeneratePagesButton() {
+    const actions = $('.editor-actions');
+    if (!actions) return;
+    // Remove existing generate button
+    const existing = $('#btn-generate-pages');
+    if (existing) existing.remove();
+
+    const btn = document.createElement('button');
+    btn.id = 'btn-generate-pages';
+    btn.className = 'btn btn--outline';
+    btn.textContent = 'Generate Detail Pages';
+    btn.style.marginLeft = '12px';
+    actions.appendChild(btn);
+
+    btn.addEventListener('click', async () => {
+      const p = projectsData[currentProject];
+      if (!p) return;
+
+      // Check if pages already exist
+      let pageExists = false;
+      try {
+        await fetchFile(p.page);
+        pageExists = true;
+      } catch { /* new file */ }
+
+      if (pageExists && !confirm(`Pages for "${p.name}" already exist. Overwrite?`)) return;
+
+      btn.disabled = true;
+      btn.textContent = 'Generating...';
+      const status = $('#publish-status');
+
+      try {
+        const langConfigs = [
+          { lang: 'en', langFull: 'English', prefix: '', htmlLang: 'en', path: p.page },
+          { lang: 'ru', langFull: 'Русский', prefix: '../', htmlLang: 'ru', path: `ru/${p.page}` },
+          { lang: 'id', langFull: 'Bahasa Indonesia', prefix: '../', htmlLang: 'id', path: `id/${p.page}` },
+          { lang: 'zh', langFull: '简体中文', prefix: '../', htmlLang: 'zh-CN', path: `zh/${p.page}` }
+        ];
+
+        let generated = 0;
+        for (const cfg of langConfigs) {
+          const html = buildDetailPage(p, currentProject, cfg);
+          let sha;
+          try { sha = (await fetchFile(cfg.path)).sha; } catch { /* new */ }
+          await commitFile(cfg.path, html, `Generate detail page: ${p.name} (${cfg.lang})`, sha);
+          generated++;
+          status.textContent = `Generating... ${generated}/${langConfigs.length}`;
+        }
+
+        status.textContent = `${generated} pages generated!`;
+        status.className = 'publish-status success';
+      } catch (err) {
+        status.textContent = 'Error: ' + err.message;
+        status.className = 'publish-status error';
+      }
+      btn.disabled = false;
+      btn.textContent = 'Generate Detail Pages';
+      updateRateLimit();
+    });
+  }
+
+  const PAGE_LABELS = {
+    en: { home: 'Home', projects: 'Projects', services: 'Services', about: 'About', gallery: 'Gallery', contact: 'Contact', findVilla: 'Find My Villa', nav: 'Navigation', concept: 'The Concept', conceptTitle: 'About This Project', availability: 'Availability', unitSelection: 'Unit Selection', galleryTitle: 'Project Images', viewPhotos: 'View Photos', interested: 'Interested in', getConsult: 'Get a Consultation', footer: 'Global Bali Home is an international real estate company focused on the development of high-quality properties in Bali.', copyright: '&copy; 2024–2026 Global Bali Home. All rights reserved.' },
+    ru: { home: 'Главная', projects: 'Проекты', services: 'Услуги', about: 'О нас', gallery: 'Галерея', contact: 'Контакты', findVilla: 'Найти виллу', nav: 'Навигация', concept: 'Концепция', conceptTitle: 'О проекте', availability: 'Доступность', unitSelection: 'Выбор юнитов', galleryTitle: 'Фотографии проекта', viewPhotos: 'Смотреть фото', interested: 'Интересует', getConsult: 'Получить консультацию', footer: 'Global Bali Home — международная компания по строительству премиальной недвижимости на Бали.', copyright: '&copy; 2024–2026 Global Bali Home. Все права защищены.' },
+    id: { home: 'Beranda', projects: 'Proyek', services: 'Layanan', about: 'Tentang', gallery: 'Galeri', contact: 'Kontak', findVilla: 'Temukan Villa', nav: 'Navigasi', concept: 'Konsep', conceptTitle: 'Tentang Proyek Ini', availability: 'Ketersediaan', unitSelection: 'Pilihan Unit', galleryTitle: 'Galeri Proyek', viewPhotos: 'Lihat Foto', interested: 'Tertarik dengan', getConsult: 'Hubungi Kami', footer: 'Global Bali Home adalah perusahaan real estate internasional yang fokus pada pengembangan properti berkualitas tinggi di Bali.', copyright: '&copy; 2024–2026 Global Bali Home. Hak cipta dilindungi.' },
+    zh: { home: '首页', projects: '项目', services: '服务', about: '关于', gallery: '画廊', contact: '联系', findVilla: '找到我的别墅', nav: '导航', concept: '概念', conceptTitle: '关于本项目', availability: '可用性', unitSelection: '房型选择', galleryTitle: '项目图片', viewPhotos: '查看照片', interested: '感兴趣', getConsult: '获取咨询', footer: 'Global Bali Home 是一家专注于巴厘岛高品质房产开发的国际房地产公司。', copyright: '&copy; 2024–2026 Global Bali Home. 版权所有。' }
+  };
+
+  function buildDetailPage(proj, slug, cfg) {
+    const L = PAGE_LABELS[cfg.lang] || PAGE_LABELS.en;
+    const p = cfg.prefix;
+    const BASE_URL = 'https://winstik13.github.io/global-bali-home';
+    const pageUrl = `${BASE_URL}/${proj.page}`;
+    const desc = (proj.showcaseDesc && (proj.showcaseDesc[cfg.lang] || proj.showcaseDesc.en)) || proj.name;
+    const subtitle = (proj.showcaseSubtitle && (proj.showcaseSubtitle[cfg.lang] || proj.showcaseSubtitle.en)) || '';
+    const image = proj.showcaseImage ? `${BASE_URL}/${proj.showcaseImage}` : '';
+
+    // Lang switcher
+    const langLinks = [
+      { lang: 'en', label: 'English', href: `${p}${proj.page}` },
+      { lang: 'id', label: 'Bahasa Indonesia', href: `${cfg.lang === 'en' ? 'id/' : (cfg.lang === 'id' ? '' : '../id/')}${proj.page}` },
+      { lang: 'ru', label: 'Русский', href: `${cfg.lang === 'en' ? 'ru/' : (cfg.lang === 'ru' ? '' : '../ru/')}${proj.page}` },
+      { lang: 'zh', label: '简体中文', href: `${cfg.lang === 'en' ? 'zh/' : (cfg.lang === 'zh' ? '' : '../zh/')}${proj.page}` }
+    ];
+    const langToggleLabel = cfg.lang === 'en' ? 'EN' : cfg.lang === 'ru' ? 'RU' : cfg.lang === 'id' ? 'ID' : '中文';
+    const langDropdown = langLinks.map(l =>
+      l.lang === cfg.lang ? `<span class="active">${l.label}</span>` : `<a href="${l.href}">${l.label}</a>`
+    ).join('');
+
+    return `<!DOCTYPE html>
+<html lang="${cfg.htmlLang}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="${escAttr(desc)}">
+  <title>${escAttr(proj.name)} — Global Bali Home</title>
+  <link rel="icon" href="${p}images/common/favicon.ico">
+  <link rel="canonical" href="${pageUrl}">
+  <link rel="alternate" hreflang="en" href="${BASE_URL}/${proj.page}">
+  <link rel="alternate" hreflang="ru" href="${BASE_URL}/ru/${proj.page}">
+  <link rel="alternate" hreflang="id" href="${BASE_URL}/id/${proj.page}">
+  <link rel="alternate" hreflang="zh-CN" href="${BASE_URL}/zh/${proj.page}">
+  <link rel="alternate" hreflang="x-default" href="${BASE_URL}/${proj.page}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="${escAttr(proj.name)} — Global Bali Home">
+  <meta property="og:description" content="${escAttr(desc)}">
+  ${image ? `<meta property="og:image" content="${escAttr(image)}">` : ''}
+  <meta property="og:url" content="${pageUrl}">
+  <meta property="og:site_name" content="Global Bali Home">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${escAttr(proj.name)} — Global Bali Home">
+  <meta name="twitter:description" content="${escAttr(desc)}">
+  ${image ? `<meta name="twitter:image" content="${escAttr(image)}">` : ''}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="${p}css/reset.css">
+  <link rel="stylesheet" href="${p}css/style.css">
+</head>
+<body>
+
+  <header class="header header--transparent">
+    <div class="container">
+      <a href="index.html" class="header__logo"><img src="${p}images/common/logo-transparent.png" alt="GlobalBaliHome" width="1000" height="740"></a>
+      <nav class="header__nav">
+        <a href="index.html">${L.home}</a>
+        <a href="projects.html">${L.projects}</a>
+        <a href="services.html">${L.services}</a>
+        <a href="about.html">${L.about}</a>
+        <a href="gallery.html">${L.gallery}</a>
+        <a href="contacts.html">${L.contact}</a>
+      </nav>
+      <div class="header__lang"><button class="header__lang-toggle">${langToggleLabel} <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></button><div class="header__lang-dropdown">${langDropdown}</div></div>
+      <button class="header__cta btn btn--outline" data-quiz>${L.findVilla}</button>
+      <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <section class="fullbleed-hero">
+    <div class="fullbleed-hero__bg"${proj.showcaseImage ? ` style="background-image: url('${p}${proj.showcaseImage}');"` : ''}></div>
+    <div class="fullbleed-hero__overlay"></div>
+    <div class="fullbleed-hero__top">
+      <div class="container">
+        <nav class="page-hero__breadcrumbs"><a href="index.html">${L.home}</a> <span>/</span> <a href="projects.html">${L.projects}</a> <span>/</span> <span>${proj.name}</span></nav>
+        <p class="page-hero__subtitle">${escAttr(subtitle)}</p>
+        <h1>${proj.name}</h1>
+        <div class="hero-stats" data-project="${slug}"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-alt">
+    <div class="container">
+      <div class="split-section reveal">
+        <div class="split-section__content" style="max-width:100%">
+          <span class="section-header__tag">${L.concept}</span>
+          <h2>${L.conceptTitle}</h2>
+          <p>${escAttr(desc)}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-header__tag">${L.availability}</span>
+        <h2>${L.unitSelection}</h2>
+      </div>
+      <div class="availability-bar reveal" data-project="${slug}"></div>
+      <div class="reveal">
+        <div class="table-wrap"><table class="unit-table" data-project="${slug}"></table></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section logo-watermark logo-watermark--right">
+    <div class="container reveal">
+      <h2>${L.interested} ${proj.name}?</h2>
+      <p>${escAttr(desc)}</p>
+      <a href="contacts.html" class="btn btn--primary">${L.getConsult}</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <img src="${p}images/common/logo-transparent.png" alt="GlobalBaliHome" loading="lazy" width="1000" height="740">
+          <p>${L.footer}</p>
+        </div>
+        <div>
+          <h4 class="footer__heading">${L.nav}</h4>
+          <div class="footer__links"><a href="about.html">${L.about}</a><a href="projects.html">${L.projects}</a><a href="services.html">${L.services}</a><a href="gallery.html">${L.gallery}</a><a href="contacts.html">${L.contact}</a></div>
+        </div>
+        <div>
+          <h4 class="footer__heading">${L.projects}</h4>
+          <div class="footer__links" data-footer-projects><a href="project-serenity-villas.html">Serenity Villas</a><a href="project-serenity-estates.html">Serenity Estates</a><a href="project-serenity-village.html">Serenity Village</a></div>
+        </div>
+        <div>
+          <h4 class="footer__heading">${L.contact}</h4>
+          <p class="footer__contact-item">+62 813 251 438 49</p>
+          <p class="footer__contact-item">office@globalbalihome.com</p>
+          <p class="footer__contact-item">Ubud, Bali, Indonesia</p>
+          <div class="footer__social"><a href="https://www.facebook.com/serenityvillasbali" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a><a href="https://www.instagram.com/serenity_villas_bali" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5"/></svg></a></div>
+        </div>
+      </div>
+      <div class="footer__bottom">${L.copyright}</div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/6281338741177" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "RealEstateListing",
+    "name": "${escAttr(proj.name)}",
+    "description": "${escAttr(desc)}",
+    "url": "${pageUrl}",
+    ${image ? `"image": "${escAttr(image)}",` : ''}
+    "offers": {
+      "@type": "AggregateOffer",
+      "lowPrice": "${proj.startingPrice || 0}",
+      "priceCurrency": "USD"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Ubud",
+      "addressRegion": "Bali",
+      "addressCountry": "ID"
+    }
+  }
+  </script>
+  <script src="${p}data/projects-data.js" defer></script>
+  <script src="${p}js/main.js" defer></script>
+</body>
+</html>`;
+  }
+
+  // ─── New Project Modal ───
+  function showNewProjectModal() {
+    // Remove existing modal
+    const existing = $('#new-project-modal');
+    if (existing) existing.remove();
+
+    const modal = document.createElement('div');
+    modal.id = 'new-project-modal';
+    modal.className = 'admin-modal';
+    modal.innerHTML = `<div class="admin-modal__backdrop"></div>
+      <div class="admin-modal__content">
+        <div class="admin-modal__header">
+          <h2>Add New Project</h2>
+          <button class="admin-modal__close">&times;</button>
+        </div>
+        <div class="admin-modal__body">
+          <div class="form-group"><label>Project Name</label><input type="text" id="np-name" placeholder="e.g. Serenity Heights"></div>
+          <div class="form-group"><label>Slug (auto)</label><input type="text" id="np-slug" placeholder="serenity-heights" readonly></div>
+          <div style="display:flex;gap:16px;flex-wrap:wrap">
+            <div class="form-group" style="flex:1;min-width:140px"><label>Status</label>
+              <select id="np-status"><option value="pre-sale">Pre-Sale</option><option value="in-progress">In Progress</option><option value="completed">Completed</option></select>
+            </div>
+            <div class="form-group" style="flex:1;min-width:140px"><label>Starting Price ($)</label><input type="number" id="np-price" placeholder="119000" min="0" step="1000"></div>
+            <div class="form-group" style="flex:1;min-width:140px"><label>Total Units</label><input type="number" id="np-units" value="1" min="1"></div>
+          </div>
+          <div style="display:flex;gap:16px;flex-wrap:wrap">
+            <div class="form-group" style="flex:1;min-width:140px"><label>Bedrooms</label><input type="text" id="np-bedrooms" placeholder="2–3"></div>
+            <div class="form-group" style="flex:1;min-width:140px"><label>Handover</label><input type="text" id="np-handover" placeholder="Q1 2028"></div>
+            <div class="form-group" style="flex:1;min-width:140px"><label>Showcase Image</label><input type="text" id="np-image" placeholder="images/project/hero.jpg"></div>
+          </div>
+          <h3 style="margin-top:16px">Showcase Text (EN)</h3>
+          <div class="form-group"><label>Short Subtitle</label><input type="text" id="np-subtitle" placeholder="12 modern villas with jungle views"></div>
+          <div class="form-group"><label>Description</label><textarea id="np-desc" rows="2" placeholder="Full description for projects page"></textarea></div>
+          <h3 style="margin-top:16px">Comparison Data</h3>
+          <div style="display:flex;gap:16px;flex-wrap:wrap">
+            <div class="form-group" style="flex:1;min-width:120px"><label>Area Range</label><input type="text" id="np-area" placeholder="100–200 m²"></div>
+            <div class="form-group" style="flex:1;min-width:120px"><label>Land Range</label><input type="text" id="np-land" placeholder="2–3 are"></div>
+            <div class="form-group" style="flex:1;min-width:120px"><label>Pool</label><input type="text" id="np-pool" placeholder="Private"></div>
+          </div>
+        </div>
+        <div class="admin-modal__footer">
+          <button class="btn btn--outline" id="np-cancel">Cancel</button>
+          <button class="btn btn--primary" id="np-create">Create Project</button>
+        </div>
+      </div>`;
+
+    document.body.appendChild(modal);
+
+    // Auto-generate slug from name
+    $('#np-name').addEventListener('input', () => {
+      const name = $('#np-name').value;
+      $('#np-slug').value = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    });
+
+    // Close
+    modal.querySelector('.admin-modal__backdrop').addEventListener('click', () => modal.remove());
+    modal.querySelector('.admin-modal__close').addEventListener('click', () => modal.remove());
+    $('#np-cancel').addEventListener('click', () => modal.remove());
+
+    // Create
+    $('#np-create').addEventListener('click', () => {
+      const name = $('#np-name').value.trim();
+      const slug = $('#np-slug').value.trim();
+      if (!name || !slug) { alert('Name is required'); return; }
+      if (projectsData[slug]) { alert('Project with this slug already exists'); return; }
+
+      const status = $('#np-status').value;
+      const price = +$('#np-price').value || 0;
+      const totalUnits = +$('#np-units').value || 1;
+      const bedrooms = $('#np-bedrooms').value || '1–2';
+      const handover = $('#np-handover').value || '';
+      const image = $('#np-image').value || '';
+      const subtitle = $('#np-subtitle').value || name;
+      const desc = $('#np-desc').value || subtitle;
+      const area = $('#np-area').value || '';
+      const land = $('#np-land').value || '';
+      const pool = $('#np-pool').value || 'Private';
+      const priceLabel = price ? 'From $' + price.toLocaleString('en-US') : '';
+
+      const nextOrder = getProjectKeys().length + 1;
+
+      // Build the project object
+      const proj = {
+        slug: slug,
+        page: `project-${slug}.html`,
+        name: name,
+        order: nextOrder,
+        totalUnits: totalUnits,
+        bedrooms: bedrooms,
+        handover: handover,
+        status: status,
+        startingPrice: price,
+        showcaseImage: image,
+        showcaseSubtitle: { en: subtitle, ru: subtitle, id: subtitle, zh: subtitle },
+        showcaseMeta: {
+          en: [{ strong: String(totalUnits), label: 'Villas' }, { strong: bedrooms, label: 'Bedrooms' }, { strong: handover || status, label: handover ? 'Handover' : 'Status' }],
+          ru: [{ strong: String(totalUnits), label: 'Вилл' }, { strong: bedrooms, label: 'Спальни' }, { strong: handover || status, label: handover ? 'Сдача' : 'Статус' }],
+          id: [{ strong: String(totalUnits), label: 'Villa' }, { strong: bedrooms, label: 'Kamar Tidur' }, { strong: handover || status, label: handover ? 'Serah Terima' : 'Status' }],
+          zh: [{ strong: String(totalUnits), label: '套别墅' }, { strong: bedrooms, label: '间卧室' }, { strong: handover || status, label: handover ? '交房' : '状态' }]
+        },
+        compArea: area,
+        compLand: land,
+        compPool: { en: pool, ru: pool, id: pool, zh: pool },
+        heroStats: {
+          en: [{ number: String(totalUnits), label: 'Villas' }, { number: bedrooms, label: 'Bedrooms' }, { number: priceLabel ? '$' + (price / 1000 | 0) + 'K' : '', label: 'From' }],
+          ru: [{ number: String(totalUnits), label: 'Вилл' }, { number: bedrooms, label: 'Спальни' }, { number: priceLabel ? '$' + (price / 1000 | 0) + 'K' : '', label: 'От' }],
+          id: [{ number: String(totalUnits), label: 'Vila' }, { number: bedrooms, label: 'Kamar Tidur' }, { number: priceLabel ? '$' + (price / 1000 | 0) + 'K' : '', label: 'Mulai Dari' }],
+          zh: [{ number: String(totalUnits), label: '别墅' }, { number: bedrooms, label: '卧室' }, { number: priceLabel ? '$' + (price / 1000 | 0) + 'K' : '', label: '起价' }]
+        },
+        availability: { sold: 0, total: totalUnits },
+        showcasePrice: { en: priceLabel, ru: priceLabel.replace('From', 'От'), id: priceLabel, zh: priceLabel.replace('From', '起价') },
+        showcaseStatus: {
+          en: status === 'pre-sale' ? 'Pre-Sale' : status === 'completed' ? 'Completed' : 'In Progress',
+          ru: status === 'pre-sale' ? 'Предпродажа' : status === 'completed' ? 'Завершён' : 'Строится',
+          id: status === 'pre-sale' ? 'Pra-Penjualan' : status === 'completed' ? 'Selesai' : 'Dalam Pembangunan',
+          zh: status === 'pre-sale' ? '预售' : status === 'completed' ? '已完工' : '建设中'
+        },
+        showcaseAvailability: {
+          en: status === 'pre-sale' ? 'Pre-Sale Open' : '0 of ' + totalUnits + ' units sold',
+          ru: status === 'pre-sale' ? 'Предпродажа открыта' : '0 из ' + totalUnits + ' продано',
+          id: status === 'pre-sale' ? 'Pra-Penjualan Dibuka' : '0 dari ' + totalUnits + ' unit terjual',
+          zh: status === 'pre-sale' ? '预售开放' : totalUnits + '套中已售0套'
+        },
+        showcaseDesc: { en: desc, ru: desc, id: desc, zh: desc },
+        showcaseCta: { en: 'View Details', ru: 'Подробнее', id: 'Lihat Detail', zh: '查看详情' },
+        units: []
+      };
+
+      // Pre-populate units
+      for (let i = 0; i < totalUnits; i++) {
+        proj.units.push({ id: String.fromCharCode(65 + (i / 4 | 0)) + ((i % 4) + 1), type: '2 Bedroom', floors: 1, area: '', land: '', status: 'available', price: price, badge: null });
+      }
+
+      // Add pre-sale banner for pre-sale projects
+      if (status === 'pre-sale') {
+        proj.preSaleBanner = {
+          en: 'Pre-Sale Now Open — Register Your Interest Today',
+          ru: 'Предпродажа открыта — Зарегистрируйте ваш интерес',
+          id: 'Pra-Penjualan Dibuka — Daftarkan Minat Anda Hari Ini',
+          zh: '预售已开启 — 立即登记您的意向'
+        };
+      }
+
+      // Add to data
+      projectsData[slug] = proj;
+      currentProject = slug;
+      markChanged();
+
+      // Rebuild UI
+      buildDynamicUI();
+      renderDashboard();
+      renderProjectEditor();
+
+      // Activate the new project tab
+      $$('.project-tabs__btn').forEach(b => b.classList.remove('active'));
+      const newTab = document.querySelector(`.project-tabs__btn[data-proj="${slug}"]`);
+      if (newTab) newTab.classList.add('active');
+
+      modal.remove();
+    });
+  }
+
+  // ─── Investment Guide PDF Upload ───
+  let siteData = null;
+
+  function loadSiteData() {
+    if (typeof SITE_DATA !== 'undefined') {
+      siteData = JSON.parse(JSON.stringify(SITE_DATA));
+    } else {
+      siteData = { investmentGuide: { path: 'assets/bali-investment-guide-2026.pdf', version: '2026', updatedAt: '' } };
+    }
+  }
+
+  function renderGuideInfo() {
+    if (!siteData) loadSiteData();
+    const info = $('#guide-info');
+    if (!info) return;
+    const guide = siteData.investmentGuide;
+    if (guide.updatedAt) {
+      info.innerHTML = `<p><strong>Current file:</strong> ${escAttr(guide.path)}</p><p><strong>Version:</strong> ${guide.version} &bull; <strong>Updated:</strong> ${guide.updatedAt}</p>`;
+    } else {
+      info.innerHTML = '<p style="color:var(--color-text-dim)">No PDF uploaded yet. Upload a file to enable the Investment Guide download.</p>';
+    }
+  }
+
+  const guideUploadBtn = $('#btn-guide-upload');
+  const guideFileInput = $('#guide-file-input');
+
+  if (guideUploadBtn && guideFileInput) {
+    guideUploadBtn.addEventListener('click', () => guideFileInput.click());
+
+    guideFileInput.addEventListener('change', async () => {
+      const file = guideFileInput.files[0];
+      if (!file) return;
+      if (!file.name.endsWith('.pdf')) {
+        alert('Please select a PDF file');
+        return;
+      }
+
+      const status = $('#guide-upload-status');
+      guideUploadBtn.disabled = true;
+      status.textContent = 'Uploading PDF...';
+      status.className = 'publish-status';
+
+      try {
+        // Read file as base64
+        const base64 = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result.split(',')[1]);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+
+        if (!siteData) loadSiteData();
+        const pdfPath = siteData.investmentGuide.path || 'assets/bali-investment-guide-2026.pdf';
+
+        // Upload PDF via GitHub API
+        await commitFile(pdfPath, '', 'Upload Investment Guide PDF via admin', null, base64);
+
+        // Update site-data.js
+        const today = new Date().toISOString().split('T')[0];
+        siteData.investmentGuide.updatedAt = today;
+        const siteDataContent = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
+        await commitFile('data/site-data.js', siteDataContent, 'Update site data: investment guide metadata');
+
+        status.textContent = 'Uploaded! Site updating (~1-2 min)';
+        status.className = 'publish-status success';
+        renderGuideInfo();
+        updateRateLimit();
+      } catch (err) {
+        status.textContent = 'Error: ' + err.message;
+        status.className = 'publish-status error';
+      }
+      guideUploadBtn.disabled = false;
+      guideFileInput.value = '';
+    });
+  }
+
+  // ─── FAQ Editor ───
+  let faqData = null;
+  let faqChanged = false;
+
+  function loadFaqData() {
+    if (typeof FAQ_DATA !== 'undefined') {
+      faqData = JSON.parse(JSON.stringify(FAQ_DATA));
+    } else {
+      faqData = [];
+    }
+  }
+
+  function renderFaqEditor() {
+    if (!faqData) loadFaqData();
+    const editor = $('#faq-editor');
+    if (!editor) return;
+
+    const sorted = faqData.slice().sort((a, b) => (a.order || 99) - (b.order || 99));
+
+    if (!sorted.length) {
+      editor.innerHTML = '<p style="color:var(--color-text-dim)">No FAQ items. Click "+ Add Question" to create one.</p>';
+      return;
+    }
+
+    editor.innerHTML = sorted.map((item, idx) => {
+      const i = faqData.indexOf(item);
+      return `<div class="faq-editor-item" data-faq-idx="${i}">
+        <div class="faq-editor-item__header">
+          <span class="faq-editor-item__num">#${idx + 1}</span>
+          <div class="faq-editor-item__controls">
+            <button class="btn btn--icon" data-faq-up="${i}" title="Move Up" ${idx === 0 ? 'disabled' : ''}>↑</button>
+            <button class="btn btn--icon" data-faq-down="${i}" title="Move Down" ${idx === sorted.length - 1 ? 'disabled' : ''}>↓</button>
+            <button class="btn btn--icon btn--danger" data-faq-delete="${i}" title="Delete">🗑</button>
+          </div>
+        </div>
+        ${LANGS.map(lng => `<div class="faq-editor-lang">
+          <div class="faq-editor-lang__label">${LANG_NAMES[lng]}</div>
+          <div class="form-group"><label>Question</label><input type="text" data-faq-field="question" data-faq-i="${i}" data-faq-lng="${lng}" value="${escAttr(item.question[lng] || '')}"></div>
+          <div class="form-group"><label>Answer</label><textarea data-faq-field="answer" data-faq-i="${i}" data-faq-lng="${lng}" rows="3">${escAttr(item.answer[lng] || '')}</textarea></div>
+        </div>`).join('')}
+      </div>`;
+    }).join('');
+
+    // Bind input events
+    editor.querySelectorAll('[data-faq-field]').forEach(el => {
+      el.addEventListener('input', () => {
+        const i = +el.dataset.faqI;
+        const field = el.dataset.faqField;
+        const lng = el.dataset.faqLng;
+        faqData[i][field][lng] = el.value;
+        faqChanged = true;
+      });
+    });
+
+    // Move up/down
+    editor.querySelectorAll('[data-faq-up]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const i = +btn.dataset.faqUp;
+        const item = faqData[i];
+        const sorted2 = faqData.slice().sort((a, b) => (a.order || 99) - (b.order || 99));
+        const pos = sorted2.indexOf(item);
+        if (pos <= 0) return;
+        const prev = sorted2[pos - 1];
+        const tmpOrder = item.order;
+        item.order = prev.order;
+        prev.order = tmpOrder;
+        faqChanged = true;
+        renderFaqEditor();
+      });
+    });
+
+    editor.querySelectorAll('[data-faq-down]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const i = +btn.dataset.faqDown;
+        const item = faqData[i];
+        const sorted2 = faqData.slice().sort((a, b) => (a.order || 99) - (b.order || 99));
+        const pos = sorted2.indexOf(item);
+        if (pos >= sorted2.length - 1) return;
+        const next = sorted2[pos + 1];
+        const tmpOrder = item.order;
+        item.order = next.order;
+        next.order = tmpOrder;
+        faqChanged = true;
+        renderFaqEditor();
+      });
+    });
+
+    // Delete
+    editor.querySelectorAll('[data-faq-delete]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (!confirm('Delete this FAQ item?')) return;
+        const i = +btn.dataset.faqDelete;
+        faqData.splice(i, 1);
+        faqChanged = true;
+        renderFaqEditor();
+      });
+    });
+  }
+
+  // Add Question
+  const faqAddBtn = $('#btn-faq-add');
+  if (faqAddBtn) {
+    faqAddBtn.addEventListener('click', () => {
+      if (!faqData) loadFaqData();
+      const maxOrder = faqData.reduce((m, it) => Math.max(m, it.order || 0), 0);
+      faqData.push({
+        order: maxOrder + 1,
+        question: { en: '', ru: '', id: '', zh: '' },
+        answer: { en: '', ru: '', id: '', zh: '' }
+      });
+      faqChanged = true;
+      renderFaqEditor();
+    });
+  }
+
+  // Publish FAQ
+  const faqPublishBtn = $('#btn-faq-publish');
+  if (faqPublishBtn) {
+    faqPublishBtn.addEventListener('click', async () => {
+      if (!faqChanged || !faqData) return;
+      faqPublishBtn.disabled = true;
+      const status = $('#faq-publish-status');
+      status.textContent = 'Publishing FAQ...';
+      status.className = 'publish-status';
+
+      try {
+        const content = buildFaqDataJS();
+        await commitFile('data/faq-data.js', content, 'Update FAQ data via admin panel');
+        faqChanged = false;
+        status.textContent = 'Published! Site updating (~1-2 min)';
+        status.className = 'publish-status success';
+        updateRateLimit();
+      } catch (err) {
+        status.textContent = 'Error: ' + err.message;
+        status.className = 'publish-status error';
+      }
+      faqPublishBtn.disabled = false;
+    });
+  }
+
+  function buildFaqDataJS() {
+    return '/* eslint-disable */\nconst FAQ_DATA = ' + JSON.stringify(faqData, null, 2) + ';\n';
+  }
+
+  // Auto-render FAQ when tab is activated
+  const faqNavBtn = document.querySelector('.admin-nav__btn[data-tab="faq"]');
+  if (faqNavBtn) {
+    faqNavBtn.addEventListener('click', () => {
+      if (!faqData) loadFaqData();
+      renderFaqEditor();
+    });
   }
 
   // ─── Helpers ───
