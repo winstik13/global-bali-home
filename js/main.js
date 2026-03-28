@@ -5,6 +5,16 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // --- Skip navigation & main landmark ---
+  const skipLink = document.createElement('a');
+  skipLink.className = 'skip-link';
+  skipLink.href = '#main-content';
+  skipLink.textContent = 'Skip to main content';
+  document.body.insertBefore(skipLink, document.body.firstChild);
+
+  const mainSection = document.querySelector('.hero, .fullbleed-hero, .page-hero');
+  if (mainSection) mainSection.id = 'main-content';
+
   // --- Header scroll effect ---
   const header = document.querySelector('.header');
   if (header) {
@@ -31,10 +41,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const hamburger = document.querySelector('.hamburger');
   const nav = document.querySelector('.header__nav');
   if (hamburger && nav) {
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.setAttribute('aria-controls', 'main-nav');
+    nav.id = 'main-nav';
     hamburger.addEventListener('click', () => {
       hamburger.classList.toggle('active');
       nav.classList.toggle('active');
-      document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
+      const isOpen = nav.classList.contains('active');
+      hamburger.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
     });
     nav.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
@@ -448,19 +463,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- FAQ Accordion ---
-  document.querySelectorAll('.faq-question').forEach(btn => {
+  document.querySelectorAll('.faq-question').forEach((btn, idx) => {
+    const item = btn.parentElement;
+    const answer = item.querySelector('.faq-answer');
+    const answerId = 'faq-answer-' + idx;
+    answer.id = answerId;
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-controls', answerId);
+    answer.setAttribute('role', 'region');
+    answer.setAttribute('aria-labelledby', btn.id || ('faq-q-' + idx));
+    if (!btn.id) btn.id = 'faq-q-' + idx;
+
     btn.addEventListener('click', () => {
-      const item = btn.parentElement;
-      const answer = item.querySelector('.faq-answer');
       const isActive = item.classList.contains('active');
 
       document.querySelectorAll('.faq-item').forEach(fi => {
         fi.classList.remove('active');
+        fi.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
         fi.querySelector('.faq-answer').style.maxHeight = null;
       });
 
       if (!isActive) {
         item.classList.add('active');
+        btn.setAttribute('aria-expanded', 'true');
         answer.style.maxHeight = answer.scrollHeight + 'px';
       }
     });
@@ -469,13 +494,41 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Contact form validation ---
   const contactForm = document.querySelector('.contact-form');
   if (contactForm) {
+    // Real-time inline validation
+    contactForm.querySelectorAll('.form-group[data-required]').forEach(group => {
+      const input = group.querySelector('input, select, textarea');
+      if (!input) return;
+
+      const validate = () => {
+        const val = input.value.trim();
+        group.classList.remove('error', 'valid');
+        if (!val) return; // Don't show error while empty (only on submit)
+        if (input.type === 'email') {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          group.classList.toggle('error', !emailRegex.test(val));
+          group.classList.toggle('valid', emailRegex.test(val));
+        } else {
+          group.classList.add('valid');
+        }
+      };
+
+      input.addEventListener('input', validate);
+      input.addEventListener('blur', () => {
+        if (!input.value.trim() && group.dataset.required !== undefined) {
+          group.classList.add('error');
+          group.classList.remove('valid');
+        }
+      });
+    });
+
+    // Submit validation
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
       let valid = true;
 
       contactForm.querySelectorAll('.form-group[data-required]').forEach(group => {
         const input = group.querySelector('input, select, textarea');
-        group.classList.remove('error');
+        group.classList.remove('error', 'valid');
 
         if (!input.value.trim()) {
           group.classList.add('error');
@@ -492,7 +545,12 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       if (valid) {
-        alert('Thank you for your inquiry! We will get back to you shortly.');
+        const formWrap = contactForm.parentElement;
+        contactForm.style.display = 'none';
+        const success = document.createElement('div');
+        success.className = 'form-success';
+        success.innerHTML = '<h3>Thank you!</h3><p>We will get back to you within 24 hours.</p>';
+        formWrap.appendChild(success);
         contactForm.reset();
       }
     });
@@ -519,15 +577,6 @@ document.addEventListener('DOMContentLoaded', () => {
       ]
     },
     {
-      question: 'How many bedrooms do you need?',
-      options: [
-        { icon: '<svg viewBox="0 0 24 24"><path d="M2 16h20M4 16V8a4 4 0 018 0M20 16v-4a2 2 0 00-4 0v4M2 16v4M22 16v4"/></svg>', label: '1–2 bedrooms' },
-        { icon: '<svg viewBox="0 0 24 24"><path d="M2 16h20M2 16v4M22 16v4"/><path d="M4 16V9a3 3 0 016 0M14 16V9a3 3 0 00-6 0"/><path d="M14 16V9a3 3 0 016 0"/></svg>', label: '3 bedrooms' },
-        { icon: '<svg viewBox="0 0 24 24"><path d="M2 16h20M2 16v4M22 16v4"/><path d="M3 16V9a2.5 2.5 0 015 0M8 16V9a2.5 2.5 0 015 0M13 16V9a2.5 2.5 0 015 0"/><path d="M18 9a2.5 2.5 0 012.5 2.5V16"/></svg>', label: '4+ bedrooms' },
-        { icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 15s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>', label: 'Not sure yet' }
-      ]
-    },
-    {
       question: 'When are you planning to buy?',
       options: [
         { icon: '<svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>', label: 'Ready to buy now' },
@@ -549,9 +598,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const quizOverlay = document.createElement('div');
   quizOverlay.className = 'quiz-overlay';
   quizOverlay.innerHTML = `
-    <div class="quiz">
-      <button class="quiz__close">&times;</button>
-      <div class="quiz__progress"><div class="quiz__progress-bar"></div></div>
+    <div class="quiz" role="dialog" aria-modal="true" aria-label="Investment quiz">
+      <button class="quiz__close" aria-label="Close quiz">&times;</button>
+      <div class="quiz__progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"><div class="quiz__progress-bar"></div></div>
       <div class="quiz__body"></div>
     </div>
   `;
@@ -586,7 +635,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (quizStep < quizSteps.length) {
           renderStep();
         } else {
-          renderContactStep();
+          renderRecommendation();
         }
       });
     });
@@ -599,17 +648,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  const renderContactStep = () => {
+  const renderRecommendation = () => {
+    const rec = quizRecommend(quizAnswers);
     updateProgress();
     quizBody.innerHTML = `
-      <p class="quiz__step-label">Final step</p>
-      <h3 class="quiz__question">Where should we send your personalized recommendation?</h3>
+      <p class="quiz__step-label">Your match</p>
+      <h3 class="quiz__question">${rec.project}</h3>
+      <p class="quiz__result-desc">${rec.desc}</p>
       <form class="quiz__form">
         <input type="text" class="quiz__input" name="quiz-name" placeholder="Your name" required>
         <input type="email" class="quiz__input" name="quiz-email" placeholder="Email address" required>
         <input type="tel" class="quiz__input" name="quiz-phone" placeholder="WhatsApp / Phone (optional)">
-        <button type="submit" class="btn btn--primary" style="width:100%;">Get My Recommendation</button>
+        <button type="submit" class="btn btn--primary" style="width:100%;">Get Details & Contact Me</button>
       </form>
+      <a href="${rec.url}" class="quiz__skip-link">View project without submitting &rarr;</a>
       <button class="quiz__back">&larr; Back</button>
     `;
     quizBody.querySelector('.quiz__form').addEventListener('submit', (e) => {
@@ -618,7 +670,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const email = quizBody.querySelector('[name="quiz-email"]').value.trim();
       const phone = quizBody.querySelector('[name="quiz-phone"]').value.trim();
 
-      const rec = quizRecommend(quizAnswers);
       const body = [
         'New Quiz Lead',
         '',
@@ -629,31 +680,27 @@ document.addEventListener('DOMContentLoaded', () => {
         'Answers:',
         '1. Goal: ' + (quizAnswers[0] || '—'),
         '2. Budget: ' + (quizAnswers[1] || '—'),
-        '3. Bedrooms: ' + (quizAnswers[2] || '—'),
-        '4. Timeline: ' + (quizAnswers[3] || '—'),
+        '3. Timeline: ' + (quizAnswers[2] || '—'),
         '',
         'Recommended: ' + rec.project
       ].join('\n');
 
       window.open('mailto:office@globalbalihome.com?subject=New Lead: ' + encodeURIComponent(name) + '&body=' + encodeURIComponent(body));
-      renderResult(rec);
+      sessionStorage.setItem('leadCaptured', 'true');
+      quizBar.style.width = '100%';
+      quizBody.innerHTML = `
+        <div class="quiz__result">
+          <p class="quiz__step-label">Thank you!</p>
+          <h3 class="quiz__question">We'll be in touch soon</h3>
+          <p class="quiz__result-desc">In the meantime, explore your recommended project:</p>
+          <a href="${rec.url}" class="btn btn--primary" style="width:100%;">View ${rec.project}</a>
+        </div>
+      `;
     });
     quizBody.querySelector('.quiz__back').addEventListener('click', () => {
       quizStep--;
       renderStep();
     });
-  };
-
-  const renderResult = (rec) => {
-    quizBar.style.width = '100%';
-    quizBody.innerHTML = `
-      <div class="quiz__result">
-        <p class="quiz__step-label">Your match</p>
-        <h3 class="quiz__question">${rec.project}</h3>
-        <p class="quiz__result-desc">${rec.desc}</p>
-        <a href="${rec.url}" class="btn btn--primary" style="width:100%;">View Project</a>
-      </div>
-    `;
   };
 
   const openQuiz = () => {
@@ -800,10 +847,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const exitOverlay = document.createElement('div');
   exitOverlay.className = 'exit-overlay';
   exitOverlay.innerHTML = `
-    <div class="exit-popup">
-      <button class="exit-popup__close">&times;</button>
+    <div class="exit-popup" role="dialog" aria-modal="true" aria-labelledby="exit-popup-title">
+      <button class="exit-popup__close" aria-label="Close popup">&times;</button>
       <span class="section-header__tag">Free Guide</span>
-      <h3 class="exit-popup__title">Wait — Don't Miss Our Free Investment Guide</h3>
+      <h3 class="exit-popup__title" id="exit-popup-title">Wait — Don't Miss Our Free Investment Guide</h3>
       <p class="exit-popup__text">Download our comprehensive Bali Real Estate Investment Guide with market analysis, ROI projections, and expert insights.</p>
       <form class="exit-popup__form">
         <input type="email" class="exit-popup__input" placeholder="Your email address" required>
