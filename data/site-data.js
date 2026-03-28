@@ -6,8 +6,8 @@ const SITE_DATA = {
     "updatedAt": "2026-03-28"
   },
   "exchangeRate": {
-    "usdToIdr": 16500,
-    "updatedAt": "2026-03-29"
+    "usdToIdr": 16800,
+    "updatedAt": "2026-03-28"
   },
   "contacts": {
     "phone": "+62 813 251 438 49",
