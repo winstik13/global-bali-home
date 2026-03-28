@@ -54,6 +54,10 @@ body {
     var(--color-bg);
 }
 
+[hidden] {
+  display: none !important;
+}
+
 .login-card {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
