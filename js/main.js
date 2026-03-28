@@ -60,6 +60,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --- Language dropdown ---
+  const langWidget = document.querySelector('.header__lang');
+  const langToggle = document.querySelector('.header__lang-toggle');
+  if (langWidget && langToggle) {
+    langToggle.setAttribute('aria-expanded', 'false');
+    langToggle.setAttribute('aria-haspopup', 'true');
+
+    langToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = langWidget.classList.toggle('open');
+      langToggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!langWidget.contains(e.target)) {
+        langWidget.classList.remove('open');
+        langToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && langWidget.classList.contains('open')) {
+        langWidget.classList.remove('open');
+        langToggle.setAttribute('aria-expanded', 'false');
+        langToggle.focus();
+      }
+    });
+  }
+
   // --- Active nav link ---
   const navLinks = document.querySelectorAll('.header__nav a');
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';

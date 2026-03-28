@@ -8,7 +8,9 @@ Global Bali Home — a multi-page marketing website for a premium real estate de
 
 ## Architecture
 
-- **9 HTML pages** in root (EN) + **9 mirrored pages** in `ru/` (RU): `index.html` (home), `about.html`, `projects.html`, `services.html`, `gallery.html`, `contacts.html`, and 3 project detail pages (`project-serenity-villas.html`, `project-serenity-estates.html`, `project-serenity-village.html`). Header includes EN|RU language switcher linking to the corresponding page.
+- **9 HTML pages** in root (EN) + mirrored in `ru/` (RU), `id/` (Bahasa Indonesia), `zh/` (简体中文) — **36 pages total**. Header has a dropdown language switcher (EN ▾) showing all 4 languages.
+  - Pages: `index.html` (home), `about.html`, `projects.html`, `services.html`, `gallery.html`, `contacts.html`, `project-serenity-villas.html`, `project-serenity-estates.html`, `project-serenity-village.html`
+  - Language codes: `en` (root), `ru/`, `id/`, `zh/`
 - **`css/style.css`** — entire design system: CSS variables, dark theme, all components, responsive breakpoints (1024px, 768px)
 - **`css/reset.css`** — standard CSS reset
 - **`js/main.js`** — all interactivity: header scroll, hamburger menu, scroll reveal (IntersectionObserver), parallax, number counters, dynamic gallery rendering, lightbox, FAQ accordion, contact form validation, quiz popup, ROI calculator, exit intent popup, sticky CTA bar, lead magnet form
@@ -18,7 +20,7 @@ Global Bali Home — a multi-page marketing website for a premium real estate de
 
 ### JS-injected components (DOM created in main.js, no HTML duplication)
 
-- **Quiz popup** — 4-step lead qualification (goal → budget → bedrooms → timeline → contact form → project recommendation). Triggered by `[data-quiz]` attribute or `.cta-section .btn--primary`.
+- **Quiz popup** — 3-step lead qualification (goal → budget → timeline → recommendation + contact form). Triggered by `[data-quiz]` attribute or `.cta-section .btn--primary`. Shows project recommendation BEFORE contact form to reduce abandonment.
 - **Exit intent popup** — fires on `mouseleave` (desktop only) after 30s, suppressed if quiz is open or lead already captured. Uses `sessionStorage` (`exitShown`, `leadCaptured`).
 - **Sticky CTA bar** — mobile-only fixed bottom bar, appears after scrolling past hero, opens quiz.
 
@@ -62,8 +64,10 @@ Compress images with FFmpeg (max 1920px width, `-update 1` required for overwrit
 - **Video background sections**: hero, Why Bali, and Wanayu use `<video autoplay muted loop playsinline>` with overlay div for text readability
 - **Decorative watermark**: add `.logo-watermark .logo-watermark--right` or `.logo-watermark--left` to sections for decorative lotus background. Use `--large` modifier for 40% bigger size.
 - **Component naming**: BEM-like (`block__element--modifier`), e.g. `.project-showcase__content`, `.project-card__badge--presale`
-- **All pages share**: identical header (with "Get Started" CTA button, EN|RU language switcher), footer (with SVG social icons), and WhatsApp floating button — changes must be replicated across all 18 HTML files (9 EN + 9 RU)
-- **Header nav order**: Home, Projects, Services, About, Gallery, Contact + "Get Started" CTA button (opens quiz) + EN|RU switcher
+- **All pages share**: identical header (with "Get Started" CTA button, language dropdown), footer (with SVG social icons), and WhatsApp floating button — changes must be replicated across all **36 HTML files** (9 EN + 9 RU + 9 ID + 9 ZH)
+- **Header nav order**: Home, Projects, Services, About, Gallery, Contact + "Get Started" CTA button (opens quiz) + language dropdown
+- **Language dropdown**: `.header__lang` button shows current lang code (EN/RU/ID/中文) + chevron SVG → dropdown lists all 4 languages with active checkmark. Logic in `main.js`. CSS: `.header__lang-toggle`, `.header__lang-dropdown`. Closes on outside click or Escape.
+- **Relative paths in subfolders**: `ru/`, `id/`, `zh/` all use `../` prefix for CSS, JS, images, videos. Nav links point to sibling pages (e.g. `index.html` not `../index.html`). Lang switcher back-links use `../` for EN and `../ru/`, `../id/`, `../zh/` for other langs.
 - **Icons**: SVG line-art style (`stroke: var(--color-accent); stroke-width: 1.5; fill: none`) — used in service cards, project features, and quiz options
 - **External links**: always use `target="_blank" rel="noopener noreferrer"`
 - **Images**: organized in `images/common/`, `images/home/`, `images/serenity-villas/`, `images/serenity-estates/`, `images/serenity-village/`. All below-fold images use `loading="lazy"`.
