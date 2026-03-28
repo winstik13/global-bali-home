@@ -833,77 +833,153 @@
   const galleryGrid = $('#gallery-grid');
   const galleryUploadBtn = $('#btn-gallery-upload');
   const galleryFileInput = $('#gallery-file-input');
+  const galleryProgress = $('#gallery-upload-progress');
+  const galleryDropZone = $('#gallery-drop-zone');
+  const galleryCount = $('#gallery-count');
+  let galleryDataCopy = null; // working copy
+
+  function getGalleryData() {
+    if (!galleryDataCopy) {
+      galleryDataCopy = typeof GALLERY_DATA !== 'undefined' ? JSON.parse(JSON.stringify(GALLERY_DATA)) : { villas: [], estates: [], village: [] };
+    }
+    return galleryDataCopy;
+  }
 
   galleryProject.addEventListener('change', renderGallery);
   galleryUploadBtn.addEventListener('click', () => galleryFileInput.click());
-  galleryFileInput.addEventListener('change', handleGalleryUpload);
+  galleryFileInput.addEventListener('change', (e) => handleGalleryUpload(Array.from(e.target.files)));
+
+  // Drag & drop
+  galleryDropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    galleryDropZone.classList.add('dragover');
+  });
+  galleryDropZone.addEventListener('dragleave', () => {
+    galleryDropZone.classList.remove('dragover');
+  });
+  galleryDropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    galleryDropZone.classList.remove('dragover');
+    const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+    if (files.length) handleGalleryUpload(files);
+  });
 
   function renderGallery() {
     const cat = galleryProject.value;
-    const galleryData = typeof GALLERY_DATA !== 'undefined' ? GALLERY_DATA : {};
-    const images = galleryData[cat] || [];
+    const data = getGalleryData();
+    const images = data[cat] || [];
 
-    galleryGrid.innerHTML = images.map((img, i) => `
-      <div class="admin-gallery-item" data-index="${i}">
-        <img src="../${img}" alt="" loading="lazy">
+    galleryCount.textContent = `${images.length} photos`;
+
+    if (!images.length) {
+      galleryGrid.innerHTML = '<p style="color:var(--color-text-dim);padding:20px 0">No images in this project. Upload some photos.</p>';
+      return;
+    }
+
+    galleryGrid.innerHTML = images.map((img, i) => {
+      const name = img.split('/').pop();
+      return `<div class="admin-gallery-item" data-index="${i}">
+        <img src="../${img}" alt="${escAttr(name)}" loading="lazy">
+        <div class="admin-gallery-item__info">${escAttr(name)}</div>
         <div class="admin-gallery-item__actions">
-          <button class="admin-gallery-item__btn" data-delete="${i}" title="Delete">&times;</button>
+          <button class="admin-gallery-item__btn admin-gallery-item__btn--up" data-move-up="${i}" title="Move left">&#8592;</button>
+          <button class="admin-gallery-item__btn admin-gallery-item__btn--down" data-move-down="${i}" title="Move right">&#8594;</button>
+          <button class="admin-gallery-item__btn admin-gallery-item__btn--delete" data-delete="${i}" title="Delete">&times;</button>
         </div>
-      </div>
-    `).join('') || '<p style="color:var(--color-text-dim)">No images in this category.</p>';
+      </div>`;
+    }).join('');
 
+    // Bind actions
     galleryGrid.querySelectorAll('[data-delete]').forEach(btn => {
       btn.addEventListener('click', () => deleteGalleryImage(cat, +btn.dataset.delete));
     });
+    galleryGrid.querySelectorAll('[data-move-up]').forEach(btn => {
+      btn.addEventListener('click', () => moveGalleryImage(cat, +btn.dataset.moveUp, -1));
+    });
+    galleryGrid.querySelectorAll('[data-move-down]').forEach(btn => {
+      btn.addEventListener('click', () => moveGalleryImage(cat, +btn.dataset.moveDown, 1));
+    });
   }
 
-  async function handleGalleryUpload(e) {
-    const files = Array.from(e.target.files);
+  function moveGalleryImage(cat, index, direction) {
+    const data = getGalleryData();
+    const images = data[cat];
+    const newIndex = index + direction;
+    if (newIndex < 0 || newIndex >= images.length) return;
+    [images[index], images[newIndex]] = [images[newIndex], images[index]];
+    renderGallery();
+    // Auto-save order
+    saveGalleryData('Reorder gallery: ' + cat);
+  }
+
+  async function handleGalleryUpload(files) {
     if (!files.length) return;
 
     const cat = galleryProject.value;
     const folderMap = { villas: 'serenity-villas', estates: 'serenity-estates', village: 'serenity-village' };
     const folder = `images/${folderMap[cat]}`;
+    const data = getGalleryData();
+
+    galleryProgress.hidden = false;
+    let uploaded = 0;
 
     for (const file of files) {
-      const resized = await resizeImage(file, 1920, 0.8);
-      const base64 = resized.split(',')[1];
-      const path = `${folder}/${file.name}`;
+      galleryProgress.innerHTML = `<div class="gallery-progress__text">Uploading ${uploaded + 1}/${files.length}: ${escAttr(file.name)}</div>
+        <div class="gallery-progress__bar"><div class="gallery-progress__fill" style="width:${Math.round((uploaded / files.length) * 100)}%"></div></div>`;
+
       try {
+        const resized = await resizeImage(file, 1920, 0.8);
+        const base64 = resized.split(',')[1];
+        const path = `${folder}/${file.name}`;
         await commitFile(path, null, `Add gallery image: ${file.name}`, null, base64);
+
+        // Add to local data
+        if (!data[cat]) data[cat] = [];
+        if (!data[cat].includes(path)) data[cat].push(path);
+        uploaded++;
       } catch (err) {
         console.error('Upload failed:', file.name, err);
+        galleryProgress.innerHTML += `<div style="color:var(--color-danger);font-size:0.8rem">Failed: ${escAttr(file.name)} — ${err.message}</div>`;
       }
     }
 
     // Update gallery-data.js
-    await regenerateGalleryData();
+    galleryProgress.innerHTML = `<div class="gallery-progress__text">Saving gallery data...</div>
+      <div class="gallery-progress__bar"><div class="gallery-progress__fill" style="width:100%"></div></div>`;
+    await saveGalleryData('Add gallery images via admin panel');
+
+    galleryProgress.innerHTML = `<div class="gallery-progress__text" style="color:var(--color-success)">${uploaded}/${files.length} photos uploaded!</div>`;
+    setTimeout(() => { galleryProgress.hidden = true; }, 3000);
+
     renderGallery();
     galleryFileInput.value = '';
+    updateRateLimit();
   }
 
   async function deleteGalleryImage(cat, index) {
-    const galleryData = typeof GALLERY_DATA !== 'undefined' ? GALLERY_DATA : {};
-    const images = galleryData[cat];
+    const data = getGalleryData();
+    const images = data[cat];
     if (!images || !images[index]) return;
 
-    if (!confirm(`Delete ${images[index]}?`)) return;
+    const fileName = images[index].split('/').pop();
+    if (!confirm(`Delete "${fileName}"?`)) return;
 
     try {
       const file = await fetchFile(images[index]);
-      await deleteFile(images[index], file.sha, `Remove gallery image`);
+      await deleteFile(images[index], file.sha, `Remove gallery image: ${fileName}`);
       images.splice(index, 1);
-      await regenerateGalleryData();
+      await saveGalleryData('Remove gallery image: ' + fileName);
       renderGallery();
+      updateRateLimit();
     } catch (err) {
       alert('Error deleting: ' + err.message);
     }
   }
 
-  async function regenerateGalleryData() {
-    const galleryData = typeof GALLERY_DATA !== 'undefined' ? GALLERY_DATA : {};
-    const content = 'const GALLERY_DATA = ' + JSON.stringify(galleryData, null, 2) + ';\n';
-    await commitFile('gallery-data.js', content, 'Update gallery data via admin panel');
+  async function saveGalleryData(message) {
+    const data = getGalleryData();
+    const content = 'const GALLERY_DATA = ' + JSON.stringify(data, null, 2) + ';\n';
+    await commitFile('gallery-data.js', content, message);
   }
 
   function resizeImage(file, maxWidth, quality) {
