@@ -636,7 +636,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       question: 'What is your budget?',
       options: [
-        { icon: '<svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>', label: 'Under $150K' },
+        { icon: '<svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>', label: 'Exploring Options' },
         { icon: '<svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>', label: '$150K – $350K' },
         { icon: '<svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>', label: '$350K – $500K' },
         { icon: '<svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>', label: '$500K+' }
@@ -654,7 +654,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const quizRecommend = (answers) => {
     const budget = answers[1];
-    if (budget === 'Under $150K') return { project: 'Serenity Village', url: 'project-serenity-village.html', desc: 'Affordable 1-2 bedroom villas from $119,000 in a vibrant community setting.' };
+    if (budget === 'Exploring Options') return { project: 'Serenity Village', url: 'project-serenity-village.html', desc: 'Affordable 1-2 bedroom villas from $119,000 in a vibrant community setting.' };
     if (budget === '$150K – $350K') return { project: 'Serenity Villas', url: 'project-serenity-villas.html', desc: 'Premium 2-3 bedroom villas from $335,000 with private pools and gardens.' };
     if (budget === '$350K – $500K') return { project: 'Serenity Estates', url: 'project-serenity-estates.html', desc: 'Exclusive 2-4.5 bedroom estates with panoramic views and spacious design.' };
     return { project: 'Serenity Estates', url: 'project-serenity-estates.html', desc: 'Our most exclusive properties — spacious estates designed for premium living.' };
@@ -718,7 +718,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const rec = quizRecommend(quizAnswers);
     updateProgress();
     quizBody.innerHTML = `
-      <p class="quiz__step-label">Your match</p>
+      <p class="quiz__step-label">Our Recommendation for You</p>
       <h3 class="quiz__question">${rec.project}</h3>
       <p class="quiz__result-desc">${rec.desc}</p>
       <form class="quiz__form">
@@ -729,7 +729,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <input type="checkbox" class="form-consent__checkbox" id="quiz-consent" name="quiz-consent">
           <label class="form-consent__text" for="quiz-consent">I agree to the processing of my personal data in accordance with the Privacy Policy</label>
         </div>
-        <button type="submit" class="btn btn--primary" style="width:100%;">Get Details & Contact Me</button>
+        <button type="submit" class="btn btn--primary" style="width:100%;">Send Me Full Details</button>
       </form>
       <a href="${rec.url}" class="quiz__skip-link">View project without submitting &rarr;</a>
       <button class="quiz__back">&larr; Back</button>
@@ -891,7 +891,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Sticky CTA Bar (mobile) ---
   const stickyCTA = document.createElement('div');
   stickyCTA.className = 'sticky-cta';
-  stickyCTA.innerHTML = '<button class="sticky-cta__btn btn btn--primary" data-quiz>Get Started</button>';
+  stickyCTA.innerHTML = '<button class="sticky-cta__btn btn btn--primary" data-quiz>Explore Villas</button>';
   document.body.appendChild(stickyCTA);
   stickyCTA.querySelector('[data-quiz]').addEventListener('click', (e) => {
     e.preventDefault();
@@ -928,12 +928,12 @@ document.addEventListener('DOMContentLoaded', () => {
   exitOverlay.innerHTML = `
     <div class="exit-popup" role="dialog" aria-modal="true" aria-labelledby="exit-popup-title">
       <button class="exit-popup__close" aria-label="Close popup">&times;</button>
-      <span class="section-header__tag">Free Guide</span>
-      <h3 class="exit-popup__title" id="exit-popup-title">Wait — Don't Miss Our Free Investment Guide</h3>
-      <p class="exit-popup__text">Download our comprehensive Bali Real Estate Investment Guide with market analysis, ROI projections, and expert insights.</p>
+      <span class="section-header__tag">Exclusive Guide</span>
+      <h3 class="exit-popup__title" id="exit-popup-title">Before You Go — A Complimentary Resource</h3>
+      <p class="exit-popup__text">Access our comprehensive Bali Real Estate Investment Guide with market analysis, ROI projections, and expert insights.</p>
       <form class="exit-popup__form">
         <input type="email" class="exit-popup__input" placeholder="Your email address" required>
-        <button type="submit" class="btn btn--primary" style="width:100%">Download Free Guide</button>
+        <button type="submit" class="btn btn--primary" style="width:100%">Access the Investment Guide</button>
       </form>
     </div>
   `;
