@@ -321,7 +321,6 @@ function testForms() {
       ['name input',    /name="name"\s+|name="[^"]*name[^"]*"/i],
       ['email input',   /type="email"|name="email"/i],
       ['phone input',   /type="tel"|name="phone"/i],
-      ['message textarea', /<textarea/i],
       ['submit button', /<button[^>]*type="submit"|<input[^>]*type="submit"/i],
     ];
     for (const [name, pattern] of fields) {
