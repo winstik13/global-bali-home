@@ -1231,7 +1231,7 @@ document.addEventListener('DOMContentLoaded', () => {
     var idr = usd * xRate;
     if (idr >= 1e9) {
       var m = idr / 1e9;
-      return 'Rp ' + (m % 1 === 0 ? m.toFixed(0) : m.toFixed(1)).replace('.', ',') + ' M';
+      return 'Rp ' + (m % 1 === 0 ? m.toFixed(0) : m.toFixed(1)).replace('.', ',') + ' Miliar';
     }
     var j = idr / 1e6;
     return 'Rp ' + Math.round(j).toLocaleString('id-ID') + ' jt';
@@ -1243,6 +1243,48 @@ document.addEventListener('DOMContentLoaded', () => {
     var idr = fmtIdr(usd);
     if (idr) el.innerHTML = el.innerHTML + '<span class="price-idr">' + idr + '</span>';
   });
+
+  // ─── Dynamic Contact Data from SITE_DATA ───
+  if (typeof SITE_DATA !== 'undefined' && SITE_DATA.contacts) {
+    var c = SITE_DATA.contacts;
+    document.querySelectorAll('[data-contact="phone"]').forEach(function(el) { el.textContent = c.phone; });
+    document.querySelectorAll('[data-contact="email"]').forEach(function(el) { el.textContent = c.email; });
+    document.querySelectorAll('[data-contact="location"]').forEach(function(el) {
+      var loc = c.location;
+      el.textContent = (typeof loc === 'object') ? (loc[lang] || loc.en) : loc;
+    });
+    document.querySelectorAll('[data-contact="whatsapp-link"]').forEach(function(el) {
+      el.href = 'https://wa.me/' + c.whatsapp;
+    });
+    // Update mailto links
+    document.querySelectorAll('a[href^="mailto:"]').forEach(function(el) {
+      el.href = 'mailto:' + c.email;
+      if (el.textContent.includes('@')) el.textContent = c.email;
+    });
+  }
+
+  // ─── Dynamic Testimonials from TESTIMONIALS_DATA ───
+  if (typeof TESTIMONIALS_DATA !== 'undefined') {
+    var tContainer = document.querySelector('[data-testimonials-container]');
+    if (tContainer) {
+      var sorted = TESTIMONIALS_DATA.slice().sort(function(a, b) { return (a.order || 99) - (b.order || 99); });
+      tContainer.innerHTML = sorted.map(function(t) {
+        var stars = '';
+        for (var s = 0; s < (t.stars || 5); s++) stars += '★';
+        return '<div class="testimonials__card reveal-stagger">' +
+          '<div class="testimonials__stars">' + stars + '</div>' +
+          '<blockquote class="testimonials__text">' + (t.text[lang] || t.text.en) + '</blockquote>' +
+          '<div class="testimonials__author"><div class="testimonials__author-info">' +
+          '<span class="testimonials__name">' + (t.name[lang] || t.name.en) + '</span>' +
+          '<span class="testimonials__role">' + (t.role[lang] || t.role.en) + '</span>' +
+          '</div></div></div>';
+      }).join('');
+      // Re-observe for scroll reveal
+      if (typeof revealObserver !== 'undefined') {
+        tContainer.querySelectorAll('.reveal-stagger').forEach(function(el) { revealObserver.observe(el); });
+      }
+    }
+  }
 
   // ─── Dynamic Render from PROJECTS_DATA ───
   if (typeof PROJECTS_DATA !== 'undefined') {
@@ -1268,6 +1310,10 @@ document.addEventListener('DOMContentLoaded', () => {
       return Object.keys(PD).filter(function(k) { return PD[k] && PD[k].slug; })
         .sort(function(a, b) { return (PD[a].order || 99) - (PD[b].order || 99); });
     }
+
+    // Auto-calculate project count
+    var autoStatEl = document.querySelector('[data-auto-stat="projects-count"]');
+    if (autoStatEl) { autoStatEl.textContent = getProjectKeys().length; }
 
     // Helper: get localized value
     function loc(obj) {

@@ -176,14 +176,32 @@
     buildDynamicUI();
     renderDashboard();
     renderRateInfo();
+    renderContactsForm();
     renderGuideInfo();
     renderProjectEditor();
     updateRateLimit();
   }
 
+  // ─── Unsaved Changes Warning ───
+  window.addEventListener('beforeunload', (e) => {
+    if (pendingChanges) { e.preventDefault(); e.returnValue = ''; }
+  });
+
+  // ─── Loading Button Helper ───
+  function btnLoading(btn, loading) {
+    if (loading) {
+      btn.classList.add('is-loading');
+      btn.disabled = true;
+    } else {
+      btn.classList.remove('is-loading');
+      btn.disabled = false;
+    }
+  }
+
   // ─── Tab Navigation ───
   $$('.admin-nav__btn').forEach(btn => {
     btn.addEventListener('click', () => {
+      if (pendingChanges && !confirm('You have unsaved changes. Switch tab anyway?')) return;
       $$('.admin-nav__btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       $$('.admin-tab').forEach(t => t.hidden = true);
@@ -359,7 +377,10 @@
           <span class="dash-card__bar-label">${pct}%</span>
         </div>
         ${breakdown}
-        <button class="dash-card__edit btn btn--outline btn--sm" data-goto="${key}">Edit Project →</button>
+        <div style="display:flex;gap:8px;margin-top:auto">
+          <button class="dash-card__edit btn btn--outline btn--sm" data-goto="${key}">Edit Project →</button>
+          <a href="https://winstik13.github.io/global-bali-home/${p.page || 'project-' + p.slug + '.html'}" target="_blank" rel="noopener" class="btn btn--outline btn--sm" style="text-decoration:none">View on Site ↗</a>
+        </div>
       </div>`;
     });
     html += '</div>';
@@ -676,12 +697,11 @@
     if (!pendingChanges) return;
     const btn = $('#btn-publish');
     const status = $('#publish-status');
-    btn.disabled = true;
+    btnLoading(btn, true);
     status.textContent = 'Publishing...';
     status.className = 'publish-status';
 
     try {
-      // Build the JS file content
       const dataContent = buildProjectsDataJS();
       await commitFile('data/projects-data.js', dataContent, 'Update project data via admin panel');
       pendingChanges = false;
@@ -693,7 +713,7 @@
       status.textContent = 'Error: ' + err.message;
       status.className = 'publish-status error';
     }
-    btn.disabled = false;
+    btnLoading(btn, false);
   });
 
   function buildProjectsDataJS() {
@@ -817,7 +837,7 @@
       $('#btn-seo-save').addEventListener('click', async () => {
         const status = $('#seo-save-status');
         const btn = $('#btn-seo-save');
-        btn.disabled = true;
+        btnLoading(btn, true);
         status.textContent = 'Saving all languages...';
         status.className = 'publish-status';
 
@@ -855,7 +875,7 @@
           status.textContent = `All ${saved} languages saved!`;
           status.className = 'publish-status success';
         }
-        btn.disabled = false;
+        btnLoading(btn, false);
         updateRateLimit();
       });
 
@@ -967,7 +987,7 @@
     galleryCount.textContent = `${images.length} photos`;
 
     if (!images.length) {
-      galleryGrid.innerHTML = '<p style="color:var(--color-text-dim);padding:20px 0">No images in this project. Upload some photos.</p>';
+      galleryGrid.innerHTML = '<div class="empty-state"><div class="empty-state__icon">&#128247;</div><div class="empty-state__text">No images in this project. Drag & drop or click Upload to add photos.</div></div>';
       return;
     }
 
@@ -1191,8 +1211,7 @@
 
       if (pageExists && !confirm(`Pages for "${p.name}" already exist. Overwrite?`)) return;
 
-      btn.disabled = true;
-      btn.textContent = 'Generating...';
+      btnLoading(btn, true);
       const status = $('#publish-status');
 
       try {
@@ -1218,8 +1237,7 @@
         status.textContent = 'Error: ' + err.message;
         status.className = 'publish-status error';
       }
-      btn.disabled = false;
-      btn.textContent = 'Generate Detail Pages';
+      btnLoading(btn, false);
       updateRateLimit();
     });
   }
@@ -1568,6 +1586,7 @@
       siteData = { investmentGuide: { path: 'assets/bali-investment-guide-2026.pdf', version: '2026', updatedAt: '' }, exchangeRate: { usdToIdr: 16500, updatedAt: '' } };
     }
     if (!siteData.exchangeRate) siteData.exchangeRate = { usdToIdr: 16500, updatedAt: '' };
+    if (!siteData.contacts) siteData.contacts = { phone: '', phoneRaw: '', whatsapp: '', email: '', location: { en: '', ru: '', id: '' } };
   }
 
   function renderRateInfo() {
@@ -1592,7 +1611,7 @@
       const newRate = parseInt(input.value, 10);
       if (!newRate || newRate < 1000) { alert('Enter a valid rate (e.g. 16500)'); return; }
 
-      rateSaveBtn.disabled = true;
+      btnLoading(rateSaveBtn, true);
       const status = $('#rate-save-status');
       status.textContent = 'Saving...';
       status.className = 'publish-status';
@@ -1610,7 +1629,7 @@
         status.textContent = 'Error: ' + err.message;
         status.className = 'publish-status error';
       }
-      rateSaveBtn.disabled = false;
+      btnLoading(rateSaveBtn, false);
     });
   }
 
@@ -1624,6 +1643,57 @@
     } else {
       info.innerHTML = '<p style="color:var(--color-text-dim)">No PDF uploaded yet. Upload a file to enable the Investment Guide download.</p>';
     }
+  }
+
+  // ─── Contact Info Editor ───
+  function renderContactsForm() {
+    if (!siteData) loadSiteData();
+    const c = siteData.contacts || {};
+    const v = (id, val) => { const el = $('#' + id); if (el) el.value = val || ''; };
+    v('contact-phone', c.phone);
+    v('contact-whatsapp', c.whatsapp);
+    v('contact-email', c.email);
+    if (c.location && typeof c.location === 'object') {
+      v('contact-location-en', c.location.en);
+      v('contact-location-ru', c.location.ru);
+      v('contact-location-id', c.location.id);
+    }
+  }
+
+  const contactsSaveBtn = $('#btn-contacts-save');
+  if (contactsSaveBtn) {
+    contactsSaveBtn.addEventListener('click', async () => {
+      if (!siteData) loadSiteData();
+      const g = (id) => ($('#' + id) || {}).value || '';
+      siteData.contacts = {
+        phone: g('contact-phone'),
+        phoneRaw: g('contact-phone').replace(/[\s\-\+]/g, ''),
+        whatsapp: g('contact-whatsapp'),
+        email: g('contact-email'),
+        location: {
+          en: g('contact-location-en'),
+          ru: g('contact-location-ru'),
+          id: g('contact-location-id')
+        }
+      };
+
+      btnLoading(contactsSaveBtn, true);
+      const status = $('#contacts-save-status');
+      status.textContent = 'Saving...';
+      status.className = 'publish-status';
+
+      try {
+        const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
+        await commitFile('data/site-data.js', content, 'Update contact info via admin panel');
+        status.textContent = 'Saved! Site updating (~1-2 min)';
+        status.className = 'publish-status success';
+        updateRateLimit();
+      } catch (err) {
+        status.textContent = 'Error: ' + err.message;
+        status.className = 'publish-status error';
+      }
+      btnLoading(contactsSaveBtn, false);
+    });
   }
 
   const guideUploadBtn = $('#btn-guide-upload');
@@ -1641,7 +1711,7 @@
       }
 
       const status = $('#guide-upload-status');
-      guideUploadBtn.disabled = true;
+      btnLoading(guideUploadBtn, true);
       status.textContent = 'Uploading PDF...';
       status.className = 'publish-status';
 
@@ -1674,7 +1744,7 @@
         status.textContent = 'Error: ' + err.message;
         status.className = 'publish-status error';
       }
-      guideUploadBtn.disabled = false;
+      btnLoading(guideUploadBtn, false);
       guideFileInput.value = '';
     });
   }
@@ -1699,7 +1769,7 @@
     const sorted = faqData.slice().sort((a, b) => (a.order || 99) - (b.order || 99));
 
     if (!sorted.length) {
-      editor.innerHTML = '<p style="color:var(--color-text-dim)">No FAQ items. Click "+ Add Question" to create one.</p>';
+      editor.innerHTML = '<div class="empty-state"><div class="empty-state__icon">&#10067;</div><div class="empty-state__text">No FAQ items yet. Click "+ Add Question" to create one.</div></div>';
       return;
     }
 
@@ -1799,7 +1869,7 @@
   if (faqPublishBtn) {
     faqPublishBtn.addEventListener('click', async () => {
       if (!faqChanged || !faqData) return;
-      faqPublishBtn.disabled = true;
+      btnLoading(faqPublishBtn, true);
       const status = $('#faq-publish-status');
       status.textContent = 'Publishing FAQ...';
       status.className = 'publish-status';
@@ -1815,7 +1885,7 @@
         status.textContent = 'Error: ' + err.message;
         status.className = 'publish-status error';
       }
-      faqPublishBtn.disabled = false;
+      btnLoading(faqPublishBtn, false);
     });
   }
 
@@ -1829,6 +1899,147 @@
     faqNavBtn.addEventListener('click', () => {
       if (!faqData) loadFaqData();
       renderFaqEditor();
+    });
+  }
+
+  // ─── Testimonials Editor ───
+  const LANGS_FULL = { en: 'English', ru: 'Русский', id: 'Bahasa Indonesia' };
+  let testimonialsData = null;
+  let testimonialsChanged = false;
+
+  function loadTestimonialsData() {
+    if (typeof TESTIMONIALS_DATA !== 'undefined') {
+      testimonialsData = JSON.parse(JSON.stringify(TESTIMONIALS_DATA));
+    } else {
+      testimonialsData = [];
+    }
+  }
+
+  function renderTestimonialsEditor() {
+    if (!testimonialsData) loadTestimonialsData();
+    const editor = $('#testimonials-editor');
+    if (!editor) return;
+
+    const sorted = testimonialsData.slice().sort((a, b) => (a.order || 99) - (b.order || 99));
+
+    if (!sorted.length) {
+      editor.innerHTML = '<div class="empty-state"><div class="empty-state__icon">&#128172;</div><div class="empty-state__text">No testimonials yet. Click "+ Add Testimonial" to create one.</div></div>';
+      return;
+    }
+
+    editor.innerHTML = sorted.map((item, idx) => {
+      const i = testimonialsData.indexOf(item);
+      return `<div class="faq-editor-item" data-test-idx="${i}">
+        <div class="faq-editor-item__header">
+          <span class="faq-editor-item__num">#${idx + 1}</span>
+          <div class="faq-editor-item__controls">
+            <button class="btn btn--icon" data-test-up="${i}" title="Move Up" ${idx === 0 ? 'disabled' : ''}>↑</button>
+            <button class="btn btn--icon" data-test-down="${i}" title="Move Down" ${idx === sorted.length - 1 ? 'disabled' : ''}>↓</button>
+            <button class="btn btn--icon btn--danger" data-test-delete="${i}" title="Delete">🗑</button>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+          <div class="form-group"><label>Stars</label><input type="number" data-test-field="stars" data-test-i="${i}" min="1" max="5" value="${item.stars || 5}"></div>
+        </div>
+        ${LANGS.map(lng => `<div class="faq-editor-lang">
+          <div class="faq-editor-lang__label">${LANGS_FULL[lng] || lng}</div>
+          <div class="form-group"><label>Name</label><input type="text" data-test-field="name" data-test-i="${i}" data-test-lng="${lng}" value="${escAttr(item.name[lng] || '')}"></div>
+          <div class="form-group"><label>Role</label><input type="text" data-test-field="role" data-test-i="${i}" data-test-lng="${lng}" value="${escAttr(item.role[lng] || '')}"></div>
+          <div class="form-group"><label>Text</label><textarea data-test-field="text" data-test-i="${i}" data-test-lng="${lng}" rows="3">${escAttr(item.text[lng] || '')}</textarea></div>
+        </div>`).join('')}
+      </div>`;
+    }).join('');
+
+    // Bind input changes
+    editor.querySelectorAll('[data-test-field]').forEach(el => {
+      el.addEventListener('input', () => {
+        const i = parseInt(el.dataset.testI);
+        const field = el.dataset.testField;
+        const lng = el.dataset.testLng;
+        if (field === 'stars') {
+          testimonialsData[i].stars = parseInt(el.value) || 5;
+        } else {
+          testimonialsData[i][field][lng] = el.value;
+        }
+        testimonialsChanged = true;
+      });
+    });
+
+    // Bind reorder/delete
+    editor.querySelectorAll('[data-test-up]').forEach(btn => btn.addEventListener('click', () => {
+      const i = parseInt(btn.dataset.testUp);
+      const sorted2 = testimonialsData.slice().sort((a, b) => (a.order || 99) - (b.order || 99));
+      const idx2 = sorted2.indexOf(testimonialsData[i]);
+      if (idx2 > 0) { const tmp = sorted2[idx2].order; sorted2[idx2].order = sorted2[idx2 - 1].order; sorted2[idx2 - 1].order = tmp; }
+      testimonialsChanged = true;
+      renderTestimonialsEditor();
+    }));
+    editor.querySelectorAll('[data-test-down]').forEach(btn => btn.addEventListener('click', () => {
+      const i = parseInt(btn.dataset.testDown);
+      const sorted2 = testimonialsData.slice().sort((a, b) => (a.order || 99) - (b.order || 99));
+      const idx2 = sorted2.indexOf(testimonialsData[i]);
+      if (idx2 < sorted2.length - 1) { const tmp = sorted2[idx2].order; sorted2[idx2].order = sorted2[idx2 + 1].order; sorted2[idx2 + 1].order = tmp; }
+      testimonialsChanged = true;
+      renderTestimonialsEditor();
+    }));
+    editor.querySelectorAll('[data-test-delete]').forEach(btn => btn.addEventListener('click', () => {
+      const i = parseInt(btn.dataset.testDelete);
+      if (!confirm('Delete this testimonial?')) return;
+      testimonialsData.splice(i, 1);
+      testimonialsChanged = true;
+      renderTestimonialsEditor();
+    }));
+  }
+
+  // Add testimonial
+  const testAddBtn = $('#btn-testimonial-add');
+  if (testAddBtn) {
+    testAddBtn.addEventListener('click', () => {
+      if (!testimonialsData) loadTestimonialsData();
+      const maxOrder = testimonialsData.reduce((m, t) => Math.max(m, t.order || 0), 0);
+      testimonialsData.push({
+        name: { en: '', ru: '', id: '' },
+        role: { en: '', ru: '', id: '' },
+        text: { en: '', ru: '', id: '' },
+        stars: 5,
+        order: maxOrder + 1
+      });
+      testimonialsChanged = true;
+      renderTestimonialsEditor();
+    });
+  }
+
+  // Publish testimonials
+  const testPublishBtn = $('#btn-testimonials-publish');
+  if (testPublishBtn) {
+    testPublishBtn.addEventListener('click', async () => {
+      if (!testimonialsChanged || !testimonialsData) return;
+      btnLoading(testPublishBtn, true);
+      const status = $('#testimonials-publish-status');
+      status.textContent = 'Publishing testimonials...';
+      status.className = 'publish-status';
+
+      try {
+        const content = '/* eslint-disable */\nconst TESTIMONIALS_DATA = ' + JSON.stringify(testimonialsData, null, 2) + ';\n';
+        await commitFile('data/testimonials-data.js', content, 'Update testimonials via admin panel');
+        testimonialsChanged = false;
+        status.textContent = 'Published! Site updating (~1-2 min)';
+        status.className = 'publish-status success';
+        updateRateLimit();
+      } catch (err) {
+        status.textContent = 'Error: ' + err.message;
+        status.className = 'publish-status error';
+      }
+      btnLoading(testPublishBtn, false);
+    });
+  }
+
+  // Auto-render testimonials when tab is activated
+  const testNavBtn = document.querySelector('.admin-nav__btn[data-tab="testimonials"]');
+  if (testNavBtn) {
+    testNavBtn.addEventListener('click', () => {
+      if (!testimonialsData) loadTestimonialsData();
+      renderTestimonialsEditor();
     });
   }
 

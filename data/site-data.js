@@ -8,5 +8,16 @@ const SITE_DATA = {
   "exchangeRate": {
     "usdToIdr": 16500,
     "updatedAt": "2026-03-29"
+  },
+  "contacts": {
+    "phone": "+62 813 251 438 49",
+    "phoneRaw": "6281325143849",
+    "whatsapp": "6281338741177",
+    "email": "office@globalbalihome.com",
+    "location": {
+      "en": "Ubud, Bali, Indonesia",
+      "ru": "Убуд, Бали, Индонезия",
+      "id": "Ubud, Bali, Indonesia"
+    }
   }
 };

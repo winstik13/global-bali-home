@@ -82,6 +82,7 @@
       <button class="admin-nav__btn" data-tab="seo">SEO</button>
       <button class="admin-nav__btn" data-tab="gallery">Gallery</button>
       <button class="admin-nav__btn" data-tab="faq">FAQ</button>
+      <button class="admin-nav__btn" data-tab="testimonials">Testimonials</button>
     </nav>
 
     <!-- Tab: Dashboard -->
@@ -105,6 +106,40 @@
               <button id="btn-rate-save" class="btn btn--primary btn--sm">Save Rate</button>
               <span id="rate-save-status" class="publish-status"></span>
             </div>
+          </div>
+        </div>
+
+        <div class="editor-section" style="margin-top:24px">
+          <h3>Contact Information</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="text" id="contact-phone" placeholder="+62 813 251 438 49">
+            </div>
+            <div class="form-group">
+              <label>WhatsApp Number</label>
+              <input type="text" id="contact-whatsapp" placeholder="6281338741177">
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" id="contact-email" placeholder="office@globalbalihome.com">
+            </div>
+            <div class="form-group">
+              <label>Location (EN)</label>
+              <input type="text" id="contact-location-en" placeholder="Ubud, Bali, Indonesia">
+            </div>
+            <div class="form-group">
+              <label>Location (RU)</label>
+              <input type="text" id="contact-location-ru" placeholder="Убуд, Бали, Индонезия">
+            </div>
+            <div class="form-group">
+              <label>Location (ID)</label>
+              <input type="text" id="contact-location-id" placeholder="Ubud, Bali, Indonesia">
+            </div>
+          </div>
+          <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
+            <button id="btn-contacts-save" class="btn btn--primary btn--sm">Save Contacts</button>
+            <span id="contacts-save-status" class="publish-status"></span>
           </div>
         </div>
 
@@ -178,6 +213,17 @@
           <span id="faq-publish-status" class="publish-status"></span>
         </div>
       </section>
+
+      <!-- Tab: Testimonials -->
+      <section id="tab-testimonials" class="admin-tab" hidden>
+        <h2>Testimonials Editor</h2>
+        <div id="testimonials-editor"></div>
+        <div class="editor-actions">
+          <button id="btn-testimonial-add" class="btn btn--outline">+ Add Testimonial</button>
+          <button id="btn-testimonials-publish" class="btn btn--primary">Publish Testimonials</button>
+          <span id="testimonials-publish-status" class="publish-status"></span>
+        </div>
+      </section>
     </main>
   </div>
 
@@ -186,6 +232,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script src="../data/projects-data.js"></script>
   <script src="../data/faq-data.js"></script>
+  <script src="../data/testimonials-data.js"></script>
   <script src="../data/site-data.js"></script>
   <script src="../gallery-data.js"></script>
   <script src="admin.js"></script>
