@@ -95,6 +95,20 @@
         </div>
 
         <div class="editor-section" style="margin-top:24px">
+          <h3>Exchange Rate (USD → IDR)</h3>
+          <div class="guide-upload">
+            <div id="rate-info" class="guide-info"></div>
+            <div class="guide-actions" style="gap:8px">
+              <div class="form-group" style="margin:0;flex:0 0 160px">
+                <input type="number" id="rate-input" min="1000" step="100" placeholder="16500" style="width:100%">
+              </div>
+              <button id="btn-rate-save" class="btn btn--primary btn--sm">Save Rate</button>
+              <span id="rate-save-status" class="publish-status"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-section" style="margin-top:24px">
           <h3>Investment Guide PDF</h3>
           <div class="guide-upload">
             <div id="guide-info" class="guide-info"></div>

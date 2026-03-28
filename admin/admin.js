@@ -175,6 +175,7 @@
     loadSiteData();
     buildDynamicUI();
     renderDashboard();
+    renderRateInfo();
     renderGuideInfo();
     renderProjectEditor();
     updateRateLimit();
@@ -1564,8 +1565,53 @@
     if (typeof SITE_DATA !== 'undefined') {
       siteData = JSON.parse(JSON.stringify(SITE_DATA));
     } else {
-      siteData = { investmentGuide: { path: 'assets/bali-investment-guide-2026.pdf', version: '2026', updatedAt: '' } };
+      siteData = { investmentGuide: { path: 'assets/bali-investment-guide-2026.pdf', version: '2026', updatedAt: '' }, exchangeRate: { usdToIdr: 16500, updatedAt: '' } };
     }
+    if (!siteData.exchangeRate) siteData.exchangeRate = { usdToIdr: 16500, updatedAt: '' };
+  }
+
+  function renderRateInfo() {
+    if (!siteData) loadSiteData();
+    const info = $('#rate-info');
+    const input = $('#rate-input');
+    if (!info) return;
+    const rate = siteData.exchangeRate;
+    input.value = rate.usdToIdr;
+    if (rate.updatedAt) {
+      info.innerHTML = `<p><strong>Current rate:</strong> 1 USD = ${Number(rate.usdToIdr).toLocaleString('id-ID')} IDR &bull; <strong>Updated:</strong> ${rate.updatedAt}</p>`;
+    } else {
+      info.innerHTML = '<p style="color:var(--color-text-dim)">Default rate. Update to show accurate IDR prices on the site.</p>';
+    }
+  }
+
+  const rateSaveBtn = $('#btn-rate-save');
+  if (rateSaveBtn) {
+    rateSaveBtn.addEventListener('click', async () => {
+      if (!siteData) loadSiteData();
+      const input = $('#rate-input');
+      const newRate = parseInt(input.value, 10);
+      if (!newRate || newRate < 1000) { alert('Enter a valid rate (e.g. 16500)'); return; }
+
+      rateSaveBtn.disabled = true;
+      const status = $('#rate-save-status');
+      status.textContent = 'Saving...';
+      status.className = 'publish-status';
+
+      try {
+        siteData.exchangeRate.usdToIdr = newRate;
+        siteData.exchangeRate.updatedAt = new Date().toISOString().split('T')[0];
+        const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
+        await commitFile('data/site-data.js', content, 'Update exchange rate: 1 USD = ' + newRate + ' IDR');
+        status.textContent = 'Saved! Site updating (~1-2 min)';
+        status.className = 'publish-status success';
+        renderRateInfo();
+        updateRateLimit();
+      } catch (err) {
+        status.textContent = 'Error: ' + err.message;
+        status.className = 'publish-status error';
+      }
+      rateSaveBtn.disabled = false;
+    });
   }
 
   function renderGuideInfo() {

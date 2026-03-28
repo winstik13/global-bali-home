@@ -1085,10 +1085,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (y === 5) rental5 = rental10 + (pv - inv);
       }
       const total10 = rental10 + (pv - inv);
-      amountEl.textContent = '$' + inv.toLocaleString();
-      annualEl.textContent = '$' + Math.round(annualRental).toLocaleString();
-      yr5El.textContent = '$' + Math.round(rental5).toLocaleString();
-      yr10El.textContent = '$' + Math.round(total10).toLocaleString();
+      amountEl.innerHTML = '$' + inv.toLocaleString() + (fmtIdr(inv) ? '<span class="price-idr">' + fmtIdr(inv) + '</span>' : '');
+      annualEl.innerHTML = '$' + Math.round(annualRental).toLocaleString() + (fmtIdr(annualRental) ? '<span class="price-idr">' + fmtIdr(Math.round(annualRental)) + '</span>' : '');
+      yr5El.innerHTML = '$' + Math.round(rental5).toLocaleString() + (fmtIdr(rental5) ? '<span class="price-idr">' + fmtIdr(Math.round(rental5)) + '</span>' : '');
+      yr10El.innerHTML = '$' + Math.round(total10).toLocaleString() + (fmtIdr(total10) ? '<span class="price-idr">' + fmtIdr(Math.round(total10)) + '</span>' : '');
     };
 
     roiRange.addEventListener('input', calculate);
@@ -1223,16 +1223,44 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = 'hidden';
   });
 
+  // ─── IDR Currency Helpers ───
+  var xRate = (typeof SITE_DATA !== 'undefined' && SITE_DATA.exchangeRate) ? SITE_DATA.exchangeRate.usdToIdr : 0;
+
+  function fmtIdr(usd) {
+    if (!usd || !xRate) return '';
+    var idr = usd * xRate;
+    if (idr >= 1e9) {
+      var m = idr / 1e9;
+      return 'Rp ' + (m % 1 === 0 ? m.toFixed(0) : m.toFixed(1)).replace('.', ',') + ' M';
+    }
+    var j = idr / 1e6;
+    return 'Rp ' + Math.round(j).toLocaleString('id-ID') + ' jt';
+  }
+
+  // Auto-inject IDR into any element with data-usd="123000"
+  document.querySelectorAll('[data-usd]').forEach(function(el) {
+    var usd = parseFloat(el.dataset.usd);
+    var idr = fmtIdr(usd);
+    if (idr) el.innerHTML = el.innerHTML + '<span class="price-idr">' + idr + '</span>';
+  });
+
   // ─── Dynamic Render from PROJECTS_DATA ───
   if (typeof PROJECTS_DATA !== 'undefined') {
     const PD = PROJECTS_DATA;
     const dataLang = lang;
     const pathPrefix = (lang !== 'en') ? '../' : '';
 
-    // Helper: format price
     function fmtPrice(p) {
       if (!p) return '\u2014';
       return '$' + p.toLocaleString('en-US');
+    }
+
+    function fmtDualPrice(p) {
+      if (!p) return '\u2014';
+      var usd = '$' + p.toLocaleString('en-US');
+      var idr = fmtIdr(p);
+      if (!idr) return usd;
+      return usd + '<span class="price-idr">' + idr + '</span>';
     }
 
     // Helper: get project keys sorted by order
@@ -1253,9 +1281,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const proj = PD[key];
       if (!proj || !proj.heroStats) return;
       const stats = proj.heroStats[lang] || proj.heroStats.en;
-      el.innerHTML = stats.map(s =>
-        '<div class="hero-stats__item"><div class="hero-stats__number">' + s.number + '</div><div class="hero-stats__label">' + s.label + '</div></div>'
-      ).join('');
+      el.innerHTML = stats.map(s => {
+        var idrSub = '';
+        if (xRate && s.number && s.number.indexOf('$') === 0) {
+          var num = parseFloat(s.number.replace(/[^0-9.]/g, ''));
+          if (s.number.indexOf('K') > -1) num *= 1000;
+          if (num) idrSub = '<span class="price-idr">' + fmtIdr(num) + '</span>';
+        }
+        return '<div class="hero-stats__item"><div class="hero-stats__number">' + s.number + idrSub + '</div><div class="hero-stats__label">' + s.label + '</div></div>';
+      }).join('');
     });
 
     // --- Availability Bar ---
@@ -1290,7 +1324,7 @@ document.addEventListener('DOMContentLoaded', () => {
       proj.units.forEach(u => {
         const cls = u.badge ? ' class="unit--premium"' : '';
         const badge = u.badge ? ' <span class="unit__badge">' + u.badge + '</span>' : '';
-        html += '<tr' + cls + '><td>' + u.id + badge + '</td><td>' + u.type + '</td><td>' + u.floors + '</td><td>' + u.area + '</td><td>' + u.land + '</td><td class="status--' + u.status + '">' + (sl[u.status] || u.status) + '</td><td>' + fmtPrice(u.price) + '</td></tr>';
+        html += '<tr' + cls + '><td>' + u.id + badge + '</td><td>' + u.type + '</td><td>' + u.floors + '</td><td>' + u.area + '</td><td>' + u.land + '</td><td class="status--' + u.status + '">' + (sl[u.status] || u.status) + '</td><td>' + fmtDualPrice(u.price) + '</td></tr>';
       });
       html += '</tbody>';
       el.innerHTML = html;
@@ -1304,7 +1338,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       let html = '<thead><tr><th>' + h.type + '</th><th>' + h.floors + '</th><th>' + h.area + '</th><th>' + h.land + '</th><th>' + h.units + '</th><th>' + h.price + '</th></tr></thead><tbody>';
       proj.unitTypes.forEach(u => {
-        html += '<tr><td>' + u.type + '</td><td>' + u.floors + '</td><td>' + u.area + '</td><td>' + u.land + '</td><td>' + u.count + '</td><td>' + fmtPrice(u.price) + '</td></tr>';
+        html += '<tr><td>' + u.type + '</td><td>' + u.floors + '</td><td>' + u.area + '</td><td>' + u.land + '</td><td>' + u.count + '</td><td>' + fmtDualPrice(u.price) + '</td></tr>';
       });
       html += '</tbody>';
       el.innerHTML = html;
@@ -1359,7 +1393,7 @@ document.addEventListener('DOMContentLoaded', () => {
             '<h3>' + proj.name + '</h3>' +
             '<p>' + text + '</p>' +
             '<div class="project-showcase__meta">' + metaHtml + '</div>' +
-            '<p class="project-showcase__price">' + loc(proj.showcasePrice) + '</p>' +
+            '<p class="project-showcase__price">' + loc(proj.showcasePrice) + (proj.startingPrice ? '<span class="price-idr">' + fmtIdr(proj.startingPrice) + '</span>' : '') + '</p>' +
             buildAvailBar(proj) +
             '<a href="' + proj.page + '" class="btn btn--outline">' + loc(proj.showcaseCta) + '</a>' +
           '</div>' +
@@ -1374,7 +1408,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!proj) return;
 
       var price = el.querySelector('.project-showcase__price');
-      if (price && proj.showcasePrice) price.textContent = loc(proj.showcasePrice);
+      if (price && proj.showcasePrice) price.innerHTML = loc(proj.showcasePrice) + (proj.startingPrice ? '<span class="price-idr">' + fmtIdr(proj.startingPrice) + '</span>' : '');
 
       var badge = el.querySelector('.project-showcase__badge');
       if (badge && proj.showcaseStatus) badge.textContent = loc(proj.showcaseStatus);
@@ -1397,7 +1431,7 @@ document.addEventListener('DOMContentLoaded', () => {
       html += '</tr></thead><tbody>';
       var comp = PD.comparisonData || {};
       var rows = [
-        { key: 'price', fn: function(k) { return (comp[k] && comp[k].price) || ('$' + (PD[k].startingPrice / 1000 | 0) + 'K'); } },
+        { key: 'price', fn: function(k) { var p = (comp[k] && comp[k].price) || ('$' + (PD[k].startingPrice / 1000 | 0) + 'K'); var idr = fmtIdr(PD[k].startingPrice); return p + (idr ? '<span class="price-idr">' + idr + '</span>' : ''); } },
         { key: 'bedrooms', fn: function(k) { return PD[k].bedrooms; } },
         { key: 'area', fn: function(k) { return PD[k].compArea || (comp[k] && comp[k].area) || '\u2014'; } },
         { key: 'land', fn: function(k) { return PD[k].compLand || (comp[k] && comp[k].land) || '\u2014'; } },
