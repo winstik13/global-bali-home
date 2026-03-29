@@ -279,6 +279,7 @@ p {
   font-weight: 500;
   letter-spacing: 0.15em;
   text-transform: uppercase;
+  white-space: nowrap;
   transition: color var(--transition);
 }
 
@@ -473,7 +474,7 @@ p {
 .hero h1 {
   color: var(--color-cream);
   margin-bottom: 20px;
-  max-width: 800px;
+  white-space: nowrap;
 }
 
 .hero h1 .text-accent {
@@ -2952,6 +2953,9 @@ td .price-idr {
     justify-content: flex-end;
   }
 
+  .hero h1 {
+    white-space: normal;
+  }
 
   .hero__tag {
     margin-bottom: 16px;
