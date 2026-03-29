@@ -35,13 +35,13 @@ const ALL_FILES = LANGS.flatMap(lang =>
 const LANG_CHECKS = {
   ru: {
     nav:    ['Главная', 'Проекты', 'Услуги', 'О нас', 'Галерея', 'Контакты'],
-    cta:    'Начать',
+    cta:    'Подобрать',
     footer: 'Навигация',
     lang_toggle: '>RU ',  // space before svg
   },
   id: {
     nav:    ['Beranda', 'Proyek', 'Layanan', 'Tentang Kami', 'Galeri', 'Kontak'],
-    cta:    'Mulai',
+    cta:    'Konsultasi',
     footer: 'Navigasi',
     lang_toggle: '>ID ',  // space before svg
   },
@@ -407,8 +407,11 @@ function testProjectPages() {
         ['fullbleed hero', /class="fullbleed-hero"/i],
         ['price mention', /\$\d+K|\$\d{3}[,\s]/],
         ['availability bar or presale', /availability-bar|presale/i],
-        ['CTA section', /class="cta-section/i],
       ];
+      // CTA section is optional for Village (presale page)
+      if (!page.includes('village')) {
+        checks.push(['CTA section', /class="cta-section/i]);
+      }
       for (const [name, pattern] of checks) {
         if (has(html, pattern)) addResult(cat, `${relPath} → ${name}`, 'pass');
         else                    addResult(cat, `${relPath} → ${name}`, 'fail', `Missing: ${name}`);
@@ -487,6 +490,263 @@ function testGalleryData() {
   else addResult(cat, `gallery images on disk`, 'fail', `${missingImages} missing out of ${imgPaths.length}`);
 }
 
+// ─── TEST 16: DATA FILES INTEGRITY ───────────────────────────────────────────
+function testDataFiles() {
+  const cat = 'Data Files';
+  const dataFiles = [
+    ['data/site-data.js', 'SITE_DATA'],
+    ['data/projects-data.js', 'PROJECTS_DATA'],
+    ['data/faq-data.js', 'FAQ_DATA'],
+    ['data/testimonials-data.js', 'TESTIMONIALS_DATA'],
+  ];
+  for (const [file, varName] of dataFiles) {
+    const abs = path.join(ROOT, file);
+    if (!fs.existsSync(abs)) {
+      addResult(cat, file, 'fail', 'File not found');
+      continue;
+    }
+    const content = fs.readFileSync(abs, 'utf8');
+    if (content.includes(varName)) addResult(cat, `${file} → ${varName}`, 'pass');
+    else addResult(cat, `${file} → ${varName}`, 'fail', `Missing ${varName} declaration`);
+
+    // Validate it's parseable JS
+    try {
+      new Function(content);
+      addResult(cat, `${file} → syntax`, 'pass');
+    } catch (e) {
+      addResult(cat, `${file} → syntax`, 'fail', `JS syntax error: ${e.message}`);
+    }
+  }
+
+  // Validate site-data.js structure
+  const sdPath = path.join(ROOT, 'data/site-data.js');
+  if (fs.existsSync(sdPath)) {
+    const sd = fs.readFileSync(sdPath, 'utf8');
+    const requiredKeys = ['investmentGuide', 'exchangeRate', 'contacts'];
+    for (const key of requiredKeys) {
+      if (sd.includes(`"${key}"`)) addResult(cat, `site-data → ${key}`, 'pass');
+      else addResult(cat, `site-data → ${key}`, 'fail', `Missing key "${key}"`);
+    }
+    // Validate WhatsApp is digits only
+    const waMatch = sd.match(/"whatsapp":\s*"([^"]*)"/);
+    if (waMatch) {
+      if (/^\d{10,15}$/.test(waMatch[1])) addResult(cat, 'WhatsApp format', 'pass');
+      else addResult(cat, 'WhatsApp format', 'fail', `Invalid: "${waMatch[1]}" — must be 10-15 digits`);
+    }
+    // Validate exchange rate
+    const rateMatch = sd.match(/"usdToIdr":\s*(\d+)/);
+    if (rateMatch) {
+      const rate = parseInt(rateMatch[1]);
+      if (rate >= 1000 && rate <= 50000) addResult(cat, `Exchange rate (${rate})`, 'pass');
+      else addResult(cat, `Exchange rate (${rate})`, 'warn', 'Rate seems unusual');
+    }
+  }
+
+  // Validate projects-data.js has all 3 projects
+  const pdPath = path.join(ROOT, 'data/projects-data.js');
+  if (fs.existsSync(pdPath)) {
+    const pd = fs.readFileSync(pdPath, 'utf8');
+    for (const slug of ['serenity-villas', 'serenity-estates', 'serenity-village']) {
+      if (pd.includes(slug)) addResult(cat, `project → ${slug}`, 'pass');
+      else addResult(cat, `project → ${slug}`, 'fail', `Missing project "${slug}"`);
+    }
+  }
+}
+
+// ─── TEST 17: ADMIN PANEL ────────────────────────────────────────────────────
+function testAdminPanel() {
+  const cat = 'Admin Panel';
+  const adminHtml = readHtml('admin/index.html');
+  if (!adminHtml) {
+    addResult(cat, 'admin/index.html', 'fail', 'File not found');
+    return;
+  }
+
+  // Required elements
+  const checks = [
+    ['login form', /id="login-form"/i],
+    ['PAT form', /id="pat-form"/i],
+    ['dashboard tab', /data-tab="dashboard"/i],
+    ['projects tab', /data-tab="projects"/i],
+    ['seo tab', /data-tab="seo"/i],
+    ['gallery tab', /data-tab="gallery"/i],
+    ['faq tab', /data-tab="faq"/i],
+    ['testimonials tab', /data-tab="testimonials"/i],
+    ['colors tab', /data-tab="colors"/i],
+    ['rate input', /id="rate-input"/i],
+    ['rate auto checkbox', /id="rate-auto"/i],
+    ['contact phone', /id="contact-phone"/i],
+    ['contact whatsapp', /id="contact-whatsapp"/i],
+    ['contact email', /id="contact-email"/i],
+    ['guide upload', /id="guide-file-input"/i],
+    ['color pickers', /id="color-accent"/i],
+    ['colors save btn', /id="btn-colors-save"/i],
+    ['colors reset btn', /id="btn-colors-reset"/i],
+  ];
+  for (const [name, pattern] of checks) {
+    if (has(adminHtml, pattern)) addResult(cat, name, 'pass');
+    else addResult(cat, name, 'fail', `Missing: ${name}`);
+  }
+
+  // Help tooltips
+  const helpSections = ['rate', 'contacts', 'guide', 'colors'];
+  for (const section of helpSections) {
+    if (has(adminHtml, `data-help="${section}"`)) addResult(cat, `help tooltip: ${section}`, 'pass');
+    else addResult(cat, `help tooltip: ${section}`, 'warn', `Missing help tooltip for ${section}`);
+  }
+
+  // Admin JS and CSS
+  for (const file of ['admin/admin.js', 'admin/admin.css']) {
+    if (fs.existsSync(path.join(ROOT, file))) addResult(cat, file, 'pass');
+    else addResult(cat, file, 'fail', 'File not found');
+  }
+
+  // JS syntax check
+  const adminJs = path.join(ROOT, 'admin/admin.js');
+  if (fs.existsSync(adminJs)) {
+    try {
+      new Function(fs.readFileSync(adminJs, 'utf8'));
+      addResult(cat, 'admin.js syntax', 'pass');
+    } catch (e) {
+      addResult(cat, 'admin.js syntax', 'fail', `JS error: ${e.message}`);
+    }
+  }
+}
+
+// ─── TEST 18: CSS VARIABLES CONSISTENCY ──────────────────────────────────────
+function testCssVariables() {
+  const cat = 'CSS Variables';
+  const cssPath = path.join(ROOT, 'css/style.css');
+  if (!fs.existsSync(cssPath)) {
+    addResult(cat, 'style.css', 'fail', 'File not found');
+    return;
+  }
+  const css = fs.readFileSync(cssPath, 'utf8');
+
+  // Required variables
+  const requiredVars = [
+    '--color-bg', '--color-bg-alt', '--color-bg-card',
+    '--color-accent', '--color-text', '--color-cream',
+    '--color-text-muted', '--color-text-dim',
+    '--color-border', '--color-border-hover',
+    '--font-heading', '--font-body',
+  ];
+  for (const v of requiredVars) {
+    if (css.includes(`${v}:`)) addResult(cat, `defined: ${v}`, 'pass');
+    else addResult(cat, `defined: ${v}`, 'fail', `Missing variable ${v} in :root`);
+  }
+
+  // Should NOT have removed/unused variables
+  const removedVars = ['--color-beige', '--color-dark', '--color-green', '--color-deep-green'];
+  for (const v of removedVars) {
+    if (css.includes(`${v}:`)) addResult(cat, `unused: ${v}`, 'warn', `Variable ${v} is defined but should be removed`);
+    else addResult(cat, `cleaned: ${v}`, 'pass');
+  }
+
+  // Check no references to removed variables
+  for (const v of removedVars) {
+    const usage = (css.match(new RegExp(`var\\(${v.replace(/[-]/g, '\\-')}\\)`, 'g')) || []).length;
+    if (usage > 0) addResult(cat, `refs to ${v}`, 'fail', `${usage} reference(s) to removed variable`);
+  }
+}
+
+// ─── TEST 19: CONSENT CHECKBOXES ─────────────────────────────────────────────
+function testConsent() {
+  const cat = 'Privacy Consent';
+  // Lead-magnet forms on index pages should have consent checkboxes
+  for (const lang of LANGS) {
+    const relPath = lang ? `${lang}/index.html` : 'index.html';
+    const html = readHtml(relPath);
+    if (!html) continue;
+
+    if (has(html, /id="lead-consent"/i)) addResult(cat, `${relPath} → lead-magnet consent`, 'pass');
+    else addResult(cat, `${relPath} → lead-magnet consent`, 'fail', 'Missing consent checkbox on lead-magnet form');
+  }
+}
+
+// ─── TEST 20: WHATSAPP DYNAMIC LINKS ─────────────────────────────────────────
+function testWhatsAppLinks() {
+  const cat = 'WhatsApp Links';
+  for (const relPath of ALL_FILES) {
+    const html = readHtml(relPath);
+    if (!html) continue;
+    // All wa.me links should have data-contact="whatsapp-link" for dynamic update
+    const waLinks = (html.match(/<a\s[^>]*href="https:\/\/wa\.me\/[^"]*"[^>]*>/gi) || []);
+    let missingDataAttr = 0;
+    for (const tag of waLinks) {
+      if (!tag.includes('data-contact="whatsapp-link"')) missingDataAttr++;
+    }
+    if (waLinks.length === 0) continue; // no WA links on this page
+    if (missingDataAttr === 0) addResult(cat, `${relPath}`, 'pass', `${waLinks.length} link(s) OK`);
+    else addResult(cat, `${relPath}`, 'warn', `${missingDataAttr}/${waLinks.length} WA link(s) missing data-contact`);
+  }
+}
+
+// ─── TEST 21: MAIN.JS INTEGRITY ──────────────────────────────────────────────
+function testMainJs() {
+  const cat = 'Main JS';
+  const jsPath = path.join(ROOT, 'js/main.js');
+  if (!fs.existsSync(jsPath)) {
+    addResult(cat, 'main.js', 'fail', 'File not found');
+    return;
+  }
+  const js = fs.readFileSync(jsPath, 'utf8');
+
+  // Syntax check
+  try {
+    new Function(js);
+    addResult(cat, 'syntax valid', 'pass');
+  } catch (e) {
+    addResult(cat, 'syntax valid', 'fail', `JS error: ${e.message}`);
+  }
+
+  // Key features present
+  const features = [
+    ['color application', /SITE_DATA\.colors/],
+    ['auto exchange rate', /exchangeRate\.auto/],
+    ['custom validation', /showFieldError/],
+    ['quiz popup', /openQuiz|closeQuiz/],
+    ['exit intent', /exit.*overlay|exitOverlay/i],
+    ['scroll reveal', /IntersectionObserver/],
+    ['WhatsApp dynamic', /data-contact.*whatsapp/],
+    ['IDR formatting', /fmtIdr/],
+    ['i18n translations', /i18n\s*=\s*\{/],
+    ['lead-magnet countdown', /countdown-num/],
+  ];
+  for (const [name, pattern] of features) {
+    if (pattern.test(js)) addResult(cat, `feature: ${name}`, 'pass');
+    else addResult(cat, `feature: ${name}`, 'fail', `Missing feature: ${name}`);
+  }
+
+  // No hardcoded WhatsApp numbers (should use SITE_DATA)
+  const hardcodedWa = (js.match(/wa\.me\/\d+/g) || []);
+  if (hardcodedWa.length === 0) addResult(cat, 'no hardcoded WA numbers', 'pass');
+  else addResult(cat, 'no hardcoded WA numbers', 'warn', `${hardcodedWa.length} hardcoded wa.me link(s) found`);
+}
+
+// ─── TEST 22: SITE-DATA SCRIPTS LOADED ───────────────────────────────────────
+function testDataScripts() {
+  const cat = 'Data Scripts';
+  // site-data.js and projects-data.js are only required on pages that use them
+  const pagesNeedingSiteData = ['index.html', 'contacts.html', 'project-serenity-villas.html', 'project-serenity-estates.html', 'project-serenity-village.html'];
+  const pagesNeedingProjectsData = ['index.html', 'projects.html', 'project-serenity-villas.html', 'project-serenity-estates.html', 'project-serenity-village.html'];
+
+  for (const relPath of ALL_FILES) {
+    const html = readHtml(relPath);
+    if (!html) continue;
+    const baseName = path.basename(relPath);
+
+    if (pagesNeedingSiteData.includes(baseName)) {
+      if (has(html, 'site-data.js')) addResult(cat, `${relPath} → site-data.js`, 'pass');
+      else addResult(cat, `${relPath} → site-data.js`, 'fail', 'site-data.js required but not loaded');
+    }
+    if (pagesNeedingProjectsData.includes(baseName)) {
+      if (has(html, 'projects-data.js')) addResult(cat, `${relPath} → projects-data.js`, 'pass');
+      else addResult(cat, `${relPath} → projects-data.js`, 'fail', 'projects-data.js required but not loaded');
+    }
+  }
+}
+
 // ─── RUN ALL TESTS ────────────────────────────────────────────────────────────
 console.log(`\n${C.bold}${C.cyan}═══════════════════════════════════════════════════════${C.reset}`);
 console.log(`${C.bold}${C.cyan}  Global Bali Home — Site Audit${C.reset}`);
@@ -507,6 +767,13 @@ testProjectPages();
 testExternalLinks();
 testHomepage();
 testGalleryData();
+testDataFiles();
+testAdminPanel();
+testCssVariables();
+testConsent();
+testWhatsAppLinks();
+testMainJs();
+testDataScripts();
 
 // ─── RENDER REPORT ────────────────────────────────────────────────────────────
 const categories = [...new Set(results.map(r => r.category))];
@@ -567,5 +834,61 @@ if (allWarns.length > 0) {
   }
   console.log();
 }
+
+// ─── GENERATE AUDIT FILE ─────────────────────────────────────────────────────
+const now = new Date();
+const dateStr = now.toISOString().slice(0, 10);
+const timeStr = now.toTimeString().slice(0, 5).replace(':', '-');
+const auditDir = path.join(ROOT, 'audits');
+if (!fs.existsSync(auditDir)) fs.mkdirSync(auditDir);
+const auditFile = path.join(auditDir, `site-audit-${dateStr}_${timeStr}.md`);
+
+let md = `# Site Audit Report\n\n`;
+md += `**Date:** ${now.toISOString().slice(0, 19).replace('T', ' ')}\n`;
+md += `**Total checks:** ${total} | **Pass:** ${pass} | **Fail:** ${failures} | **Warn:** ${warnings}\n`;
+md += `**Status:** ${failures === 0 ? (warnings === 0 ? 'ALL CLEAR' : 'STABLE (warnings only)') : 'ISSUES FOUND'}\n\n`;
+
+md += `---\n\n## Summary by Category\n\n`;
+md += `| Category | Pass | Fail | Warn | Status |\n`;
+md += `|----------|------|------|------|--------|\n`;
+for (const cat of categories) {
+  const cr = results.filter(r => r.category === cat);
+  const cp = cr.filter(r => r.status === 'pass').length;
+  const cf = cr.filter(r => r.status === 'fail').length;
+  const cw = cr.filter(r => r.status === 'warn').length;
+  const st = cf > 0 ? 'FAIL' : cw > 0 ? 'WARN' : 'OK';
+  md += `| ${cat} | ${cp} | ${cf} | ${cw} | ${st} |\n`;
+}
+
+if (allFails.length > 0) {
+  md += `\n## Failures (${allFails.length})\n\n`;
+  for (const r of allFails) {
+    md += `- **[${r.category}]** ${r.name}`;
+    if (r.message) md += ` — ${r.message}`;
+    md += `\n`;
+  }
+}
+
+if (allWarns.length > 0) {
+  md += `\n## Warnings (${allWarns.length})\n\n`;
+  for (const r of allWarns) {
+    md += `- **[${r.category}]** ${r.name}`;
+    if (r.message) md += ` — ${r.message}`;
+    md += `\n`;
+  }
+}
+
+md += `\n## Conclusion\n\n`;
+if (failures === 0 && warnings === 0) {
+  md += `All ${total} checks passed. Site is stable and ready for production.\n`;
+} else if (failures === 0) {
+  md += `No critical issues. ${warnings} warning(s) found — review recommended but not blocking.\n`;
+} else {
+  md += `${failures} critical issue(s) found that need attention. ${warnings} warning(s) also detected.\n`;
+  md += `Fix failures before deploying.\n`;
+}
+
+fs.writeFileSync(auditFile, md, 'utf8');
+console.log(`${C.cyan}Audit report saved: ${path.relative(ROOT, auditFile)}${C.reset}\n`);
 
 process.exit(failures > 0 ? 1 : 0);
