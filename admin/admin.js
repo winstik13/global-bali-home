@@ -1248,8 +1248,8 @@
             ${['1 Bedroom', '2 Bedroom', '3 Bedroom', '4 Bedroom', '4.5 Bedroom', '5 Bedroom'].map(v => `<option value="${v}"${u.type === v ? ' selected' : ''}>${v}</option>`).join('')}
           </select></td>
           <td data-label="${t('projects.floors')}"><input type="number" data-unit="${i}" data-field="floors" class="unit-text" value="${u.floors}" style="width:48px" min="1" max="5"></td>
-          <td data-label="${t('projects.area')}"><input type="text" data-unit="${i}" data-field="area" class="unit-text" value="${u.area}" style="width:72px"></td>
-          <td data-label="${t('projects.land')}"><input type="text" data-unit="${i}" data-field="land" class="unit-text" value="${u.land}" style="width:72px"></td>
+          <td data-label="${t('projects.area')}"><div class="unit-suffix"><input type="number" data-unit="${i}" data-field="area" class="unit-text" value="${parseFloat(u.area) || ''}" style="width:56px" min="0" step="1"><span>m²</span></div></td>
+          <td data-label="${t('projects.land')}"><div class="unit-suffix"><input type="number" data-unit="${i}" data-field="land" class="unit-text" value="${parseFloat(u.land) || ''}" style="width:56px" min="0" step="0.01"><span>are</span></div></td>
           <td data-label="${t('projects.badge')}"><select data-unit="${i}" data-field="badge" class="unit-badge">
             ${[['', '—'], ['Premium', 'Premium'], ['Front Row', 'Front Row'], ['Large Plot', 'Large Plot'], ['Corner', 'Corner'], ['Last Unit', 'Last Unit'], ['Best Seller', 'Best Seller']].map(([v, l]) => `<option value="${v}"${(u.badge || '') === v ? ' selected' : ''}>${l}</option>`).join('')}
           </select></td>
@@ -1274,8 +1274,8 @@
         html += `<tr>
           <td data-label="${t('projects.type')}"><input type="text" data-utype="${i}" data-field="type" class="utype-text" value="${ut.type}" style="width:100px"></td>
           <td data-label="${t('projects.floors')}"><input type="number" data-utype="${i}" data-field="floors" class="utype-text" value="${ut.floors}" style="width:48px" min="1" max="5"></td>
-          <td data-label="${t('projects.area')}"><input type="text" data-utype="${i}" data-field="area" class="utype-text" value="${ut.area}" style="width:72px"></td>
-          <td data-label="${t('projects.land')}"><input type="text" data-utype="${i}" data-field="land" class="utype-text" value="${ut.land}" style="width:72px"></td>
+          <td data-label="${t('projects.area')}"><div class="unit-suffix"><input type="number" data-utype="${i}" data-field="area" class="utype-text" value="${parseFloat(ut.area) || ''}" style="width:56px" min="0" step="1"><span>m²</span></div></td>
+          <td data-label="${t('projects.land')}"><div class="unit-suffix"><input type="number" data-utype="${i}" data-field="land" class="utype-text" value="${parseFloat(ut.land) || ''}" style="width:56px" min="0" step="0.01"><span>are</span></div></td>
           <td data-label="${t('projects.unit')}"><input type="number" data-utype="${i}" data-field="count" class="utype-text" value="${ut.count}" style="width:48px" min="0"></td>
           <td data-label="${t('projects.price')}"><input type="number" data-utype="${i}" data-field="price" class="utype-price" value="${ut.price || ''}" min="0" step="1000"></td>
           <td><button class="btn--icon btn--danger" data-delete-utype="${i}" title="${t('projects.deleteType')}">&times;</button></td>
@@ -1330,6 +1330,10 @@
         const field = inp.dataset.field;
         if (field === 'floors') {
           p.units[idx][field] = +inp.value;
+        } else if (field === 'area') {
+          p.units[idx][field] = inp.value ? inp.value + ' m²' : '';
+        } else if (field === 'land') {
+          p.units[idx][field] = inp.value ? inp.value + ' are' : '';
         } else {
           p.units[idx][field] = inp.value;
         }
@@ -1377,6 +1381,10 @@
         const field = inp.dataset.field;
         if (field === 'floors' || field === 'count') {
           p.unitTypes[idx][field] = +inp.value;
+        } else if (field === 'area') {
+          p.unitTypes[idx][field] = inp.value ? inp.value + ' m²' : '';
+        } else if (field === 'land') {
+          p.unitTypes[idx][field] = inp.value ? inp.value + ' are' : '';
         } else {
           p.unitTypes[idx][field] = inp.value;
         }

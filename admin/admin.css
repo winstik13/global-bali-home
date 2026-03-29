@@ -921,6 +921,17 @@ body {
 
 .admin-unit-table tr:hover { background: var(--color-bg-card); }
 
+.unit-suffix {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.unit-suffix span {
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+  white-space: nowrap;
+}
+
 .admin-unit-table select,
 .admin-unit-table input {
   background: var(--color-bg);
