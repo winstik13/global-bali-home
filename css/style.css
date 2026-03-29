@@ -720,11 +720,12 @@ td .price-idr {
 }
 .hero-stats__number .price-idr,
 .hero__stat-number .price-idr {
-  font-size: 0.55em;
+  font-size: 0.5em;
   display: block;
-  margin-top: 2px;
+  margin-top: 4px;
   font-family: var(--font-body);
   font-weight: 400;
+  opacity: 0.7;
 }
 .roi-calculator__amount .price-idr,
 .roi-calculator__result-value .price-idr {
@@ -1339,6 +1340,7 @@ td .price-idr {
 
 .hero-stats {
   display: flex;
+  align-items: center;
   gap: 0;
   margin-top: 32px;
 }
