@@ -113,6 +113,7 @@
       'projects.price': 'Price ($)',
       'projects.sold': 'Sold',
       'projects.total': 'Total',
+      'projects.availAutoHint': 'Auto-calculated from unit statuses above',
       'projects.number': 'Number',
       'projects.label': 'Label',
       'projects.priceLabel': 'Price',
@@ -330,6 +331,7 @@
       'projects.price': 'Цена ($)',
       'projects.sold': 'Продано',
       'projects.total': 'Всего',
+      'projects.availAutoHint': 'Рассчитывается автоматически из статусов юнитов',
       'projects.number': 'Число',
       'projects.label': 'Подпись',
       'projects.priceLabel': 'Цена',
@@ -1012,19 +1014,31 @@
       html += `</tbody></table><button class="btn btn--outline btn--sm" id="btn-add-utype" style="margin-top:8px">${t('projects.addType')}</button></div>`;
     }
 
-    // Availability
+    // Availability (auto-calculated)
+    // For projects with units: both sold and total are computed from unit statuses
+    // For unitTypes (Village): total = sum of counts, sold is editable
+    const canEditSold = !p.units && p.unitTypes;
+    if (p.units) {
+      // Force recalc from units
+      p.availability.sold = p.units.filter(u => u.status === 'sold' || u.status === 'booked').length;
+      p.availability.total = p.units.length;
+    } else if (p.unitTypes) {
+      p.availability.total = p.unitTypes.reduce((s, ut) => s + ut.count, 0);
+    }
+    const availPct = p.availability.total ? Math.round(p.availability.sold / p.availability.total * 100) : 0;
     html += `<div class="editor-section"><h3>${t('projects.availability')}</h3>
       <div style="display:flex;gap:24px;align-items:center;">
         <div class="form-group" style="width:120px">
           <label>${t('projects.sold')}</label>
-          <input type="number" id="avail-sold" value="${p.availability.sold}" min="0" max="${p.availability.total}">
+          <input type="number" id="avail-sold" value="${p.availability.sold}" min="0" max="${p.availability.total}" ${canEditSold ? '' : 'readonly'}>
         </div>
         <div class="form-group" style="width:120px">
           <label>${t('projects.total')}</label>
           <input type="number" id="avail-total" value="${p.availability.total}" min="1" readonly>
         </div>
-        <div style="font-size:1.3rem;font-family:var(--font-heading);color:var(--color-cream)">${Math.round(p.availability.sold / p.availability.total * 100)}%</div>
+        <div style="font-size:1.3rem;font-family:var(--font-heading);color:var(--color-cream)">${availPct}%</div>
       </div>
+      ${canEditSold ? '' : `<small class="field-hint" style="margin-top:4px;display:block">${t('projects.availAutoHint')}</small>`}
     </div>`;
 
     // Hero Stats (4 languages)
@@ -1183,10 +1197,13 @@
       });
     });
 
-    $('#avail-sold').addEventListener('input', (e) => {
-      p.availability.sold = +e.target.value;
-      markChanged();
-    });
+    // Only allow manual sold editing for Village (unitTypes without per-unit statuses)
+    if (!p.units && p.unitTypes) {
+      $('#avail-sold').addEventListener('input', (e) => {
+        p.availability.sold = +e.target.value;
+        markChanged();
+      });
+    }
 
     // Add generate pages button
     addGeneratePagesButton();
