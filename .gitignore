@@ -1,1 +1,16 @@
 .claude/
+
+# Documentation (local only, not needed on hosting)
+DESIGN-SYSTEM.md
+TYPOGRAPHY.md
+SITE-STRUCTURE.md
+Base info.md
+CLAUDE.md
+marketing-audit.md
+
+# Audit reports
+audits/
+site-audit.js
+
+# Admin setup docs
+admin/SETUP.md
