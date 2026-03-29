@@ -50,7 +50,7 @@
       'dash.from': 'From',
       'dash.revenue': 'Revenue',
       'dash.editProject': 'Edit Project',
-      'projects.backToDash': '&larr; Dashboard',
+      'projects.backToDash': '← Dashboard',
       'dash.viewOnSite': 'View on Site',
       'dash.recentChanges': 'Recent Changes',
       'dash.noChanges': 'No recent changes to project data.',
@@ -275,7 +275,7 @@
       'dash.from': 'От',
       'dash.revenue': 'Выручка',
       'dash.editProject': 'Редактировать',
-      'projects.backToDash': '&larr; Дашборд',
+      'projects.backToDash': '← Дашборд',
       'dash.viewOnSite': 'На сайте',
       'dash.recentChanges': 'Последние изменения',
       'dash.noChanges': 'Нет недавних изменений.',
@@ -502,7 +502,8 @@
       // Re-render SEO if open
       const seoPage = $('#seo-page');
       if (seoPage && seoPage.value && Object.keys(seoCache).length) {
-        loadAllSEO(seoPage.value);
+        saveSeoFieldsToCache(currentSeoLang);
+        renderSeoFields();
       }
     }
   }
@@ -751,7 +752,10 @@
       btn.classList.add('active');
       $$('.admin-tab').forEach(tab => tab.hidden = true);
       $(`#tab-${btn.dataset.tab}`).hidden = false;
-      hideProjectBreadcrumb();
+      // Update breadcrumb when switching to Projects tab
+      if (btn.dataset.tab === 'projects') {
+        updateProjectBreadcrumb();
+      }
     });
   });
 
@@ -759,7 +763,6 @@
   const backDashBtn = $('#btn-back-dash');
   if (backDashBtn) {
     backDashBtn.addEventListener('click', () => {
-      hideProjectBreadcrumb();
       $$('.admin-nav__btn').forEach(b => b.classList.remove('active'));
       $$('.admin-nav__btn').forEach(b => { if (b.dataset.tab === 'dashboard') b.classList.add('active'); });
       $$('.admin-tab').forEach(tab => tab.hidden = true);
@@ -802,6 +805,7 @@
           btn.classList.add('active');
           currentProject = btn.dataset.proj;
           renderProjectEditor();
+          updateProjectBreadcrumb();
         });
       });
       const newProjBtn = $('#btn-new-project');
@@ -959,27 +963,23 @@
         $$('.project-tabs__btn').forEach(b => b.classList.remove('active'));
         $$('.project-tabs__btn').forEach(b => { if (b.dataset.proj === currentProject) b.classList.add('active'); });
         renderProjectEditor();
-        showProjectBreadcrumb(currentProject);
+        updateProjectBreadcrumb();
         $('#tab-projects').scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });
+
+    // Set initial breadcrumb
+    updateProjectBreadcrumb();
 
     // Load recent commits
     loadRecentCommits();
   }
 
-  function showProjectBreadcrumb(projectKey) {
-    const bc = $('#project-breadcrumb');
+  function updateProjectBreadcrumb() {
     const nameEl = $('#breadcrumb-project');
-    if (!bc || !nameEl) return;
-    const p = projectsData[projectKey];
-    nameEl.textContent = p ? p.name : projectKey;
-    bc.hidden = false;
-  }
-
-  function hideProjectBreadcrumb() {
-    const bc = $('#project-breadcrumb');
-    if (bc) bc.hidden = true;
+    if (!nameEl) return;
+    const p = projectsData && projectsData[currentProject];
+    nameEl.textContent = p ? p.name : currentProject;
   }
 
   async function loadRecentCommits() {
@@ -1326,20 +1326,51 @@
   const LANG_NAMES = { en: 'English', ru: 'Russian', id: 'Indonesian' };
   const BASE_URL = 'https://winstik13.github.io/global-bali-home';
   let seoCache = {}; // { lang: { html, sha, fields } }
+  let currentSeoLang = 'en';
 
   $('#seo-page').addEventListener('change', () => {
     seoCache = {};
+    currentSeoLang = 'en';
     const page = $('#seo-page').value;
-    if (page) loadAllSEO(page);
-    else $('#seo-editor').innerHTML = '';
+    const langTabs = $('#seo-lang-tabs');
+    if (page) {
+      if (langTabs) langTabs.hidden = false;
+      // Reset active tab to EN
+      langTabs.querySelectorAll('.seo-lang-tab').forEach(b => b.classList.toggle('active', b.dataset.seoLang === 'en'));
+      loadAllSEO(page);
+    } else {
+      if (langTabs) langTabs.hidden = true;
+      $('#seo-editor').innerHTML = '';
+    }
   });
+
+  // Language tab switching
+  $('#seo-lang-tabs').addEventListener('click', (e) => {
+    const btn = e.target.closest('.seo-lang-tab');
+    if (!btn) return;
+    const lng = btn.dataset.seoLang;
+    if (lng === currentSeoLang) return;
+    // Save current field values before switching
+    saveSeoFieldsToCache(currentSeoLang);
+    currentSeoLang = lng;
+    $('#seo-lang-tabs').querySelectorAll('.seo-lang-tab').forEach(b => b.classList.toggle('active', b.dataset.seoLang === lng));
+    renderSeoFields();
+  });
+
+  function saveSeoFieldsToCache(lng) {
+    const editor = $('#seo-editor');
+    if (!seoCache[lng]) return;
+    editor.querySelectorAll('.seo-input').forEach(inp => {
+      seoCache[lng].fields[inp.dataset.seo] = inp.value;
+    });
+  }
 
   async function loadAllSEO(page) {
     const editor = $('#seo-editor');
     editor.innerHTML = `<p style="color:var(--color-text-dim)">${t('seo.loadingLangs')}</p>`;
 
     try {
-      // Load all 4 languages in parallel
+      // Load all 3 languages in parallel
       const results = await Promise.all(LANGS.map(async (lng) => {
         const path = lng === 'en' ? page : `${lng}/${page}`;
         const file = await fetchFile(path);
@@ -1349,132 +1380,138 @@
       }));
 
       results.forEach(r => { seoCache[r.lng] = r; });
-
-      // Build editor UI
-      let html = '';
-
-      // SERP Preview (EN)
-      const enFields = seoCache.en.fields;
-      const pageUrl = `${BASE_URL}/${page}`;
-      html += `<div class="editor-section seo-preview-section">
-        <h3>${t('seo.googlePreview')}</h3>
-        <div class="serp-preview">
-          <div class="serp-preview__title" id="serp-title">${escAttr(enFields.title)}</div>
-          <div class="serp-preview__url">${pageUrl}</div>
-          <div class="serp-preview__desc" id="serp-desc">${escAttr(enFields.description)}</div>
-        </div>
-        <h3 style="margin-top:20px">${t('seo.socialPreview')}</h3>
-        <div class="og-preview">
-          <div class="og-preview__image">${enFields.ogImage ? `<img src="${escAttr(enFields.ogImage)}" alt="">` : `<span>${t('seo.noOgImage')}</span>`}</div>
-          <div class="og-preview__text">
-            <div class="og-preview__site">winstik13.github.io</div>
-            <div class="og-preview__title" id="og-title">${escAttr(enFields.ogTitle || enFields.title)}</div>
-            <div class="og-preview__desc" id="og-desc">${escAttr(enFields.ogDescription || enFields.description)}</div>
-          </div>
-        </div>
-      </div>`;
-
-      // Fields per language
-      LANGS.forEach(lng => {
-        const f = seoCache[lng].fields;
-        html += `<div class="editor-section seo-lang-section">
-          <h3><span class="seo-lang-badge">${lng.toUpperCase()}</span> ${LANG_NAMES[lng]}</h3>
-          ${seoFieldHTML(lng, 'title', t('seo.pageTitle'), f.title, 60)}
-          ${seoFieldHTML(lng, 'description', t('seo.metaDesc'), f.description, 160)}
-          ${seoFieldHTML(lng, 'ogTitle', t('seo.ogTitle'), f.ogTitle, 60)}
-          ${seoFieldHTML(lng, 'ogDescription', t('seo.ogDesc'), f.ogDescription, 160)}
-          ${seoFieldHTML(lng, 'ogImage', t('seo.ogImage'), f.ogImage, 0)}
-          ${seoFieldHTML(lng, 'canonical', t('seo.canonical'), f.canonical, 0)}
-        </div>`;
-      });
-
-      // Save button
-      html += `<div class="editor-section" style="display:flex;align-items:center;gap:16px">
-        <button id="btn-seo-save" class="btn btn--primary">${t('seo.saveAll')}</button>
-        <span id="seo-save-status" class="publish-status"></span>
-      </div>`;
-
-      editor.innerHTML = html;
-
-      // Bind counters + live SERP preview update
-      editor.querySelectorAll('.seo-input').forEach(inp => {
-        inp.addEventListener('input', () => {
-          dirtyTabs.seo = true;
-          updateSEOCounter(inp);
-          // Update live previews from EN fields
-          if (inp.dataset.lang === 'en') {
-            const key = inp.dataset.seo;
-            if (key === 'title') {
-              const el = $('#serp-title');
-              if (el) el.textContent = inp.value || '(no title)';
-            }
-            if (key === 'description') {
-              const el = $('#serp-desc');
-              if (el) el.textContent = inp.value || '(no description)';
-            }
-            if (key === 'ogTitle') {
-              const el = $('#og-title');
-              if (el) el.textContent = inp.value || editor.querySelector('[data-lang="en"][data-seo="title"]').value || '(no title)';
-            }
-            if (key === 'ogDescription') {
-              const el = $('#og-desc');
-              if (el) el.textContent = inp.value || editor.querySelector('[data-lang="en"][data-seo="description"]').value || '';
-            }
-          }
-        });
-        updateSEOCounter(inp);
-      });
-
-      // Save all languages
-      $('#btn-seo-save').addEventListener('click', async () => {
-        const status = $('#seo-save-status');
-        const btn = $('#btn-seo-save');
-        btnLoading(btn, true);
-        status.textContent = t('seo.savingAll');
-        status.className = 'publish-status';
-
-        let saved = 0;
-        let errors = [];
-
-        for (const lng of LANGS) {
-          const cache = seoCache[lng];
-          if (!cache) continue;
-
-          try {
-            let updated = cache.html;
-            const getVal = (key) => editor.querySelector(`[data-lang="${lng}"][data-seo="${key}"]`).value;
-            updated = replaceMeta(updated, 'title', getVal('title'));
-            updated = replaceMeta(updated, 'description', getVal('description'));
-            updated = replaceMeta(updated, 'ogTitle', getVal('ogTitle'));
-            updated = replaceMeta(updated, 'ogDescription', getVal('ogDescription'));
-            updated = replaceMeta(updated, 'ogImage', getVal('ogImage'));
-            updated = replaceMeta(updated, 'canonical', getVal('canonical'));
-
-            const result = await commitFile(cache.path, updated, `Update SEO: ${page} (${lng})`, cache.sha);
-            // Update SHA for potential re-save
-            cache.sha = result.content.sha;
-            saved++;
-            status.textContent = `${t('common.saving')} ${saved}/${LANGS.length}`;
-          } catch (err) {
-            errors.push(`${lng}: ${err.message}`);
-          }
-        }
-
-        if (errors.length) {
-          status.textContent = `Saved ${saved}/${LANGS.length}. Errors: ${errors.join('; ')}`;
-          status.className = 'publish-status error';
-        } else {
-          dirtyTabs.seo = false;
-          status.textContent = t('common.saved');
-          status.className = 'publish-status success';
-        }
-        btnLoading(btn, false);
-        updateRateLimit();
-      });
-
+      renderSeoFields();
     } catch (err) {
       editor.innerHTML = `<p style="color:var(--color-danger)">Error: ${err.message}</p>`;
     }
+  }
+
+  function renderSeoFields() {
+    const editor = $('#seo-editor');
+    const lng = currentSeoLang;
+    const page = $('#seo-page').value;
+    if (!seoCache[lng]) return;
+
+    const f = seoCache[lng].fields;
+    const langPath = lng === 'en' ? page : `${lng}/${page}`;
+    const pageUrl = `${BASE_URL}/${langPath}`;
+
+    let html = '';
+
+    // SERP Preview for current language
+    html += `<div class="editor-section seo-preview-section">
+      <h3>${t('seo.googlePreview')}</h3>
+      <div class="serp-preview">
+        <div class="serp-preview__title" id="serp-title">${escAttr(f.title)}</div>
+        <div class="serp-preview__url">${pageUrl}</div>
+        <div class="serp-preview__desc" id="serp-desc">${escAttr(f.description)}</div>
+      </div>
+      <h3 style="margin-top:20px">${t('seo.socialPreview')}</h3>
+      <div class="og-preview">
+        <div class="og-preview__image">${f.ogImage ? `<img src="${escAttr(f.ogImage)}" alt="">` : `<span>${t('seo.noOgImage')}</span>`}</div>
+        <div class="og-preview__text">
+          <div class="og-preview__site">winstik13.github.io</div>
+          <div class="og-preview__title" id="og-title">${escAttr(f.ogTitle || f.title)}</div>
+          <div class="og-preview__desc" id="og-desc">${escAttr(f.ogDescription || f.description)}</div>
+        </div>
+      </div>
+    </div>`;
+
+    // Fields for current language only
+    html += `<div class="editor-section seo-lang-section">
+      ${seoFieldHTML(lng, 'title', t('seo.pageTitle'), f.title, 60)}
+      ${seoFieldHTML(lng, 'description', t('seo.metaDesc'), f.description, 160)}
+      ${seoFieldHTML(lng, 'ogTitle', t('seo.ogTitle'), f.ogTitle, 60)}
+      ${seoFieldHTML(lng, 'ogDescription', t('seo.ogDesc'), f.ogDescription, 160)}
+      ${seoFieldHTML(lng, 'ogImage', t('seo.ogImage'), f.ogImage, 0)}
+      ${seoFieldHTML(lng, 'canonical', t('seo.canonical'), f.canonical, 0)}
+    </div>`;
+
+    // Save button
+    html += `<div class="editor-section" style="display:flex;align-items:center;gap:16px">
+      <button id="btn-seo-save" class="btn btn--primary">${t('seo.saveAll')}</button>
+      <span id="seo-save-status" class="publish-status"></span>
+    </div>`;
+
+    editor.innerHTML = html;
+
+    // Bind counters + live SERP preview update
+    editor.querySelectorAll('.seo-input').forEach(inp => {
+      inp.addEventListener('input', () => {
+        dirtyTabs.seo = true;
+        updateSEOCounter(inp);
+        const key = inp.dataset.seo;
+        if (key === 'title') {
+          const el = $('#serp-title');
+          if (el) el.textContent = inp.value || '(no title)';
+        }
+        if (key === 'description') {
+          const el = $('#serp-desc');
+          if (el) el.textContent = inp.value || '(no description)';
+        }
+        if (key === 'ogTitle') {
+          const el = $('#og-title');
+          if (el) el.textContent = inp.value || inp.closest('.seo-lang-section').querySelector('[data-seo="title"]').value || '(no title)';
+        }
+        if (key === 'ogDescription') {
+          const el = $('#og-desc');
+          if (el) el.textContent = inp.value || inp.closest('.seo-lang-section').querySelector('[data-seo="description"]').value || '';
+        }
+      });
+      updateSEOCounter(inp);
+    });
+
+    // Save button — use onclick to avoid stacking listeners on re-render
+    $('#btn-seo-save').onclick = saveAllSEO;
+  }
+
+  async function saveAllSEO() {
+    // Save current fields to cache before saving
+    saveSeoFieldsToCache(currentSeoLang);
+    const page = $('#seo-page').value;
+
+    const status = $('#seo-save-status');
+    const btn = $('#btn-seo-save');
+    btnLoading(btn, true);
+    status.textContent = t('seo.savingAll');
+    status.className = 'publish-status';
+
+    let saved = 0;
+    let errors = [];
+
+    for (const lng2 of LANGS) {
+      const cache = seoCache[lng2];
+      if (!cache) continue;
+
+      try {
+        let updated = cache.html;
+        const getVal = (key) => cache.fields[key] || '';
+        updated = replaceMeta(updated, 'title', getVal('title'));
+        updated = replaceMeta(updated, 'description', getVal('description'));
+        updated = replaceMeta(updated, 'ogTitle', getVal('ogTitle'));
+        updated = replaceMeta(updated, 'ogDescription', getVal('ogDescription'));
+        updated = replaceMeta(updated, 'ogImage', getVal('ogImage'));
+        updated = replaceMeta(updated, 'canonical', getVal('canonical'));
+
+        const result = await commitFile(cache.path, updated, `Update SEO: ${page} (${lng2})`, cache.sha);
+        cache.sha = result.content.sha;
+        saved++;
+        status.textContent = `${t('common.saving')} ${saved}/${LANGS.length}`;
+      } catch (err) {
+        errors.push(`${lng2}: ${err.message}`);
+      }
+    }
+
+    if (errors.length) {
+      status.textContent = `Saved ${saved}/${LANGS.length}. Errors: ${errors.join('; ')}`;
+      status.className = 'publish-status error';
+    } else {
+      dirtyTabs.seo = false;
+      status.textContent = t('common.saved');
+      status.className = 'publish-status success';
+    }
+    btnLoading(btn, false);
+    updateRateLimit();
   }
 
   function seoFieldHTML(lng, key, label, value, maxLen) {

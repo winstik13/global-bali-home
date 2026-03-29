@@ -939,6 +939,39 @@ body {
 .seo-field__counter.warn { color: var(--color-warning); }
 .seo-field__counter.over { color: var(--color-danger); }
 
+/* SEO language tabs */
+.seo-lang-tabs {
+  display: flex;
+  gap: 4px;
+  align-self: flex-end;
+  margin-bottom: 2px;
+}
+
+.seo-lang-tab {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  padding: 8px 16px;
+  color: var(--color-text-dim);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font-body);
+}
+
+.seo-lang-tab:hover {
+  border-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+.seo-lang-tab.active {
+  background: rgba(107, 143, 78, 0.2);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
 /* SEO language sections */
 .seo-lang-section h3 {
   display: flex;

@@ -209,8 +209,8 @@
 
       <!-- Tab: Projects -->
       <section id="tab-projects" class="admin-tab" hidden>
-        <div id="project-breadcrumb" class="project-breadcrumb" hidden>
-          <button class="project-breadcrumb__back" id="btn-back-dash" data-i18n="projects.backToDash">&larr; Dashboard</button>
+        <div id="project-breadcrumb" class="project-breadcrumb">
+          <button class="project-breadcrumb__back" id="btn-back-dash" data-i18n="projects.backToDash">← Dashboard</button>
           <span class="project-breadcrumb__sep">/</span>
           <span class="project-breadcrumb__current" id="breadcrumb-project"></span>
         </div>
@@ -238,6 +238,11 @@
               <option value="gallery.html" data-i18n="seo.gallery">Gallery</option>
               <option value="contacts.html" data-i18n="seo.contacts">Contacts</option>
             </select>
+          </div>
+          <div class="seo-lang-tabs" id="seo-lang-tabs" hidden>
+            <button class="seo-lang-tab active" data-seo-lang="en">EN</button>
+            <button class="seo-lang-tab" data-seo-lang="ru">RU</button>
+            <button class="seo-lang-tab" data-seo-lang="id">ID</button>
           </div>
         </div>
         <div id="seo-editor"></div>
