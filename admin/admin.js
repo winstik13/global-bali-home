@@ -625,7 +625,7 @@
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       const val = t(key);
-      if (val.includes('<strong>') || val.includes('<b>') || val.includes('<br>')) {
+      if (val.includes('<strong>') || val.includes('<b>') || val.includes('<br>') || val.includes('<a ')) {
         el.innerHTML = val;
       } else {
         el.textContent = val;
