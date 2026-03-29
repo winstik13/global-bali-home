@@ -136,7 +136,7 @@ const PROJECTS_DATA = {
       ]
     },
     "availability": {
-      "sold": 8,
+      "sold": 9,
       "total": 12
     },
     "showcasePrice": {
@@ -287,8 +287,7 @@ const PROJECTS_DATA = {
       }
     ],
     "floorPlans": {
-      "Type A — 2BR Single Story": "",
-      "Type B — 2BR Two Story": "images/serenity-villas/plans/2-bedroom.webp",
+      "Type A — 2BR Single Story": "images/serenity-villas/plans/type-a-—-2br-single-story.webp",
       "Type B — 3BR Two Story": "",
       "Type C — 2BR Two Story": ""
     }
@@ -429,7 +428,7 @@ const PROJECTS_DATA = {
       ]
     },
     "availability": {
-      "sold": 0,
+      "sold": 1,
       "total": 4
     },
     "showcasePrice": {
