@@ -2164,7 +2164,7 @@ td .price-idr {
 
 .faq-answer__inner {
   padding-bottom: 28px;
-  font-size: var(--font-base);
+  font-size: var(--font-sm);
   color: var(--color-text-muted);
   line-height: 1.8;
 }

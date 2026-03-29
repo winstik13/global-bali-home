@@ -1217,6 +1217,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const occRange = document.getElementById('roi-occupancy');
     const occValue = document.getElementById('occupancy-value');
     const scenarioBtns = document.querySelectorAll('.roi-calculator__scenario');
+    if (!amountEl || !annualEl || !yr5El || !yr10El || !occRange) return;
 
     const calculate = () => {
       const inv = parseInt(roiRange.value);
@@ -1377,6 +1378,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     exitOverlay.classList.remove('active');
     document.body.style.overflow = '';
     sessionStorage.setItem('exitShown', 'true');
+    if (exitOverlay._countdownIv) { clearInterval(exitOverlay._countdownIv); exitOverlay._countdownIv = null; }
   };
 
   exitOverlay.querySelector('.exit-popup__close').addEventListener('click', closeExit);
@@ -1419,7 +1421,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     if (guidePath) {
       var cnt = 7;
       var numEl = exitForm.querySelector('.countdown-num');
-      var iv = setInterval(function() {
+      exitOverlay._countdownIv = setInterval(function() {
         cnt--;
         if (numEl) {
           numEl.textContent = cnt;
@@ -1427,7 +1429,8 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
           setTimeout(function() { numEl.classList.remove('tick'); }, 300);
         }
         if (cnt <= 0) {
-          clearInterval(iv);
+          clearInterval(exitOverlay._countdownIv);
+          exitOverlay._countdownIv = null;
           if (numEl) numEl.parentElement.innerHTML = '<a href="' + guidePath + '" target="_blank" rel="noopener noreferrer" class="btn btn--primary guide-open-btn">' + t.exitOpenBtn + '</a>';
         }
       }, 1000);
@@ -1469,14 +1472,14 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         xRate = Math.round(data.rates.IDR);
         refreshIdrDisplay();
       }
-    }).catch(function() { /* fallback to saved rate */ });
+    }).catch(function(err) { console.warn('Exchange rate fetch failed, using saved rate:', err.message); });
     setInterval(function() {
       fetch('https://open.er-api.com/v6/latest/USD').then(function(res) { return res.json(); }).then(function(data) {
         if (data.result === 'success' && data.rates && data.rates.IDR) {
           xRate = Math.round(data.rates.IDR);
           refreshIdrDisplay();
         }
-      }).catch(function() {});
+      }).catch(function(err) { console.warn('Exchange rate refresh failed:', err.message); });
     }, 3600000);
   }
 
