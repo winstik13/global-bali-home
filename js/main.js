@@ -51,6 +51,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --- Apply social links from SITE_DATA ---
+  if (typeof SITE_DATA !== 'undefined' && SITE_DATA.social) {
+    var sc = SITE_DATA.social;
+    document.querySelectorAll('.footer__social a[aria-label="Facebook"]').forEach(function(el) {
+      if (sc.facebook) el.href = sc.facebook;
+    });
+    document.querySelectorAll('.footer__social a[aria-label="Instagram"]').forEach(function(el) {
+      if (sc.instagram) el.href = sc.instagram;
+    });
+  }
+
+  // --- Apply stats from SITE_DATA ---
+  if (typeof SITE_DATA !== 'undefined' && SITE_DATA.stats) {
+    var st = SITE_DATA.stats;
+    document.querySelectorAll('[data-stat]').forEach(function(el) {
+      var key = el.dataset.stat;
+      if (st[key]) el.textContent = st[key];
+    });
+  }
+
   // --- Localisation ---
   const lang = document.documentElement.lang || 'en';
   const i18n = {
@@ -1234,6 +1254,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ─── IDR Currency Helpers ───
+  var xRate = (typeof SITE_DATA !== 'undefined' && SITE_DATA.exchangeRate) ? SITE_DATA.exchangeRate.usdToIdr : 0;
+  var xRateAuto = (typeof SITE_DATA !== 'undefined' && SITE_DATA.exchangeRate && SITE_DATA.exchangeRate.auto);
+
+  function fmtIdr(usd, short) {
+    if (!usd || !xRate) return '';
+    var idr = Math.round(usd * xRate);
+    if (short) {
+      if (idr >= 1e9) return 'Rp ' + (idr / 1e9).toFixed(1).replace('.', ',') + ' Miliar';
+      return 'Rp ' + Math.round(idr / 1e6).toLocaleString('id-ID') + ' jt';
+    }
+    return 'Rp ' + idr.toLocaleString('id-ID');
+  }
+
   // --- ROI Calculator ---
   const roiRange = document.querySelector('.roi-calculator__range:not(#roi-occupancy)');
   if (roiRange) {
@@ -1247,6 +1281,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const occValue = document.getElementById('occupancy-value');
     const scenarioBtns = document.querySelectorAll('.roi-calculator__scenario');
     if (!amountEl || !annualEl || !yr5El || !yr10El || !occRange) return;
+
+    // Apply ROI params from SITE_DATA
+    if (typeof SITE_DATA !== 'undefined' && SITE_DATA.roi) {
+      var roi = SITE_DATA.roi;
+      if (roi.minInvestment) roiRange.min = roi.minInvestment;
+      if (roi.maxInvestment) roiRange.max = roi.maxInvestment;
+      if (roi.step) roiRange.step = roi.step;
+      if (roi.defaultInvestment) roiRange.value = roi.defaultInvestment;
+      if (roi.minOccupancy) occRange.min = roi.minOccupancy;
+      if (roi.maxOccupancy) occRange.max = roi.maxOccupancy;
+      if (roi.occupancyStep) occRange.step = roi.occupancyStep;
+      if (roi.defaultOccupancy) { occRange.value = roi.defaultOccupancy; occValue.textContent = roi.defaultOccupancy + '%'; }
+      if (roi.scenarios) {
+        scenarioBtns.forEach(function(btn) {
+          var sc = btn.dataset.scenario;
+          if (sc && roi.scenarios[sc]) {
+            btn.dataset.yield = roi.scenarios[sc].yield;
+            btn.dataset.growth = roi.scenarios[sc].growth;
+            if (btn.classList.contains('active')) {
+              rentalYield = roi.scenarios[sc].yield;
+              growthRate = roi.scenarios[sc].growth;
+            }
+          }
+        });
+      }
+    }
 
     const calculate = () => {
       const inv = parseInt(roiRange.value);
@@ -1479,10 +1539,6 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     document.body.style.overflow = 'hidden';
   });
 
-  // ─── IDR Currency Helpers ───
-  var xRate = (typeof SITE_DATA !== 'undefined' && SITE_DATA.exchangeRate) ? SITE_DATA.exchangeRate.usdToIdr : 0;
-  var xRateAuto = (typeof SITE_DATA !== 'undefined' && SITE_DATA.exchangeRate && SITE_DATA.exchangeRate.auto);
-
   function refreshIdrDisplay() {
     document.querySelectorAll('[data-usd]').forEach(function(el) {
       var usd = parseFloat(el.dataset.usd);
@@ -1512,21 +1568,11 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     }, 3600000);
   }
 
-  function fmtIdr(usd) {
-    if (!usd || !xRate) return '';
-    var idr = usd * xRate;
-    if (idr >= 1e9) {
-      var m = idr / 1e9;
-      return 'Rp ' + (m % 1 === 0 ? m.toFixed(0) : m.toFixed(1)).replace('.', ',') + ' Miliar';
-    }
-    var j = idr / 1e6;
-    return 'Rp ' + Math.round(j).toLocaleString('id-ID') + ' jt';
-  }
-
   // Auto-inject IDR into any element with data-usd="123000"
   document.querySelectorAll('[data-usd]').forEach(function(el) {
     var usd = parseFloat(el.dataset.usd);
-    var idr = fmtIdr(usd);
+    var short = !!el.closest('.hero__stats, .hero-stats');
+    var idr = fmtIdr(usd, short);
     if (idr) el.innerHTML = el.innerHTML + '<span class="price-idr">' + idr + '</span>';
   });
 

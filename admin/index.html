@@ -120,30 +120,6 @@
         </div>
 
         <div class="editor-section editor-section--has-help" style="margin-top:24px">
-          <button class="editor-help-btn" data-help="rate" aria-label="Help">?</button>
-          <div class="editor-help-popup" id="help-rate" hidden>
-            <p data-i18n="help.rate.manual"><strong>Manual:</strong> Enter the rate manually and click Save.</p>
-            <p data-i18n="help.rate.auto"><strong>Auto:</strong> Rate updates from API every hour. Manual input is disabled.</p>
-            <p data-i18n="help.rate.fallback"><strong>Fallback:</strong> If API is unavailable, the last saved rate is used on the site.</p>
-          </div>
-          <h3 data-i18n="rate.title">Exchange Rate (USD → IDR)</h3>
-          <div class="guide-upload">
-            <div id="rate-info" class="guide-info"></div>
-            <div class="guide-actions" style="gap:8px">
-              <label class="auto-rate-toggle">
-                <input type="checkbox" id="rate-auto">
-                <span data-i18n="rate.auto">Auto (live rate from API)</span>
-              </label>
-              <div class="form-group" style="margin:0;flex:0 0 160px">
-                <input type="number" id="rate-input" min="1000" step="100" placeholder="16500" style="width:100%">
-              </div>
-              <button id="btn-rate-save" class="btn btn--primary btn--sm" data-i18n="rate.save">Save Rate</button>
-              <span id="rate-save-status" class="publish-status"></span>
-            </div>
-          </div>
-        </div>
-
-        <div class="editor-section editor-section--has-help" style="margin-top:24px">
           <button class="editor-help-btn" data-help="contacts" aria-label="Help">?</button>
           <div class="editor-help-popup" id="help-contacts" hidden>
             <p data-i18n="help.contacts.phone"><strong>Phone:</strong> Any format with spaces/dashes, start with +country code.</p>
@@ -188,6 +164,30 @@
         </div>
 
         <div class="editor-section editor-section--has-help" style="margin-top:24px">
+          <button class="editor-help-btn" data-help="rate" aria-label="Help">?</button>
+          <div class="editor-help-popup" id="help-rate" hidden>
+            <p data-i18n="help.rate.manual"><strong>Manual:</strong> Enter the rate manually and click Save.</p>
+            <p data-i18n="help.rate.auto"><strong>Auto:</strong> Rate updates from API every hour. Manual input is disabled.</p>
+            <p data-i18n="help.rate.fallback"><strong>Fallback:</strong> If API is unavailable, the last saved rate is used on the site.</p>
+          </div>
+          <h3 data-i18n="rate.title">Exchange Rate (USD → IDR)</h3>
+          <div class="guide-upload">
+            <div id="rate-info" class="guide-info"></div>
+            <div class="guide-actions" style="gap:8px">
+              <label class="auto-rate-toggle">
+                <input type="checkbox" id="rate-auto">
+                <span data-i18n="rate.auto">Auto (live rate from API)</span>
+              </label>
+              <div class="form-group" style="margin:0;flex:0 0 160px">
+                <input type="number" id="rate-input" min="1000" step="100" placeholder="16500" style="width:100%">
+              </div>
+              <button id="btn-rate-save" class="btn btn--primary btn--sm" data-i18n="rate.save">Save Rate</button>
+              <span id="rate-save-status" class="publish-status"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-section editor-section--has-help" style="margin-top:24px">
           <button class="editor-help-btn" data-help="guide" aria-label="Help">?</button>
           <div class="editor-help-popup" id="help-guide" hidden>
             <p data-i18n="help.guide.format"><strong>Format:</strong> PDF only.</p>
@@ -204,6 +204,131 @@
             </div>
           </div>
         </div>
+
+        <div class="editor-section" style="margin-top:24px">
+          <h3>Social Media</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div class="form-group">
+              <label>Facebook URL</label>
+              <input type="url" id="social-facebook" placeholder="https://www.facebook.com/...">
+            </div>
+            <div class="form-group">
+              <label>Instagram URL</label>
+              <input type="url" id="social-instagram" placeholder="https://www.instagram.com/...">
+            </div>
+          </div>
+          <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
+            <button id="btn-social-save" class="btn btn--primary btn--sm">Save Social</button>
+            <span id="social-save-status" class="publish-status"></span>
+          </div>
+        </div>
+
+        <div class="editor-section editor-section--has-help" style="margin-top:24px">
+          <button class="editor-help-btn" data-help="roi" aria-label="Help">?</button>
+          <div class="editor-help-popup" id="help-roi" hidden>
+            <p><strong>Investment range:</strong> Min/max/step for the slider on homepage.</p>
+            <p><strong>Scenarios:</strong> Yield and growth rates for Conservative/Normal/Optimistic.</p>
+            <p><strong>Occupancy:</strong> Default occupancy rate and its slider range.</p>
+          </div>
+          <h3>ROI Calculator Parameters</h3>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+            <div class="form-group">
+              <label>Min Investment ($)</label>
+              <input type="number" id="roi-min" min="10000" step="10000" placeholder="100000">
+            </div>
+            <div class="form-group">
+              <label>Max Investment ($)</label>
+              <input type="number" id="roi-max" min="100000" step="10000" placeholder="1000000">
+            </div>
+            <div class="form-group">
+              <label>Step ($)</label>
+              <input type="number" id="roi-step" min="1000" step="1000" placeholder="10000">
+            </div>
+            <div class="form-group">
+              <label>Default Investment ($)</label>
+              <input type="number" id="roi-default" min="10000" step="10000" placeholder="335000">
+            </div>
+            <div class="form-group">
+              <label>Default Occupancy (%)</label>
+              <input type="number" id="roi-occ-default" min="10" max="100" placeholder="80">
+            </div>
+            <div class="form-group">
+              <label>Occupancy Range (%)</label>
+              <div style="display:flex;gap:8px">
+                <input type="number" id="roi-occ-min" min="0" max="100" placeholder="50" style="width:50%">
+                <input type="number" id="roi-occ-max" min="0" max="100" placeholder="95" style="width:50%">
+              </div>
+            </div>
+          </div>
+          <h4 style="margin:16px 0 8px;color:var(--color-text-muted)">Scenarios</h4>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+            <div class="form-group">
+              <label>Conservative — Yield / Growth (%)</label>
+              <div style="display:flex;gap:8px">
+                <input type="number" id="roi-cons-yield" min="0" max="100" step="0.5" placeholder="8" style="width:50%">
+                <input type="number" id="roi-cons-growth" min="0" max="100" step="0.5" placeholder="6" style="width:50%">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Normal — Yield / Growth (%)</label>
+              <div style="display:flex;gap:8px">
+                <input type="number" id="roi-norm-yield" min="0" max="100" step="0.5" placeholder="12" style="width:50%">
+                <input type="number" id="roi-norm-growth" min="0" max="100" step="0.5" placeholder="10" style="width:50%">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Optimistic — Yield / Growth (%)</label>
+              <div style="display:flex;gap:8px">
+                <input type="number" id="roi-opt-yield" min="0" max="100" step="0.5" placeholder="15" style="width:50%">
+                <input type="number" id="roi-opt-growth" min="0" max="100" step="0.5" placeholder="12" style="width:50%">
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
+            <button id="btn-roi-save" class="btn btn--primary btn--sm">Save ROI Settings</button>
+            <span id="roi-save-status" class="publish-status"></span>
+          </div>
+        </div>
+
+        <div class="editor-section" style="margin-top:24px">
+          <h3>Company Statistics</h3>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+            <div class="form-group">
+              <label>Years in Bali</label>
+              <input type="text" id="stat-yearsInBali" placeholder="3+">
+            </div>
+            <div class="form-group">
+              <label>Villas Designed</label>
+              <input type="text" id="stat-villasDesigned" placeholder="43">
+            </div>
+            <div class="form-group">
+              <label>Occupancy Rate</label>
+              <input type="text" id="stat-occupancyRate" placeholder="80%+">
+            </div>
+            <div class="form-group">
+              <label>Founder Experience</label>
+              <input type="text" id="stat-founderExperience" placeholder="$1B+">
+            </div>
+            <div class="form-group">
+              <label>Tourist Arrivals</label>
+              <input type="text" id="stat-touristArrivals" placeholder="16M+">
+            </div>
+            <div class="form-group">
+              <label>Rental Yield</label>
+              <input type="text" id="stat-rentalYield" placeholder="12-15%">
+            </div>
+            <div class="form-group">
+              <label>Property Growth</label>
+              <input type="text" id="stat-propertyGrowth" placeholder="8-12%">
+            </div>
+          </div>
+          <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
+            <button id="btn-stats-save" class="btn btn--primary btn--sm">Save Statistics</button>
+            <span id="stats-save-status" class="publish-status"></span>
+          </div>
+        </div>
+
+        <div id="dash-recent-changes" style="margin-top:24px"></div>
       </section>
 
       <!-- Tab: Projects -->

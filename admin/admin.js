@@ -786,6 +786,9 @@
     renderRateInfo();
     renderContactsForm();
     renderGuideInfo();
+    renderSocialForm();
+    renderRoiForm();
+    renderStatsForm();
     renderProjectEditor();
     renderGallery();
     renderColorsTab();
@@ -1001,10 +1004,11 @@
     });
     html += '</div>';
 
-    // Recent commits
-    html += `<div class="dash-commits"><h3>${t('dash.recentChanges')}</h3><div id="dash-commits-list"><span style="color:var(--color-text-dim)">${t('dash.loading')}</span></div></div>`;
-
     container.innerHTML = html;
+
+    // Recent commits (rendered separately below project cards)
+    const recentEl = $('#dash-recent-changes');
+    if (recentEl) recentEl.innerHTML = `<div class="dash-commits"><h3>${t('dash.recentChanges')}</h3><div id="dash-commits-list"><span style="color:var(--color-text-dim)">${t('dash.loading')}</span></div></div>`;
 
     // Quick edit buttons
     container.querySelectorAll('[data-goto]').forEach(btn => {
@@ -2753,6 +2757,120 @@
       guideFileInput.value = '';
     });
   }
+
+  // ─── Social Media ───
+  function renderSocialForm() {
+    if (!siteData) return;
+    const social = siteData.social || {};
+    $('#social-facebook').value = social.facebook || '';
+    $('#social-instagram').value = social.instagram || '';
+  }
+
+  $('#btn-social-save')?.addEventListener('click', async () => {
+    const btn = $('#btn-social-save');
+    const status = $('#social-save-status');
+    btnLoading(btn, true);
+    try {
+      if (!siteData.social) siteData.social = {};
+      siteData.social.facebook = $('#social-facebook').value.trim();
+      siteData.social.instagram = $('#social-instagram').value.trim();
+      const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
+      await commitFile('data/site-data.js', content, 'Update social media links via admin');
+      status.textContent = t('common.saved');
+      status.className = 'publish-status success';
+      updateRateLimit();
+    } catch (err) {
+      status.textContent = t('common.error') + err.message;
+      status.className = 'publish-status error';
+    }
+    btnLoading(btn, false);
+  });
+
+  // ─── ROI Calculator Settings ───
+  function renderRoiForm() {
+    if (!siteData) return;
+    const roi = siteData.roi || {};
+    $('#roi-min').value = roi.minInvestment || 100000;
+    $('#roi-max').value = roi.maxInvestment || 1000000;
+    $('#roi-step').value = roi.step || 10000;
+    $('#roi-default').value = roi.defaultInvestment || 335000;
+    $('#roi-occ-default').value = roi.defaultOccupancy || 80;
+    $('#roi-occ-min').value = roi.minOccupancy || 50;
+    $('#roi-occ-max').value = roi.maxOccupancy || 95;
+    const sc = roi.scenarios || {};
+    $('#roi-cons-yield').value = (sc.conservative?.yield || 0.08) * 100;
+    $('#roi-cons-growth').value = (sc.conservative?.growth || 0.06) * 100;
+    $('#roi-norm-yield').value = (sc.normal?.yield || 0.12) * 100;
+    $('#roi-norm-growth').value = (sc.normal?.growth || 0.10) * 100;
+    $('#roi-opt-yield').value = (sc.optimistic?.yield || 0.15) * 100;
+    $('#roi-opt-growth').value = (sc.optimistic?.growth || 0.12) * 100;
+  }
+
+  $('#btn-roi-save')?.addEventListener('click', async () => {
+    const btn = $('#btn-roi-save');
+    const status = $('#roi-save-status');
+    btnLoading(btn, true);
+    try {
+      siteData.roi = {
+        minInvestment: parseInt($('#roi-min').value) || 100000,
+        maxInvestment: parseInt($('#roi-max').value) || 1000000,
+        step: parseInt($('#roi-step').value) || 10000,
+        defaultInvestment: parseInt($('#roi-default').value) || 335000,
+        minOccupancy: parseInt($('#roi-occ-min').value) || 50,
+        maxOccupancy: parseInt($('#roi-occ-max').value) || 95,
+        occupancyStep: 5,
+        defaultOccupancy: parseInt($('#roi-occ-default').value) || 80,
+        scenarios: {
+          conservative: { yield: parseFloat($('#roi-cons-yield').value) / 100 || 0.08, growth: parseFloat($('#roi-cons-growth').value) / 100 || 0.06 },
+          normal: { yield: parseFloat($('#roi-norm-yield').value) / 100 || 0.12, growth: parseFloat($('#roi-norm-growth').value) / 100 || 0.10 },
+          optimistic: { yield: parseFloat($('#roi-opt-yield').value) / 100 || 0.15, growth: parseFloat($('#roi-opt-growth').value) / 100 || 0.12 }
+        }
+      };
+      const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
+      await commitFile('data/site-data.js', content, 'Update ROI calculator parameters via admin');
+      status.textContent = t('common.saved');
+      status.className = 'publish-status success';
+      updateRateLimit();
+    } catch (err) {
+      status.textContent = t('common.error') + err.message;
+      status.className = 'publish-status error';
+    }
+    btnLoading(btn, false);
+  });
+
+  // ─── Company Statistics ───
+  const STAT_KEYS = ['yearsInBali', 'villasDesigned', 'occupancyRate', 'founderExperience', 'touristArrivals', 'rentalYield', 'propertyGrowth'];
+
+  function renderStatsForm() {
+    if (!siteData) return;
+    const stats = siteData.stats || {};
+    STAT_KEYS.forEach(key => {
+      const el = $(`#stat-${key}`);
+      if (el) el.value = stats[key] || '';
+    });
+  }
+
+  $('#btn-stats-save')?.addEventListener('click', async () => {
+    const btn = $('#btn-stats-save');
+    const status = $('#stats-save-status');
+    btnLoading(btn, true);
+    try {
+      if (!siteData.stats) siteData.stats = {};
+      STAT_KEYS.forEach(key => {
+        const el = $(`#stat-${key}`);
+        if (el) siteData.stats[key] = el.value.trim();
+      });
+      const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
+      await commitFile('data/site-data.js', content, 'Update company statistics via admin');
+      status.textContent = t('common.saved');
+      status.className = 'publish-status success';
+      updateRateLimit();
+    } catch (err) {
+      status.textContent = t('common.error') + err.message;
+      status.className = 'publish-status error';
+    }
+    btnLoading(btn, false);
+  });
 
   // ─── FAQ Editor ───
   let faqData = null;

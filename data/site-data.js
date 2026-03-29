@@ -20,5 +20,33 @@ const SITE_DATA = {
       "ru": "Убуд, Бали, Индонезия",
       "id": "Ubud, Bali, Indonesia"
     }
+  },
+  "social": {
+    "facebook": "https://www.facebook.com/serenityvillasbali",
+    "instagram": "https://www.instagram.com/serenity_villas_bali"
+  },
+  "roi": {
+    "minInvestment": 100000,
+    "maxInvestment": 1000000,
+    "step": 10000,
+    "defaultInvestment": 335000,
+    "minOccupancy": 50,
+    "maxOccupancy": 95,
+    "occupancyStep": 5,
+    "defaultOccupancy": 80,
+    "scenarios": {
+      "conservative": { "yield": 0.08, "growth": 0.06 },
+      "normal": { "yield": 0.12, "growth": 0.10 },
+      "optimistic": { "yield": 0.15, "growth": 0.12 }
+    }
+  },
+  "stats": {
+    "yearsInBali": "3+",
+    "villasDesigned": "43",
+    "occupancyRate": "80%+",
+    "founderExperience": "$1B+",
+    "touristArrivals": "16M+",
+    "rentalYield": "12-15%",
+    "propertyGrowth": "8-12%"
   }
 };

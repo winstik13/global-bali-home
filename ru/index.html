@@ -94,19 +94,19 @@
     <div class="container">
       <div class="stats-grid reveal-stagger">
         <div class="stat-card">
-          <div class="stat-card__number" data-counter>3+</div>
+          <div class="stat-card__number" data-counter data-stat="yearsInBali">3+</div>
           <div class="stat-card__label">Года на рынке<br>недвижимости Бали</div>
         </div>
         <div class="stat-card">
-          <div class="stat-card__number" data-counter>43</div>
+          <div class="stat-card__number" data-counter data-stat="villasDesigned">43</div>
           <div class="stat-card__label">Виллы спроектированы<br>в 3 проектах</div>
         </div>
         <div class="stat-card">
-          <div class="stat-card__number" data-counter>80%+</div>
+          <div class="stat-card__number" data-counter data-stat="occupancyRate">80%+</div>
           <div class="stat-card__label">Прогнозируемая<br>заполняемость</div>
         </div>
         <div class="stat-card">
-          <div class="stat-card__number">$1B+</div>
+          <div class="stat-card__number" data-stat="founderExperience">$1B+</div>
           <div class="stat-card__label">Опыт основателя<br>на Уолл-стрит</div>
         </div>
       </div>
@@ -126,15 +126,15 @@
       <p>Наши проекты расположены в Убуде — культурном сердце Бали, в окружении рисовых террас, древних храмов и процветающего международного сообщества.</p>
       <div class="why-bali-stats">
         <div class="why-bali-stat">
-          <strong data-counter>16M+</strong>
+          <strong data-counter data-stat="touristArrivals">16M+</strong>
           <span>Туристов на Бали ежегодно</span>
         </div>
         <div class="why-bali-stat">
-          <strong>12-15%</strong>
+          <strong data-stat="rentalYield">12-15%</strong>
           <span>Средняя годовая арендная доходность</span>
         </div>
         <div class="why-bali-stat">
-          <strong>8-12%</strong>
+          <strong data-stat="propertyGrowth">8-12%</strong>
           <span>Рост стоимости недвижимости в год</span>
         </div>
       </div>
@@ -173,9 +173,9 @@
           <div class="roi-calculator__group">
             <label class="roi-calculator__label">Сценарий</label>
             <div class="roi-calculator__scenarios">
-              <button class="roi-calculator__scenario" data-yield="0.08" data-growth="0.06">Консервативный<span>8% доходность</span></button>
-              <button class="roi-calculator__scenario active" data-yield="0.12" data-growth="0.10">Нормальный<span>12% доходность</span></button>
-              <button class="roi-calculator__scenario" data-yield="0.15" data-growth="0.12">Оптимистичный<span>15% доходность</span></button>
+              <button class="roi-calculator__scenario" data-scenario="conservative" data-yield="0.08" data-growth="0.06">Консервативный<span>8% доходность</span></button>
+              <button class="roi-calculator__scenario active" data-scenario="normal" data-yield="0.12" data-growth="0.10">Нормальный<span>12% доходность</span></button>
+              <button class="roi-calculator__scenario" data-scenario="optimistic" data-yield="0.15" data-growth="0.12">Оптимистичный<span>15% доходность</span></button>
             </div>
           </div>
 
