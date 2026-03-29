@@ -1076,8 +1076,7 @@
 
     // Project cards
     html += '<div class="dashboard-grid">';
-    const cardColors = ['#6B8F4E', '#D4A94B', '#5DADE2'];
-    projectStats.forEach(({ key, p, sold, total, pct, left, potential }, idx) => {
+    projectStats.forEach(({ key, p, sold, total, pct, left, potential }) => {
       const isAllSoldDash = p.units ? p.units.every(u => u.status === 'sold') : (p.availability.sold >= p.availability.total);
       const dashStatus = isAllSoldDash ? 'sold-out' : (p.status || 'in-progress');
       const badgeClassMap = { 'pre-sale': 'presale', 'in-progress': 'progress', 'completed': 'completed', 'sold-out': 'soldout' };
@@ -1110,15 +1109,15 @@
       const segBooked = Math.round((counts.booked / total) * 100);
       const segResale = Math.round((counts.resale / total) * 100);
 
-      // Tooltip for segmented bar
-      const tooltipParts = [
-        counts.sold ? `${counts.sold} ${t('dash.breakSold')}` : '',
-        counts.booked ? `${counts.booked} ${t('dash.breakBooked')}` : '',
-        counts.resale ? `${counts.resale} ${t('dash.breakResale')}` : '',
-        counts.available ? `${counts.available} ${t('dash.breakAvailable')}` : ''
-      ].filter(Boolean).join(' · ');
+      // Legend
+      const legend = [
+        counts.sold ? `<span class="seg-legend seg-legend--sold">${counts.sold} ${t('dash.breakSold')}</span>` : '',
+        counts.booked ? `<span class="seg-legend seg-legend--booked">${counts.booked} ${t('dash.breakBooked')}</span>` : '',
+        counts.resale ? `<span class="seg-legend seg-legend--resale">${counts.resale} ${t('dash.breakResale')}</span>` : '',
+        counts.available ? `<span class="seg-legend seg-legend--available">${counts.available} ${t('dash.breakAvailable')}</span>` : ''
+      ].filter(Boolean).join('');
 
-      html += `<div class="dash-card" data-card-project="${key}" style="border-left:3px solid ${cardColor}">
+      html += `<div class="dash-card" data-card-project="${key}">
         <div class="dash-card__header">
           <span class="dash-card__name">${escapeHtml(p.name)}</span>
           <span class="dash-card__badge dash-card__badge--${badgeClass}">${badgeText}</span>
@@ -1129,7 +1128,7 @@
           <div><div class="dash-card__stat-value">${priceRange}</div><div class="dash-card__stat-label">${t('dash.price')}</div></div>
           <div><div class="dash-card__stat-value">${fmtPrice(potential)}</div><div class="dash-card__stat-label">${t('dash.potential')}</div></div>
         </div>
-        <div class="dash-card__bar" title="${tooltipParts}">
+        <div class="dash-card__bar">
           <div class="dash-card__bar-track dash-card__bar-track--seg">
             <div class="dash-card__seg dash-card__seg--sold" style="width:${segSold}%"></div>
             <div class="dash-card__seg dash-card__seg--booked" style="width:${segBooked}%"></div>
@@ -1137,8 +1136,9 @@
           </div>
           <span class="dash-card__bar-label">${pct}%</span>
         </div>
+        <div class="seg-legend-row">${legend}</div>
         <div class="dash-card__actions">
-          <button class="dash-card__edit btn btn--primary btn--sm" data-goto="${key}">${t('dash.editProject')}</button>
+          <button class="dash-card__edit btn btn--outline btn--sm btn--accent" data-goto="${key}">${t('dash.editProject')}</button>
           <a href="https://winstik13.github.io/global-bali-home/${p.page || 'project-' + p.slug + '.html'}" target="_blank" rel="noopener" class="btn btn--outline btn--sm" style="text-decoration:none">${t('dash.viewOnSite')}</a>
         </div>
       </div>`;

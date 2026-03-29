@@ -283,6 +283,15 @@ body {
   border-color: var(--color-text);
 }
 
+.btn--accent {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.btn--accent:hover {
+  background: rgba(107, 143, 78, 0.15);
+  border-color: var(--color-accent);
+}
+
 .btn--danger {
   background: transparent;
   color: var(--color-danger);
@@ -795,8 +804,31 @@ body {
   min-width: 36px;
 }
 
-/* Bar tooltip on hover */
-.dash-card__bar[title] { cursor: help; }
+/* Segmented bar legend */
+.seg-legend-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.seg-legend {
+  font-size: 0.7rem;
+  color: var(--color-text-dim);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.seg-legend::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+.seg-legend--sold::before   { background: var(--color-text-dim); }
+.seg-legend--booked::before { background: var(--color-warning); }
+.seg-legend--resale::before { background: #5dade2; }
+.seg-legend--available::before { background: rgba(107, 143, 78, 0.4); }
 
 .dash-card__edit {
   align-self: flex-start;
