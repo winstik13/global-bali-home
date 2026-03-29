@@ -1444,6 +1444,44 @@ body {
   gap: 6px;
 }
 
+/* Testimonial avatar */
+.test-avatar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.test-avatar__preview {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--color-bg);
+  border: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.test-avatar__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.test-avatar__initials {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text-dim);
+  font-family: var(--font-heading);
+}
+
+.btn--xs {
+  padding: 3px 8px;
+  font-size: 0.65rem;
+}
+
 .faq-editor-lang {
   margin-bottom: 12px;
 }

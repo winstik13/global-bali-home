@@ -1505,11 +1505,19 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       tContainer.innerHTML = sorted.map(function(t) {
         var stars = '';
         for (var s = 0; s < (t.stars || 5); s++) stars += '★';
+        var authorName = t.name[lang] || t.name.en;
+        var avatarHTML = '';
+        if (t.avatar) {
+          avatarHTML = '<img class="testimonials__avatar" src="' + t.avatar + '" alt="' + authorName + '" loading="lazy" width="48" height="48">';
+        } else {
+          var inits = authorName.split(' ').map(function(w) { return w[0]; }).join('').slice(0, 2).toUpperCase();
+          avatarHTML = '<span class="testimonials__avatar testimonials__avatar--initials">' + inits + '</span>';
+        }
         return '<div class="testimonials__card reveal-stagger">' +
           '<div class="testimonials__stars">' + stars + '</div>' +
           '<blockquote class="testimonials__text">' + (t.text[lang] || t.text.en) + '</blockquote>' +
-          '<div class="testimonials__author"><div class="testimonials__author-info">' +
-          '<span class="testimonials__name">' + (t.name[lang] || t.name.en) + '</span>' +
+          '<div class="testimonials__author">' + avatarHTML + '<div class="testimonials__author-info">' +
+          '<span class="testimonials__name">' + authorName + '</span>' +
           '<span class="testimonials__role">' + (t.role[lang] || t.role.en) + '</span>' +
           '</div></div></div>';
       }).join('');

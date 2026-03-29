@@ -182,6 +182,7 @@
       'test.noItems': 'No testimonials yet. Click "+ Add Testimonial" to create one.',
       'test.name': 'Name',
       'test.role': 'Role',
+      'test.avatar': 'Photo',
       'test.text': 'Text',
       'test.stars': 'Stars',
       'colors.title': 'Site Colors',
@@ -416,6 +417,7 @@
       'test.noItems': 'Пока нет отзывов. Нажмите "+ Добавить отзыв".',
       'test.name': 'Имя',
       'test.role': 'Роль',
+      'test.avatar': 'Фото',
       'test.text': 'Текст',
       'test.stars': 'Звёзды',
       'colors.title': 'Цвета сайта',
@@ -2789,6 +2791,10 @@
 
     editor.innerHTML = sorted.map((item, idx) => {
       const i = testimonialsData.indexOf(item);
+      const initials = (item.name.en || '??').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+      const avatarPreview = item.avatar
+        ? `<img src="../${item.avatar}" alt="" class="test-avatar__img">`
+        : `<span class="test-avatar__initials">${initials}</span>`;
       return `<div class="faq-editor-item" data-test-idx="${i}">
         <div class="faq-editor-item__header">
           <span class="faq-editor-item__num">#${idx + 1}</span>
@@ -2798,7 +2804,12 @@
             <button class="btn btn--icon btn--danger" data-test-delete="${i}" title="Delete">🗑</button>
           </div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:12px;margin-bottom:12px;align-items:end">
+          <div class="test-avatar" data-test-avatar="${i}">
+            <div class="test-avatar__preview">${avatarPreview}</div>
+            <button class="btn btn--outline btn--xs" data-test-avatar-btn="${i}">${t('test.avatar')}</button>
+            <input type="file" data-test-avatar-input="${i}" accept="image/*" hidden>
+          </div>
           <div class="form-group"><label>${t('test.stars')}</label><input type="number" data-test-field="stars" data-test-i="${i}" min="1" max="5" value="${item.stars || 5}"></div>
         </div>
         ${LANGS.map(lng => `<div class="faq-editor-lang">
@@ -2849,6 +2860,38 @@
       dirtyTabs.testimonials = true;
       renderTestimonialsEditor();
     }));
+
+    // Avatar upload buttons
+    editor.querySelectorAll('[data-test-avatar-btn]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const input = editor.querySelector(`[data-test-avatar-input="${btn.dataset.testAvatarBtn}"]`);
+        if (input) input.click();
+      });
+    });
+    editor.querySelectorAll('[data-test-avatar-input]').forEach(input => {
+      input.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const i = parseInt(input.dataset.testAvatarInput);
+        const preview = editor.querySelector(`[data-test-avatar="${i}"] .test-avatar__preview`);
+        preview.innerHTML = `<span class="test-avatar__initials">...</span>`;
+        try {
+          const resized = await resizeImage(file, 200, 0.85);
+          const base64 = resized.split(',')[1];
+          const ext = file.name.split('.').pop().toLowerCase();
+          const safeName = (testimonialsData[i].name.en || 'avatar').replace(/[^a-z0-9]/gi, '-').toLowerCase();
+          const path = `images/testimonials/${safeName}.${ext}`;
+          await commitFile(path, null, `Add testimonial avatar: ${safeName}`, null, base64);
+          testimonialsData[i].avatar = path;
+          dirtyTabs.testimonials = true;
+          preview.innerHTML = `<img src="../${path}" alt="" class="test-avatar__img">`;
+          updateRateLimit();
+        } catch (err) {
+          preview.innerHTML = `<span class="test-avatar__initials" style="color:var(--color-danger)">!</span>`;
+          console.error('Avatar upload failed:', err);
+        }
+      });
+    });
   }
 
   // Add testimonial
