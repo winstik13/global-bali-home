@@ -288,6 +288,7 @@ const PROJECTS_DATA = {
     ],
     "floorPlans": {
       "Type A — 2BR Single Story": "images/serenity-villas/plans/type-a-—-2br-single-story.webp",
+      "Type B — 2BR Two Story": "images/serenity-villas/plans/2-bedroom.webp",
       "Type B — 3BR Two Story": "",
       "Type C — 2BR Two Story": ""
     }
