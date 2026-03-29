@@ -31,26 +31,22 @@
 
 ## 2. i18n — НЕПЕРЕВЕДЁННЫЙ ТЕКСТ
 
-**[I18N-1] ID index.html: "From $119K" не переведено**
-- `id/index.html:69` — `<span>From $119K</span>` — должно быть "Mulai $119K".
-- **Видимость:** Высокая — hero секция главной страницы.
+**[I18N-1] ~~ID index.html: "From $119K" не переведено~~ ✅ РЕШЕНО**
+- ~~`id/index.html:69` — "From $119K" на английском.~~
+- **Исправлено:** заменено на "Mulai $119K".
 
-**[I18N-2] ID index.html: "A Global Bali Home Development" не переведено**
-- `id/index.html:58` — `<p class="hero__tag">A Global Bali Home Development</p>` — на английском.
-- **Видимость:** Высокая — hero секция.
+**[I18N-2] ID index.html: "A Global Bali Home Development" — ❌ НЕ НУЖНО**
+- Бренд-слоган, намеренно на английском во всех языковых версиях. Премиальный брендинг.
 
-**[I18N-3] Бейдж "Premium" не переведён на RU и ID**
-- Все 3 страницы проектов × 2 языка — бейджи `<span class="unit__badge">Premium</span>` всегда на английском.
-- RU: должно быть "Премиум". ID: можно оставить "Premium" (заимствование) или "Kelas Atas".
-- ~8 мест в project-serenity-villas/estates/village.html (ru/ и id/).
+**[I18N-3] Бейдж "Premium" на RU и ID — ❌ НЕ НУЖНО**
+- Международное слово, понятно на всех языках без перевода.
 
-**[I18N-4] ID gallery.html: alt-тексты noscript не переведены**
-- `id/gallery.html:74` — `alt="aerial view"` вместо ID-перевода.
-- **Видимость:** Низкая — только при отключённом JS.
+**[I18N-4] ~~ID gallery.html: alt-тексты noscript~~ ✅ РЕШЕНО (BUG-5)**
+- **Исправлено в BUG-5.**
 
-**[I18N-5] RU about.html: JSON-LD отсутствует numberOfEmployees**
-- `ru/about.html:48-50` — schema не содержит поля numberOfEmployees, которое есть в EN версии.
-- **Влияние:** SEO/schema.
+**[I18N-5] ~~RU/ID about.html: JSON-LD отсутствует numberOfEmployees~~ ✅ РЕШЕНО**
+- ~~Schema не содержала numberOfEmployees в RU и ID версиях.~~
+- **Исправлено:** добавлен блок numberOfEmployees в обе версии.
 
 ---
 
