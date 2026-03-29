@@ -423,7 +423,7 @@ const PROJECTS_DATA = {
       ]
     },
     "availability": {
-      "sold": 1,
+      "sold": 0,
       "total": 4
     },
     "showcasePrice": {
@@ -478,8 +478,8 @@ const PROJECTS_DATA = {
         "floors": 2,
         "area": "180 m²",
         "land": "3.5 are",
-        "status": "sold",
-        "price": null,
+        "status": "resale",
+        "price": 335000,
         "badge": null
       },
       {
