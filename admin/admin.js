@@ -1044,7 +1044,7 @@
 
       let potential = 0;
       if (p.units) {
-        p.units.forEach(u => { if (u.status !== 'sold' && u.status !== 'booked') potential += u.price || p.startingPrice; });
+        p.units.forEach(u => { if (u.status === 'available') potential += u.price || p.startingPrice; });
       } else if (p.unitTypes) {
         const availCount = total - sold;
         let assigned = 0;
