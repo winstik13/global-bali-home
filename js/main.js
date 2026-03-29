@@ -20,6 +20,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // --- Apply contacts from SITE_DATA ---
+  if (typeof SITE_DATA !== 'undefined' && SITE_DATA.contacts) {
+    var ct = SITE_DATA.contacts;
+    var lang0 = document.documentElement.lang || 'en';
+    // Phone in footer
+    document.querySelectorAll('[data-contact="phone"]').forEach(function(el) {
+      if (ct.phone) el.textContent = ct.phone;
+    });
+    // Email in footer
+    document.querySelectorAll('[data-contact="email"]').forEach(function(el) {
+      if (ct.email) el.textContent = ct.email;
+    });
+    // Email links (contacts page)
+    document.querySelectorAll('[data-contact="email-link"]').forEach(function(el) {
+      if (ct.email) {
+        el.href = 'mailto:' + ct.email;
+        el.textContent = ct.email;
+      }
+    });
+    // Location (language-aware)
+    document.querySelectorAll('[data-contact="location"]').forEach(function(el) {
+      if (ct.location) {
+        el.textContent = (typeof ct.location === 'object') ? (ct.location[lang0] || ct.location.en) : ct.location;
+      }
+    });
+    // WhatsApp links (footer float + contacts page)
+    document.querySelectorAll('[data-contact="whatsapp-link"]').forEach(function(el) {
+      if (ct.whatsapp) el.href = 'https://wa.me/' + ct.whatsapp;
+    });
+  }
+
   // --- Localisation ---
   const lang = document.documentElement.lang || 'en';
   const i18n = {

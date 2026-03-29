@@ -51,6 +51,15 @@
       </div>
       <h1 class="login-card__title" data-i18n="pat.title">GitHub Access</h1>
       <p class="login-card__desc" data-i18n="pat.desc">Enter your GitHub Personal Access Token to enable publishing.</p>
+      <div class="pat-steps">
+        <p class="pat-steps__why" data-i18n="pat.why">This token allows the admin panel to publish your changes to the live website.</p>
+        <ol class="pat-steps__list">
+          <li data-i18n="pat.step1">Open <a href="https://github.com/settings/tokens?type=beta" target="_blank" rel="noopener noreferrer">GitHub Token Settings</a></li>
+          <li data-i18n="pat.step2">Click <strong>Generate new token</strong>, select repo <strong>global-bali-home</strong></li>
+          <li data-i18n="pat.step3">Under Permissions → Contents → set <strong>Read and write</strong></li>
+          <li data-i18n="pat.step4">Copy the token and paste it below</li>
+        </ol>
+      </div>
       <form id="pat-form" class="login-form">
         <div class="form-group">
           <label for="pat-input" data-i18n="pat.label">Personal Access Token</label>
@@ -200,6 +209,11 @@
 
       <!-- Tab: Projects -->
       <section id="tab-projects" class="admin-tab" hidden>
+        <div id="project-breadcrumb" class="project-breadcrumb" hidden>
+          <button class="project-breadcrumb__back" id="btn-back-dash" data-i18n="projects.backToDash">&larr; Dashboard</button>
+          <span class="project-breadcrumb__sep">/</span>
+          <span class="project-breadcrumb__current" id="breadcrumb-project"></span>
+        </div>
         <h2 data-i18n="projects.title">Project Editor</h2>
         <div class="project-tabs"></div>
         <div id="project-editor"></div>

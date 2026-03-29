@@ -18,6 +18,11 @@
       'login.signingIn': 'Signing in...',
       'pat.title': 'GitHub Access',
       'pat.desc': 'Enter your GitHub Personal Access Token to enable publishing.',
+      'pat.why': 'This token allows the admin panel to publish your changes to the live website.',
+      'pat.step1': 'Open <a href="https://github.com/settings/tokens?type=beta" target="_blank" rel="noopener noreferrer">GitHub Token Settings</a>',
+      'pat.step2': 'Click <strong>Generate new token</strong>, select repo <strong>global-bali-home</strong>',
+      'pat.step3': 'Under Permissions → Contents → set <strong>Read and write</strong>',
+      'pat.step4': 'Copy the token and paste it below',
       'pat.label': 'Personal Access Token',
       'pat.remember': 'Remember on this device',
       'pat.submit': 'Connect',
@@ -45,6 +50,7 @@
       'dash.from': 'From',
       'dash.revenue': 'Revenue',
       'dash.editProject': 'Edit Project',
+      'projects.backToDash': '&larr; Dashboard',
       'dash.viewOnSite': 'View on Site',
       'dash.recentChanges': 'Recent Changes',
       'dash.noChanges': 'No recent changes to project data.',
@@ -237,6 +243,11 @@
       'login.signingIn': 'Вход...',
       'pat.title': 'Доступ к GitHub',
       'pat.desc': 'Введите Personal Access Token GitHub для публикации изменений.',
+      'pat.why': 'Этот токен позволяет админ-панели публиковать ваши изменения на сайт.',
+      'pat.step1': 'Откройте <a href="https://github.com/settings/tokens?type=beta" target="_blank" rel="noopener noreferrer">Настройки токенов GitHub</a>',
+      'pat.step2': 'Нажмите <strong>Generate new token</strong>, выберите репо <strong>global-bali-home</strong>',
+      'pat.step3': 'В Permissions → Contents → выберите <strong>Read and write</strong>',
+      'pat.step4': 'Скопируйте токен и вставьте ниже',
       'pat.label': 'Personal Access Token',
       'pat.remember': 'Запомнить на этом устройстве',
       'pat.submit': 'Подключить',
@@ -264,6 +275,7 @@
       'dash.from': 'От',
       'dash.revenue': 'Выручка',
       'dash.editProject': 'Редактировать',
+      'projects.backToDash': '&larr; Дашборд',
       'dash.viewOnSite': 'На сайте',
       'dash.recentChanges': 'Последние изменения',
       'dash.noChanges': 'Нет недавних изменений.',
@@ -513,6 +525,16 @@
   let currentProject = 'serenity-villas';
   let projectsData = null;    // working copy of PROJECTS_DATA
   let pendingChanges = false;
+  const dirtyTabs = { projects: false, faq: false, testimonials: false, seo: false, colors: false, contacts: false, rate: false };
+
+  function getActiveTab() {
+    const btn = document.querySelector('.admin-nav__btn.active');
+    return btn ? btn.dataset.tab : 'dashboard';
+  }
+
+  function isAnyDirty() {
+    return Object.values(dirtyTabs).some(v => v);
+  }
 
   // ─── Live Exchange Rate ───
   let rateInterval = null;
@@ -703,7 +725,7 @@
 
   // ─── Unsaved Changes Warning ───
   window.addEventListener('beforeunload', (e) => {
-    if (pendingChanges) { e.preventDefault(); e.returnValue = ''; }
+    if (pendingChanges || isAnyDirty()) { e.preventDefault(); e.returnValue = ''; }
   });
 
   // ─── Loading Button Helper ───
@@ -720,13 +742,30 @@
   // ─── Tab Navigation ───
   $$('.admin-nav__btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      if (pendingChanges && !confirm(t('common.unsavedWarn'))) return;
+      const currentTab = getActiveTab();
+      const isDirty = currentTab === 'dashboard'
+        ? (dirtyTabs.rate || dirtyTabs.contacts)
+        : (pendingChanges || dirtyTabs[currentTab]);
+      if (isDirty && !confirm(t('common.unsavedWarn'))) return;
       $$('.admin-nav__btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       $$('.admin-tab').forEach(tab => tab.hidden = true);
       $(`#tab-${btn.dataset.tab}`).hidden = false;
+      hideProjectBreadcrumb();
     });
   });
+
+  // Back to Dashboard from project breadcrumb
+  const backDashBtn = $('#btn-back-dash');
+  if (backDashBtn) {
+    backDashBtn.addEventListener('click', () => {
+      hideProjectBreadcrumb();
+      $$('.admin-nav__btn').forEach(b => b.classList.remove('active'));
+      $$('.admin-nav__btn').forEach(b => { if (b.dataset.tab === 'dashboard') b.classList.add('active'); });
+      $$('.admin-tab').forEach(tab => tab.hidden = true);
+      $('#tab-dashboard').hidden = false;
+    });
+  }
 
   // Project tabs are now generated dynamically in buildDynamicUI()
 
@@ -920,11 +959,27 @@
         $$('.project-tabs__btn').forEach(b => b.classList.remove('active'));
         $$('.project-tabs__btn').forEach(b => { if (b.dataset.proj === currentProject) b.classList.add('active'); });
         renderProjectEditor();
+        showProjectBreadcrumb(currentProject);
+        $('#tab-projects').scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });
 
     // Load recent commits
     loadRecentCommits();
+  }
+
+  function showProjectBreadcrumb(projectKey) {
+    const bc = $('#project-breadcrumb');
+    const nameEl = $('#breadcrumb-project');
+    if (!bc || !nameEl) return;
+    const p = projectsData[projectKey];
+    nameEl.textContent = p ? p.name : projectKey;
+    bc.hidden = false;
+  }
+
+  function hideProjectBreadcrumb() {
+    const bc = $('#project-breadcrumb');
+    if (bc) bc.hidden = true;
   }
 
   async function loadRecentCommits() {
@@ -1222,6 +1277,7 @@
 
   function markChanged() {
     pendingChanges = true;
+    dirtyTabs.projects = true;
     $('#publish-status').textContent = t('projects.unsaved');
     $('#publish-status').className = 'publish-status';
   }
@@ -1239,6 +1295,7 @@
       const dataContent = buildProjectsDataJS();
       await commitFile('data/projects-data.js', dataContent, 'Update project data via admin panel');
       pendingChanges = false;
+      dirtyTabs.projects = false;
       status.textContent = t('projects.published');
       status.className = 'publish-status success';
       renderDashboard();
@@ -1342,6 +1399,7 @@
       // Bind counters + live SERP preview update
       editor.querySelectorAll('.seo-input').forEach(inp => {
         inp.addEventListener('input', () => {
+          dirtyTabs.seo = true;
           updateSEOCounter(inp);
           // Update live previews from EN fields
           if (inp.dataset.lang === 'en') {
@@ -1406,6 +1464,7 @@
           status.textContent = `Saved ${saved}/${LANGS.length}. Errors: ${errors.join('; ')}`;
           status.className = 'publish-status error';
         } else {
+          dirtyTabs.seo = false;
           status.textContent = t('common.saved');
           status.className = 'publish-status success';
         }
@@ -2143,10 +2202,15 @@
     }
   }
 
+  // Track rate changes
+  const rateInput = $('#rate-input');
+  if (rateInput) rateInput.addEventListener('input', () => { dirtyTabs.rate = true; });
+
   // Auto-rate checkbox toggle
   const rateAutoBox = $('#rate-auto');
   if (rateAutoBox) {
     rateAutoBox.addEventListener('change', async () => {
+      dirtyTabs.rate = true;
       const input = $('#rate-input');
       input.disabled = rateAutoBox.checked;
       if (rateAutoBox.checked) {
@@ -2181,6 +2245,7 @@
         siteData.exchangeRate.updatedAt = new Date().toISOString().split('T')[0];
         const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
         await commitFile('data/site-data.js', content, 'Update exchange rate: 1 USD = ' + newRate + ' IDR');
+        dirtyTabs.rate = false;
         status.textContent = t('common.saved');
         status.className = 'publish-status success';
         renderRateInfo();
@@ -2269,6 +2334,12 @@
       waInput.addEventListener('paste', () => setTimeout(updateWaPreview, 0));
       updateWaPreview();
     }
+
+    // Track contacts changes
+    ['contact-phone', 'contact-whatsapp', 'contact-email', 'contact-location-en', 'contact-location-ru', 'contact-location-id'].forEach(id => {
+      const el = $('#' + id);
+      if (el) el.addEventListener('input', () => { dirtyTabs.contacts = true; });
+    });
   }
 
   const contactsSaveBtn = $('#btn-contacts-save');
@@ -2311,6 +2382,7 @@
       try {
         const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
         await commitFile('data/site-data.js', content, 'Update contact info via admin panel');
+        dirtyTabs.contacts = false;
         status.textContent = t('common.saved');
         status.className = 'publish-status success';
         updateRateLimit();
@@ -2377,7 +2449,7 @@
 
   // ─── FAQ Editor ───
   let faqData = null;
-  let faqChanged = false;
+  // faqChanged is now dirtyTabs.faq
 
   function loadFaqData() {
     if (typeof FAQ_DATA !== 'undefined') {
@@ -2425,7 +2497,7 @@
         const field = el.dataset.faqField;
         const lng = el.dataset.faqLng;
         faqData[i][field][lng] = el.value;
-        faqChanged = true;
+        dirtyTabs.faq = true;
       });
     });
 
@@ -2441,7 +2513,7 @@
         const tmpOrder = item.order;
         item.order = prev.order;
         prev.order = tmpOrder;
-        faqChanged = true;
+        dirtyTabs.faq = true;
         renderFaqEditor();
       });
     });
@@ -2457,7 +2529,7 @@
         const tmpOrder = item.order;
         item.order = next.order;
         next.order = tmpOrder;
-        faqChanged = true;
+        dirtyTabs.faq = true;
         renderFaqEditor();
       });
     });
@@ -2468,7 +2540,7 @@
         if (!confirm('Delete this FAQ item?')) return;
         const i = +btn.dataset.faqDelete;
         faqData.splice(i, 1);
-        faqChanged = true;
+        dirtyTabs.faq = true;
         renderFaqEditor();
       });
     });
@@ -2485,7 +2557,7 @@
         question: { en: '', ru: '', id: '' },
         answer: { en: '', ru: '', id: '' }
       });
-      faqChanged = true;
+      dirtyTabs.faq = true;
       renderFaqEditor();
     });
   }
@@ -2494,7 +2566,7 @@
   const faqPublishBtn = $('#btn-faq-publish');
   if (faqPublishBtn) {
     faqPublishBtn.addEventListener('click', async () => {
-      if (!faqChanged || !faqData) return;
+      if (!dirtyTabs.faq || !faqData) return;
       btnLoading(faqPublishBtn, true);
       const status = $('#faq-publish-status');
       status.textContent = t('faq.publishing');
@@ -2503,7 +2575,7 @@
       try {
         const content = buildFaqDataJS();
         await commitFile('data/faq-data.js', content, 'Update FAQ data via admin panel');
-        faqChanged = false;
+        dirtyTabs.faq = false;
         status.textContent = t('faq.published');
         status.className = 'publish-status success';
         updateRateLimit();
@@ -2531,7 +2603,7 @@
   // ─── Testimonials Editor ───
   const LANGS_FULL = { en: 'English', ru: 'Русский', id: 'Bahasa Indonesia' };
   let testimonialsData = null;
-  let testimonialsChanged = false;
+  // testimonialsChanged is now dirtyTabs.testimonials
 
   function loadTestimonialsData() {
     if (typeof TESTIMONIALS_DATA !== 'undefined') {
@@ -2587,7 +2659,7 @@
         } else {
           testimonialsData[i][field][lng] = el.value;
         }
-        testimonialsChanged = true;
+        dirtyTabs.testimonials = true;
       });
     });
 
@@ -2597,7 +2669,7 @@
       const sorted2 = testimonialsData.slice().sort((a, b) => (a.order || 99) - (b.order || 99));
       const idx2 = sorted2.indexOf(testimonialsData[i]);
       if (idx2 > 0) { const tmp = sorted2[idx2].order; sorted2[idx2].order = sorted2[idx2 - 1].order; sorted2[idx2 - 1].order = tmp; }
-      testimonialsChanged = true;
+      dirtyTabs.testimonials = true;
       renderTestimonialsEditor();
     }));
     editor.querySelectorAll('[data-test-down]').forEach(btn => btn.addEventListener('click', () => {
@@ -2605,14 +2677,14 @@
       const sorted2 = testimonialsData.slice().sort((a, b) => (a.order || 99) - (b.order || 99));
       const idx2 = sorted2.indexOf(testimonialsData[i]);
       if (idx2 < sorted2.length - 1) { const tmp = sorted2[idx2].order; sorted2[idx2].order = sorted2[idx2 + 1].order; sorted2[idx2 + 1].order = tmp; }
-      testimonialsChanged = true;
+      dirtyTabs.testimonials = true;
       renderTestimonialsEditor();
     }));
     editor.querySelectorAll('[data-test-delete]').forEach(btn => btn.addEventListener('click', () => {
       const i = parseInt(btn.dataset.testDelete);
       if (!confirm('Delete this testimonial?')) return;
       testimonialsData.splice(i, 1);
-      testimonialsChanged = true;
+      dirtyTabs.testimonials = true;
       renderTestimonialsEditor();
     }));
   }
@@ -2630,7 +2702,7 @@
         stars: 5,
         order: maxOrder + 1
       });
-      testimonialsChanged = true;
+      dirtyTabs.testimonials = true;
       renderTestimonialsEditor();
     });
   }
@@ -2639,7 +2711,7 @@
   const testPublishBtn = $('#btn-testimonials-publish');
   if (testPublishBtn) {
     testPublishBtn.addEventListener('click', async () => {
-      if (!testimonialsChanged || !testimonialsData) return;
+      if (!dirtyTabs.testimonials || !testimonialsData) return;
       btnLoading(testPublishBtn, true);
       const status = $('#testimonials-publish-status');
       status.textContent = t('test.publishing');
@@ -2648,7 +2720,7 @@
       try {
         const content = '/* eslint-disable */\nconst TESTIMONIALS_DATA = ' + JSON.stringify(testimonialsData, null, 2) + ';\n';
         await commitFile('data/testimonials-data.js', content, 'Update testimonials via admin panel');
-        testimonialsChanged = false;
+        dirtyTabs.testimonials = false;
         status.textContent = t('test.published');
         status.className = 'publish-status success';
         updateRateLimit();
@@ -2748,11 +2820,13 @@
     const hexInput = $('#color-' + key + '-hex');
     if (picker && hexInput) {
       picker.addEventListener('input', () => {
+        dirtyTabs.colors = true;
         hexInput.value = picker.value.toUpperCase();
         hexInput.classList.remove('input--error');
         applyColorLive(key, picker.value);
       });
       hexInput.addEventListener('input', () => {
+        dirtyTabs.colors = true;
         let val = hexInput.value.trim();
         if (val.length > 0 && val[0] !== '#') val = '#' + val;
         if (isValidHex(val)) {
@@ -2798,6 +2872,7 @@
       try {
         const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
         await commitFile('data/site-data.js', content, 'Update site colors via admin panel');
+        dirtyTabs.colors = false;
         status.textContent = t('common.saved');
         status.className = 'publish-status success';
         updateRateLimit();
