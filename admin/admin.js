@@ -47,7 +47,7 @@
       'dash.soldBooked': 'Sold / Booked',
       'dash.available': 'Available',
       'dash.overallProgress': 'Overall Progress',
-      'dash.totalPotential': 'Total Potential',
+      'dash.totalPotential': 'Remaining Potential',
       'dash.preSale': 'Pre-Sale',
       'dash.inProgress': 'In Progress',
       'dash.sold': 'Sold',
@@ -351,7 +351,7 @@
       'dash.soldBooked': 'Продано / Бронь',
       'dash.available': 'Доступно',
       'dash.overallProgress': 'Общий прогресс',
-      'dash.totalPotential': 'Потенциал',
+      'dash.totalPotential': 'Остаток',
       'dash.preSale': 'Предпродажа',
       'dash.inProgress': 'Строится',
       'dash.sold': 'Продано',
@@ -1012,9 +1012,16 @@
 
       let potential = 0;
       if (p.units) {
-        p.units.forEach(u => { potential += u.price || p.startingPrice; });
+        p.units.forEach(u => { if (u.status !== 'sold' && u.status !== 'booked') potential += u.price || p.startingPrice; });
       } else if (p.unitTypes) {
-        p.unitTypes.forEach(ut => { potential += ut.count * ut.price; });
+        const availCount = total - sold;
+        let assigned = 0;
+        p.unitTypes.forEach(ut => {
+          const share = Math.min(Math.round(availCount * ut.count / total), ut.count);
+          potential += share * ut.price;
+          assigned += share;
+        });
+        if (assigned < availCount) potential += (availCount - assigned) * p.startingPrice;
       }
       totalPotential += potential;
 
