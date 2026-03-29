@@ -1427,7 +1427,7 @@
       const results = await Promise.all(LANGS.map(async (lng) => {
         const path = lng === 'en' ? page : `${lng}/${page}`;
         const file = await fetchFile(path);
-        const html = atob(file.content);
+        const html = decodeBase64UTF8(file.content);
         const fields = extractSEO(html);
         return { lng, path, html, sha: file.sha, fields };
       }));
@@ -1880,6 +1880,13 @@
   }
 
   // ─── GitHub API Helpers ───
+  function decodeBase64UTF8(base64) {
+    const binary = atob(base64.replace(/\s/g, ''));
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    return new TextDecoder('utf-8').decode(bytes);
+  }
+
   async function fetchFile(path) {
     const res = await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`, {
       headers: { 'Authorization': `token ${githubPAT}` }
@@ -2072,7 +2079,7 @@
           let file;
           try { file = await fetchFile(cfg.path); } catch { continue; } // skip if page doesn't exist
 
-          let html = atob(file.content);
+          let html = decodeBase64UTF8(file.content);
           const desc = (p.showcaseDesc && (p.showcaseDesc[cfg.lang] || p.showcaseDesc.en)) || p.name;
           const image = p.showcaseImage ? `https://winstik13.github.io/global-bali-home/${p.showcaseImage}` : '';
 
