@@ -238,19 +238,19 @@
 
         <!-- Social Media -->
         <div class="editor-section" style="margin-top:24px">
-          <h3>Social Media</h3>
+          <h3 data-i18n="social.title">Social Media</h3>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
             <div class="form-group">
-              <label>Facebook URL</label>
+              <label data-i18n="social.facebook">Facebook URL</label>
               <input type="url" id="social-facebook" placeholder="https://www.facebook.com/...">
             </div>
             <div class="form-group">
-              <label>Instagram URL</label>
+              <label data-i18n="social.instagram">Instagram URL</label>
               <input type="url" id="social-instagram" placeholder="https://www.instagram.com/...">
             </div>
           </div>
           <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
-            <button id="btn-social-save" class="btn btn--primary btn--sm">Save Social</button>
+            <button id="btn-social-save" class="btn btn--primary btn--sm" data-i18n="social.save">Save Social</button>
             <span id="social-save-status" class="publish-status"></span>
           </div>
         </div>
@@ -301,39 +301,39 @@
 
         <!-- Company Statistics -->
         <div class="editor-section" style="margin-top:24px">
-          <h3>Company Statistics</h3>
+          <h3 data-i18n="stats.title">Company Statistics</h3>
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
             <div class="form-group">
-              <label>Years in Bali</label>
+              <label data-i18n="stats.yearsInBali">Years in Bali</label>
               <input type="text" id="stat-yearsInBali" placeholder="3+">
             </div>
             <div class="form-group">
-              <label>Villas Designed</label>
+              <label data-i18n="stats.villasDesigned">Villas Designed</label>
               <input type="text" id="stat-villasDesigned" placeholder="43">
             </div>
             <div class="form-group">
-              <label>Occupancy Rate</label>
+              <label data-i18n="stats.occupancyRate">Occupancy Rate</label>
               <input type="text" id="stat-occupancyRate" placeholder="80%+">
             </div>
             <div class="form-group">
-              <label>Founder Experience</label>
+              <label data-i18n="stats.founderExperience">Founder Experience</label>
               <input type="text" id="stat-founderExperience" placeholder="$1B+">
             </div>
             <div class="form-group">
-              <label>Tourist Arrivals</label>
+              <label data-i18n="stats.touristArrivals">Tourist Arrivals</label>
               <input type="text" id="stat-touristArrivals" placeholder="16M+">
             </div>
             <div class="form-group">
-              <label>Rental Yield</label>
+              <label data-i18n="stats.rentalYield">Rental Yield</label>
               <input type="text" id="stat-rentalYield" placeholder="12-15%">
             </div>
             <div class="form-group">
-              <label>Property Growth</label>
+              <label data-i18n="stats.propertyGrowth">Property Growth</label>
               <input type="text" id="stat-propertyGrowth" placeholder="8-12%">
             </div>
           </div>
           <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
-            <button id="btn-stats-save" class="btn btn--primary btn--sm">Save Statistics</button>
+            <button id="btn-stats-save" class="btn btn--primary btn--sm" data-i18n="stats.save">Save Statistics</button>
             <span id="stats-save-status" class="publish-status"></span>
           </div>
         </div>
@@ -342,58 +342,58 @@
         <div class="editor-section editor-section--has-help" style="margin-top:24px">
           <button class="editor-help-btn" data-help="roi" aria-label="Help">?</button>
           <div class="editor-help-popup" id="help-roi" hidden>
-            <p><strong>Investment range:</strong> Min/max/step for the slider on homepage.</p>
-            <p><strong>Scenarios:</strong> Yield and growth rates for Conservative/Normal/Optimistic.</p>
-            <p><strong>Occupancy:</strong> Default occupancy rate and its slider range.</p>
+            <p data-i18n="help.roi.investment"><strong>Investment range:</strong> Min/max/step for the slider on homepage.</p>
+            <p data-i18n="help.roi.scenarios"><strong>Scenarios:</strong> Yield and growth rates for Conservative/Normal/Optimistic.</p>
+            <p data-i18n="help.roi.occupancy"><strong>Occupancy:</strong> Default occupancy rate and its slider range.</p>
           </div>
-          <h3>ROI Calculator Parameters</h3>
+          <h3 data-i18n="roi.title">ROI Calculator Parameters</h3>
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
             <div class="form-group">
-              <label>Min Investment ($)</label>
+              <label data-i18n="roi.minInvestment">Min Investment ($)</label>
               <input type="number" id="roi-min" min="10000" step="10000" placeholder="100000">
             </div>
             <div class="form-group">
-              <label>Max Investment ($)</label>
+              <label data-i18n="roi.maxInvestment">Max Investment ($)</label>
               <input type="number" id="roi-max" min="100000" step="10000" placeholder="1000000">
             </div>
             <div class="form-group">
-              <label>Step ($)</label>
+              <label data-i18n="roi.step">Step ($)</label>
               <input type="number" id="roi-step" min="1000" step="1000" placeholder="10000">
             </div>
             <div class="form-group">
-              <label>Default Investment ($)</label>
+              <label data-i18n="roi.defaultInvestment">Default Investment ($)</label>
               <input type="number" id="roi-default" min="10000" step="10000" placeholder="335000">
             </div>
             <div class="form-group">
-              <label>Default Occupancy (%)</label>
+              <label data-i18n="roi.defaultOccupancy">Default Occupancy (%)</label>
               <input type="number" id="roi-occ-default" min="10" max="100" placeholder="80">
             </div>
             <div class="form-group">
-              <label>Occupancy Range (%)</label>
+              <label data-i18n="roi.occupancyRange">Occupancy Range (%)</label>
               <div style="display:flex;gap:8px">
                 <input type="number" id="roi-occ-min" min="0" max="100" placeholder="50" style="width:50%">
                 <input type="number" id="roi-occ-max" min="0" max="100" placeholder="95" style="width:50%">
               </div>
             </div>
           </div>
-          <h4 style="margin:16px 0 8px;color:var(--color-text-muted)">Scenarios</h4>
+          <h4 style="margin:16px 0 8px;color:var(--color-text-muted)" data-i18n="roi.scenarios">Scenarios</h4>
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
             <div class="form-group">
-              <label>Conservative — Yield / Growth (%)</label>
+              <label data-i18n="roi.conservative">Conservative — Yield / Growth (%)</label>
               <div style="display:flex;gap:8px">
                 <input type="number" id="roi-cons-yield" min="0" max="100" step="0.5" placeholder="8" style="width:50%">
                 <input type="number" id="roi-cons-growth" min="0" max="100" step="0.5" placeholder="6" style="width:50%">
               </div>
             </div>
             <div class="form-group">
-              <label>Normal — Yield / Growth (%)</label>
+              <label data-i18n="roi.normal">Normal — Yield / Growth (%)</label>
               <div style="display:flex;gap:8px">
                 <input type="number" id="roi-norm-yield" min="0" max="100" step="0.5" placeholder="12" style="width:50%">
                 <input type="number" id="roi-norm-growth" min="0" max="100" step="0.5" placeholder="10" style="width:50%">
               </div>
             </div>
             <div class="form-group">
-              <label>Optimistic — Yield / Growth (%)</label>
+              <label data-i18n="roi.optimistic">Optimistic — Yield / Growth (%)</label>
               <div style="display:flex;gap:8px">
                 <input type="number" id="roi-opt-yield" min="0" max="100" step="0.5" placeholder="15" style="width:50%">
                 <input type="number" id="roi-opt-growth" min="0" max="100" step="0.5" placeholder="12" style="width:50%">
@@ -401,7 +401,7 @@
             </div>
           </div>
           <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
-            <button id="btn-roi-save" class="btn btn--primary btn--sm">Save ROI Settings</button>
+            <button id="btn-roi-save" class="btn btn--primary btn--sm" data-i18n="roi.save">Save ROI Settings</button>
             <span id="roi-save-status" class="publish-status"></span>
           </div>
         </div>
