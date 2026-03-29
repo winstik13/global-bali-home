@@ -16,14 +16,15 @@
       'login.password': 'Password',
       'login.submit': 'Sign In',
       'login.signingIn': 'Signing in...',
-      'pat.title': 'GitHub Access',
-      'pat.desc': 'Enter your GitHub Personal Access Token to enable publishing.',
+      'pat.title': 'GBH Access',
+      'pat.desc': 'Enter your access token to enable publishing.',
       'pat.why': 'This token allows the admin panel to publish your changes to the live website.',
       'pat.step1': 'Open <a href="https://github.com/settings/tokens?type=beta" target="_blank" rel="noopener noreferrer">GitHub Token Settings</a>',
       'pat.step2': 'Click <strong>Generate new token</strong>, select repo <strong>global-bali-home</strong>',
       'pat.step3': 'Under Permissions → Contents → set <strong>Read and write</strong>',
       'pat.step4': 'Copy the token and paste it below',
       'pat.label': 'Personal Access Token',
+      'pat.remember': 'Remember on this device',
       'pat.remember': 'Remember on this device',
       'pat.submit': 'Connect',
       'pat.error': 'Invalid token. Ensure it has "contents:write" scope for this repo.',
@@ -318,14 +319,15 @@
       'login.password': 'Пароль',
       'login.submit': 'Войти',
       'login.signingIn': 'Вход...',
-      'pat.title': 'Доступ к GitHub',
-      'pat.desc': 'Введите Personal Access Token GitHub для публикации изменений.',
+      'pat.title': 'GBH Access',
+      'pat.desc': 'Введите токен доступа для публикации изменений.',
       'pat.why': 'Этот токен позволяет админ-панели публиковать ваши изменения на сайт.',
       'pat.step1': 'Откройте <a href="https://github.com/settings/tokens?type=beta" target="_blank" rel="noopener noreferrer">Настройки токенов GitHub</a>',
       'pat.step2': 'Нажмите <strong>Generate new token</strong>, выберите репо <strong>global-bali-home</strong>',
       'pat.step3': 'В Permissions → Contents → выберите <strong>Read and write</strong>',
       'pat.step4': 'Скопируйте токен и вставьте ниже',
       'pat.label': 'Personal Access Token',
+      'pat.remember': 'Запомнить на этом устройстве',
       'pat.remember': 'Запомнить на этом устройстве',
       'pat.submit': 'Подключить',
       'pat.error': 'Неверный токен. Убедитесь, что scope "contents:write" включён.',
@@ -768,12 +770,13 @@
       $('#admin-user').textContent = user.email;
       startRateUpdates();
       // Check for stored PAT
-      githubPAT = sessionStorage.getItem('gbh_pat') || '';
+      githubPAT = localStorage.getItem('gbh_pat') || sessionStorage.getItem('gbh_pat') || '';
       if (githubPAT) {
         validatePAT(githubPAT).then(valid => {
           if (valid) {
             showAdmin();
           } else {
+            localStorage.removeItem('gbh_pat');
             sessionStorage.removeItem('gbh_pat');
             githubPAT = '';
             showPATScreen();
@@ -838,7 +841,11 @@
     const valid = await validatePAT(pat);
     if (valid) {
       githubPAT = pat;
-      sessionStorage.setItem('gbh_pat', pat);
+      if ($('#pat-remember').checked) {
+        localStorage.setItem('gbh_pat', pat);
+      } else {
+        sessionStorage.setItem('gbh_pat', pat);
+      }
       showAdmin();
     } else {
       patError.textContent = t('pat.error');
@@ -858,6 +865,7 @@
   // ─── Logout ───
   $('#btn-logout').addEventListener('click', () => {
     auth.signOut();
+    localStorage.removeItem('gbh_pat');
     sessionStorage.removeItem('gbh_pat');
     githubPAT = '';
   });

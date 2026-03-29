@@ -44,8 +44,8 @@
       <div class="login-card__logo">
         <img src="../images/common/logo-transparent.png" alt="Global Bali Home" height="60">
       </div>
-      <h1 class="login-card__title" data-i18n="pat.title">GitHub Access</h1>
-      <p class="login-card__desc" data-i18n="pat.desc">Enter your GitHub Personal Access Token to enable publishing.</p>
+      <h1 class="login-card__title" data-i18n="pat.title">GBH Access</h1>
+      <p class="login-card__desc" data-i18n="pat.desc">Enter your access token to enable publishing.</p>
       <div class="pat-steps">
         <p class="pat-steps__why" data-i18n="pat.why">This token allows the admin panel to publish your changes to the live website.</p>
         <ol class="pat-steps__list">
@@ -60,6 +60,7 @@
           <label for="pat-input" data-i18n="pat.label">Personal Access Token</label>
           <input type="password" id="pat-input" placeholder="github_pat_..." required>
         </div>
+        <label class="remember-check"><input type="checkbox" id="pat-remember"> <span data-i18n="pat.remember">Remember on this device</span></label>
         <div id="pat-error" class="login-error" hidden></div>
         <button type="submit" class="btn btn--primary btn--full" data-i18n="pat.submit">Connect</button>
       </form>
