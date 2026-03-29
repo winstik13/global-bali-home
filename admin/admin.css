@@ -612,8 +612,8 @@ body {
 .dash-summary__item:last-child { border-right: none; }
 
 .dash-summary__value {
-  font-family: var(--font-heading);
   font-size: 1.6rem;
+  font-weight: 600;
   color: var(--color-cream);
   margin-bottom: 4px;
 }
@@ -668,8 +668,8 @@ body {
 }
 
 .dash-card__name {
-  font-family: var(--font-heading);
-  font-size: 1.1rem;
+  font-size: 1.05rem;
+  font-weight: 600;
 }
 
 .dash-card__badge {
@@ -757,8 +757,8 @@ body {
 }
 
 .dash-card__stat-value {
-  font-family: var(--font-heading);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
   color: var(--color-cream);
 }
 
@@ -844,9 +844,8 @@ body {
 }
 
 .dash-commits h3 {
-  font-family: var(--font-heading);
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 600;
   margin-bottom: 16px;
 }
 
