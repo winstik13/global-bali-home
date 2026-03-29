@@ -667,6 +667,27 @@ body {
 .status-avail-row .form-group { margin-bottom: 0; }
 .status-avail-row select,
 .status-avail-row input { min-width: 0; }
+.status-avail-row input[readonly] {
+  border-bottom: 1px solid transparent;
+  color: var(--color-text-dim);
+  cursor: default;
+  opacity: 0.7;
+}
+#project-status {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border-hover);
+  border-radius: 4px;
+  padding: 8px 28px 8px 10px;
+  color: var(--color-cream);
+  font-weight: 500;
+}
+#project-status:focus {
+  border-color: var(--color-accent);
+}
+#project-status option {
+  background: var(--color-bg-card);
+  color: var(--color-text);
+}
 .status-avail-pct {
   display: flex;
   align-items: center;
