@@ -69,12 +69,12 @@
         <img src="../images/common/LOGO.png" alt="Global Bali Home" height="36">
         <span class="admin-header__title">Admin Panel</span>
       </div>
-      <div class="admin-header__rate" id="header-rate">
-        <span class="admin-header__rate-label">USD/IDR</span>
-        <span class="admin-header__rate-value" id="header-rate-value">—</span>
-        <span class="admin-header__rate-time" id="header-rate-time"></span>
-      </div>
       <div class="admin-header__right">
+        <div class="admin-header__rate" id="header-rate">
+          <span class="admin-header__rate-label">USD/IDR</span>
+          <span class="admin-header__rate-value" id="header-rate-value">—</span>
+          <span class="admin-header__rate-time" id="header-rate-time"></span>
+        </div>
         <span id="admin-user" class="admin-header__user"></span>
         <button id="btn-logout" class="btn btn--outline btn--sm">Sign Out</button>
       </div>
@@ -88,6 +88,7 @@
       <button class="admin-nav__btn" data-tab="gallery">Gallery</button>
       <button class="admin-nav__btn" data-tab="faq">FAQ</button>
       <button class="admin-nav__btn" data-tab="testimonials">Testimonials</button>
+      <button class="admin-nav__btn" data-tab="colors">Colors</button>
     </nav>
 
     <!-- Tab: Dashboard -->
@@ -100,11 +101,21 @@
           <span id="rate-limit"></span>
         </div>
 
-        <div class="editor-section" style="margin-top:24px">
+        <div class="editor-section editor-section--has-help" style="margin-top:24px">
+          <button class="editor-help-btn" data-help="rate" aria-label="Help">?</button>
+          <div class="editor-help-popup" id="help-rate" hidden>
+            <p><strong>Manual:</strong> Enter the rate manually and click Save.</p>
+            <p><strong>Auto:</strong> Rate updates from API every hour. Manual input is disabled.</p>
+            <p><strong>Fallback:</strong> If API is unavailable, the last saved rate is used on the site.</p>
+          </div>
           <h3>Exchange Rate (USD → IDR)</h3>
           <div class="guide-upload">
             <div id="rate-info" class="guide-info"></div>
             <div class="guide-actions" style="gap:8px">
+              <label class="auto-rate-toggle">
+                <input type="checkbox" id="rate-auto">
+                <span>Auto (live rate from API)</span>
+              </label>
               <div class="form-group" style="margin:0;flex:0 0 160px">
                 <input type="number" id="rate-input" min="1000" step="100" placeholder="16500" style="width:100%">
               </div>
@@ -114,16 +125,26 @@
           </div>
         </div>
 
-        <div class="editor-section" style="margin-top:24px">
+        <div class="editor-section editor-section--has-help" style="margin-top:24px">
+          <button class="editor-help-btn" data-help="contacts" aria-label="Help">?</button>
+          <div class="editor-help-popup" id="help-contacts" hidden>
+            <p><strong>Phone:</strong> Any format with spaces/dashes, start with +country code.</p>
+            <p><strong>WhatsApp:</strong> DIGITS ONLY, no +, spaces or dashes. Example: 6281338741177</p>
+            <p><strong>Email:</strong> Standard email format.</p>
+            <p><strong>Location:</strong> Display text, translate manually for each language.</p>
+          </div>
           <h3>Contact Information</h3>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
             <div class="form-group">
               <label>Phone</label>
-              <input type="text" id="contact-phone" placeholder="+62 813 251 438 49">
+              <input type="tel" id="contact-phone" placeholder="+62 813 251 438 49">
+              <small class="field-hint">Display format, e.g. +62 813 251 438 49</small>
             </div>
             <div class="form-group">
               <label>WhatsApp Number</label>
-              <input type="text" id="contact-whatsapp" placeholder="6281338741177">
+              <input type="tel" id="contact-whatsapp" placeholder="6281338741177">
+              <small class="field-hint">Digits only, with country code, no +</small>
+              <small class="field-hint field-hint--preview" id="wa-preview"></small>
             </div>
             <div class="form-group">
               <label>Email</label>
@@ -148,7 +169,13 @@
           </div>
         </div>
 
-        <div class="editor-section" style="margin-top:24px">
+        <div class="editor-section editor-section--has-help" style="margin-top:24px">
+          <button class="editor-help-btn" data-help="guide" aria-label="Help">?</button>
+          <div class="editor-help-popup" id="help-guide" hidden>
+            <p><strong>Format:</strong> PDF only.</p>
+            <p><strong>After upload:</strong> File is committed to the repository and available to site visitors.</p>
+            <p><strong>Deploy time:</strong> ~1-2 minutes after upload.</p>
+          </div>
           <h3>Investment Guide PDF</h3>
           <div class="guide-upload">
             <div id="guide-info" class="guide-info"></div>
@@ -216,6 +243,90 @@
           <button id="btn-faq-add" class="btn btn--outline">+ Add Question</button>
           <button id="btn-faq-publish" class="btn btn--primary">Publish FAQ</button>
           <span id="faq-publish-status" class="publish-status"></span>
+        </div>
+      </section>
+
+      <!-- Tab: Colors -->
+      <section id="tab-colors" class="admin-tab" hidden>
+        <h2>Site Colors</h2>
+
+        <div class="editor-section editor-section--has-help">
+          <button class="editor-help-btn" data-help="colors" aria-label="Help">?</button>
+          <div class="editor-help-popup" id="help-colors" hidden>
+            <p><strong>Text color</strong> determines derived colors (muted text, borders).</p>
+            <p><strong>Live preview:</strong> Changes apply instantly in admin panel.</p>
+            <p><strong>On site:</strong> Colors apply after Save + ~1-2 min deploy.</p>
+            <p>Use <strong>Reset to Defaults</strong> to restore original palette.</p>
+          </div>
+          <h3>Backgrounds</h3>
+          <div class="color-group">
+            <div class="color-picker-row">
+              <label>Main Background</label>
+              <div class="color-input-pair">
+                <input type="color" id="color-bg" value="#1a1a14">
+                <input type="text" id="color-bg-hex" class="color-hex-input" value="#1a1a14" maxlength="7" placeholder="#1a1a14">
+              </div>
+            </div>
+            <div class="color-picker-row">
+              <label>Alternate Background</label>
+              <div class="color-input-pair">
+                <input type="color" id="color-bgAlt" value="#111110">
+                <input type="text" id="color-bgAlt-hex" class="color-hex-input" value="#111110" maxlength="7" placeholder="#111110">
+              </div>
+            </div>
+            <div class="color-picker-row">
+              <label>Card / Panel</label>
+              <div class="color-input-pair">
+                <input type="color" id="color-bgCard" value="#2a2a20">
+                <input type="text" id="color-bgCard-hex" class="color-hex-input" value="#2a2a20" maxlength="7" placeholder="#2a2a20">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-section">
+          <h3>Text & Borders</h3>
+          <p class="color-hint">Muted text, dim text, and border colors are automatically derived from the primary text color.</p>
+          <div class="color-group">
+            <div class="color-picker-row">
+              <label>Primary Text</label>
+              <div class="color-input-pair">
+                <input type="color" id="color-text" value="#E1D9C9">
+                <input type="text" id="color-text-hex" class="color-hex-input" value="#E1D9C9" maxlength="7" placeholder="#E1D9C9">
+              </div>
+              <div class="color-derived" id="text-derived-preview">
+                <span class="color-swatch" id="swatch-muted"></span> Muted 75%
+                <span class="color-swatch" id="swatch-dim"></span> Dim 50%
+                <span class="color-swatch" id="swatch-border"></span> Border 10%
+              </div>
+            </div>
+            <div class="color-picker-row">
+              <label>Cream (Buttons)</label>
+              <div class="color-input-pair">
+                <input type="color" id="color-cream" value="#F7F7F0">
+                <input type="text" id="color-cream-hex" class="color-hex-input" value="#F7F7F0" maxlength="7" placeholder="#F7F7F0">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-section">
+          <h3>Accent</h3>
+          <div class="color-group">
+            <div class="color-picker-row">
+              <label>Brand Accent</label>
+              <div class="color-input-pair">
+                <input type="color" id="color-accent" value="#6B8F4E">
+                <input type="text" id="color-accent-hex" class="color-hex-input" value="#6B8F4E" maxlength="7" placeholder="#6B8F4E">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;display:flex;align-items:center;gap:12px">
+          <button id="btn-colors-save" class="btn btn--primary">Save Colors</button>
+          <button id="btn-colors-reset" class="btn btn--outline">Reset to Defaults</button>
+          <span id="colors-save-status" class="publish-status"></span>
         </div>
       </section>
 

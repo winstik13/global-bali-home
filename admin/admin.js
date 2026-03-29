@@ -406,7 +406,7 @@
           <span class="dash-card__bar-label">${pct}%</span>
         </div>
         ${breakdown}
-        <div style="display:flex;gap:8px;margin-top:auto">
+        <div class="dash-card__actions">
           <button class="dash-card__edit btn btn--outline btn--sm" data-goto="${key}">Edit Project →</button>
           <a href="https://winstik13.github.io/global-bali-home/${p.page || 'project-' + p.slug + '.html'}" target="_blank" rel="noopener" class="btn btn--outline btn--sm" style="text-decoration:none">View on Site ↗</a>
         </div>
@@ -1622,14 +1622,39 @@
     if (!siteData) loadSiteData();
     const info = $('#rate-info');
     const input = $('#rate-input');
+    const autoBox = $('#rate-auto');
     if (!info) return;
     const rate = siteData.exchangeRate;
     input.value = rate.usdToIdr;
+    if (autoBox) {
+      autoBox.checked = !!rate.auto;
+      input.disabled = !!rate.auto;
+    }
     if (rate.updatedAt) {
-      info.innerHTML = `<p><strong>Current rate:</strong> 1 USD = ${Number(rate.usdToIdr).toLocaleString('id-ID')} IDR &bull; <strong>Updated:</strong> ${rate.updatedAt}</p>`;
+      const modeLabel = rate.auto ? ' (auto)' : ' (manual)';
+      info.innerHTML = `<p><strong>Current rate:</strong> 1 USD = ${Number(rate.usdToIdr).toLocaleString('id-ID')} IDR${modeLabel} &bull; <strong>Updated:</strong> ${rate.updatedAt}</p>`;
     } else {
       info.innerHTML = '<p style="color:var(--color-text-dim)">Default rate. Update to show accurate IDR prices on the site.</p>';
     }
+  }
+
+  // Auto-rate checkbox toggle
+  const rateAutoBox = $('#rate-auto');
+  if (rateAutoBox) {
+    rateAutoBox.addEventListener('change', async () => {
+      const input = $('#rate-input');
+      input.disabled = rateAutoBox.checked;
+      if (rateAutoBox.checked) {
+        // Fetch live rate and fill input
+        try {
+          const res = await fetch('https://open.er-api.com/v6/latest/USD');
+          const data = await res.json();
+          if (data.result === 'success' && data.rates && data.rates.IDR) {
+            input.value = Math.round(data.rates.IDR);
+          }
+        } catch (e) { /* keep current value */ }
+      }
+    });
   }
 
   const rateSaveBtn = $('#btn-rate-save');
@@ -1647,6 +1672,7 @@
 
       try {
         siteData.exchangeRate.usdToIdr = newRate;
+        siteData.exchangeRate.auto = !!(rateAutoBox && rateAutoBox.checked);
         siteData.exchangeRate.updatedAt = new Date().toISOString().split('T')[0];
         const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
         await commitFile('data/site-data.js', content, 'Update exchange rate: 1 USD = ' + newRate + ' IDR');
@@ -1675,6 +1701,50 @@
   }
 
   // ─── Contact Info Editor ───
+  function sanitizeWhatsApp(val) {
+    return val.replace(/[\s\-\(\)\+]/g, '');
+  }
+
+  function validateWhatsApp(val) {
+    if (!val) return { ok: false, msg: 'Required' };
+    if (/[^0-9]/.test(val)) return { ok: false, msg: 'Digits only — no +, spaces or dashes' };
+    if (val.length < 10) return { ok: false, msg: 'Too short — include country code (e.g. 62...)' };
+    if (val.length > 15) return { ok: false, msg: 'Too long — max 15 digits' };
+    return { ok: true };
+  }
+
+  function updateWaPreview() {
+    const input = $('#contact-whatsapp');
+    const preview = $('#wa-preview');
+    if (!input || !preview) return;
+    const clean = sanitizeWhatsApp(input.value);
+    if (clean !== input.value) input.value = clean;
+    const result = validateWhatsApp(clean);
+    if (!clean) {
+      preview.textContent = '';
+      input.classList.remove('input--error', 'input--ok');
+      return;
+    }
+    if (result.ok) {
+      preview.textContent = 'Link: wa.me/' + clean;
+      preview.classList.remove('field-hint--error');
+      input.classList.remove('input--error');
+      input.classList.add('input--ok');
+    } else {
+      preview.textContent = result.msg;
+      preview.classList.add('field-hint--error');
+      input.classList.add('input--error');
+      input.classList.remove('input--ok');
+    }
+  }
+
+  function validatePhone(val) {
+    if (!val) return { ok: false, msg: 'Required' };
+    const digits = val.replace(/[^0-9]/g, '');
+    if (digits.length < 10) return { ok: false, msg: 'Too short' };
+    return { ok: true };
+  }
+
   function renderContactsForm() {
     if (!siteData) loadSiteData();
     const c = siteData.contacts || {};
@@ -1687,6 +1757,13 @@
       v('contact-location-ru', c.location.ru);
       v('contact-location-id', c.location.id);
     }
+    // Attach live validation
+    const waInput = $('#contact-whatsapp');
+    if (waInput) {
+      waInput.addEventListener('input', updateWaPreview);
+      waInput.addEventListener('paste', () => setTimeout(updateWaPreview, 0));
+      updateWaPreview();
+    }
   }
 
   const contactsSaveBtn = $('#btn-contacts-save');
@@ -1694,10 +1771,26 @@
     contactsSaveBtn.addEventListener('click', async () => {
       if (!siteData) loadSiteData();
       const g = (id) => ($('#' + id) || {}).value || '';
+      // Validate before saving
+      const waVal = sanitizeWhatsApp(g('contact-whatsapp'));
+      const waCheck = validateWhatsApp(waVal);
+      const phoneCheck = validatePhone(g('contact-phone'));
+      const status = $('#contacts-save-status');
+      if (!waCheck.ok) {
+        status.textContent = 'WhatsApp: ' + waCheck.msg;
+        status.className = 'publish-status error';
+        updateWaPreview();
+        return;
+      }
+      if (!phoneCheck.ok) {
+        status.textContent = 'Phone: ' + phoneCheck.msg;
+        status.className = 'publish-status error';
+        return;
+      }
       siteData.contacts = {
         phone: g('contact-phone'),
         phoneRaw: g('contact-phone').replace(/[\s\-\+]/g, ''),
-        whatsapp: g('contact-whatsapp'),
+        whatsapp: waVal,
         email: g('contact-email'),
         location: {
           en: g('contact-location-en'),
@@ -1707,7 +1800,6 @@
       };
 
       btnLoading(contactsSaveBtn, true);
-      const status = $('#contacts-save-status');
       status.textContent = 'Saving...';
       status.className = 'publish-status';
 
@@ -2069,6 +2161,168 @@
     testNavBtn.addEventListener('click', () => {
       if (!testimonialsData) loadTestimonialsData();
       renderTestimonialsEditor();
+    });
+  }
+
+  // ─── Help Tooltips ───
+  document.querySelectorAll('.editor-help-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const popup = $('#help-' + btn.dataset.help);
+      if (!popup) return;
+      const wasHidden = popup.hidden;
+      // Close all popups first
+      document.querySelectorAll('.editor-help-popup').forEach(p => p.hidden = true);
+      popup.hidden = !wasHidden;
+    });
+  });
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.editor-help-popup').forEach(p => p.hidden = true);
+  });
+
+  // ─── Colors Tab ───
+  const DEFAULT_COLORS = {
+    bg: '#1a1a14', bgAlt: '#111110', bgCard: '#2a2a20',
+    accent: '#6B8F4E', text: '#E1D9C9', cream: '#F7F7F0'
+  };
+
+  const COLOR_VAR_MAP = {
+    bg: '--color-bg', bgAlt: '--color-bg-alt', bgCard: '--color-bg-card',
+    accent: '--color-accent', text: '--color-text', cream: '--color-cream'
+  };
+
+  function hexToRgb(hex) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return { r, g, b };
+  }
+
+  function isValidHex(str) {
+    return /^#[0-9A-Fa-f]{6}$/.test(str);
+  }
+
+  function applyDerivedColors(hex) {
+    const { r, g, b } = hexToRgb(hex);
+    const root = document.documentElement.style;
+    root.setProperty('--color-text-muted', `rgba(${r},${g},${b},0.75)`);
+    root.setProperty('--color-text-dim', `rgba(${r},${g},${b},0.5)`);
+    root.setProperty('--color-border', `rgba(${r},${g},${b},0.1)`);
+    root.setProperty('--color-border-hover', `rgba(${r},${g},${b},0.25)`);
+    // Update swatches
+    const sm = $('#swatch-muted');
+    const sd = $('#swatch-dim');
+    const sb = $('#swatch-border');
+    if (sm) sm.style.background = `rgba(${r},${g},${b},0.75)`;
+    if (sd) sd.style.background = `rgba(${r},${g},${b},0.5)`;
+    if (sb) sb.style.background = `rgba(${r},${g},${b},0.1)`;
+  }
+
+  function applyColorLive(key, hex) {
+    const varName = COLOR_VAR_MAP[key];
+    if (varName) document.documentElement.style.setProperty(varName, hex);
+    if (key === 'text') applyDerivedColors(hex);
+  }
+
+  function renderColorsTab() {
+    if (!siteData) loadSiteData();
+    if (!siteData.colors) siteData.colors = JSON.parse(JSON.stringify(DEFAULT_COLORS));
+    const colors = siteData.colors;
+    for (const key of Object.keys(DEFAULT_COLORS)) {
+      const picker = $('#color-' + key);
+      const hexInput = $('#color-' + key + '-hex');
+      if (picker) picker.value = colors[key] || DEFAULT_COLORS[key];
+      if (hexInput) hexInput.value = (colors[key] || DEFAULT_COLORS[key]).toUpperCase();
+    }
+    applyDerivedColors(colors.text || DEFAULT_COLORS.text);
+  }
+
+  // Wire color picker events
+  for (const key of Object.keys(DEFAULT_COLORS)) {
+    const picker = $('#color-' + key);
+    const hexInput = $('#color-' + key + '-hex');
+    if (picker && hexInput) {
+      picker.addEventListener('input', () => {
+        hexInput.value = picker.value.toUpperCase();
+        hexInput.classList.remove('input--error');
+        applyColorLive(key, picker.value);
+      });
+      hexInput.addEventListener('input', () => {
+        let val = hexInput.value.trim();
+        if (val.length > 0 && val[0] !== '#') val = '#' + val;
+        if (isValidHex(val)) {
+          picker.value = val;
+          hexInput.classList.remove('input--error');
+          applyColorLive(key, val);
+        } else {
+          hexInput.classList.add('input--error');
+        }
+      });
+    }
+  }
+
+  // Colors tab activation
+  const colorsNavBtn = document.querySelector('.admin-nav__btn[data-tab="colors"]');
+  if (colorsNavBtn) {
+    colorsNavBtn.addEventListener('click', () => {
+      renderColorsTab();
+    });
+  }
+
+  // Save colors
+  const colorsSaveBtn = $('#btn-colors-save');
+  if (colorsSaveBtn) {
+    colorsSaveBtn.addEventListener('click', async () => {
+      if (!siteData) loadSiteData();
+      const status = $('#colors-save-status');
+      const colors = {};
+      for (const key of Object.keys(DEFAULT_COLORS)) {
+        const hexInput = $('#color-' + key + '-hex');
+        const val = hexInput ? hexInput.value.trim() : '';
+        if (!isValidHex(val)) {
+          status.textContent = 'Invalid hex for ' + key;
+          status.className = 'publish-status error';
+          return;
+        }
+        colors[key] = val.toUpperCase();
+      }
+      siteData.colors = colors;
+      btnLoading(colorsSaveBtn, true);
+      status.textContent = 'Saving...';
+      status.className = 'publish-status';
+      try {
+        const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
+        await commitFile('data/site-data.js', content, 'Update site colors via admin panel');
+        status.textContent = 'Saved! Site updating (~1-2 min)';
+        status.className = 'publish-status success';
+        updateRateLimit();
+      } catch (err) {
+        status.textContent = 'Error: ' + err.message;
+        status.className = 'publish-status error';
+      }
+      btnLoading(colorsSaveBtn, false);
+    });
+  }
+
+  // Reset colors
+  const colorsResetBtn = $('#btn-colors-reset');
+  if (colorsResetBtn) {
+    colorsResetBtn.addEventListener('click', () => {
+      for (const key of Object.keys(DEFAULT_COLORS)) {
+        const picker = $('#color-' + key);
+        const hexInput = $('#color-' + key + '-hex');
+        if (picker) picker.value = DEFAULT_COLORS[key];
+        if (hexInput) {
+          hexInput.value = DEFAULT_COLORS[key].toUpperCase();
+          hexInput.classList.remove('input--error');
+        }
+        applyColorLive(key, DEFAULT_COLORS[key]);
+      }
+      const status = $('#colors-save-status');
+      if (status) {
+        status.textContent = 'Reset to defaults (not saved yet)';
+        status.className = 'publish-status';
+      }
     });
   }
 

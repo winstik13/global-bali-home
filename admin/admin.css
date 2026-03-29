@@ -4,17 +4,12 @@
    ============================================ */
 
 :root {
-  --color-dark:       #3B3B2E;
-  --color-beige:      #E1D9C9;
-  --color-green:      #4A5530;
-  --color-deep-green: #1E2E1B;
   --color-cream:      #F7F7F0;
   --color-accent:     #6B8F4E;
 
   --color-bg:          #1a1a14;
   --color-bg-alt:      #111110;
   --color-bg-card:     #2a2a20;
-  --color-bg-elevated: #333328;
 
   --color-text:       #E1D9C9;
   --color-text-muted: rgba(225, 217, 201, 0.75);
@@ -142,6 +137,30 @@ body {
   border-bottom-color: var(--color-accent);
 }
 
+.field-hint {
+  font-size: 0.7rem;
+  color: var(--color-text-dim);
+  opacity: 0.5;
+}
+
+.field-hint--preview {
+  opacity: 0.8;
+  color: var(--color-accent);
+}
+
+.field-hint--error {
+  color: #e74c3c;
+  opacity: 1;
+}
+
+.form-group input.input--error {
+  border-bottom-color: #e74c3c;
+}
+
+.form-group input.input--ok {
+  border-bottom-color: var(--color-accent);
+}
+
 .form-group select {
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23E1D9C9' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
@@ -203,9 +222,9 @@ body {
 }
 
 .btn--primary {
-  background: var(--color-beige);
+  background: var(--color-text);
   color: var(--color-bg);
-  border-color: var(--color-beige);
+  border-color: var(--color-text);
 }
 .btn--primary:hover {
   background: var(--color-cream);
@@ -697,7 +716,7 @@ body {
   color: var(--color-text-muted);
 }
 
-.admin-unit-table tr:hover { background: var(--color-bg-elevated); }
+.admin-unit-table tr:hover { background: var(--color-bg-card); }
 
 .admin-unit-table select,
 .admin-unit-table input {
@@ -1181,7 +1200,7 @@ body {
 .guide-info p {
   margin: 0 0 4px;
   font-size: 0.9rem;
-  color: var(--color-beige);
+  color: var(--color-text);
 }
 
 .guide-actions {
@@ -1241,6 +1260,168 @@ body {
   min-height: 60px;
 }
 
+/* ─── HELP TOOLTIPS ─── */
+.editor-section--has-help {
+  position: relative;
+}
+
+.editor-help-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-hover);
+  background: transparent;
+  color: var(--color-text-dim);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 2;
+}
+
+.editor-help-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.editor-help-popup {
+  position: absolute;
+  top: 52px;
+  right: 16px;
+  width: 320px;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border-hover);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  z-index: 10;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.editor-help-popup p {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.editor-help-popup p:last-child { margin-bottom: 0; }
+
+/* ─── AUTO RATE TOGGLE ─── */
+.auto-rate-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.auto-rate-toggle input[type="checkbox"] {
+  accent-color: var(--color-accent);
+  width: 16px;
+  height: 16px;
+}
+
+/* ─── COLOR PICKER TAB ─── */
+.color-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.color-picker-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.color-picker-row > label {
+  min-width: 180px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.color-input-pair {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.color-input-pair input[type="color"] {
+  width: 44px;
+  height: 36px;
+  padding: 2px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+}
+
+.color-input-pair input[type="color"]::-webkit-color-swatch-wrapper { padding: 2px; }
+.color-input-pair input[type="color"]::-webkit-color-swatch { border: none; border-radius: 2px; }
+
+.color-hex-input {
+  width: 90px;
+  font-family: monospace;
+  font-size: 0.85rem;
+  padding: 6px 8px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+  text-transform: uppercase;
+}
+
+.color-hex-input:focus {
+  border-bottom-color: var(--color-accent);
+  outline: none;
+}
+
+.color-hint {
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+  margin-bottom: 12px;
+}
+
+.color-derived {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.7rem;
+  color: var(--color-text-dim);
+  margin-top: 4px;
+  flex-basis: 100%;
+  padding-left: 196px;
+}
+
+.color-swatch {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-hover);
+  vertical-align: middle;
+}
+
+/* ─── DASH CARD ACTIONS ─── */
+.dash-card__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.dash-card__actions .btn {
+  text-align: center;
+  justify-content: center;
+}
+
 /* ─── RESPONSIVE ─── */
 @media (max-width: 768px) {
   .login-card { margin: 20px; padding: 32px 24px; }
@@ -1253,6 +1434,9 @@ body {
   .dashboard-grid { grid-template-columns: 1fr; }
   .seo-controls { flex-direction: column; }
   .gallery-controls { flex-wrap: wrap; }
+  .color-derived { padding-left: 0; }
+  .color-picker-row > label { min-width: 120px; }
+  .editor-help-popup { width: 260px; right: 8px; }
 
   .admin-unit-table { font-size: 0.75rem; }
   .admin-unit-table th,

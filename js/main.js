@@ -5,6 +5,21 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // --- Apply custom colors from SITE_DATA ---
+  if (typeof SITE_DATA !== 'undefined' && SITE_DATA.colors) {
+    var cc = SITE_DATA.colors;
+    var root = document.documentElement.style;
+    var cmap = { bg: '--color-bg', bgAlt: '--color-bg-alt', bgCard: '--color-bg-card', accent: '--color-accent', text: '--color-text', cream: '--color-cream' };
+    for (var ck in cmap) { if (cc[ck]) root.setProperty(cmap[ck], cc[ck]); }
+    if (cc.text) {
+      var r = parseInt(cc.text.slice(1, 3), 16), g = parseInt(cc.text.slice(3, 5), 16), b = parseInt(cc.text.slice(5, 7), 16);
+      root.setProperty('--color-text-muted', 'rgba(' + r + ',' + g + ',' + b + ',0.75)');
+      root.setProperty('--color-text-dim', 'rgba(' + r + ',' + g + ',' + b + ',0.5)');
+      root.setProperty('--color-border', 'rgba(' + r + ',' + g + ',' + b + ',0.1)');
+      root.setProperty('--color-border-hover', 'rgba(' + r + ',' + g + ',' + b + ',0.25)');
+    }
+  }
+
   // --- Localisation ---
   const lang = document.documentElement.lang || 'en';
   const i18n = {
@@ -1383,6 +1398,36 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
 
   // ─── IDR Currency Helpers ───
   var xRate = (typeof SITE_DATA !== 'undefined' && SITE_DATA.exchangeRate) ? SITE_DATA.exchangeRate.usdToIdr : 0;
+  var xRateAuto = (typeof SITE_DATA !== 'undefined' && SITE_DATA.exchangeRate && SITE_DATA.exchangeRate.auto);
+
+  function refreshIdrDisplay() {
+    document.querySelectorAll('[data-usd]').forEach(function(el) {
+      var usd = parseFloat(el.dataset.usd);
+      if (usd && xRate) {
+        var idrEl = el.querySelector('.idr-amount') || el.nextElementSibling;
+        if (idrEl && idrEl.classList.contains('idr-amount')) {
+          idrEl.textContent = fmtIdr(usd);
+        }
+      }
+    });
+  }
+
+  if (xRateAuto) {
+    fetch('https://open.er-api.com/v6/latest/USD').then(function(res) { return res.json(); }).then(function(data) {
+      if (data.result === 'success' && data.rates && data.rates.IDR) {
+        xRate = Math.round(data.rates.IDR);
+        refreshIdrDisplay();
+      }
+    }).catch(function() { /* fallback to saved rate */ });
+    setInterval(function() {
+      fetch('https://open.er-api.com/v6/latest/USD').then(function(res) { return res.json(); }).then(function(data) {
+        if (data.result === 'success' && data.rates && data.rates.IDR) {
+          xRate = Math.round(data.rates.IDR);
+          refreshIdrDisplay();
+        }
+      }).catch(function() {});
+    }, 3600000);
+  }
 
   function fmtIdr(usd) {
     if (!usd || !xRate) return '';

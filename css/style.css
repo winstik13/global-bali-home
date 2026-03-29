@@ -12,13 +12,8 @@
   --color-bg: #1a1a14;
   --color-bg-alt: #111110;
   --color-bg-card: #2a2a20;
-  --color-bg-elevated: #333328;
 
-  /* Brand Colors (from brandbook) */
-  --color-dark: #3B3B2E;
-  --color-beige: #E1D9C9;
-  --color-green: #4A5530;
-  --color-deep-green: #1E2E1B;
+  /* Brand Colors */
   --color-cream: #F7F7F0;
   --color-accent: #6B8F4E;
 
@@ -846,14 +841,14 @@ td .price-idr {
 }
 
 .btn--primary {
-  background: var(--color-beige);
+  background: var(--color-text);
   color: var(--color-bg);
-  border-color: var(--color-beige);
+  border-color: var(--color-text);
 }
 
 .btn--primary:hover {
   background: transparent;
-  color: var(--color-beige);
+  color: var(--color-text);
 }
 
 @keyframes pulse {
