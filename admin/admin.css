@@ -616,6 +616,24 @@ body {
   letter-spacing: 0.1em;
 }
 
+.dash-summary__item--accent .dash-summary__value {
+  color: var(--color-accent);
+}
+
+.dash-summary__bar {
+  width: 60%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  margin: 6px auto 0;
+  overflow: hidden;
+}
+.dash-summary__bar-fill {
+  height: 100%;
+  background: var(--color-accent);
+  border-radius: 2px;
+}
+
 /* Project cards grid */
 .dashboard-grid {
   display: grid;
@@ -724,6 +742,11 @@ body {
   gap: 12px;
 }
 
+.dash-card__stats--2x2 {
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 24px;
+}
+
 .dash-card__stat-value {
   font-family: var(--font-heading);
   font-size: 1.2rem;
@@ -746,9 +769,9 @@ body {
 
 .dash-card__bar-track {
   flex: 1;
-  height: 6px;
+  height: 10px;
   background: rgba(255, 255, 255, 0.08);
-  border-radius: 3px;
+  border-radius: 5px;
   overflow: hidden;
 }
 
@@ -772,31 +795,8 @@ body {
   min-width: 36px;
 }
 
-/* Segmented bar legend */
-.seg-legend-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.seg-legend {
-  font-size: 0.68rem;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.seg-legend::before {
-  content: '';
-  width: 8px;
-  height: 8px;
-  border-radius: 2px;
-  display: inline-block;
-}
-
-.seg-legend--sold::before   { background: var(--color-text-dim); }
-.seg-legend--booked::before { background: var(--color-warning); }
-.seg-legend--resale::before { background: #5dade2; }
-.seg-legend--available::before { background: rgba(107, 143, 78, 0.4); }
+/* Bar tooltip on hover */
+.dash-card__bar[title] { cursor: help; }
 
 .dash-card__edit {
   align-self: flex-start;

@@ -48,6 +48,9 @@
       'dash.available': 'Available',
       'dash.overallProgress': 'Overall Progress',
       'dash.totalPotential': 'Remaining Potential',
+      'dash.progress': 'Progress',
+      'dash.potential': 'Potential',
+      'dash.price': 'Price',
       'dash.preSale': 'Pre-Sale',
       'dash.inProgress': 'In Progress',
       'dash.status_pre-sale': 'Pre-Sale',
@@ -359,6 +362,9 @@
       'dash.available': 'Доступно',
       'dash.overallProgress': 'Общий прогресс',
       'dash.totalPotential': 'Остаток',
+      'dash.progress': 'Прогресс',
+      'dash.potential': 'Потенциал',
+      'dash.price': 'Цена',
       'dash.preSale': 'Предпродажа',
       'dash.inProgress': 'Строится',
       'dash.status_pre-sale': 'Предпродажа',
@@ -1051,7 +1057,7 @@
       </div>
       <div class="dash-summary__item">
         <div class="dash-summary__value">${totalSold}</div>
-        <div class="dash-summary__label">${t('dash.soldBooked')}</div>
+        <div class="dash-summary__label">${t('dash.sold')}</div>
       </div>
       <div class="dash-summary__item">
         <div class="dash-summary__value">${totalAvailable}</div>
@@ -1059,11 +1065,12 @@
       </div>
       <div class="dash-summary__item">
         <div class="dash-summary__value">${totalPct}%</div>
-        <div class="dash-summary__label">${t('dash.overallProgress')}</div>
+        <div class="dash-summary__label">${t('dash.progress')}</div>
+        <div class="dash-summary__bar"><div class="dash-summary__bar-fill" style="width:${totalPct}%"></div></div>
       </div>
-      <div class="dash-summary__item">
+      <div class="dash-summary__item dash-summary__item--accent">
         <div class="dash-summary__value">$${totalPotential >= 1000000 ? (totalPotential / 1000000).toFixed(1) + 'M' : (totalPotential / 1000).toFixed(0) + 'K'}</div>
-        <div class="dash-summary__label">${t('dash.totalPotential')}</div>
+        <div class="dash-summary__label">${t('dash.potential')}</div>
       </div>
     </div>`;
 
@@ -1103,26 +1110,26 @@
       const segBooked = Math.round((counts.booked / total) * 100);
       const segResale = Math.round((counts.resale / total) * 100);
 
-      // Segmented bar legend
-      const legend = [
-        counts.sold ? `<span class="seg-legend seg-legend--sold">${counts.sold} ${t('dash.breakSold')}</span>` : '',
-        counts.booked ? `<span class="seg-legend seg-legend--booked">${counts.booked} ${t('dash.breakBooked')}</span>` : '',
-        counts.resale ? `<span class="seg-legend seg-legend--resale">${counts.resale} ${t('dash.breakResale')}</span>` : '',
-        counts.available ? `<span class="seg-legend seg-legend--available">${counts.available} ${t('dash.breakAvailable')}</span>` : ''
-      ].filter(Boolean).join('');
+      // Tooltip for segmented bar
+      const tooltipParts = [
+        counts.sold ? `${counts.sold} ${t('dash.breakSold')}` : '',
+        counts.booked ? `${counts.booked} ${t('dash.breakBooked')}` : '',
+        counts.resale ? `${counts.resale} ${t('dash.breakResale')}` : '',
+        counts.available ? `${counts.available} ${t('dash.breakAvailable')}` : ''
+      ].filter(Boolean).join(' · ');
 
       html += `<div class="dash-card" data-card-project="${key}" style="border-left:3px solid ${cardColor}">
         <div class="dash-card__header">
           <span class="dash-card__name">${escapeHtml(p.name)}</span>
           <span class="dash-card__badge dash-card__badge--${badgeClass}">${badgeText}</span>
         </div>
-        <div class="dash-card__stats">
+        <div class="dash-card__stats dash-card__stats--2x2">
           <div><div class="dash-card__stat-value">${sold}/${total}</div><div class="dash-card__stat-label">${t('dash.sold')}</div></div>
           <div><div class="dash-card__stat-value">${left}</div><div class="dash-card__stat-label">${t('dash.left')}</div></div>
-          <div><div class="dash-card__stat-value">${priceRange}</div><div class="dash-card__stat-label">${t('dash.priceRange')}</div></div>
-          <div><div class="dash-card__stat-value">${fmtPrice(potential)}</div><div class="dash-card__stat-label">${t('dash.totalPotential')}</div></div>
+          <div><div class="dash-card__stat-value">${priceRange}</div><div class="dash-card__stat-label">${t('dash.price')}</div></div>
+          <div><div class="dash-card__stat-value">${fmtPrice(potential)}</div><div class="dash-card__stat-label">${t('dash.potential')}</div></div>
         </div>
-        <div class="dash-card__bar">
+        <div class="dash-card__bar" title="${tooltipParts}">
           <div class="dash-card__bar-track dash-card__bar-track--seg">
             <div class="dash-card__seg dash-card__seg--sold" style="width:${segSold}%"></div>
             <div class="dash-card__seg dash-card__seg--booked" style="width:${segBooked}%"></div>
@@ -1130,9 +1137,8 @@
           </div>
           <span class="dash-card__bar-label">${pct}%</span>
         </div>
-        <div class="seg-legend-row">${legend}</div>
         <div class="dash-card__actions">
-          <button class="dash-card__edit btn btn--outline btn--sm" data-goto="${key}">${t('dash.editProject')}</button>
+          <button class="dash-card__edit btn btn--primary btn--sm" data-goto="${key}">${t('dash.editProject')}</button>
           <a href="https://winstik13.github.io/global-bali-home/${p.page || 'project-' + p.slug + '.html'}" target="_blank" rel="noopener" class="btn btn--outline btn--sm" style="text-decoration:none">${t('dash.viewOnSite')}</a>
         </div>
       </div>`;
