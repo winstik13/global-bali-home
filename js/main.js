@@ -470,7 +470,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Page hero parallax
   const pageHeroBg = document.querySelector('.page-hero__bg');
   const pageHeroSection = document.querySelector('.page-hero');
-  if (pageHeroBg && pageHeroSection) {
+  if (pageHeroBg && pageHeroSection && window.matchMedia('(min-width: 769px)').matches) {
     let ticking = false;
     const heroHeight = pageHeroSection.offsetHeight;
     window.addEventListener('scroll', () => {
@@ -753,14 +753,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event delegation for dynamically created gallery items
     const galleryGridEl = document.getElementById('gallery-grid');
     if (galleryGridEl) {
+      let cachedItems = [];
+      let cachedImages = [];
+      let cachedCategories = [];
+
+      const updateGalleryCache = () => {
+        cachedItems = Array.from(galleryGridEl.querySelectorAll('.gallery-item'));
+        cachedImages = cachedItems.map(i => i.querySelector('img').src);
+        cachedCategories = cachedItems.map(i => i.dataset.category);
+      };
+
+      // Update cache when gallery content changes (filter/load more)
+      const galleryCacheObserver = new MutationObserver(updateGalleryCache);
+      galleryCacheObserver.observe(galleryGridEl, { childList: true });
+      updateGalleryCache();
+
       galleryGridEl.addEventListener('click', (e) => {
         const item = e.target.closest('.gallery-item');
         if (!item) return;
-        const allItems = Array.from(galleryGridEl.querySelectorAll('.gallery-item'));
-        const images = allItems.map(i => i.querySelector('img').src);
-        const categories = allItems.map(i => i.dataset.category);
-        const index = allItems.indexOf(item);
-        openLightbox(index >= 0 ? index : 0, images, categories);
+        const index = cachedItems.indexOf(item);
+        openLightbox(index >= 0 ? index : 0, cachedImages, cachedCategories);
       });
     }
 
@@ -1051,8 +1063,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const quizBar = quizOverlay.querySelector('.quiz__progress-bar');
   const totalSteps = quizSteps.length + 1;
 
+  const quizProgressBar = quizOverlay.querySelector('.quiz__progress');
   const updateProgress = () => {
-    quizBar.style.width = ((quizStep + 1) / (totalSteps + 1) * 100) + '%';
+    const pct = Math.round((quizStep + 1) / (totalSteps + 1) * 100);
+    quizBar.style.width = pct + '%';
+    quizProgressBar.setAttribute('aria-valuenow', pct);
   };
 
   const renderStep = () => {
@@ -1192,18 +1207,22 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --- Availability Bar animation ---
-  document.querySelectorAll('.availability-bar__fill').forEach(bar => {
-    const target = bar.style.width;
-    bar.dataset.percent = target;
-    bar.style.width = '0';
-    const observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        bar.style.width = bar.dataset.percent;
-        observer.unobserve(bar);
-      }
+  var availBars = document.querySelectorAll('.availability-bar__fill');
+  if (availBars.length) {
+    var availObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.style.width = entry.target.dataset.percent;
+          availObserver.unobserve(entry.target);
+        }
+      });
     }, { threshold: 0.5 });
-    observer.observe(bar);
-  });
+    availBars.forEach(function(bar) {
+      bar.dataset.percent = bar.style.width;
+      bar.style.width = '0';
+      availObserver.observe(bar);
+    });
+  }
 
   // --- ROI Calculator ---
   const roiRange = document.querySelector('.roi-calculator__range:not(#roi-occupancy)');
