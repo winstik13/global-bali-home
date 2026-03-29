@@ -1519,10 +1519,10 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
 
   // ─── Dynamic Testimonials from TESTIMONIALS_DATA ───
   if (typeof TESTIMONIALS_DATA !== 'undefined') {
-    var tContainer = document.querySelector('[data-testimonials-container]');
-    if (tContainer) {
+    var tContainers = document.querySelectorAll('[data-testimonials-container]');
+    if (tContainers.length) {
       var sorted = TESTIMONIALS_DATA.slice().sort(function(a, b) { return (a.order || 99) - (b.order || 99); });
-      tContainer.innerHTML = sorted.map(function(t) {
+      var testimonialsHTML = sorted.map(function(t) {
         var stars = '';
         for (var s = 0; s < (t.stars || 5); s++) stars += '★';
         var authorName = t.name[lang] || t.name.en;
@@ -1549,10 +1549,12 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
           verifiedHTML +
           '</div></div></div>';
       }).join('');
-      // Re-observe for scroll reveal
-      if (typeof revealObserver !== 'undefined') {
-        tContainer.querySelectorAll('.reveal-stagger').forEach(function(el) { revealObserver.observe(el); });
-      }
+      tContainers.forEach(function(tContainer) {
+        tContainer.innerHTML = testimonialsHTML;
+        if (typeof revealObserver !== 'undefined') {
+          tContainer.querySelectorAll('.reveal-stagger').forEach(function(el) { revealObserver.observe(el); });
+        }
+      });
     }
   }
 

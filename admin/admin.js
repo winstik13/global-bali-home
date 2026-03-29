@@ -163,6 +163,7 @@
       'seo.savingAll': 'Saving all languages...',
       'seo.loadingLangs': 'Loading all languages...',
       'gallery.title': 'Gallery Manager',
+      'gallery.selectProject': '— Select project —',
       'gallery.upload': 'Upload Photos',
       'gallery.photos': 'photos',
       'gallery.noImages': 'No images in this project. Drag & drop or click Upload to add photos.',
@@ -420,6 +421,7 @@
       'seo.savingAll': 'Сохранение всех языков...',
       'seo.loadingLangs': 'Загрузка всех языков...',
       'gallery.title': 'Менеджер галереи',
+      'gallery.selectProject': '— Выберите проект —',
       'gallery.upload': 'Загрузить фото',
       'gallery.photos': 'фото',
       'gallery.noImages': 'Нет изображений. Перетащите файлы или нажмите Загрузить.',
@@ -881,7 +883,7 @@
     // Gallery project select
     const galSelect = $('#gallery-project');
     if (galSelect) {
-      galSelect.innerHTML = keys.map(k => {
+      galSelect.innerHTML = `<option value="">${t('gallery.selectProject')}</option>` + keys.map(k => {
         const shortName = k.replace('serenity-', '');
         return `<option value="${shortName}">${projectsData[k].name}</option>`;
       }).join('');
@@ -1742,6 +1744,18 @@
 
   function renderGallery() {
     const cat = galleryProject.value;
+    const noProject = !cat;
+
+    // Hide/show upload controls based on project selection
+    galleryUploadBtn.style.display = noProject ? 'none' : '';
+    galleryDropZone.style.display = noProject ? 'none' : '';
+    galleryCount.style.display = noProject ? 'none' : '';
+
+    if (noProject) {
+      galleryGrid.innerHTML = `<div class="empty-state"><div class="empty-state__icon">&#128247;</div><div class="empty-state__text">${t('gallery.selectProject')}</div></div>`;
+      return;
+    }
+
     const data = getGalleryData();
     const images = data[cat] || [];
 
