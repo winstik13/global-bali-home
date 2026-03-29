@@ -1925,6 +1925,25 @@ td .price-idr {
 
 .form-group.error .error-msg { display: block; }
 
+/* Inline field validation (quiz, exit-popup, lead-magnet) */
+.field-error {
+  border-color: #c0392b !important;
+}
+
+.field-error-msg {
+  display: block;
+  font-size: 0.72rem;
+  color: #e74c3c;
+  margin-top: 6px;
+  padding-left: 2px;
+  animation: fieldErrorIn 0.3s ease;
+}
+
+@keyframes fieldErrorIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .form-group.valid input,
 .form-group.valid select,
 .form-group.valid textarea {
@@ -2746,12 +2765,72 @@ td .price-idr {
 
 .lead-magnet__success {
   text-align: center;
-  padding: 20px 0;
+  padding: 48px 32px;
 }
 
 .lead-magnet__success h3 {
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
   color: var(--color-accent);
-  margin-bottom: 8px;
+  margin-bottom: 24px;
+}
+
+.lead-magnet__success p {
+  font-size: var(--font-sm);
+  line-height: 1.6;
+  color: var(--color-text);
+  margin-bottom: 0;
+}
+
+.lead-magnet__divider {
+  width: 48px;
+  height: 1px;
+  background: var(--color-text-muted);
+  opacity: 0.3;
+  margin: 32px auto;
+}
+
+.lead-magnet__sub {
+  font-size: var(--font-xs);
+  color: var(--color-text-muted);
+  margin-bottom: 24px;
+}
+
+.lead-magnet__wa {
+  display: inline-block;
+  font-size: var(--font-xs);
+  padding: 12px 28px;
+  padding-left: 28px;
+  margin-top: 12px;
+  background: #25D366;
+  color: #fff;
+  border-color: #25D366;
+}
+
+.lead-magnet__wa:hover {
+  background: #1ebe5a;
+  border-color: #1ebe5a;
+  color: #fff;
+}
+
+.countdown-num {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 1.6em;
+  color: var(--color-accent);
+  min-width: 1.2em;
+  transition: transform 0.3s ease;
+}
+
+.countdown-num.tick {
+  transform: scale(1.3);
+}
+
+.guide-open-btn {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 14px 36px;
+  padding-left: calc(36px + 0.15em);
+  animation: pulse 2s ease-in-out infinite;
 }
 
 /* --- Exit Intent Popup --- */
@@ -2848,6 +2927,26 @@ td .price-idr {
     --section-padding: 80px;
   }
 
+  .header__nav {
+    gap: 20px;
+  }
+
+  .header__nav a {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+  }
+
+  .header__lang-toggle {
+    padding: 8px 10px;
+    font-size: 0.65rem;
+  }
+
+  .header__cta {
+    padding: 6px 16px;
+    font-size: 0.65rem;
+    margin-left: 8px;
+  }
+
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -2892,6 +2991,21 @@ td .price-idr {
 
   .photo-mosaic__item:nth-child(1) {
     grid-column: 1 / 3;
+  }
+}
+
+@media (max-width: 900px) {
+  .header__cta {
+    display: none;
+  }
+
+  .header__nav {
+    gap: 16px;
+  }
+
+  .header__nav a {
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
   }
 }
 
@@ -2962,26 +3076,69 @@ td .price-idr {
     justify-content: flex-end;
   }
 
+  .hero__overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(26, 26, 20, 0.3) 0%,
+      rgba(26, 26, 20, 0.6) 45%,
+      rgba(26, 26, 20, 0.95) 100%
+    );
+  }
+
   .hero__tag {
-    margin-bottom: 16px;
+    display: none;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+
+  .hero__text {
+    font-size: 0.85rem;
+    max-width: 320px;
+    color: rgba(225, 217, 201, 0.85);
+    margin-bottom: 20px;
+    line-height: 1.6;
   }
 
   .hero__content {
-    padding-bottom: 40px;
+    padding-top: 40vh;
+    padding-bottom: 20px;
   }
 
   .hero__content .btn {
-    padding: 14px 32px;
+    width: 100%;
+    padding: 18px;
     font-size: var(--font-xs);
+    background: var(--color-accent);
+    color: #fff;
+    border-color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  .hero__content .btn:hover {
+    background: transparent;
+    color: var(--color-accent);
   }
 
   .hero__stats {
     border-top: 1px solid rgba(225, 217, 201, 0.15);
-    padding-bottom: 80px;
+    padding: 24px var(--side-padding) 28px;
   }
 
   .hero__stat {
     border-right: none;
+  }
+
+  .hero__stat-number {
+    font-size: clamp(1.1rem, 5vw, 1.5rem);
+  }
+
+  .hero__stat-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
   }
 
   .stats-grid,

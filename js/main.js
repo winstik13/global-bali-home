@@ -44,9 +44,16 @@ document.addEventListener('DOMContentLoaded', () => {
       exitText: 'Access our comprehensive Bali Real Estate Investment Guide with market analysis, ROI projections, and expert insights.',
       exitPlaceholder: 'Your email address',
       exitSubmit: 'Access the Investment Guide',
-      exitSuccess: 'Thank you! Check your email for the guide.',
-      leadThankTitle: 'Thank You!',
-      leadThankText: 'Check your email for the guide.',
+      exitSuccess: 'Your guide will be ready in <span class="countdown-num">7</span>',
+      exitOpenBtn: 'Open the Guide',
+      leadThankTitle: 'Your Guide Is Ready!',
+      leadThankText: 'Your guide will be ready in <span class="countdown-num">7</span>',
+      leadThankSub: 'Have a question? Chat with our advisor now',
+      leadThankWa: 'WhatsApp Us',
+      leadOpenBtn: 'Open the Guide',
+      valName: 'Please enter your name',
+      valEmail: 'Please enter a valid email',
+      valConsent: 'Please accept the privacy policy',
       descs: {
         village: {
           'Rental income': 'Compact villas from $119K — ideal for short-term rental with strong occupancy rates and low entry cost.',
@@ -104,9 +111,16 @@ document.addEventListener('DOMContentLoaded', () => {
       exitText: 'Получите наш подробный гид по инвестициям в недвижимость Бали с анализом рынка, прогнозами доходности и экспертными оценками.',
       exitPlaceholder: 'Ваш email',
       exitSubmit: 'Получить инвестиционный гид',
-      exitSuccess: 'Спасибо! Проверьте вашу почту.',
-      leadThankTitle: 'Спасибо!',
-      leadThankText: 'Проверьте вашу почту.',
+      exitSuccess: 'Ваш гид будет готов через <span class="countdown-num">7</span>',
+      exitOpenBtn: 'Открыть гид',
+      leadThankTitle: 'Ваш гид готов!',
+      leadThankText: 'Ваш гид будет готов через <span class="countdown-num">7</span>',
+      leadThankSub: 'Есть вопросы? Напишите нашему консультанту',
+      leadThankWa: 'Написать в WhatsApp',
+      leadOpenBtn: 'Открыть гид',
+      valName: 'Пожалуйста, введите имя',
+      valEmail: 'Введите корректный email',
+      valConsent: 'Необходимо согласие с политикой',
       descs: {
         village: {
           'Rental income': 'Компактные виллы от $119K — идеально для краткосрочной аренды с высокой заполняемостью и низким порогом входа.',
@@ -164,9 +178,16 @@ document.addEventListener('DOMContentLoaded', () => {
       exitText: 'Akses panduan investasi properti Bali kami yang komprehensif dengan analisis pasar, proyeksi ROI, dan wawasan ahli.',
       exitPlaceholder: 'Alamat email Anda',
       exitSubmit: 'Akses Panduan Investasi',
-      exitSuccess: 'Terima kasih! Cek email Anda untuk panduan.',
-      leadThankTitle: 'Terima Kasih!',
-      leadThankText: 'Cek email Anda untuk panduan.',
+      exitSuccess: 'Panduan Anda akan siap dalam <span class="countdown-num">7</span>',
+      exitOpenBtn: 'Buka Panduan',
+      leadThankTitle: 'Panduan Anda Siap!',
+      leadThankText: 'Panduan Anda akan siap dalam <span class="countdown-num">7</span>',
+      leadThankSub: 'Ada pertanyaan? Hubungi konsultan kami sekarang',
+      leadThankWa: 'WhatsApp Kami',
+      leadOpenBtn: 'Buka Panduan',
+      valName: 'Silakan masukkan nama Anda',
+      valEmail: 'Masukkan email yang valid',
+      valConsent: 'Harap setujui kebijakan privasi',
       descs: {
         village: {
           'Rental income': 'Vila kompak mulai $119K — ideal untuk sewa jangka pendek dengan tingkat hunian tinggi dan biaya masuk rendah.',
@@ -193,6 +214,34 @@ document.addEventListener('DOMContentLoaded', () => {
   const t = i18n[lang] || i18n[lang.split('-')[0]] || i18n.en;
   // Map localised option labels back to EN keys for scoring
   const enOptions = i18n.en.quizSteps.map(s => s.options);
+
+  // --- Custom inline validation helper ---
+  function showFieldError(input, msg) {
+    clearFieldError(input);
+    input.classList.add('field-error');
+    var err = document.createElement('span');
+    err.className = 'field-error-msg';
+    err.textContent = msg;
+    input.parentNode.insertBefore(err, input.nextSibling);
+  }
+  function clearFieldError(input) {
+    input.classList.remove('field-error');
+    var next = input.nextElementSibling;
+    if (next && next.classList.contains('field-error-msg')) next.remove();
+  }
+  function validateField(input, type) {
+    clearFieldError(input);
+    var val = input.value.trim();
+    if (type === 'name' && !val) { showFieldError(input, t.valName); return false; }
+    if (type === 'email') {
+      if (!val) { showFieldError(input, t.valEmail); return false; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) { showFieldError(input, t.valEmail); return false; }
+    }
+    return true;
+  }
+
+  // Disable native browser validation on all forms
+  document.querySelectorAll('form').forEach(function(f) { f.setAttribute('novalidate', ''); });
 
   // --- Skip navigation & main landmark ---
   const skipLink = document.createElement('a');
@@ -791,6 +840,15 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
+    // Live clear consent error
+    var consentBoxEl = contactForm.querySelector('#consent');
+    if (consentBoxEl) {
+      consentBoxEl.addEventListener('change', function() {
+        var grp = contactForm.querySelector('#consent-group');
+        if (grp) grp.classList.remove('error');
+      });
+    }
+
     // Submit validation
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -970,9 +1028,9 @@ document.addEventListener('DOMContentLoaded', () => {
       <p class="quiz__step-label">${t.quizRec}</p>
       <h3 class="quiz__question">${rec.project} <span class="quiz__match">${rec.match}% ${t.quizMatch}</span></h3>
       <p class="quiz__result-desc">${rec.desc}</p>
-      <form class="quiz__form">
-        <input type="text" class="quiz__input" name="quiz-name" placeholder="${t.quizName}" required>
-        <input type="email" class="quiz__input" name="quiz-email" placeholder="${t.quizEmail}" required>
+      <form class="quiz__form" novalidate>
+        <input type="text" class="quiz__input" name="quiz-name" placeholder="${t.quizName}">
+        <input type="email" class="quiz__input" name="quiz-email" placeholder="${t.quizEmail}">
         <input type="tel" class="quiz__input" name="quiz-phone" placeholder="${t.quizPhone}">
         <div class="form-consent" id="quiz-consent-group">
           <input type="checkbox" class="form-consent__checkbox" id="quiz-consent" name="quiz-consent">
@@ -983,20 +1041,40 @@ document.addEventListener('DOMContentLoaded', () => {
       <a href="${rec.url}" class="quiz__skip-link">${t.quizSkip} &rarr;</a>
       <button class="quiz__back">&larr; ${t.quizBack}</button>
     `;
+    // Live clear errors on input
+    quizBody.querySelectorAll('.quiz__input').forEach(function(inp) {
+      inp.addEventListener('input', function() { clearFieldError(inp); });
+    });
+    var quizConsentEl = quizBody.querySelector('#quiz-consent');
+    if (quizConsentEl) {
+      quizConsentEl.addEventListener('change', function() {
+        var grp = quizBody.querySelector('#quiz-consent-group');
+        if (grp) grp.classList.remove('error');
+        clearFieldError(quizConsentEl);
+      });
+    }
+
     quizBody.querySelector('.quiz__form').addEventListener('submit', (e) => {
       e.preventDefault();
-      const name = quizBody.querySelector('[name="quiz-name"]').value.trim();
-      const email = quizBody.querySelector('[name="quiz-email"]').value.trim();
+      const nameInput = quizBody.querySelector('[name="quiz-name"]');
+      const emailInput = quizBody.querySelector('[name="quiz-email"]');
       const phone = quizBody.querySelector('[name="quiz-phone"]').value.trim();
+
+      var valid = true;
+      if (!validateField(nameInput, 'name')) valid = false;
+      if (!validateField(emailInput, 'email')) valid = false;
 
       const quizConsentGroup = quizBody.querySelector('#quiz-consent-group');
       const quizConsentBox = quizBody.querySelector('#quiz-consent');
       if (quizConsentGroup && quizConsentBox && !quizConsentBox.checked) {
         quizConsentGroup.classList.add('error');
-        return;
+        showFieldError(quizConsentBox, t.valConsent);
+        valid = false;
       }
 
-      if (!name || !email) return;
+      if (!valid) return;
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
 
       // TODO: Connect to backend when ready for production
       // Currently in test mode — no data is sent anywhere
@@ -1119,17 +1197,57 @@ document.addEventListener('DOMContentLoaded', () => {
     return '';
   }
 
-  document.querySelectorAll('.lead-magnet__form').forEach(form => {
+document.querySelectorAll('.lead-magnet__form').forEach(form => {
+    form.setAttribute('novalidate', '');
+    form.querySelectorAll('input[type="text"], input[type="email"]').forEach(function(inp) {
+      inp.addEventListener('input', function() { clearFieldError(inp); });
+    });
+    var leadConsentBox = form.querySelector('#lead-consent');
+    if (leadConsentBox) {
+      leadConsentBox.addEventListener('change', function() {
+        var grp = form.querySelector('#lead-consent-group');
+        if (grp) grp.classList.remove('error');
+        clearFieldError(leadConsentBox);
+      });
+    }
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const name = form.querySelector('input[type="text"]').value;
-      const email = form.querySelector('input[type="email"]').value;
+      var nameInp = form.querySelector('input[type="text"]');
+      var emailInp = form.querySelector('input[type="email"]');
+      var ok = true;
+      if (nameInp && !validateField(nameInp, 'name')) ok = false;
+      if (emailInp && !validateField(emailInp, 'email')) ok = false;
+      var leadConsentGrp = form.querySelector('#lead-consent-group');
+      var leadConsentCb = form.querySelector('#lead-consent');
+      if (leadConsentGrp && leadConsentCb && !leadConsentCb.checked) {
+        leadConsentGrp.classList.add('error');
+        showFieldError(leadConsentCb, t.valConsent);
+        ok = false;
+      }
+      if (!ok) return;
+      const name = nameInp ? nameInp.value.trim() : '';
+      const email = emailInp ? emailInp.value.trim() : '';
       console.log('Lead magnet:', { name, email });
       sessionStorage.setItem('leadCaptured', 'true');
-      form.closest('.lead-magnet__form-wrap').innerHTML = `<div class="lead-magnet__success"><h3>${t.leadThankTitle}</h3><p>${t.leadThankText}</p></div>`;
+      var wrap = form.closest('.lead-magnet__form-wrap');
+      var waNum2 = (typeof SITE_DATA !== 'undefined' && SITE_DATA.contacts) ? SITE_DATA.contacts.whatsapp : '6281338741177';
+      wrap.innerHTML = `<div class="lead-magnet__success"><h3>${t.leadThankTitle}</h3><p>${t.leadThankText}</p><div class="lead-magnet__divider"></div><p class="lead-magnet__sub">${t.leadThankSub}</p><a href="https://wa.me/${waNum2}" target="_blank" rel="noopener noreferrer" class="btn lead-magnet__wa">${t.leadThankWa}</a></div>`;
       var guidePath = getGuidePath();
       if (guidePath) {
-        setTimeout(function() { window.open(guidePath, '_blank'); }, 500);
+        var cnt = 7;
+        var numEl = wrap.querySelector('.countdown-num');
+        var iv = setInterval(function() {
+          cnt--;
+          if (numEl) {
+            numEl.textContent = cnt;
+            numEl.classList.add('tick');
+            setTimeout(function() { numEl.classList.remove('tick'); }, 300);
+          }
+          if (cnt <= 0) {
+            clearInterval(iv);
+            if (numEl) numEl.parentElement.innerHTML = '<a href="' + guidePath + '" target="_blank" rel="noopener noreferrer" class="btn btn--primary guide-open-btn">' + t.leadOpenBtn + '</a>';
+          }
+        }, 1000);
       }
     });
   });
@@ -1177,8 +1295,12 @@ document.addEventListener('DOMContentLoaded', () => {
       <span class="section-header__tag">${t.exitTag}</span>
       <h3 class="exit-popup__title" id="exit-popup-title">${t.exitTitle}</h3>
       <p class="exit-popup__text">${t.exitText}</p>
-      <form class="exit-popup__form">
-        <input type="email" class="exit-popup__input" placeholder="${t.exitPlaceholder}" required>
+      <form class="exit-popup__form" novalidate>
+        <input type="email" class="exit-popup__input" placeholder="${t.exitPlaceholder}">
+        <div class="form-consent" id="exit-consent-group">
+          <input type="checkbox" class="form-consent__checkbox" id="exit-consent" name="exit-consent">
+          <label class="form-consent__text" for="exit-consent">${t.quizConsent}</label>
+        </div>
         <button type="submit" class="btn btn--primary" style="width:100%">${t.exitSubmit}</button>
       </form>
     </div>
@@ -1199,17 +1321,53 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape' && exitOverlay.classList.contains('active')) closeExit();
   });
 
+  var exitInput = exitOverlay.querySelector('.exit-popup__input');
+  exitInput.addEventListener('input', function() { clearFieldError(exitInput); });
+  var exitConsentBox = exitOverlay.querySelector('#exit-consent');
+  if (exitConsentBox) {
+    exitConsentBox.addEventListener('change', function() {
+      var grp = exitOverlay.querySelector('#exit-consent-group');
+      if (grp) grp.classList.remove('error');
+      clearFieldError(exitConsentBox);
+    });
+  }
+
   exitOverlay.querySelector('.exit-popup__form').addEventListener('submit', (e) => {
     e.preventDefault();
-    const email = exitOverlay.querySelector('.exit-popup__input').value;
+    var ok = true;
+    if (!validateField(exitInput, 'email')) ok = false;
+    var exitConsentGrp = exitOverlay.querySelector('#exit-consent-group');
+    var exitConsentCb = exitOverlay.querySelector('#exit-consent');
+    if (exitConsentGrp && exitConsentCb && !exitConsentCb.checked) {
+      exitConsentGrp.classList.add('error');
+      showFieldError(exitConsentCb, t.valConsent);
+      ok = false;
+    }
+    if (!ok) return;
+    const email = exitInput.value.trim();
     console.log('Exit popup lead:', { email });
     sessionStorage.setItem('leadCaptured', 'true');
-    exitOverlay.querySelector('.exit-popup__form').innerHTML = `<p style="text-align:center;color:var(--color-accent);font-weight:600;padding:12px 0;">${t.exitSuccess}</p>`;
+    var exitForm = exitOverlay.querySelector('.exit-popup__form');
+    exitForm.innerHTML = `<p style="text-align:center;font-weight:600;padding:12px 0;">${t.exitSuccess}</p>`;
     var guidePath = getGuidePath();
     if (guidePath) {
-      setTimeout(function() { window.open(guidePath, '_blank'); }, 500);
+      var cnt = 7;
+      var numEl = exitForm.querySelector('.countdown-num');
+      var iv = setInterval(function() {
+        cnt--;
+        if (numEl) {
+          numEl.textContent = cnt;
+          numEl.classList.add('tick');
+          setTimeout(function() { numEl.classList.remove('tick'); }, 300);
+        }
+        if (cnt <= 0) {
+          clearInterval(iv);
+          if (numEl) numEl.parentElement.innerHTML = '<a href="' + guidePath + '" target="_blank" rel="noopener noreferrer" class="btn btn--primary guide-open-btn">' + t.exitOpenBtn + '</a>';
+        }
+      }, 1000);
+    } else {
+      setTimeout(closeExit, 3000);
     }
-    setTimeout(closeExit, 3000);
   });
 
   const pageLoadTime = Date.now();
