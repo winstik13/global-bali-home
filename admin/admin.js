@@ -1313,22 +1313,40 @@
 
     // Floor Plans
     if (!p.floorPlans) p.floorPlans = {};
+    // Migrate old flat format { type: "url" } → { type: { "Ground Floor": "url" } }
+    Object.keys(p.floorPlans).forEach(type => {
+      if (typeof p.floorPlans[type] === 'string') {
+        p.floorPlans[type] = { 'Ground Floor': p.floorPlans[type] };
+      }
+    });
     const planTypes = Object.keys(p.floorPlans);
     html += `<div class="editor-section"><h3>${t('projects.floorPlans')}</h3>
-      <div class="floor-plans-grid">`;
+      <div class="floor-plans-types">`;
     planTypes.forEach(type => {
-      const path = p.floorPlans[type] || '';
-      html += `<div class="floor-plan-card" data-plan-type="${type}">
-        <div class="floor-plan-card__label" data-rename="${type}" title="Click to rename">${type} <span class="floor-plan-card__rename-icon">✎</span></div>
-        <div class="floor-plan-card__preview">${path ? `<img src="../${path}" alt="${type}">` : `<span class="floor-plan-card__empty">${t('projects.noPlan')}</span>`}</div>
-        <div class="floor-plan-card__actions">
-          <label class="btn btn--outline btn--sm floor-plan-upload-label">
-            ${t('projects.uploadPlan')}
-            <input type="file" accept="image/*" class="floor-plan-upload" data-type="${type}" hidden>
-          </label>
-          ${path ? `<button class="btn--icon btn--danger floor-plan-delete" data-type="${type}" title="${t('projects.deletePlan')}">&times;</button>` : ''}
+      const floors = p.floorPlans[type] || {};
+      const floorKeys = Object.keys(floors);
+      html += `<div class="fp-type" data-plan-type="${type}">
+        <div class="fp-type__header">
+          <span class="fp-type__name" data-rename="${type}" title="Click to rename">${type} <span class="fp-type__rename-icon">✎</span></span>
+          <div class="fp-type__actions">
+            <button class="btn btn--outline btn--sm fp-add-floor" data-type="${type}">+ Floor</button>
+            <button class="btn--icon btn--danger fp-delete-type" data-type="${type}" title="Delete type">&times;</button>
+          </div>
         </div>
-      </div>`;
+        <div class="fp-type__floors">`;
+      floorKeys.forEach(floor => {
+        const path = floors[floor] || '';
+        html += `<div class="fp-floor" data-type="${type}" data-floor="${floor}">
+            <div class="fp-floor__label">${floor}</div>
+            <div class="fp-floor__preview">${path ? `<img src="../${path}" alt="${type} — ${floor}">` : `<span class="fp-floor__empty">No image</span>`}</div>
+            <div class="fp-floor__actions">
+              <label class="btn btn--outline btn--sm">Upload<input type="file" accept="image/*" class="fp-upload" data-type="${type}" data-floor="${floor}" hidden></label>
+              ${path ? `<button class="btn--icon btn--danger fp-delete-img" data-type="${type}" data-floor="${floor}" title="Remove image">&times;</button>` : ''}
+              <button class="btn--icon btn--danger fp-delete-floor" data-type="${type}" data-floor="${floor}" title="Delete floor">✕</button>
+            </div>
+          </div>`;
+      });
+      html += `</div></div>`;
     });
     html += `</div>
       <button class="btn btn--outline btn--sm" id="add-plan-type" style="margin-top:12px">+ Add Plan Type</button>
@@ -1522,26 +1540,27 @@
       });
     }
 
-    // Floor plan upload
-    editor.querySelectorAll('.floor-plan-upload').forEach(inp => {
+    // Floor plan upload (per floor)
+    editor.querySelectorAll('.fp-upload').forEach(inp => {
       inp.addEventListener('change', async () => {
         const type = inp.dataset.type;
+        const floor = inp.dataset.floor;
         const file = inp.files[0];
         if (!file) return;
         const reader = new FileReader();
         reader.onload = async () => {
           const base64 = reader.result.split(',')[1];
           const ext = file.name.split('.').pop().toLowerCase();
-          const safeName = type.toLowerCase().replace(/[\s.]+/g, '-');
+          const safeName = (type + '-' + floor).toLowerCase().replace(/[^a-z0-9]+/g, '-');
           const path = `images/${p.slug}/plans/${safeName}.${ext}`;
           try {
-            inp.closest('.floor-plan-card').querySelector('.floor-plan-card__preview').innerHTML = `<span class="floor-plan-card__empty">${t('projects.uploading')}</span>`;
+            inp.closest('.fp-floor').querySelector('.fp-floor__preview').innerHTML = `<span class="fp-floor__empty">Uploading...</span>`;
             const existing = await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`, {
               headers: { 'Authorization': `token ${githubPAT}` }
             });
             let sha;
             if (existing.ok) { sha = (await existing.json()).sha; }
-            const body = { message: `Add floor plan: ${type} (${p.name})`, content: base64 };
+            const body = { message: `Add floor plan: ${type} — ${floor} (${p.name})`, content: base64 };
             if (sha) body.sha = sha;
             const res = await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`, {
               method: 'PUT',
@@ -1549,7 +1568,7 @@
               body: JSON.stringify(body)
             });
             if (res.ok) {
-              p.floorPlans[type] = path;
+              p.floorPlans[type][floor] = path;
               markChanged();
               renderProjectEditor();
             }
@@ -1561,19 +1580,56 @@
       });
     });
 
-    // Floor plan delete
-    editor.querySelectorAll('.floor-plan-delete').forEach(btn => {
+    // Delete floor plan image
+    editor.querySelectorAll('.fp-delete-img').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const { type, floor } = btn.dataset;
+        if (!confirm(`Remove image for "${type} — ${floor}"?`)) return;
+        p.floorPlans[type][floor] = '';
+        markChanged();
+        renderProjectEditor();
+      });
+    });
+
+    // Delete entire floor
+    editor.querySelectorAll('.fp-delete-floor').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const { type, floor } = btn.dataset;
+        if (!confirm(`Delete floor "${floor}" from "${type}"?`)) return;
+        delete p.floorPlans[type][floor];
+        if (!Object.keys(p.floorPlans[type]).length) delete p.floorPlans[type];
+        markChanged();
+        renderProjectEditor();
+      });
+    });
+
+    // Delete entire type
+    editor.querySelectorAll('.fp-delete-type').forEach(btn => {
       btn.addEventListener('click', () => {
         const type = btn.dataset.type;
-        if (!confirm(t('projects.confirmDeletePlan').replace('{type}', type))) return;
+        if (!confirm(`Delete type "${type}" and all its floor plans?`)) return;
         delete p.floorPlans[type];
         markChanged();
         renderProjectEditor();
       });
     });
 
+    // Add floor to type
+    editor.querySelectorAll('.fp-add-floor').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const type = btn.dataset.type;
+        const name = prompt('Floor name (e.g. "Upper Floor", "Roof Terrace"):');
+        if (!name || !name.trim()) return;
+        const trimmed = name.trim();
+        if (p.floorPlans[type][trimmed] !== undefined) { alert('This floor already exists'); return; }
+        p.floorPlans[type][trimmed] = '';
+        markChanged();
+        renderProjectEditor();
+      });
+    });
+
     // Rename plan type
-    editor.querySelectorAll('.floor-plan-card__label[data-rename]').forEach(label => {
+    editor.querySelectorAll('.fp-type__name[data-rename]').forEach(label => {
       label.addEventListener('click', () => {
         const oldName = label.dataset.rename;
         const newName = prompt('Rename plan type:', oldName);
@@ -1595,7 +1651,7 @@
         if (!name || !name.trim()) return;
         const trimmed = name.trim();
         if (p.floorPlans[trimmed] !== undefined) { alert('This type already exists'); return; }
-        p.floorPlans[trimmed] = '';
+        p.floorPlans[trimmed] = { 'Ground Floor': '' };
         markChanged();
         renderProjectEditor();
       });

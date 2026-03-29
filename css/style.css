@@ -797,55 +797,120 @@ td .price-idr {
 }
 
 /* --- Floor Plans --- */
-.floor-plans-showcase {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
+
+/* Type selector tabs */
+.fp-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
 }
 
-.floor-plan-card {
+.fp-tabs__btn {
+  padding: 10px 20px;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.fp-tabs__btn:hover {
+  border-color: var(--color-border-hover);
+  color: var(--color-text);
+}
+
+.fp-tabs__btn--active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+/* Panel (one per type) */
+.fp-panel {
+  display: none;
+}
+
+.fp-panel--active {
+  display: block;
+}
+
+/* Floor sub-tabs */
+.fp-floor-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.fp-floor-tabs__btn {
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: -1px;
+}
+
+.fp-floor-tabs__btn:hover {
+  color: var(--color-text);
+}
+
+.fp-floor-tabs__btn--active {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+/* Floor view */
+.fp-view {
+  display: none;
+}
+
+.fp-view--active {
+  display: block;
+}
+
+.fp-view__img {
+  max-width: 600px;
+  margin: 0 auto;
+  cursor: pointer;
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: 12px;
   overflow: hidden;
-  transition: border-color 0.3s ease, transform 0.3s ease;
+  transition: border-color 0.3s ease;
 }
 
-.floor-plan-card:hover {
+.fp-view__img:hover {
   border-color: var(--color-border-hover);
-  transform: translateY(-2px);
 }
 
-.floor-plan-card__img {
-  aspect-ratio: 3 / 4;
-  overflow: hidden;
-  cursor: pointer;
-  background: var(--color-bg-alt);
-}
-
-.floor-plan-card__img img {
+.fp-view__img img {
   width: 100%;
-  height: 100%;
+  height: auto;
+  display: block;
+  padding: 16px;
   object-fit: contain;
-  transition: transform 0.5s ease;
-  padding: 12px;
 }
 
-.floor-plan-card:hover .floor-plan-card__img img {
-  transform: scale(1.03);
-}
-
-.floor-plan-card__label {
-  padding: 12px 16px;
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--color-text);
-  text-align: center;
-  border-top: 1px solid var(--color-border);
-}
-
-.floor-plan-card--placeholder .floor-plan-card__img {
+.fp-view__placeholder {
+  max-width: 600px;
+  margin: 0 auto;
+  aspect-ratio: 3 / 4;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -854,13 +919,13 @@ td .price-idr {
   color: var(--color-text-dim);
 }
 
-.floor-plan-card--placeholder .floor-plan-card__img svg {
+.fp-view__placeholder svg {
   width: 80px;
   height: 80px;
   opacity: 0.3;
 }
 
-.floor-plan-card__coming {
+.fp-view__placeholder span {
   font-family: var(--font-body);
   font-size: 0.85rem;
   font-weight: 500;
@@ -3309,13 +3374,18 @@ td .price-idr {
     grid-column: auto;
   }
 
-  .floor-plans-showcase {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+  .fp-tabs {
+    gap: 6px;
   }
 
-  .floor-plan-card__img {
-    aspect-ratio: auto;
+  .fp-tabs__btn {
+    padding: 8px 14px;
+    font-size: 0.75rem;
+  }
+
+  .fp-view__img,
+  .fp-view__placeholder {
+    max-width: 100%;
   }
 
   .wanayu-section {

@@ -1927,29 +1927,83 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       if (!proj || !proj.floorPlans) return;
       var types = Object.keys(proj.floorPlans);
       if (!types.length) return;
-      var html = '';
-      types.forEach(function(type) {
-        var img = proj.floorPlans[type];
-        if (img) {
-          html += '<div class="floor-plan-card">' +
-            '<div class="floor-plan-card__img" data-lightbox-src="' + img + '">' +
-              '<img src="' + img + '" alt="' + type + '" loading="lazy">' +
-            '</div>' +
-            '<div class="floor-plan-card__label">' + type + '</div>' +
-          '</div>';
-        } else {
-          html += '<div class="floor-plan-card floor-plan-card--placeholder">' +
-            '<div class="floor-plan-card__img">' +
-              '<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="16" width="56" height="48" rx="3" stroke="currentColor" stroke-width="1.5"/><line x1="12" y1="40" x2="68" y2="40" stroke="currentColor" stroke-width="1.5"/><line x1="40" y1="16" x2="40" y2="64" stroke="currentColor" stroke-width="1.5"/><rect x="18" y="22" width="10" height="12" rx="1" stroke="currentColor" stroke-width="1"/><rect x="46" y="22" width="10" height="12" rx="1" stroke="currentColor" stroke-width="1"/><rect x="18" y="46" width="16" height="12" rx="1" stroke="currentColor" stroke-width="1"/><circle cx="56" cy="52" r="5" stroke="currentColor" stroke-width="1"/></svg>' +
-              '<span class="floor-plan-card__coming">' + (dataLang === 'ru' ? 'Скоро' : dataLang === 'id' ? 'Segera' : 'Coming Soon') + '</span>' +
-            '</div>' +
-            '<div class="floor-plan-card__label">' + type + '</div>' +
-          '</div>';
+
+      // Migrate old flat format
+      types.forEach(function(t) {
+        if (typeof proj.floorPlans[t] === 'string') {
+          proj.floorPlans[t] = { 'Ground Floor': proj.floorPlans[t] };
         }
       });
+
+      var comingSoon = dataLang === 'ru' ? 'Скоро' : dataLang === 'id' ? 'Segera' : 'Coming Soon';
+      var placeholderSvg = '<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="16" width="56" height="48" rx="3" stroke="currentColor" stroke-width="1.5"/><line x1="12" y1="40" x2="68" y2="40" stroke="currentColor" stroke-width="1.5"/><line x1="40" y1="16" x2="40" y2="64" stroke="currentColor" stroke-width="1.5"/><rect x="18" y="22" width="10" height="12" rx="1" stroke="currentColor" stroke-width="1"/><rect x="46" y="22" width="10" height="12" rx="1" stroke="currentColor" stroke-width="1"/><rect x="18" y="46" width="16" height="12" rx="1" stroke="currentColor" stroke-width="1"/><circle cx="56" cy="52" r="5" stroke="currentColor" stroke-width="1"/></svg>';
+
+      // Type selector tabs
+      var html = '<div class="fp-tabs">';
+      types.forEach(function(type, i) {
+        html += '<button class="fp-tabs__btn' + (i === 0 ? ' fp-tabs__btn--active' : '') + '" data-fp-type="' + type + '">' + type + '</button>';
+      });
+      html += '</div>';
+
+      // Content panels per type
+      types.forEach(function(type, i) {
+        var floors = proj.floorPlans[type];
+        var floorKeys = Object.keys(floors);
+        var hasMultiFloor = floorKeys.length > 1;
+
+        html += '<div class="fp-panel' + (i === 0 ? ' fp-panel--active' : '') + '" data-fp-panel="' + type + '">';
+
+        // Floor tabs (only if multiple floors)
+        if (hasMultiFloor) {
+          html += '<div class="fp-floor-tabs">';
+          floorKeys.forEach(function(floor, fi) {
+            html += '<button class="fp-floor-tabs__btn' + (fi === 0 ? ' fp-floor-tabs__btn--active' : '') + '" data-fp-floor="' + floor + '">' + floor + '</button>';
+          });
+          html += '</div>';
+        }
+
+        // Floor images
+        floorKeys.forEach(function(floor, fi) {
+          var img = floors[floor];
+          html += '<div class="fp-view' + (fi === 0 ? ' fp-view--active' : '') + '" data-fp-view="' + floor + '">';
+          if (img) {
+            html += '<div class="fp-view__img" data-lightbox-src="' + img + '"><img src="' + img + '" alt="' + type + ' — ' + floor + '" loading="lazy"></div>';
+          } else {
+            html += '<div class="fp-view__placeholder">' + placeholderSvg + '<span>' + comingSoon + '</span></div>';
+          }
+          html += '</div>';
+        });
+
+        html += '</div>';
+      });
+
       el.innerHTML = html;
 
-      el.querySelectorAll('.floor-plan-card__img[data-lightbox-src]').forEach(function(card) {
+      // Type tab switching
+      el.querySelectorAll('.fp-tabs__btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          el.querySelectorAll('.fp-tabs__btn').forEach(function(b) { b.classList.remove('fp-tabs__btn--active'); });
+          el.querySelectorAll('.fp-panel').forEach(function(p) { p.classList.remove('fp-panel--active'); });
+          btn.classList.add('fp-tabs__btn--active');
+          var panel = el.querySelector('[data-fp-panel="' + btn.dataset.fpType + '"]');
+          if (panel) panel.classList.add('fp-panel--active');
+        });
+      });
+
+      // Floor tab switching
+      el.querySelectorAll('.fp-floor-tabs__btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var panel = btn.closest('.fp-panel');
+          panel.querySelectorAll('.fp-floor-tabs__btn').forEach(function(b) { b.classList.remove('fp-floor-tabs__btn--active'); });
+          panel.querySelectorAll('.fp-view').forEach(function(v) { v.classList.remove('fp-view--active'); });
+          btn.classList.add('fp-floor-tabs__btn--active');
+          var view = panel.querySelector('[data-fp-view="' + btn.dataset.fpFloor + '"]');
+          if (view) view.classList.add('fp-view--active');
+        });
+      });
+
+      // Lightbox
+      el.querySelectorAll('.fp-view__img[data-lightbox-src]').forEach(function(card) {
         card.addEventListener('click', function() {
           var src = this.dataset.lightboxSrc;
           if (!src) return;

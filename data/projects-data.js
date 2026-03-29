@@ -287,10 +287,21 @@ const PROJECTS_DATA = {
       }
     ],
     "floorPlans": {
-      "Type A — 2BR Single Story": "images/serenity-villas/plans/type-a-—-2br-single-story.webp",
-      "Type B — 2BR Two Story": "images/serenity-villas/plans/2-bedroom.webp",
-      "Type B — 3BR Two Story": "",
-      "Type C — 2BR Two Story": ""
+      "Type A — 2BR Single Story": {
+        "Ground Floor": "images/serenity-villas/plans/type-a-—-2br-single-story.webp"
+      },
+      "Type B — 2BR Two Story": {
+        "Ground Floor": "images/serenity-villas/plans/2-bedroom.webp",
+        "Upper Floor": ""
+      },
+      "Type B — 3BR Two Story": {
+        "Ground Floor": "",
+        "Upper Floor": ""
+      },
+      "Type C — 2BR Two Story": {
+        "Ground Floor": "",
+        "Upper Floor": ""
+      }
     }
   },
   "serenity-estates": {
@@ -500,10 +511,20 @@ const PROJECTS_DATA = {
       }
     ],
     "floorPlans": {
-      "Type A — 4.5BR Villa": "",
-      "Type A — 4.5BR Villa Large": "",
-      "Type B — 2BR Villa": "",
-      "Type B — 2BR Villa Compact": ""
+      "Type A — 4.5BR Villa": {
+        "Ground Floor": ""
+      },
+      "Type A — 4.5BR Villa Large": {
+        "Ground Floor": ""
+      },
+      "Type B — 2BR Villa": {
+        "Ground Floor": "",
+        "Upper Floor": ""
+      },
+      "Type B — 2BR Villa Compact": {
+        "Ground Floor": "",
+        "Upper Floor": ""
+      }
     }
   },
   "serenity-village": {
@@ -694,8 +715,13 @@ const PROJECTS_DATA = {
       }
     ],
     "floorPlans": {
-      "Type A — 1BR Villa": "",
-      "Type B — 2BR Villa": ""
+      "Type A — 1BR Villa": {
+        "Ground Floor": ""
+      },
+      "Type B — 2BR Villa": {
+        "Ground Floor": "",
+        "Upper Floor": ""
+      }
     }
   },
   "comparisonLabels": {
