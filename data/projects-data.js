@@ -286,7 +286,9 @@ const PROJECTS_DATA = {
         "badge": null
       }
     ],
-    "floorPlans": {}
+    "floorPlans": {
+      "2 Bedroom": "images/serenity-villas/plans/2-bedroom.webp"
+    }
   },
   "serenity-estates": {
     "slug": "serenity-estates",
