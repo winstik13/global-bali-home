@@ -927,6 +927,64 @@ body {
 }
 
 /* Unit Table in Editor */
+/* Floor Plans */
+.floor-plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.floor-plan-card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.floor-plan-card__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+}
+
+.floor-plan-card__preview {
+  aspect-ratio: 3 / 4;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.floor-plan-card__preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.floor-plan-card__empty {
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+}
+
+.floor-plan-card__actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.floor-plan-card__actions .floor-plan-upload-label {
+  flex: 1;
+  text-align: center;
+  cursor: pointer;
+}
+
 .admin-unit-table {
   width: 100%;
   border-collapse: collapse;

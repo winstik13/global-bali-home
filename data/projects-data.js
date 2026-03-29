@@ -285,7 +285,8 @@ const PROJECTS_DATA = {
         "price": null,
         "badge": null
       }
-    ]
+    ],
+    "floorPlans": {}
   },
   "serenity-estates": {
     "slug": "serenity-estates",
@@ -492,7 +493,8 @@ const PROJECTS_DATA = {
         "price": 310000,
         "badge": null
       }
-    ]
+    ],
+    "floorPlans": {}
   },
   "serenity-village": {
     "slug": "serenity-village",
@@ -680,7 +682,8 @@ const PROJECTS_DATA = {
         "count": 14,
         "price": 187000
       }
-    ]
+    ],
+    "floorPlans": {}
   },
   "comparisonLabels": {
     "en": {

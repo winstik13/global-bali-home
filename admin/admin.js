@@ -120,6 +120,12 @@
       'projects.projectStatus': 'Project Status',
       'projects.statusLabel': 'Status',
       'projects.soldOutAuto': 'Auto: all units sold',
+      'projects.floorPlans': 'Floor Plans',
+      'projects.noPlan': 'No plan',
+      'projects.uploadPlan': 'Upload',
+      'projects.deletePlan': 'Delete plan',
+      'projects.confirmDeletePlan': 'Delete floor plan for {type}?',
+      'projects.uploading': 'Uploading...',
       'projects.units': 'Units',
       'projects.unitTypes': 'Unit Types',
       'projects.availability': 'Availability',
@@ -434,6 +440,12 @@
       'projects.projectStatus': 'Статус проекта',
       'projects.statusLabel': 'Статус',
       'projects.soldOutAuto': 'Авто: все юниты проданы',
+      'projects.floorPlans': 'Планировки',
+      'projects.noPlan': 'Нет планировки',
+      'projects.uploadPlan': 'Загрузить',
+      'projects.deletePlan': 'Удалить планировку',
+      'projects.confirmDeletePlan': 'Удалить планировку для {type}?',
+      'projects.uploading': 'Загрузка...',
       'projects.units': 'Юниты',
       'projects.unitTypes': 'Типы юнитов',
       'projects.availability': 'Доступность',
@@ -1290,6 +1302,32 @@
     }
 
 
+    // Floor Plans
+    const unitTypes = [];
+    if (p.units) {
+      p.units.forEach(u => { if (!unitTypes.includes(u.type)) unitTypes.push(u.type); });
+    } else if (p.unitTypes) {
+      p.unitTypes.forEach(ut => { if (!unitTypes.includes(ut.type)) unitTypes.push(ut.type); });
+    }
+    if (!p.floorPlans) p.floorPlans = {};
+    html += `<div class="editor-section"><h3>${t('projects.floorPlans')}</h3>
+      <div class="floor-plans-grid">`;
+    unitTypes.forEach(type => {
+      const path = p.floorPlans[type] || '';
+      html += `<div class="floor-plan-card" data-plan-type="${type}">
+        <div class="floor-plan-card__label">${type}</div>
+        <div class="floor-plan-card__preview">${path ? `<img src="../${path}" alt="${type}">` : `<span class="floor-plan-card__empty">${t('projects.noPlan')}</span>`}</div>
+        <div class="floor-plan-card__actions">
+          <label class="btn btn--outline btn--sm floor-plan-upload-label">
+            ${t('projects.uploadPlan')}
+            <input type="file" accept="image/*" class="floor-plan-upload" data-type="${type}" hidden>
+          </label>
+          ${path ? `<button class="btn--icon btn--danger floor-plan-delete" data-type="${type}" title="${t('projects.deletePlan')}">&times;</button>` : ''}
+        </div>
+      </div>`;
+    });
+    html += '</div></div>';
+
     // Hero Stats (4 languages)
     html += `<div class="editor-section"><h3>${t('projects.heroStats')}</h3>`;
     ['en', 'ru', 'id'].forEach(lng => {
@@ -1477,6 +1515,56 @@
         markChanged();
       });
     }
+
+    // Floor plan upload
+    editor.querySelectorAll('.floor-plan-upload').forEach(inp => {
+      inp.addEventListener('change', async () => {
+        const type = inp.dataset.type;
+        const file = inp.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = async () => {
+          const base64 = reader.result.split(',')[1];
+          const ext = file.name.split('.').pop().toLowerCase();
+          const safeName = type.toLowerCase().replace(/[\s.]+/g, '-');
+          const path = `images/${p.slug}/plans/${safeName}.${ext}`;
+          try {
+            inp.closest('.floor-plan-card').querySelector('.floor-plan-card__preview').innerHTML = `<span class="floor-plan-card__empty">${t('projects.uploading')}</span>`;
+            const existing = await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`, {
+              headers: { 'Authorization': `token ${githubPAT}` }
+            });
+            let sha;
+            if (existing.ok) { sha = (await existing.json()).sha; }
+            const body = { message: `Add floor plan: ${type} (${p.name})`, content: base64 };
+            if (sha) body.sha = sha;
+            const res = await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`, {
+              method: 'PUT',
+              headers: { 'Authorization': `token ${githubPAT}`, 'Content-Type': 'application/json' },
+              body: JSON.stringify(body)
+            });
+            if (res.ok) {
+              p.floorPlans[type] = path;
+              markChanged();
+              renderProjectEditor();
+            }
+          } catch (err) {
+            console.error('Floor plan upload error:', err);
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+
+    // Floor plan delete
+    editor.querySelectorAll('.floor-plan-delete').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const type = btn.dataset.type;
+        if (!confirm(t('projects.confirmDeletePlan').replace('{type}', type))) return;
+        delete p.floorPlans[type];
+        markChanged();
+        renderProjectEditor();
+      });
+    });
 
     // Add generate pages button
     addGeneratePagesButton();
