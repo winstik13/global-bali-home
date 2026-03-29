@@ -158,6 +158,7 @@
       'seo.ogDesc': 'OG Description',
       'seo.ogImage': 'OG Image URL',
       'seo.canonical': 'Canonical URL',
+      'seo.viewOnSite': 'View on Site ↗',
       'seo.saveAll': 'Save All Languages',
       'seo.savingAll': 'Saving all languages...',
       'seo.loadingLangs': 'Loading all languages...',
@@ -414,6 +415,7 @@
       'seo.ogDesc': 'OG Описание',
       'seo.ogImage': 'OG Изображение URL',
       'seo.canonical': 'Canonical URL',
+      'seo.viewOnSite': 'Открыть на сайте ↗',
       'seo.saveAll': 'Сохранить все языки',
       'seo.savingAll': 'Сохранение всех языков...',
       'seo.loadingLangs': 'Загрузка всех языков...',
@@ -1367,6 +1369,16 @@
   let seoCache = {}; // { lang: { html, sha, fields } }
   let currentSeoLang = 'en';
 
+  function updateSeoPreviewLink() {
+    const link = $('#seo-preview-link');
+    if (!link) return;
+    const page = $('#seo-page').value;
+    if (!page) { link.hidden = true; return; }
+    const langPrefix = currentSeoLang === 'en' ? '' : currentSeoLang + '/';
+    link.href = `${BASE_URL}/${langPrefix}${page}`;
+    link.hidden = false;
+  }
+
   $('#seo-page').addEventListener('change', () => {
     seoCache = {};
     currentSeoLang = 'en';
@@ -1381,6 +1393,7 @@
       if (langTabs) langTabs.hidden = true;
       $('#seo-editor').innerHTML = '';
     }
+    updateSeoPreviewLink();
   });
 
   // Language tab switching
@@ -1394,6 +1407,7 @@
     currentSeoLang = lng;
     $('#seo-lang-tabs').querySelectorAll('.seo-lang-tab').forEach(b => b.classList.toggle('active', b.dataset.seoLang === lng));
     renderSeoFields();
+    updateSeoPreviewLink();
   });
 
   function saveSeoFieldsToCache(lng) {
