@@ -46,14 +46,11 @@
       'dash.soldBooked': 'Sold / Booked',
       'dash.available': 'Available',
       'dash.overallProgress': 'Overall Progress',
-      'dash.soldRevenue': 'Sold Revenue',
-      'dash.totalPotential': 'Total Potential',
       'dash.preSale': 'Pre-Sale',
       'dash.inProgress': 'In Progress',
       'dash.sold': 'Sold',
       'dash.left': 'Left',
       'dash.from': 'From',
-      'dash.revenue': 'Revenue',
       'dash.editProject': 'Edit Project',
       'dash.viewOnSite': 'View on Site',
       'dash.recentChanges': 'Recent Changes',
@@ -351,14 +348,11 @@
       'dash.soldBooked': 'Продано / Бронь',
       'dash.available': 'Доступно',
       'dash.overallProgress': 'Общий прогресс',
-      'dash.soldRevenue': 'Выручка (продано)',
-      'dash.totalPotential': 'Потенциал (все)',
       'dash.preSale': 'Предпродажа',
       'dash.inProgress': 'Строится',
       'dash.sold': 'Продано',
       'dash.left': 'Осталось',
       'dash.from': 'От',
-      'dash.revenue': 'Выручка',
       'dash.editProject': 'Редактировать',
       'dash.viewOnSite': 'На сайте',
       'dash.recentChanges': 'Последние изменения',
@@ -996,7 +990,7 @@
     const projects = getProjectKeys();
 
     // Compute totals
-    let totalUnits = 0, totalSold = 0, totalAvailable = 0, totalRevenue = 0, totalPotential = 0;
+    let totalUnits = 0, totalSold = 0, totalAvailable = 0;
     const projectStats = projects.map(key => {
       const p = projectsData[key];
       const { sold, total } = p.availability;
@@ -1006,36 +1000,7 @@
       totalSold += sold;
       totalAvailable += left;
 
-      // Revenue from sold/booked units
-      let revenue = 0;
-      // Potential revenue from ALL units
-      let potential = 0;
-      if (p.units) {
-        p.units.forEach(u => {
-          const price = u.price || p.startingPrice;
-          potential += price;
-          if (u.status === 'sold' || u.status === 'booked') {
-            revenue += price;
-          }
-        });
-      } else if (p.unitTypes) {
-        // Village: compute from unit types
-        p.unitTypes.forEach(ut => {
-          potential += ut.count * ut.price;
-        });
-        const soldCount = sold;
-        let assigned = 0;
-        p.unitTypes.forEach(ut => {
-          const share = Math.min(Math.round(soldCount * ut.count / total), ut.count);
-          revenue += share * ut.price;
-          assigned += share;
-        });
-        if (assigned < soldCount) revenue += (soldCount - assigned) * p.startingPrice;
-      }
-      totalRevenue += revenue;
-      totalPotential += potential;
-
-      return { key, p, sold, total, pct, left, revenue, potential };
+      return { key, p, sold, total, pct, left };
     });
 
     // Summary row
@@ -1057,19 +1022,11 @@
         <div class="dash-summary__value">${totalPct}%</div>
         <div class="dash-summary__label">${t('dash.overallProgress')}</div>
       </div>
-      <div class="dash-summary__item">
-        <div class="dash-summary__value">$${totalRevenue >= 1000000 ? (totalRevenue / 1000000).toFixed(1) + 'M' : (totalRevenue / 1000).toFixed(0) + 'K'}</div>
-        <div class="dash-summary__label">${t('dash.soldRevenue')}</div>
-      </div>
-      <div class="dash-summary__item">
-        <div class="dash-summary__value">$${totalPotential >= 1000000 ? (totalPotential / 1000000).toFixed(1) + 'M' : (totalPotential / 1000).toFixed(0) + 'K'}</div>
-        <div class="dash-summary__label">${t('dash.totalPotential')}</div>
-      </div>
     </div>`;
 
     // Project cards
     html += '<div class="dashboard-grid">';
-    projectStats.forEach(({ key, p, sold, total, pct, left, revenue }) => {
+    projectStats.forEach(({ key, p, sold, total, pct, left }) => {
       const badgeClass = p.status === 'pre-sale' ? 'presale' : 'progress';
       const badgeText = p.status === 'pre-sale' ? t('dash.preSale') : t('dash.inProgress');
 
@@ -1095,7 +1052,6 @@
           <div><div class="dash-card__stat-value">${sold}/${total}</div><div class="dash-card__stat-label">${t('dash.sold')}</div></div>
           <div><div class="dash-card__stat-value">${left}</div><div class="dash-card__stat-label">${t('dash.left')}</div></div>
           <div><div class="dash-card__stat-value">$${(p.startingPrice / 1000).toFixed(0)}K</div><div class="dash-card__stat-label">${t('dash.from')}</div></div>
-          <div><div class="dash-card__stat-value">$${revenue >= 1000000 ? (revenue / 1000000).toFixed(1) + 'M' : (revenue / 1000).toFixed(0) + 'K'}</div><div class="dash-card__stat-label">${t('dash.revenue')}</div></div>
         </div>
         <div class="dash-card__bar">
           <div class="dash-card__bar-track"><div class="dash-card__bar-fill" style="width:${pct}%"></div></div>
