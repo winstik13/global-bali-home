@@ -113,6 +113,14 @@
       'projects.showcaseCard': 'Showcase Card',
       'projects.addUnit': '+ Add Unit',
       'projects.addType': '+ Add Type',
+      'projects.deleteUnit': 'Delete',
+      'projects.deleteType': 'Delete',
+      'projects.confirmDeleteUnit': 'Delete unit {id}?',
+      'projects.confirmDeleteType': 'Delete type "{type}"?',
+      'gallery.confirmDelete': 'Delete "{name}"?',
+      'gallery.deleteError': 'Error deleting: ',
+      'faq.confirmDelete': 'Delete this FAQ item?',
+      'test.confirmDelete': 'Delete this testimonial?',
       'projects.unit': 'Unit',
       'projects.type': 'Type',
       'projects.floors': 'Floors',
@@ -209,7 +217,8 @@
       'help.colors.reset': 'Use <strong>Reset to Defaults</strong> to restore original palette.',
       'newProject.title': 'Add New Project',
       'newProject.name': 'Project Name',
-      'newProject.slug': 'Slug (auto)',
+      'newProject.slug': 'Slug',
+      'newProject.slugHint': 'Auto-generated from name, editable',
       'newProject.status': 'Status',
       'newProject.startingPrice': 'Starting Price ($)',
       'newProject.totalUnits': 'Total Units',
@@ -244,6 +253,10 @@
       'validate.wa.link': 'Link: wa.me/',
       'validate.phone.required': 'Required',
       'validate.phone.tooShort': 'Too short',
+      'time.justNow': 'just now',
+      'time.mAgo': 'm ago',
+      'time.hAgo': 'h ago',
+      'time.dAgo': 'd ago',
     },
     ru: {
       'login.title': 'Панель управления',
@@ -348,6 +361,14 @@
       'projects.showcaseCard': 'Карточка проекта',
       'projects.addUnit': '+ Добавить юнит',
       'projects.addType': '+ Добавить тип',
+      'projects.deleteUnit': 'Удалить',
+      'projects.deleteType': 'Удалить',
+      'projects.confirmDeleteUnit': 'Удалить юнит {id}?',
+      'projects.confirmDeleteType': 'Удалить тип «{type}»?',
+      'gallery.confirmDelete': 'Удалить «{name}»?',
+      'gallery.deleteError': 'Ошибка удаления: ',
+      'faq.confirmDelete': 'Удалить этот вопрос?',
+      'test.confirmDelete': 'Удалить этот отзыв?',
       'projects.unit': 'Юнит',
       'projects.type': 'Тип',
       'projects.floors': 'Этажи',
@@ -444,7 +465,8 @@
       'help.colors.reset': 'Используйте <strong>Сбросить</strong> для возврата палитры.',
       'newProject.title': 'Добавить проект',
       'newProject.name': 'Название проекта',
-      'newProject.slug': 'Slug (авто)',
+      'newProject.slug': 'Slug',
+      'newProject.slugHint': 'Генерируется из имени, можно редактировать',
       'newProject.status': 'Статус',
       'newProject.startingPrice': 'Начальная цена ($)',
       'newProject.totalUnits': 'Всего юнитов',
@@ -479,6 +501,10 @@
       'validate.wa.link': 'Ссылка: wa.me/',
       'validate.phone.required': 'Обязательное поле',
       'validate.phone.tooShort': 'Слишком короткий',
+      'time.justNow': 'только что',
+      'time.mAgo': 'м назад',
+      'time.hAgo': 'ч назад',
+      'time.dAgo': 'д назад',
     }
   };
 
@@ -742,6 +768,9 @@
     renderGuideInfo();
     renderProjectEditor();
     renderGallery();
+    renderColorsTab();
+    loadFaqData();
+    loadTestimonialsData();
     updateRateLimit();
   }
 
@@ -1002,10 +1031,10 @@
 
   function timeAgo(date) {
     const s = Math.floor((Date.now() - date.getTime()) / 1000);
-    if (s < 60) return 'just now';
-    if (s < 3600) return Math.floor(s / 60) + 'm ago';
-    if (s < 86400) return Math.floor(s / 3600) + 'h ago';
-    return Math.floor(s / 86400) + 'd ago';
+    if (s < 60) return t('time.justNow');
+    if (s < 3600) return Math.floor(s / 60) + t('time.mAgo');
+    if (s < 86400) return Math.floor(s / 3600) + t('time.hAgo');
+    return Math.floor(s / 86400) + t('time.dAgo');
   }
 
   // ─── Project Editor ───
@@ -1217,7 +1246,7 @@
     editor.querySelectorAll('[data-delete-unit]').forEach(btn => {
       btn.addEventListener('click', () => {
         const idx = +btn.dataset.deleteUnit;
-        if (!confirm(`Delete unit ${p.units[idx].id}?`)) return;
+        if (!confirm(t('projects.confirmDeleteUnit').replace('{id}', p.units[idx].id))) return;
         p.units.splice(idx, 1);
         p.availability.total = p.units.length;
         recalcAvailability();
@@ -1240,7 +1269,7 @@
     editor.querySelectorAll('[data-delete-utype]').forEach(btn => {
       btn.addEventListener('click', () => {
         const idx = +btn.dataset.deleteUtype;
-        if (!confirm(`Delete type "${p.unitTypes[idx].type}"?`)) return;
+        if (!confirm(t('projects.confirmDeleteType').replace('{type}', p.unitTypes[idx].type))) return;
         p.unitTypes.splice(idx, 1);
         p.availability.total = p.unitTypes.reduce((s, ut) => s + ut.count, 0);
         markChanged();
@@ -1780,7 +1809,7 @@
     if (!images || !images[index]) return;
 
     const fileName = images[index].split('/').pop();
-    if (!confirm(`Delete "${fileName}"?`)) return;
+    if (!confirm(t('gallery.confirmDelete').replace('{name}', fileName))) return;
 
     try {
       const file = await fetchFile(images[index]);
@@ -1790,7 +1819,7 @@
       renderGallery();
       updateRateLimit();
     } catch (err) {
-      alert('Error deleting: ' + err.message);
+      alert(t('gallery.deleteError') + err.message);
     }
   }
 
@@ -2193,7 +2222,7 @@
         </div>
         <div class="admin-modal__body">
           <div class="form-group"><label>${t('newProject.name')}</label><input type="text" id="np-name" placeholder="e.g. Serenity Heights"></div>
-          <div class="form-group"><label>${t('newProject.slug')}</label><input type="text" id="np-slug" placeholder="serenity-heights" readonly></div>
+          <div class="form-group"><label>${t('newProject.slug')}</label><input type="text" id="np-slug" placeholder="serenity-heights"><small class="field-hint">${t('newProject.slugHint')}</small></div>
           <div style="display:flex;gap:16px;flex-wrap:wrap">
             <div class="form-group" style="flex:1;min-width:140px"><label>${t('newProject.status')}</label>
               <select id="np-status"><option value="pre-sale">Pre-Sale</option><option value="in-progress">In Progress</option><option value="completed">Completed</option></select>
@@ -2224,8 +2253,11 @@
 
     document.body.appendChild(modal);
 
-    // Auto-generate slug from name
+    // Auto-generate slug from name (stops if user edits slug manually)
+    let slugManuallyEdited = false;
+    $('#np-slug').addEventListener('input', () => { slugManuallyEdited = true; });
     $('#np-name').addEventListener('input', () => {
+      if (slugManuallyEdited) return;
       const name = $('#np-name').value;
       $('#np-slug').value = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     });
@@ -2701,7 +2733,7 @@
     // Delete
     editor.querySelectorAll('[data-faq-delete]').forEach(btn => {
       btn.addEventListener('click', () => {
-        if (!confirm('Delete this FAQ item?')) return;
+        if (!confirm(t('faq.confirmDelete'))) return;
         const i = +btn.dataset.faqDelete;
         faqData.splice(i, 1);
         dirtyTabs.faq = true;
@@ -2855,7 +2887,7 @@
     }));
     editor.querySelectorAll('[data-test-delete]').forEach(btn => btn.addEventListener('click', () => {
       const i = parseInt(btn.dataset.testDelete);
-      if (!confirm('Delete this testimonial?')) return;
+      if (!confirm(t('test.confirmDelete'))) return;
       testimonialsData.splice(i, 1);
       dirtyTabs.testimonials = true;
       renderTestimonialsEditor();
