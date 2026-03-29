@@ -47,6 +47,7 @@
       'dash.soldBooked': 'Sold / Booked',
       'dash.available': 'Available',
       'dash.overallProgress': 'Overall Progress',
+      'dash.totalPotential': 'Total Potential',
       'dash.preSale': 'Pre-Sale',
       'dash.inProgress': 'In Progress',
       'dash.sold': 'Sold',
@@ -350,6 +351,7 @@
       'dash.soldBooked': 'Продано / Бронь',
       'dash.available': 'Доступно',
       'dash.overallProgress': 'Общий прогресс',
+      'dash.totalPotential': 'Потенциал',
       'dash.preSale': 'Предпродажа',
       'dash.inProgress': 'Строится',
       'dash.sold': 'Продано',
@@ -998,7 +1000,7 @@
     const projects = getProjectKeys();
 
     // Compute totals
-    let totalUnits = 0, totalSold = 0, totalAvailable = 0;
+    let totalUnits = 0, totalSold = 0, totalAvailable = 0, totalPotential = 0;
     const projectStats = projects.map(key => {
       const p = projectsData[key];
       const { sold, total } = p.availability;
@@ -1008,7 +1010,15 @@
       totalSold += sold;
       totalAvailable += left;
 
-      return { key, p, sold, total, pct, left };
+      let potential = 0;
+      if (p.units) {
+        p.units.forEach(u => { potential += u.price || p.startingPrice; });
+      } else if (p.unitTypes) {
+        p.unitTypes.forEach(ut => { potential += ut.count * ut.price; });
+      }
+      totalPotential += potential;
+
+      return { key, p, sold, total, pct, left, potential };
     });
 
     // Summary row
@@ -1030,11 +1040,15 @@
         <div class="dash-summary__value">${totalPct}%</div>
         <div class="dash-summary__label">${t('dash.overallProgress')}</div>
       </div>
+      <div class="dash-summary__item">
+        <div class="dash-summary__value">$${totalPotential >= 1000000 ? (totalPotential / 1000000).toFixed(1) + 'M' : (totalPotential / 1000).toFixed(0) + 'K'}</div>
+        <div class="dash-summary__label">${t('dash.totalPotential')}</div>
+      </div>
     </div>`;
 
     // Project cards
     html += '<div class="dashboard-grid">';
-    projectStats.forEach(({ key, p, sold, total, pct, left }) => {
+    projectStats.forEach(({ key, p, sold, total, pct, left, potential }) => {
       const badgeClass = p.status === 'pre-sale' ? 'presale' : 'progress';
       const badgeText = p.status === 'pre-sale' ? t('dash.preSale') : t('dash.inProgress');
 
@@ -1060,6 +1074,7 @@
           <div><div class="dash-card__stat-value">${sold}/${total}</div><div class="dash-card__stat-label">${t('dash.sold')}</div></div>
           <div><div class="dash-card__stat-value">${left}</div><div class="dash-card__stat-label">${t('dash.left')}</div></div>
           <div><div class="dash-card__stat-value">$${(p.startingPrice / 1000).toFixed(0)}K</div><div class="dash-card__stat-label">${t('dash.from')}</div></div>
+          <div><div class="dash-card__stat-value">$${potential >= 1000000 ? (potential / 1000000).toFixed(1) + 'M' : (potential / 1000).toFixed(0) + 'K'}</div><div class="dash-card__stat-label">${t('dash.totalPotential')}</div></div>
         </div>
         <div class="dash-card__bar">
           <div class="dash-card__bar-track"><div class="dash-card__bar-fill" style="width:${pct}%"></div></div>
