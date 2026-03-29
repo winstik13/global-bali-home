@@ -100,6 +100,10 @@
       'projects.title': 'Project Editor',
       'projects.publish': 'Publish Changes',
       'projects.generatePages': 'Generate Detail Pages',
+      'projects.updateSeoOnly': 'Update SEO Only',
+      'projects.overwriteWarn': 'Pages for "{name}" already exist.\n\n• "Update SEO Only" — updates only meta tags (title, description, OG) without touching the page content.\n• "Overwrite All" — replaces the entire page. All manual edits will be lost.\n\nChoose an action:',
+      'projects.overwriteAll': 'Overwrite All',
+      'projects.cancel': 'Cancel',
       'projects.unsaved': 'Unsaved changes',
       'projects.publishing': 'Publishing...',
       'projects.published': 'Published! Site updating (~1-2 min)',
@@ -157,6 +161,12 @@
       'gallery.uploaded': 'photos uploaded!',
       'gallery.moveLeft': 'Move left',
       'gallery.moveRight': 'Move right',
+      'gallery.delete': 'Delete',
+      'gallery.previewTitle': 'Ready to upload',
+      'gallery.uploadAll': 'Upload All',
+      'gallery.cancelUpload': 'Cancel',
+      'gallery.duplicate': 'Already exists',
+      'gallery.filesSelected': 'files selected',
       'faq.title': 'FAQ Editor',
       'faq.addQuestion': '+ Add Question',
       'faq.publish': 'Publish FAQ',
@@ -325,6 +335,10 @@
       'projects.title': 'Редактор проектов',
       'projects.publish': 'Опубликовать',
       'projects.generatePages': 'Сгенерировать страницы',
+      'projects.updateSeoOnly': 'Обновить только SEO',
+      'projects.overwriteWarn': 'Страницы для "{name}" уже существуют.\n\n• «Обновить только SEO» — обновит только мета-теги (title, description, OG), контент страницы не изменится.\n• «Перезаписать всё» — заменит всю страницу. Все ручные правки будут потеряны.\n\nВыберите действие:',
+      'projects.overwriteAll': 'Перезаписать всё',
+      'projects.cancel': 'Отмена',
       'projects.unsaved': 'Есть несохранённые изменения',
       'projects.publishing': 'Публикация...',
       'projects.published': 'Опубликовано! Сайт обновится (~1-2 мин)',
@@ -382,6 +396,12 @@
       'gallery.uploaded': 'фото загружено!',
       'gallery.moveLeft': 'Влево',
       'gallery.moveRight': 'Вправо',
+      'gallery.delete': 'Удалить',
+      'gallery.previewTitle': 'Готово к загрузке',
+      'gallery.uploadAll': 'Загрузить все',
+      'gallery.cancelUpload': 'Отмена',
+      'gallery.duplicate': 'Уже существует',
+      'gallery.filesSelected': 'файлов выбрано',
       'faq.title': 'Редактор FAQ',
       'faq.addQuestion': '+ Добавить вопрос',
       'faq.publish': 'Опубликовать FAQ',
@@ -1032,18 +1052,18 @@
 
       p.units.forEach((u, i) => {
         html += `<tr>
-          <td><input type="text" data-unit="${i}" data-field="id" class="unit-text" value="${u.id}" style="width:48px"></td>
-          <td><select data-unit="${i}" data-field="type" class="unit-text-sel">
+          <td data-label="${t('projects.unit')}"><input type="text" data-unit="${i}" data-field="id" class="unit-text" value="${u.id}" style="width:48px"></td>
+          <td data-label="${t('projects.type')}"><select data-unit="${i}" data-field="type" class="unit-text-sel">
             ${['1 Bedroom', '2 Bedroom', '3 Bedroom', '4 Bedroom', '4.5 Bedroom', '5 Bedroom'].map(v => `<option value="${v}"${u.type === v ? ' selected' : ''}>${v}</option>`).join('')}
           </select></td>
-          <td><input type="number" data-unit="${i}" data-field="floors" class="unit-text" value="${u.floors}" style="width:48px" min="1" max="5"></td>
-          <td><input type="text" data-unit="${i}" data-field="area" class="unit-text" value="${u.area}" style="width:72px"></td>
-          <td><input type="text" data-unit="${i}" data-field="land" class="unit-text" value="${u.land}" style="width:72px"></td>
-          <td><input type="text" data-unit="${i}" data-field="badge" class="unit-text" value="${u.badge || ''}" style="width:72px" placeholder="—"></td>
-          <td><select data-unit="${i}" data-field="status" class="unit-status">
+          <td data-label="${t('projects.floors')}"><input type="number" data-unit="${i}" data-field="floors" class="unit-text" value="${u.floors}" style="width:48px" min="1" max="5"></td>
+          <td data-label="${t('projects.area')}"><input type="text" data-unit="${i}" data-field="area" class="unit-text" value="${u.area}" style="width:72px"></td>
+          <td data-label="${t('projects.land')}"><input type="text" data-unit="${i}" data-field="land" class="unit-text" value="${u.land}" style="width:72px"></td>
+          <td data-label="${t('projects.badge')}"><input type="text" data-unit="${i}" data-field="badge" class="unit-text" value="${u.badge || ''}" style="width:72px" placeholder="—"></td>
+          <td data-label="${t('projects.status')}"><select data-unit="${i}" data-field="status" class="unit-status">
             ${['available', 'booked', 'sold', 'resale'].map(s => `<option value="${s}"${u.status === s ? ' selected' : ''}>${s.charAt(0).toUpperCase() + s.slice(1)}</option>`).join('')}
           </select></td>
-          <td><input type="number" data-unit="${i}" data-field="price" class="unit-price" value="${u.price || ''}" placeholder="—" min="0" step="1000"></td>
+          <td data-label="${t('projects.price')}"><input type="number" data-unit="${i}" data-field="price" class="unit-price" value="${u.price || ''}" placeholder="—" min="0" step="1000"></td>
           <td><button class="btn--icon btn--danger" data-delete-unit="${i}" title="${t('projects.deleteUnit')}">&times;</button></td>
         </tr>`;
       });
@@ -1059,12 +1079,12 @@
 
       p.unitTypes.forEach((ut, i) => {
         html += `<tr>
-          <td><input type="text" data-utype="${i}" data-field="type" class="utype-text" value="${ut.type}" style="width:100px"></td>
-          <td><input type="number" data-utype="${i}" data-field="floors" class="utype-text" value="${ut.floors}" style="width:48px" min="1" max="5"></td>
-          <td><input type="text" data-utype="${i}" data-field="area" class="utype-text" value="${ut.area}" style="width:72px"></td>
-          <td><input type="text" data-utype="${i}" data-field="land" class="utype-text" value="${ut.land}" style="width:72px"></td>
-          <td><input type="number" data-utype="${i}" data-field="count" class="utype-text" value="${ut.count}" style="width:48px" min="0"></td>
-          <td><input type="number" data-utype="${i}" data-field="price" class="utype-price" value="${ut.price || ''}" min="0" step="1000"></td>
+          <td data-label="${t('projects.type')}"><input type="text" data-utype="${i}" data-field="type" class="utype-text" value="${ut.type}" style="width:100px"></td>
+          <td data-label="${t('projects.floors')}"><input type="number" data-utype="${i}" data-field="floors" class="utype-text" value="${ut.floors}" style="width:48px" min="1" max="5"></td>
+          <td data-label="${t('projects.area')}"><input type="text" data-utype="${i}" data-field="area" class="utype-text" value="${ut.area}" style="width:72px"></td>
+          <td data-label="${t('projects.land')}"><input type="text" data-utype="${i}" data-field="land" class="utype-text" value="${ut.land}" style="width:72px"></td>
+          <td data-label="${t('projects.unit')}"><input type="number" data-utype="${i}" data-field="count" class="utype-text" value="${ut.count}" style="width:48px" min="0"></td>
+          <td data-label="${t('projects.price')}"><input type="number" data-utype="${i}" data-field="price" class="utype-price" value="${ut.price || ''}" min="0" step="1000"></td>
           <td><button class="btn--icon btn--danger" data-delete-utype="${i}" title="${t('projects.deleteType')}">&times;</button></td>
         </tr>`;
       });
@@ -1590,9 +1610,15 @@
     return galleryDataCopy;
   }
 
+  const galleryPreview = $('#gallery-upload-preview');
+  let pendingFiles = []; // files staged for upload
+
   galleryProject.addEventListener('change', renderGallery);
   galleryUploadBtn.addEventListener('click', () => galleryFileInput.click());
-  galleryFileInput.addEventListener('change', (e) => handleGalleryUpload(Array.from(e.target.files)));
+  galleryFileInput.addEventListener('change', (e) => {
+    stageFiles(Array.from(e.target.files));
+    galleryFileInput.value = '';
+  });
 
   // Drag & drop
   galleryDropZone.addEventListener('dragover', (e) => {
@@ -1606,8 +1632,80 @@
     e.preventDefault();
     galleryDropZone.classList.remove('dragover');
     const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
-    if (files.length) handleGalleryUpload(files);
+    if (files.length) stageFiles(files);
   });
+
+  function stageFiles(files) {
+    if (!files.length) return;
+    // Add to pending, avoiding duplicates by name
+    files.forEach(f => {
+      if (!pendingFiles.some(p => p.name === f.name)) pendingFiles.push(f);
+    });
+    renderUploadPreview();
+  }
+
+  function renderUploadPreview() {
+    if (!pendingFiles.length) {
+      galleryPreview.hidden = true;
+      galleryPreview.innerHTML = '';
+      return;
+    }
+
+    const cat = galleryProject.value;
+    const data = getGalleryData();
+    const existingImages = (data[cat] || []).map(p => p.split('/').pop());
+
+    let html = `<div class="gallery-preview__header">
+      <span class="gallery-preview__title">${t('gallery.previewTitle')}: ${pendingFiles.length} ${t('gallery.filesSelected')}</span>
+      <div class="gallery-preview__actions">
+        <button class="btn btn--primary btn--sm" id="btn-preview-upload">${t('gallery.uploadAll')}</button>
+        <button class="btn btn--outline btn--sm" id="btn-preview-cancel">${t('gallery.cancelUpload')}</button>
+      </div>
+    </div><div class="gallery-preview__grid">`;
+
+    pendingFiles.forEach((file, i) => {
+      const isDuplicate = existingImages.includes(file.name);
+      const sizeKB = Math.round(file.size / 1024);
+      const url = URL.createObjectURL(file);
+      html += `<div class="gallery-preview__item${isDuplicate ? ' gallery-preview__item--duplicate' : ''}">
+        <img src="${url}" alt="${escAttr(file.name)}">
+        <div class="gallery-preview__info">
+          <span class="gallery-preview__name">${escAttr(file.name)}</span>
+          <span class="gallery-preview__size">${sizeKB} KB</span>
+          ${isDuplicate ? `<span class="gallery-preview__warn">${t('gallery.duplicate')}</span>` : ''}
+        </div>
+        <button class="gallery-preview__remove" data-remove="${i}">&times;</button>
+      </div>`;
+    });
+
+    html += '</div>';
+    galleryPreview.innerHTML = html;
+    galleryPreview.hidden = false;
+
+    // Bind remove buttons
+    galleryPreview.querySelectorAll('[data-remove]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        pendingFiles.splice(+btn.dataset.remove, 1);
+        renderUploadPreview();
+      });
+    });
+
+    // Upload all
+    $('#btn-preview-upload').addEventListener('click', () => {
+      const filesToUpload = [...pendingFiles];
+      pendingFiles = [];
+      galleryPreview.hidden = true;
+      galleryPreview.innerHTML = '';
+      handleGalleryUpload(filesToUpload);
+    });
+
+    // Cancel
+    $('#btn-preview-cancel').addEventListener('click', () => {
+      pendingFiles = [];
+      galleryPreview.hidden = true;
+      galleryPreview.innerHTML = '';
+    });
+  }
 
   function renderGallery() {
     const cat = galleryProject.value;
@@ -1814,12 +1912,22 @@
   }
 
   // ─── Generate Detail Pages ───
+  function getLangConfigs(p) {
+    return [
+      { lang: 'en', langFull: 'English', prefix: '', htmlLang: 'en', path: p.page },
+      { lang: 'ru', langFull: 'Русский', prefix: '../', htmlLang: 'ru', path: `ru/${p.page}` },
+      { lang: 'id', langFull: 'Bahasa Indonesia', prefix: '../', htmlLang: 'id', path: `id/${p.page}` },
+    ];
+  }
+
   function addGeneratePagesButton() {
     const actions = $('.editor-actions');
     if (!actions) return;
-    // Remove existing generate button
+    // Remove existing buttons
     const existing = $('#btn-generate-pages');
     if (existing) existing.remove();
+    const existingSeo = $('#btn-update-seo-only');
+    if (existingSeo) existingSeo.remove();
 
     const btn = document.createElement('button');
     btn.id = 'btn-generate-pages';
@@ -1828,29 +1936,32 @@
     btn.style.marginLeft = '12px';
     actions.appendChild(btn);
 
+    const btnSeo = document.createElement('button');
+    btnSeo.id = 'btn-update-seo-only';
+    btnSeo.className = 'btn btn--outline';
+    btnSeo.textContent = t('projects.updateSeoOnly');
+    btnSeo.style.marginLeft = '8px';
+    actions.appendChild(btnSeo);
+
+    // Generate full pages
     btn.addEventListener('click', async () => {
       const p = projectsData[currentProject];
       if (!p) return;
 
       // Check if pages already exist
       let pageExists = false;
-      try {
-        await fetchFile(p.page);
-        pageExists = true;
-      } catch { /* new file */ }
+      try { await fetchFile(p.page); pageExists = true; } catch { /* new file */ }
 
-      if (pageExists && !confirm(`Pages for "${p.name}" already exist. Overwrite?`)) return;
+      if (pageExists) {
+        const msg = t('projects.overwriteWarn').replace('{name}', p.name);
+        if (!confirm(msg)) return;
+      }
 
       btnLoading(btn, true);
       const status = $('#publish-status');
 
       try {
-        const langConfigs = [
-          { lang: 'en', langFull: 'English', prefix: '', htmlLang: 'en', path: p.page },
-          { lang: 'ru', langFull: 'Русский', prefix: '../', htmlLang: 'ru', path: `ru/${p.page}` },
-          { lang: 'id', langFull: 'Bahasa Indonesia', prefix: '../', htmlLang: 'id', path: `id/${p.page}` },
-        ];
-
+        const langConfigs = getLangConfigs(p);
         let generated = 0;
         for (const cfg of langConfigs) {
           const html = buildDetailPage(p, currentProject, cfg);
@@ -1860,7 +1971,6 @@
           generated++;
           status.textContent = `Generating... ${generated}/${langConfigs.length}`;
         }
-
         status.textContent = `${generated} pages generated!`;
         status.className = 'publish-status success';
       } catch (err) {
@@ -1868,6 +1978,49 @@
         status.className = 'publish-status error';
       }
       btnLoading(btn, false);
+      updateRateLimit();
+    });
+
+    // Update SEO only — preserve page content, update only meta tags
+    btnSeo.addEventListener('click', async () => {
+      const p = projectsData[currentProject];
+      if (!p) return;
+
+      btnLoading(btnSeo, true);
+      const status = $('#publish-status');
+      status.textContent = '';
+      status.className = 'publish-status';
+
+      try {
+        const langConfigs = getLangConfigs(p);
+        let updated = 0;
+
+        for (const cfg of langConfigs) {
+          let file;
+          try { file = await fetchFile(cfg.path); } catch { continue; } // skip if page doesn't exist
+
+          let html = atob(file.content);
+          const desc = (p.showcaseDesc && (p.showcaseDesc[cfg.lang] || p.showcaseDesc.en)) || p.name;
+          const image = p.showcaseImage ? `https://winstik13.github.io/global-bali-home/${p.showcaseImage}` : '';
+
+          html = replaceMeta(html, 'title', `${p.name} — Global Bali Home`);
+          html = replaceMeta(html, 'description', desc);
+          html = replaceMeta(html, 'ogTitle', `${p.name} — Global Bali Home`);
+          html = replaceMeta(html, 'ogDescription', desc);
+          if (image) html = replaceMeta(html, 'ogImage', image);
+
+          await commitFile(cfg.path, html, `Update SEO: ${p.name} (${cfg.lang})`, file.sha);
+          updated++;
+          status.textContent = `Updating SEO... ${updated}/${langConfigs.length}`;
+        }
+
+        status.textContent = updated ? `SEO updated for ${updated} pages!` : 'No existing pages found';
+        status.className = 'publish-status success';
+      } catch (err) {
+        status.textContent = t('common.error') + err.message;
+        status.className = 'publish-status error';
+      }
+      btnLoading(btnSeo, false);
       updateRateLimit();
     });
   }
