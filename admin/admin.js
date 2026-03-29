@@ -6,6 +6,491 @@
 (function () {
   'use strict';
 
+  // ─── i18n ───
+  let adminLang = localStorage.getItem('admin_lang') || 'en';
+
+  const ADMIN_I18N = {
+    en: {
+      'login.title': 'Admin Panel',
+      'login.email': 'Email',
+      'login.password': 'Password',
+      'login.submit': 'Sign In',
+      'login.signingIn': 'Signing in...',
+      'pat.title': 'GitHub Access',
+      'pat.desc': 'Enter your GitHub Personal Access Token to enable publishing.',
+      'pat.label': 'Personal Access Token',
+      'pat.remember': 'Remember on this device',
+      'pat.submit': 'Connect',
+      'pat.error': 'Invalid token. Ensure it has "contents:write" scope for this repo.',
+      'header.title': 'Admin Panel',
+      'header.signOut': 'Sign Out',
+      'nav.dashboard': 'Dashboard',
+      'nav.projects': 'Projects',
+      'nav.seo': 'SEO',
+      'nav.gallery': 'Gallery',
+      'nav.faq': 'FAQ',
+      'nav.testimonials': 'Testimonials',
+      'nav.colors': 'Colors',
+      'dash.title': 'Dashboard',
+      'dash.totalUnits': 'Total Units',
+      'dash.soldBooked': 'Sold / Booked',
+      'dash.available': 'Available',
+      'dash.overallProgress': 'Overall Progress',
+      'dash.estRevenue': 'Est. Revenue',
+      'dash.preSale': 'Pre-Sale',
+      'dash.inProgress': 'In Progress',
+      'dash.sold': 'Sold',
+      'dash.left': 'Left',
+      'dash.from': 'From',
+      'dash.revenue': 'Revenue',
+      'dash.editProject': 'Edit Project →',
+      'dash.viewOnSite': 'View on Site ↗',
+      'dash.recentChanges': 'Recent Changes',
+      'dash.noChanges': 'No recent changes to project data.',
+      'dash.loading': 'Loading...',
+      'dash.couldNotLoad': 'Could not load commit history.',
+      'dash.breakAvailable': 'available',
+      'dash.breakBooked': 'booked',
+      'dash.breakSold': 'sold',
+      'dash.breakResale': 'resale',
+      'rate.title': 'Exchange Rate (USD → IDR)',
+      'rate.auto': 'Auto (live rate from API)',
+      'rate.save': 'Save Rate',
+      'rate.currentRate': 'Current rate:',
+      'rate.updated': 'Updated:',
+      'rate.manual': '(manual)',
+      'rate.autoMode': '(auto)',
+      'rate.defaultMsg': 'Default rate. Update to show accurate IDR prices on the site.',
+      'rate.invalidRate': 'Enter a valid rate (e.g. 16500)',
+      'help.rate.manual': '<strong>Manual:</strong> Enter the rate manually and click Save.',
+      'help.rate.auto': '<strong>Auto:</strong> Rate updates from API every hour. Manual input is disabled.',
+      'help.rate.fallback': '<strong>Fallback:</strong> If API is unavailable, the last saved rate is used on the site.',
+      'contacts.title': 'Contact Information',
+      'contacts.phone': 'Phone',
+      'contacts.whatsapp': 'WhatsApp Number',
+      'contacts.email': 'Email',
+      'contacts.locationEn': 'Location (EN)',
+      'contacts.locationRu': 'Location (RU)',
+      'contacts.locationId': 'Location (ID)',
+      'contacts.save': 'Save Contacts',
+      'contacts.hint.phone': 'Display format, e.g. +62 813 251 438 49',
+      'contacts.hint.whatsapp': 'Digits only, with country code, no +',
+      'help.contacts.phone': '<strong>Phone:</strong> Any format with spaces/dashes, start with +country code.',
+      'help.contacts.whatsapp': '<strong>WhatsApp:</strong> DIGITS ONLY, no +, spaces or dashes. Example: 6281338741177',
+      'help.contacts.email': '<strong>Email:</strong> Standard email format.',
+      'help.contacts.location': '<strong>Location:</strong> Display text, translate manually for each language.',
+      'guide.title': 'Investment Guide PDF',
+      'guide.upload': 'Upload PDF',
+      'guide.currentFile': 'Current file:',
+      'guide.version': 'Version:',
+      'guide.updated': 'Updated:',
+      'guide.noFile': 'No PDF uploaded yet. Upload a file to enable the Investment Guide download.',
+      'guide.selectPdf': 'Please select a PDF file',
+      'guide.uploading': 'Uploading PDF...',
+      'help.guide.format': '<strong>Format:</strong> PDF only.',
+      'help.guide.afterUpload': '<strong>After upload:</strong> File is committed to the repository and available to site visitors.',
+      'help.guide.deployTime': '<strong>Deploy time:</strong> ~1-2 minutes after upload.',
+      'projects.title': 'Project Editor',
+      'projects.publish': 'Publish Changes',
+      'projects.generatePages': 'Generate Detail Pages',
+      'projects.unsaved': 'Unsaved changes',
+      'projects.publishing': 'Publishing...',
+      'projects.published': 'Published! Site updating (~1-2 min)',
+      'projects.units': 'Units',
+      'projects.unitTypes': 'Unit Types',
+      'projects.availability': 'Availability',
+      'projects.heroStats': 'Hero Stats',
+      'projects.showcaseCard': 'Showcase Card',
+      'projects.addUnit': '+ Add Unit',
+      'projects.addType': '+ Add Type',
+      'projects.unit': 'Unit',
+      'projects.type': 'Type',
+      'projects.floors': 'Floors',
+      'projects.area': 'Area',
+      'projects.land': 'Land',
+      'projects.badge': 'Badge',
+      'projects.status': 'Status',
+      'projects.price': 'Price ($)',
+      'projects.sold': 'Sold',
+      'projects.total': 'Total',
+      'projects.number': 'Number',
+      'projects.label': 'Label',
+      'projects.priceLabel': 'Price',
+      'projects.description': 'Description',
+      'projects.newProject': '+ New Project',
+      'seo.title': 'SEO Editor',
+      'seo.page': 'Page',
+      'seo.selectPage': '— Select page —',
+      'seo.home': 'Home',
+      'seo.about': 'About',
+      'seo.projects': 'Projects',
+      'seo.services': 'Services',
+      'seo.gallery': 'Gallery',
+      'seo.contacts': 'Contacts',
+      'seo.googlePreview': 'Google Search Preview',
+      'seo.socialPreview': 'Social Share Preview',
+      'seo.noOgImage': 'No OG Image',
+      'seo.pageTitle': 'Page Title',
+      'seo.metaDesc': 'Meta Description',
+      'seo.ogTitle': 'OG Title',
+      'seo.ogDesc': 'OG Description',
+      'seo.ogImage': 'OG Image URL',
+      'seo.canonical': 'Canonical URL',
+      'seo.saveAll': 'Save All Languages',
+      'seo.savingAll': 'Saving all languages...',
+      'seo.loadingLangs': 'Loading all languages...',
+      'gallery.title': 'Gallery Manager',
+      'gallery.upload': 'Upload Photos',
+      'gallery.photos': 'photos',
+      'gallery.noImages': 'No images in this project. Drag & drop or click Upload to add photos.',
+      'gallery.dragDrop': 'Drag & drop images here or use Upload button',
+      'gallery.uploading': 'Uploading',
+      'gallery.savingData': 'Saving gallery data...',
+      'gallery.uploaded': 'photos uploaded!',
+      'gallery.moveLeft': 'Move left',
+      'gallery.moveRight': 'Move right',
+      'faq.title': 'FAQ Editor',
+      'faq.addQuestion': '+ Add Question',
+      'faq.publish': 'Publish FAQ',
+      'faq.publishing': 'Publishing FAQ...',
+      'faq.published': 'Published! Site updating (~1-2 min)',
+      'faq.noItems': 'No FAQ items yet. Click "+ Add Question" to create one.',
+      'faq.question': 'Question',
+      'faq.answer': 'Answer',
+      'test.title': 'Testimonials Editor',
+      'test.add': '+ Add Testimonial',
+      'test.publish': 'Publish Testimonials',
+      'test.publishing': 'Publishing testimonials...',
+      'test.published': 'Published! Site updating (~1-2 min)',
+      'test.noItems': 'No testimonials yet. Click "+ Add Testimonial" to create one.',
+      'test.name': 'Name',
+      'test.role': 'Role',
+      'test.text': 'Text',
+      'test.stars': 'Stars',
+      'colors.title': 'Site Colors',
+      'colors.backgrounds': 'Backgrounds',
+      'colors.textBorders': 'Text & Borders',
+      'colors.accent': 'Accent',
+      'colors.mainBg': 'Main Background',
+      'colors.altBg': 'Alternate Background',
+      'colors.cardPanel': 'Card / Panel',
+      'colors.primaryText': 'Primary Text',
+      'colors.cream': 'Cream (Buttons)',
+      'colors.brandAccent': 'Brand Accent',
+      'colors.derivedHint': 'Muted text, dim text, and border colors are automatically derived from the primary text color.',
+      'colors.muted': 'Muted 75%',
+      'colors.dim': 'Dim 50%',
+      'colors.border': 'Border 10%',
+      'colors.save': 'Save Colors',
+      'colors.reset': 'Reset to Defaults',
+      'colors.resetDone': 'Reset to defaults (not saved yet)',
+      'colors.invalidHex': 'Invalid hex for ',
+      'help.colors.text': '<strong>Text color</strong> determines derived colors (muted text, borders).',
+      'help.colors.live': '<strong>Live preview:</strong> Changes apply instantly in admin panel.',
+      'help.colors.site': '<strong>On site:</strong> Colors apply after Save + ~1-2 min deploy.',
+      'help.colors.reset': 'Use <strong>Reset to Defaults</strong> to restore original palette.',
+      'newProject.title': 'Add New Project',
+      'newProject.name': 'Project Name',
+      'newProject.slug': 'Slug (auto)',
+      'newProject.status': 'Status',
+      'newProject.startingPrice': 'Starting Price ($)',
+      'newProject.totalUnits': 'Total Units',
+      'newProject.bedrooms': 'Bedrooms',
+      'newProject.handover': 'Handover',
+      'newProject.showcaseImage': 'Showcase Image',
+      'newProject.showcaseText': 'Showcase Text (EN)',
+      'newProject.subtitle': 'Short Subtitle',
+      'newProject.desc': 'Description',
+      'newProject.comparisonData': 'Comparison Data',
+      'newProject.areaRange': 'Area Range',
+      'newProject.landRange': 'Land Range',
+      'newProject.pool': 'Pool',
+      'newProject.cancel': 'Cancel',
+      'newProject.create': 'Create Project',
+      'newProject.nameRequired': 'Name is required',
+      'newProject.slugExists': 'Project with this slug already exists',
+      'common.saving': 'Saving...',
+      'common.saved': 'Saved! Site updating (~1-2 min)',
+      'common.error': 'Error: ',
+      'common.unsavedWarn': 'You have unsaved changes. Switch tab anyway?',
+      'auth.wrongPassword': 'Wrong password. Try again.',
+      'auth.userNotFound': 'No account with this email.',
+      'auth.tooManyRequests': 'Too many attempts. Try later.',
+      'auth.invalidEmail': 'Invalid email address.',
+      'auth.invalidCredential': 'Invalid email or password.',
+      'auth.failed': 'Authentication failed. Please try again.',
+      'validate.wa.required': 'Required',
+      'validate.wa.digitsOnly': 'Digits only — no +, spaces or dashes',
+      'validate.wa.tooShort': 'Too short — include country code (e.g. 62...)',
+      'validate.wa.tooLong': 'Too long — max 15 digits',
+      'validate.wa.link': 'Link: wa.me/',
+      'validate.phone.required': 'Required',
+      'validate.phone.tooShort': 'Too short',
+    },
+    ru: {
+      'login.title': 'Панель управления',
+      'login.email': 'Email',
+      'login.password': 'Пароль',
+      'login.submit': 'Войти',
+      'login.signingIn': 'Вход...',
+      'pat.title': 'Доступ к GitHub',
+      'pat.desc': 'Введите Personal Access Token GitHub для публикации изменений.',
+      'pat.label': 'Personal Access Token',
+      'pat.remember': 'Запомнить на этом устройстве',
+      'pat.submit': 'Подключить',
+      'pat.error': 'Неверный токен. Убедитесь, что scope "contents:write" включён.',
+      'header.title': 'Панель управления',
+      'header.signOut': 'Выйти',
+      'nav.dashboard': 'Обзор',
+      'nav.projects': 'Проекты',
+      'nav.seo': 'SEO',
+      'nav.gallery': 'Галерея',
+      'nav.faq': 'FAQ',
+      'nav.testimonials': 'Отзывы',
+      'nav.colors': 'Цвета',
+      'dash.title': 'Обзор',
+      'dash.totalUnits': 'Всего юнитов',
+      'dash.soldBooked': 'Продано / Бронь',
+      'dash.available': 'Доступно',
+      'dash.overallProgress': 'Общий прогресс',
+      'dash.estRevenue': 'Ожид. выручка',
+      'dash.preSale': 'Предпродажа',
+      'dash.inProgress': 'Строится',
+      'dash.sold': 'Продано',
+      'dash.left': 'Осталось',
+      'dash.from': 'От',
+      'dash.revenue': 'Выручка',
+      'dash.editProject': 'Редактировать →',
+      'dash.viewOnSite': 'На сайте ↗',
+      'dash.recentChanges': 'Последние изменения',
+      'dash.noChanges': 'Нет недавних изменений.',
+      'dash.loading': 'Загрузка...',
+      'dash.couldNotLoad': 'Не удалось загрузить историю.',
+      'dash.breakAvailable': 'доступно',
+      'dash.breakBooked': 'бронь',
+      'dash.breakSold': 'продано',
+      'dash.breakResale': 'перепродажа',
+      'rate.title': 'Курс валют (USD → IDR)',
+      'rate.auto': 'Авто (курс из API)',
+      'rate.save': 'Сохранить курс',
+      'rate.currentRate': 'Текущий курс:',
+      'rate.updated': 'Обновлён:',
+      'rate.manual': '(ручной)',
+      'rate.autoMode': '(авто)',
+      'rate.defaultMsg': 'Курс по умолчанию. Обновите для корректных цен в IDR.',
+      'rate.invalidRate': 'Введите корректный курс (напр. 16500)',
+      'help.rate.manual': '<strong>Вручную:</strong> Введите курс и нажмите Сохранить.',
+      'help.rate.auto': '<strong>Авто:</strong> Курс обновляется из API каждый час. Ручной ввод блокируется.',
+      'help.rate.fallback': '<strong>Резерв:</strong> Если API недоступен, используется последний сохранённый курс.',
+      'contacts.title': 'Контактная информация',
+      'contacts.phone': 'Телефон',
+      'contacts.whatsapp': 'Номер WhatsApp',
+      'contacts.email': 'Email',
+      'contacts.locationEn': 'Адрес (EN)',
+      'contacts.locationRu': 'Адрес (RU)',
+      'contacts.locationId': 'Адрес (ID)',
+      'contacts.save': 'Сохранить контакты',
+      'contacts.hint.phone': 'Формат отображения, напр. +62 813 251 438 49',
+      'contacts.hint.whatsapp': 'Только цифры, с кодом страны, без +',
+      'help.contacts.phone': '<strong>Телефон:</strong> Любой формат с пробелами/дефисами, начинать с +код страны.',
+      'help.contacts.whatsapp': '<strong>WhatsApp:</strong> ТОЛЬКО ЦИФРЫ, без +, пробелов или дефисов. Пример: 6281338741177',
+      'help.contacts.email': '<strong>Email:</strong> Стандартный формат email.',
+      'help.contacts.location': '<strong>Адрес:</strong> Отображаемый текст, переводить вручную для каждого языка.',
+      'guide.title': 'PDF Гид по инвестициям',
+      'guide.upload': 'Загрузить PDF',
+      'guide.currentFile': 'Текущий файл:',
+      'guide.version': 'Версия:',
+      'guide.updated': 'Обновлён:',
+      'guide.noFile': 'PDF ещё не загружен. Загрузите файл для активации скачивания гида.',
+      'guide.selectPdf': 'Выберите PDF файл',
+      'guide.uploading': 'Загрузка PDF...',
+      'help.guide.format': '<strong>Формат:</strong> Только PDF.',
+      'help.guide.afterUpload': '<strong>После загрузки:</strong> Файл сохраняется в репозитории и доступен посетителям.',
+      'help.guide.deployTime': '<strong>Деплой:</strong> ~1-2 минуты после загрузки.',
+      'projects.title': 'Редактор проектов',
+      'projects.publish': 'Опубликовать',
+      'projects.generatePages': 'Сгенерировать страницы',
+      'projects.unsaved': 'Есть несохранённые изменения',
+      'projects.publishing': 'Публикация...',
+      'projects.published': 'Опубликовано! Сайт обновится (~1-2 мин)',
+      'projects.units': 'Юниты',
+      'projects.unitTypes': 'Типы юнитов',
+      'projects.availability': 'Доступность',
+      'projects.heroStats': 'Статистика Hero',
+      'projects.showcaseCard': 'Карточка проекта',
+      'projects.addUnit': '+ Добавить юнит',
+      'projects.addType': '+ Добавить тип',
+      'projects.unit': 'Юнит',
+      'projects.type': 'Тип',
+      'projects.floors': 'Этажи',
+      'projects.area': 'Площадь',
+      'projects.land': 'Участок',
+      'projects.badge': 'Бейдж',
+      'projects.status': 'Статус',
+      'projects.price': 'Цена ($)',
+      'projects.sold': 'Продано',
+      'projects.total': 'Всего',
+      'projects.number': 'Число',
+      'projects.label': 'Подпись',
+      'projects.priceLabel': 'Цена',
+      'projects.description': 'Описание',
+      'projects.newProject': '+ Новый проект',
+      'seo.title': 'SEO Редактор',
+      'seo.page': 'Страница',
+      'seo.selectPage': '— Выберите страницу —',
+      'seo.home': 'Главная',
+      'seo.about': 'О нас',
+      'seo.projects': 'Проекты',
+      'seo.services': 'Услуги',
+      'seo.gallery': 'Галерея',
+      'seo.contacts': 'Контакты',
+      'seo.googlePreview': 'Превью в Google',
+      'seo.socialPreview': 'Превью в соцсетях',
+      'seo.noOgImage': 'Нет OG-изображения',
+      'seo.pageTitle': 'Заголовок страницы',
+      'seo.metaDesc': 'Мета-описание',
+      'seo.ogTitle': 'OG Заголовок',
+      'seo.ogDesc': 'OG Описание',
+      'seo.ogImage': 'OG Изображение URL',
+      'seo.canonical': 'Canonical URL',
+      'seo.saveAll': 'Сохранить все языки',
+      'seo.savingAll': 'Сохранение всех языков...',
+      'seo.loadingLangs': 'Загрузка всех языков...',
+      'gallery.title': 'Менеджер галереи',
+      'gallery.upload': 'Загрузить фото',
+      'gallery.photos': 'фото',
+      'gallery.noImages': 'Нет изображений. Перетащите файлы или нажмите Загрузить.',
+      'gallery.dragDrop': 'Перетащите изображения сюда или нажмите Загрузить',
+      'gallery.uploading': 'Загрузка',
+      'gallery.savingData': 'Сохранение данных галереи...',
+      'gallery.uploaded': 'фото загружено!',
+      'gallery.moveLeft': 'Влево',
+      'gallery.moveRight': 'Вправо',
+      'faq.title': 'Редактор FAQ',
+      'faq.addQuestion': '+ Добавить вопрос',
+      'faq.publish': 'Опубликовать FAQ',
+      'faq.publishing': 'Публикация FAQ...',
+      'faq.published': 'Опубликовано! Сайт обновится (~1-2 мин)',
+      'faq.noItems': 'Пока нет вопросов. Нажмите "+ Добавить вопрос".',
+      'faq.question': 'Вопрос',
+      'faq.answer': 'Ответ',
+      'test.title': 'Редактор отзывов',
+      'test.add': '+ Добавить отзыв',
+      'test.publish': 'Опубликовать отзывы',
+      'test.publishing': 'Публикация отзывов...',
+      'test.published': 'Опубликовано! Сайт обновится (~1-2 мин)',
+      'test.noItems': 'Пока нет отзывов. Нажмите "+ Добавить отзыв".',
+      'test.name': 'Имя',
+      'test.role': 'Роль',
+      'test.text': 'Текст',
+      'test.stars': 'Звёзды',
+      'colors.title': 'Цвета сайта',
+      'colors.backgrounds': 'Фоны',
+      'colors.textBorders': 'Текст и границы',
+      'colors.accent': 'Акцент',
+      'colors.mainBg': 'Основной фон',
+      'colors.altBg': 'Альтернативный фон',
+      'colors.cardPanel': 'Карточки / Панели',
+      'colors.primaryText': 'Основной текст',
+      'colors.cream': 'Кремовый (Кнопки)',
+      'colors.brandAccent': 'Акцентный цвет',
+      'colors.derivedHint': 'Приглушённый, тусклый текст и цвета рамок вычисляются из основного цвета текста.',
+      'colors.muted': 'Приглуш. 75%',
+      'colors.dim': 'Тусклый 50%',
+      'colors.border': 'Рамка 10%',
+      'colors.save': 'Сохранить цвета',
+      'colors.reset': 'Сбросить к стандартным',
+      'colors.resetDone': 'Сброшено (не сохранено)',
+      'colors.invalidHex': 'Неверный HEX для ',
+      'help.colors.text': '<strong>Цвет текста</strong> определяет производные цвета (приглушённый, рамки).',
+      'help.colors.live': '<strong>Предпросмотр:</strong> Изменения видны мгновенно в админке.',
+      'help.colors.site': '<strong>На сайте:</strong> Цвета применятся после сохранения + ~1-2 мин.',
+      'help.colors.reset': 'Используйте <strong>Сбросить</strong> для возврата палитры.',
+      'newProject.title': 'Добавить проект',
+      'newProject.name': 'Название проекта',
+      'newProject.slug': 'Slug (авто)',
+      'newProject.status': 'Статус',
+      'newProject.startingPrice': 'Начальная цена ($)',
+      'newProject.totalUnits': 'Всего юнитов',
+      'newProject.bedrooms': 'Спальни',
+      'newProject.handover': 'Сдача',
+      'newProject.showcaseImage': 'Изображение',
+      'newProject.showcaseText': 'Текст карточки (EN)',
+      'newProject.subtitle': 'Короткий подзаголовок',
+      'newProject.desc': 'Описание',
+      'newProject.comparisonData': 'Данные для сравнения',
+      'newProject.areaRange': 'Диапазон площади',
+      'newProject.landRange': 'Диапазон участка',
+      'newProject.pool': 'Бассейн',
+      'newProject.cancel': 'Отмена',
+      'newProject.create': 'Создать проект',
+      'newProject.nameRequired': 'Укажите название',
+      'newProject.slugExists': 'Проект с таким slug уже существует',
+      'common.saving': 'Сохранение...',
+      'common.saved': 'Сохранено! Сайт обновится (~1-2 мин)',
+      'common.error': 'Ошибка: ',
+      'common.unsavedWarn': 'Есть несохранённые изменения. Переключить вкладку?',
+      'auth.wrongPassword': 'Неверный пароль.',
+      'auth.userNotFound': 'Аккаунт не найден.',
+      'auth.tooManyRequests': 'Слишком много попыток. Попробуйте позже.',
+      'auth.invalidEmail': 'Неверный email.',
+      'auth.invalidCredential': 'Неверный email или пароль.',
+      'auth.failed': 'Ошибка аутентификации.',
+      'validate.wa.required': 'Обязательное поле',
+      'validate.wa.digitsOnly': 'Только цифры — без +, пробелов или дефисов',
+      'validate.wa.tooShort': 'Слишком короткий — укажите код страны (напр. 62...)',
+      'validate.wa.tooLong': 'Слишком длинный — макс. 15 цифр',
+      'validate.wa.link': 'Ссылка: wa.me/',
+      'validate.phone.required': 'Обязательное поле',
+      'validate.phone.tooShort': 'Слишком короткий',
+    }
+  };
+
+  function t(key) {
+    return (ADMIN_I18N[adminLang] && ADMIN_I18N[adminLang][key]) || ADMIN_I18N.en[key] || key;
+  }
+
+  function translateUI() {
+    // Static elements with data-i18n attribute
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      const val = t(key);
+      if (val.includes('<strong>') || val.includes('<b>') || val.includes('<br>')) {
+        el.innerHTML = val;
+      } else {
+        el.textContent = val;
+      }
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      el.placeholder = t(el.getAttribute('data-i18n-placeholder'));
+    });
+    // Update active language toggle (both login screen and header)
+    document.querySelectorAll('[data-admin-lang]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.adminLang === adminLang);
+    });
+  }
+
+  function setAdminLang(lang) {
+    adminLang = lang;
+    localStorage.setItem('admin_lang', lang);
+    translateUI();
+    // Re-render dynamic sections
+    if (!adminApp.hidden) {
+      renderDashboard();
+      renderRateInfo();
+      renderGuideInfo();
+      renderProjectEditor();
+      renderGallery();
+      if (faqData) renderFaqEditor();
+      if (testimonialsData) renderTestimonialsEditor();
+      // Re-render SEO if open
+      const seoPage = $('#seo-page');
+      if (seoPage && seoPage.value && Object.keys(seoCache).length) {
+        loadAllSEO(seoPage.value);
+      }
+    }
+  }
+
   // ─── Firebase Config ───
   // Replace with your Firebase project config from console.firebase.google.com
   const FIREBASE_CONFIG = {
@@ -67,7 +552,7 @@
 
   // ─── Init Firebase ───
   if (typeof firebase === 'undefined') {
-    loginError.textContent = 'Firebase SDK failed to load. Check your internet connection.';
+    loginError.textContent = t('auth.failed');
     loginError.hidden = false;
     return;
   }
@@ -129,7 +614,7 @@
     const password = $('#login-password').value;
     const btn = loginForm.querySelector('button[type="submit"]');
     btn.disabled = true;
-    btn.textContent = 'Signing in...';
+    btn.textContent = t('login.signingIn');
     try {
       await auth.signInWithEmailAndPassword(email, password);
     } catch (err) {
@@ -138,19 +623,19 @@
       loginError.hidden = false;
     } finally {
       btn.disabled = false;
-      btn.textContent = 'Sign In';
+      btn.textContent = t('login.submit');
     }
   });
 
   function friendlyError(code) {
     const map = {
-      'auth/wrong-password': 'Wrong password. Try again.',
-      'auth/user-not-found': 'No account with this email.',
-      'auth/too-many-requests': 'Too many attempts. Try later.',
-      'auth/invalid-email': 'Invalid email address.',
-      'auth/invalid-credential': 'Invalid email or password.'
+      'auth/wrong-password': t('auth.wrongPassword'),
+      'auth/user-not-found': t('auth.userNotFound'),
+      'auth/too-many-requests': t('auth.tooManyRequests'),
+      'auth/invalid-email': t('auth.invalidEmail'),
+      'auth/invalid-credential': t('auth.invalidCredential')
     };
-    return map[code] || 'Authentication failed. Please try again.';
+    return map[code] || t('auth.failed');
   }
 
   // ─── PAT Screen ───
@@ -174,7 +659,7 @@
       }
       showAdmin();
     } else {
-      patError.textContent = 'Invalid token. Ensure it has "contents:write" scope for this repo.';
+      patError.textContent = t('pat.error');
       patError.hidden = false;
     }
   });
@@ -202,6 +687,7 @@
     adminApp.hidden = false;
     loadProjectsData();
     loadSiteData();
+    translateUI();
     buildDynamicUI();
     renderDashboard();
     renderRateInfo();
@@ -230,10 +716,10 @@
   // ─── Tab Navigation ───
   $$('.admin-nav__btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      if (pendingChanges && !confirm('You have unsaved changes. Switch tab anyway?')) return;
+      if (pendingChanges && !confirm(t('common.unsavedWarn'))) return;
       $$('.admin-nav__btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      $$('.admin-tab').forEach(t => t.hidden = true);
+      $$('.admin-tab').forEach(tab => tab.hidden = true);
       $(`#tab-${btn.dataset.tab}`).hidden = false;
     });
   });
@@ -266,7 +752,7 @@
     if (tabsContainer) {
       tabsContainer.innerHTML = keys.map((k, i) =>
         `<button class="project-tabs__btn${i === 0 ? ' active' : ''}" data-proj="${k}">${projectsData[k].name}</button>`
-      ).join('') + '<button class="project-tabs__btn project-tabs__btn--add" id="btn-new-project">+ New Project</button>';
+      ).join('') + `<button class="project-tabs__btn project-tabs__btn--add" id="btn-new-project">${t('projects.newProject')}</button>`;
       tabsContainer.querySelectorAll('.project-tabs__btn[data-proj]').forEach(btn => {
         btn.addEventListener('click', () => {
           tabsContainer.querySelectorAll('.project-tabs__btn').forEach(b => b.classList.remove('active'));
@@ -351,23 +837,23 @@
     let html = `<div class="dash-summary">
       <div class="dash-summary__item">
         <div class="dash-summary__value">${totalUnits}</div>
-        <div class="dash-summary__label">Total Units</div>
+        <div class="dash-summary__label">${t('dash.totalUnits')}</div>
       </div>
       <div class="dash-summary__item">
         <div class="dash-summary__value">${totalSold}</div>
-        <div class="dash-summary__label">Sold / Booked</div>
+        <div class="dash-summary__label">${t('dash.soldBooked')}</div>
       </div>
       <div class="dash-summary__item">
         <div class="dash-summary__value">${totalAvailable}</div>
-        <div class="dash-summary__label">Available</div>
+        <div class="dash-summary__label">${t('dash.available')}</div>
       </div>
       <div class="dash-summary__item">
         <div class="dash-summary__value">${totalPct}%</div>
-        <div class="dash-summary__label">Overall Progress</div>
+        <div class="dash-summary__label">${t('dash.overallProgress')}</div>
       </div>
       <div class="dash-summary__item">
         <div class="dash-summary__value">$${(totalRevenue / 1000000).toFixed(1)}M</div>
-        <div class="dash-summary__label">Est. Revenue</div>
+        <div class="dash-summary__label">${t('dash.estRevenue')}</div>
       </div>
     </div>`;
 
@@ -375,7 +861,7 @@
     html += '<div class="dashboard-grid">';
     projectStats.forEach(({ key, p, sold, total, pct, left, revenue }) => {
       const badgeClass = p.status === 'pre-sale' ? 'presale' : 'progress';
-      const badgeText = p.status === 'pre-sale' ? 'Pre-Sale' : 'In Progress';
+      const badgeText = p.status === 'pre-sale' ? t('dash.preSale') : t('dash.inProgress');
 
       // Unit breakdown for Villas/Estates
       let breakdown = '';
@@ -383,10 +869,10 @@
         const counts = { available: 0, booked: 0, sold: 0, resale: 0 };
         p.units.forEach(u => { counts[u.status] = (counts[u.status] || 0) + 1; });
         breakdown = `<div class="dash-card__breakdown">
-          ${counts.available ? `<span class="dash-break dash-break--available">${counts.available} available</span>` : ''}
-          ${counts.booked ? `<span class="dash-break dash-break--booked">${counts.booked} booked</span>` : ''}
-          ${counts.sold ? `<span class="dash-break dash-break--sold">${counts.sold} sold</span>` : ''}
-          ${counts.resale ? `<span class="dash-break dash-break--resale">${counts.resale} resale</span>` : ''}
+          ${counts.available ? `<span class="dash-break dash-break--available">${counts.available} ${t('dash.breakAvailable')}</span>` : ''}
+          ${counts.booked ? `<span class="dash-break dash-break--booked">${counts.booked} ${t('dash.breakBooked')}</span>` : ''}
+          ${counts.sold ? `<span class="dash-break dash-break--sold">${counts.sold} ${t('dash.breakSold')}</span>` : ''}
+          ${counts.resale ? `<span class="dash-break dash-break--resale">${counts.resale} ${t('dash.breakResale')}</span>` : ''}
         </div>`;
       }
 
@@ -396,10 +882,10 @@
           <span class="dash-card__badge dash-card__badge--${badgeClass}">${badgeText}</span>
         </div>
         <div class="dash-card__stats">
-          <div><div class="dash-card__stat-value">${sold}/${total}</div><div class="dash-card__stat-label">Sold</div></div>
-          <div><div class="dash-card__stat-value">${left}</div><div class="dash-card__stat-label">Left</div></div>
-          <div><div class="dash-card__stat-value">$${(p.startingPrice / 1000).toFixed(0)}K</div><div class="dash-card__stat-label">From</div></div>
-          <div><div class="dash-card__stat-value">$${revenue >= 1000000 ? (revenue / 1000000).toFixed(1) + 'M' : (revenue / 1000).toFixed(0) + 'K'}</div><div class="dash-card__stat-label">Revenue</div></div>
+          <div><div class="dash-card__stat-value">${sold}/${total}</div><div class="dash-card__stat-label">${t('dash.sold')}</div></div>
+          <div><div class="dash-card__stat-value">${left}</div><div class="dash-card__stat-label">${t('dash.left')}</div></div>
+          <div><div class="dash-card__stat-value">$${(p.startingPrice / 1000).toFixed(0)}K</div><div class="dash-card__stat-label">${t('dash.from')}</div></div>
+          <div><div class="dash-card__stat-value">$${revenue >= 1000000 ? (revenue / 1000000).toFixed(1) + 'M' : (revenue / 1000).toFixed(0) + 'K'}</div><div class="dash-card__stat-label">${t('dash.revenue')}</div></div>
         </div>
         <div class="dash-card__bar">
           <div class="dash-card__bar-track"><div class="dash-card__bar-fill" style="width:${pct}%"></div></div>
@@ -407,15 +893,15 @@
         </div>
         ${breakdown}
         <div class="dash-card__actions">
-          <button class="dash-card__edit btn btn--outline btn--sm" data-goto="${key}">Edit Project →</button>
-          <a href="https://winstik13.github.io/global-bali-home/${p.page || 'project-' + p.slug + '.html'}" target="_blank" rel="noopener" class="btn btn--outline btn--sm" style="text-decoration:none">View on Site ↗</a>
+          <button class="dash-card__edit btn btn--outline btn--sm" data-goto="${key}">${t('dash.editProject')}</button>
+          <a href="https://winstik13.github.io/global-bali-home/${p.page || 'project-' + p.slug + '.html'}" target="_blank" rel="noopener" class="btn btn--outline btn--sm" style="text-decoration:none">${t('dash.viewOnSite')}</a>
         </div>
       </div>`;
     });
     html += '</div>';
 
     // Recent commits
-    html += '<div class="dash-commits"><h3>Recent Changes</h3><div id="dash-commits-list"><span style="color:var(--color-text-dim)">Loading...</span></div></div>';
+    html += `<div class="dash-commits"><h3>${t('dash.recentChanges')}</h3><div id="dash-commits-list"><span style="color:var(--color-text-dim)">${t('dash.loading')}</span></div></div>`;
 
     container.innerHTML = html;
 
@@ -425,7 +911,7 @@
         currentProject = btn.dataset.goto;
         $$('.admin-nav__btn').forEach(b => b.classList.remove('active'));
         $$('.admin-nav__btn').forEach(b => { if (b.dataset.tab === 'projects') b.classList.add('active'); });
-        $$('.admin-tab').forEach(t => t.hidden = true);
+        $$('.admin-tab').forEach(tab => tab.hidden = true);
         $('#tab-projects').hidden = false;
         $$('.project-tabs__btn').forEach(b => b.classList.remove('active'));
         $$('.project-tabs__btn').forEach(b => { if (b.dataset.proj === currentProject) b.classList.add('active'); });
@@ -445,7 +931,7 @@
       const commits = await res.json();
       const list = $('#dash-commits-list');
       if (!commits.length || !Array.isArray(commits)) {
-        list.innerHTML = '<span style="color:var(--color-text-dim)">No recent changes to project data.</span>';
+        list.innerHTML = `<span style="color:var(--color-text-dim)">${t('dash.noChanges')}</span>`;
         return;
       }
       list.innerHTML = commits.map(c => {
@@ -457,7 +943,7 @@
         </div>`;
       }).join('');
     } catch {
-      $('#dash-commits-list').innerHTML = '<span style="color:var(--color-text-dim)">Could not load commit history.</span>';
+      $('#dash-commits-list').innerHTML = `<span style="color:var(--color-text-dim)">${t('dash.couldNotLoad')}</span>`;
     }
   }
 
@@ -480,16 +966,16 @@
 
     // Unit Table
     if (p.units) {
-      html += `<div class="editor-section"><h3>Units</h3>
+      html += `<div class="editor-section"><h3>${t('projects.units')}</h3>
         <table class="admin-unit-table"><thead><tr>
-          <th>Unit</th><th>Type</th><th>Floors</th><th>Area</th><th>Land</th><th>Badge</th><th>Status</th><th>Price ($)</th><th></th>
+          <th>${t('projects.unit')}</th><th>${t('projects.type')}</th><th>${t('projects.floors')}</th><th>${t('projects.area')}</th><th>${t('projects.land')}</th><th>${t('projects.badge')}</th><th>${t('projects.status')}</th><th>${t('projects.price')}</th><th></th>
         </tr></thead><tbody>`;
 
       p.units.forEach((u, i) => {
         html += `<tr>
           <td><input type="text" data-unit="${i}" data-field="id" class="unit-text" value="${u.id}" style="width:48px"></td>
           <td><select data-unit="${i}" data-field="type" class="unit-text-sel">
-            ${['1 Bedroom', '2 Bedroom', '3 Bedroom', '4 Bedroom', '4.5 Bedroom', '5 Bedroom'].map(t => `<option value="${t}"${u.type === t ? ' selected' : ''}>${t}</option>`).join('')}
+            ${['1 Bedroom', '2 Bedroom', '3 Bedroom', '4 Bedroom', '4.5 Bedroom', '5 Bedroom'].map(v => `<option value="${v}"${u.type === v ? ' selected' : ''}>${v}</option>`).join('')}
           </select></td>
           <td><input type="number" data-unit="${i}" data-field="floors" class="unit-text" value="${u.floors}" style="width:48px" min="1" max="5"></td>
           <td><input type="text" data-unit="${i}" data-field="area" class="unit-text" value="${u.area}" style="width:72px"></td>
@@ -499,17 +985,17 @@
             ${['available', 'booked', 'sold', 'resale'].map(s => `<option value="${s}"${u.status === s ? ' selected' : ''}>${s.charAt(0).toUpperCase() + s.slice(1)}</option>`).join('')}
           </select></td>
           <td><input type="number" data-unit="${i}" data-field="price" class="unit-price" value="${u.price || ''}" placeholder="—" min="0" step="1000"></td>
-          <td><button class="btn--icon btn--danger" data-delete-unit="${i}" title="Delete unit">&times;</button></td>
+          <td><button class="btn--icon btn--danger" data-delete-unit="${i}" title="${t('projects.deleteUnit')}">&times;</button></td>
         </tr>`;
       });
-      html += '</tbody></table><button class="btn btn--outline btn--sm" id="btn-add-unit" style="margin-top:8px">+ Add Unit</button></div>';
+      html += `</tbody></table><button class="btn btn--outline btn--sm" id="btn-add-unit" style="margin-top:8px">${t('projects.addUnit')}</button></div>`;
     }
 
     // Village Unit Types
     if (p.unitTypes) {
-      html += `<div class="editor-section"><h3>Unit Types</h3>
+      html += `<div class="editor-section"><h3>${t('projects.unitTypes')}</h3>
         <table class="admin-unit-table"><thead><tr>
-          <th>Type</th><th>Floors</th><th>Area</th><th>Land</th><th>Units</th><th>Price ($)</th><th></th>
+          <th>${t('projects.type')}</th><th>${t('projects.floors')}</th><th>${t('projects.area')}</th><th>${t('projects.land')}</th><th>${t('projects.unit')}</th><th>${t('projects.price')}</th><th></th>
         </tr></thead><tbody>`;
 
       p.unitTypes.forEach((ut, i) => {
@@ -520,21 +1006,21 @@
           <td><input type="text" data-utype="${i}" data-field="land" class="utype-text" value="${ut.land}" style="width:72px"></td>
           <td><input type="number" data-utype="${i}" data-field="count" class="utype-text" value="${ut.count}" style="width:48px" min="0"></td>
           <td><input type="number" data-utype="${i}" data-field="price" class="utype-price" value="${ut.price || ''}" min="0" step="1000"></td>
-          <td><button class="btn--icon btn--danger" data-delete-utype="${i}" title="Delete type">&times;</button></td>
+          <td><button class="btn--icon btn--danger" data-delete-utype="${i}" title="${t('projects.deleteType')}">&times;</button></td>
         </tr>`;
       });
-      html += '</tbody></table><button class="btn btn--outline btn--sm" id="btn-add-utype" style="margin-top:8px">+ Add Type</button></div>';
+      html += `</tbody></table><button class="btn btn--outline btn--sm" id="btn-add-utype" style="margin-top:8px">${t('projects.addType')}</button></div>`;
     }
 
     // Availability
-    html += `<div class="editor-section"><h3>Availability</h3>
+    html += `<div class="editor-section"><h3>${t('projects.availability')}</h3>
       <div style="display:flex;gap:24px;align-items:center;">
         <div class="form-group" style="width:120px">
-          <label>Sold</label>
+          <label>${t('projects.sold')}</label>
           <input type="number" id="avail-sold" value="${p.availability.sold}" min="0" max="${p.availability.total}">
         </div>
         <div class="form-group" style="width:120px">
-          <label>Total</label>
+          <label>${t('projects.total')}</label>
           <input type="number" id="avail-total" value="${p.availability.total}" min="1" readonly>
         </div>
         <div style="font-size:1.3rem;font-family:var(--font-heading);color:var(--color-cream)">${Math.round(p.availability.sold / p.availability.total * 100)}%</div>
@@ -542,15 +1028,15 @@
     </div>`;
 
     // Hero Stats (4 languages)
-    html += `<div class="editor-section"><h3>Hero Stats</h3>`;
+    html += `<div class="editor-section"><h3>${t('projects.heroStats')}</h3>`;
     ['en', 'ru', 'id'].forEach(lng => {
       const stats = p.heroStats[lng] || [];
       html += `<div style="margin-bottom:16px"><div class="hero-stat-field__lang">${lng.toUpperCase()}</div>
         <div class="hero-stats-grid">`;
       stats.forEach((s, i) => {
         html += `<div class="hero-stat-field">
-          <div class="form-group"><label>Number</label><input type="text" data-lang="${lng}" data-stat="${i}" data-field="number" class="stat-input" value="${s.number}"></div>
-          <div class="form-group"><label>Label</label><input type="text" data-lang="${lng}" data-stat="${i}" data-field="label" class="stat-input" value="${s.label}"></div>
+          <div class="form-group"><label>${t('projects.number')}</label><input type="text" data-lang="${lng}" data-stat="${i}" data-field="number" class="stat-input" value="${s.number}"></div>
+          <div class="form-group"><label>${t('projects.label')}</label><input type="text" data-lang="${lng}" data-stat="${i}" data-field="label" class="stat-input" value="${s.label}"></div>
         </div>`;
       });
       html += '</div></div>';
@@ -558,11 +1044,11 @@
     html += '</div>';
 
     // Showcase Text (4 languages)
-    html += `<div class="editor-section"><h3>Showcase Card</h3>`;
+    html += `<div class="editor-section"><h3>${t('projects.showcaseCard')}</h3>`;
     ['en', 'ru', 'id'].forEach(lng => {
       html += `<div style="margin-bottom:16px"><div class="hero-stat-field__lang">${lng.toUpperCase()}</div>
-        <div class="form-group"><label>Price</label><input type="text" class="showcase-input" data-lang="${lng}" data-field="showcasePrice" value="${(p.showcasePrice[lng] || '')}"></div>
-        <div class="form-group" style="margin-top:8px"><label>Description</label><textarea class="showcase-input" data-lang="${lng}" data-field="showcaseDesc" rows="2">${(p.showcaseDesc[lng] || '')}</textarea></div>
+        <div class="form-group"><label>${t('projects.priceLabel')}</label><input type="text" class="showcase-input" data-lang="${lng}" data-field="showcasePrice" value="${(p.showcasePrice[lng] || '')}"></div>
+        <div class="form-group" style="margin-top:8px"><label>${t('projects.description')}</label><textarea class="showcase-input" data-lang="${lng}" data-field="showcaseDesc" rows="2">${(p.showcaseDesc[lng] || '')}</textarea></div>
       </div>`;
     });
     html += '</div>';
@@ -717,7 +1203,7 @@
 
   function markChanged() {
     pendingChanges = true;
-    $('#publish-status').textContent = 'Unsaved changes';
+    $('#publish-status').textContent = t('projects.unsaved');
     $('#publish-status').className = 'publish-status';
   }
 
@@ -727,19 +1213,19 @@
     const btn = $('#btn-publish');
     const status = $('#publish-status');
     btnLoading(btn, true);
-    status.textContent = 'Publishing...';
+    status.textContent = t('projects.publishing');
     status.className = 'publish-status';
 
     try {
       const dataContent = buildProjectsDataJS();
       await commitFile('data/projects-data.js', dataContent, 'Update project data via admin panel');
       pendingChanges = false;
-      status.textContent = 'Published! Site updating (~1-2 min)';
+      status.textContent = t('projects.published');
       status.className = 'publish-status success';
       renderDashboard();
       updateRateLimit();
     } catch (err) {
-      status.textContent = 'Error: ' + err.message;
+      status.textContent = t('common.error') + err.message;
       status.className = 'publish-status error';
     }
     btnLoading(btn, false);
@@ -774,7 +1260,7 @@
 
   async function loadAllSEO(page) {
     const editor = $('#seo-editor');
-    editor.innerHTML = '<p style="color:var(--color-text-dim)">Loading all languages...</p>';
+    editor.innerHTML = `<p style="color:var(--color-text-dim)">${t('seo.loadingLangs')}</p>`;
 
     try {
       // Load all 4 languages in parallel
@@ -795,15 +1281,15 @@
       const enFields = seoCache.en.fields;
       const pageUrl = `${BASE_URL}/${page}`;
       html += `<div class="editor-section seo-preview-section">
-        <h3>Google Search Preview</h3>
+        <h3>${t('seo.googlePreview')}</h3>
         <div class="serp-preview">
           <div class="serp-preview__title" id="serp-title">${escAttr(enFields.title)}</div>
           <div class="serp-preview__url">${pageUrl}</div>
           <div class="serp-preview__desc" id="serp-desc">${escAttr(enFields.description)}</div>
         </div>
-        <h3 style="margin-top:20px">Social Share Preview</h3>
+        <h3 style="margin-top:20px">${t('seo.socialPreview')}</h3>
         <div class="og-preview">
-          <div class="og-preview__image">${enFields.ogImage ? `<img src="${escAttr(enFields.ogImage)}" alt="">` : '<span>No OG Image</span>'}</div>
+          <div class="og-preview__image">${enFields.ogImage ? `<img src="${escAttr(enFields.ogImage)}" alt="">` : `<span>${t('seo.noOgImage')}</span>`}</div>
           <div class="og-preview__text">
             <div class="og-preview__site">winstik13.github.io</div>
             <div class="og-preview__title" id="og-title">${escAttr(enFields.ogTitle || enFields.title)}</div>
@@ -817,18 +1303,18 @@
         const f = seoCache[lng].fields;
         html += `<div class="editor-section seo-lang-section">
           <h3><span class="seo-lang-badge">${lng.toUpperCase()}</span> ${LANG_NAMES[lng]}</h3>
-          ${seoFieldHTML(lng, 'title', 'Page Title', f.title, 60)}
-          ${seoFieldHTML(lng, 'description', 'Meta Description', f.description, 160)}
-          ${seoFieldHTML(lng, 'ogTitle', 'OG Title', f.ogTitle, 60)}
-          ${seoFieldHTML(lng, 'ogDescription', 'OG Description', f.ogDescription, 160)}
-          ${seoFieldHTML(lng, 'ogImage', 'OG Image URL', f.ogImage, 0)}
-          ${seoFieldHTML(lng, 'canonical', 'Canonical URL', f.canonical, 0)}
+          ${seoFieldHTML(lng, 'title', t('seo.pageTitle'), f.title, 60)}
+          ${seoFieldHTML(lng, 'description', t('seo.metaDesc'), f.description, 160)}
+          ${seoFieldHTML(lng, 'ogTitle', t('seo.ogTitle'), f.ogTitle, 60)}
+          ${seoFieldHTML(lng, 'ogDescription', t('seo.ogDesc'), f.ogDescription, 160)}
+          ${seoFieldHTML(lng, 'ogImage', t('seo.ogImage'), f.ogImage, 0)}
+          ${seoFieldHTML(lng, 'canonical', t('seo.canonical'), f.canonical, 0)}
         </div>`;
       });
 
       // Save button
       html += `<div class="editor-section" style="display:flex;align-items:center;gap:16px">
-        <button id="btn-seo-save" class="btn btn--primary">Save All Languages</button>
+        <button id="btn-seo-save" class="btn btn--primary">${t('seo.saveAll')}</button>
         <span id="seo-save-status" class="publish-status"></span>
       </div>`;
 
@@ -867,7 +1353,7 @@
         const status = $('#seo-save-status');
         const btn = $('#btn-seo-save');
         btnLoading(btn, true);
-        status.textContent = 'Saving all languages...';
+        status.textContent = t('seo.savingAll');
         status.className = 'publish-status';
 
         let saved = 0;
@@ -891,7 +1377,7 @@
             // Update SHA for potential re-save
             cache.sha = result.content.sha;
             saved++;
-            status.textContent = `Saving... ${saved}/${LANGS.length}`;
+            status.textContent = `${t('common.saving')} ${saved}/${LANGS.length}`;
           } catch (err) {
             errors.push(`${lng}: ${err.message}`);
           }
@@ -901,7 +1387,7 @@
           status.textContent = `Saved ${saved}/${LANGS.length}. Errors: ${errors.join('; ')}`;
           status.className = 'publish-status error';
         } else {
-          status.textContent = `All ${saved} languages saved!`;
+          status.textContent = t('common.saved');
           status.className = 'publish-status success';
         }
         btnLoading(btn, false);
@@ -1013,10 +1499,10 @@
     const data = getGalleryData();
     const images = data[cat] || [];
 
-    galleryCount.textContent = `${images.length} photos`;
+    galleryCount.textContent = `${images.length} ${t('gallery.photos')}`;
 
     if (!images.length) {
-      galleryGrid.innerHTML = '<div class="empty-state"><div class="empty-state__icon">&#128247;</div><div class="empty-state__text">No images in this project. Drag & drop or click Upload to add photos.</div></div>';
+      galleryGrid.innerHTML = `<div class="empty-state"><div class="empty-state__icon">&#128247;</div><div class="empty-state__text">${t('gallery.noImages')}</div></div>`;
       return;
     }
 
@@ -1026,9 +1512,9 @@
         <img src="../${img}" alt="${escAttr(name)}" loading="lazy">
         <div class="admin-gallery-item__info">${escAttr(name)}</div>
         <div class="admin-gallery-item__actions">
-          <button class="admin-gallery-item__btn admin-gallery-item__btn--up" data-move-up="${i}" title="Move left">&#8592;</button>
-          <button class="admin-gallery-item__btn admin-gallery-item__btn--down" data-move-down="${i}" title="Move right">&#8594;</button>
-          <button class="admin-gallery-item__btn admin-gallery-item__btn--delete" data-delete="${i}" title="Delete">&times;</button>
+          <button class="admin-gallery-item__btn admin-gallery-item__btn--up" data-move-up="${i}" title="${t('gallery.moveLeft')}">&#8592;</button>
+          <button class="admin-gallery-item__btn admin-gallery-item__btn--down" data-move-down="${i}" title="${t('gallery.moveRight')}">&#8594;</button>
+          <button class="admin-gallery-item__btn admin-gallery-item__btn--delete" data-delete="${i}" title="${t('gallery.delete')}">&times;</button>
         </div>
       </div>`;
     }).join('');
@@ -1069,7 +1555,7 @@
     let uploaded = 0;
 
     for (const file of files) {
-      galleryProgress.innerHTML = `<div class="gallery-progress__text">Uploading ${uploaded + 1}/${files.length}: ${escAttr(file.name)}</div>
+      galleryProgress.innerHTML = `<div class="gallery-progress__text">${t('gallery.uploading')} ${uploaded + 1}/${files.length}: ${escAttr(file.name)}</div>
         <div class="gallery-progress__bar"><div class="gallery-progress__fill" style="width:${Math.round((uploaded / files.length) * 100)}%"></div></div>`;
 
       try {
@@ -1089,11 +1575,11 @@
     }
 
     // Update gallery-data.js
-    galleryProgress.innerHTML = `<div class="gallery-progress__text">Saving gallery data...</div>
+    galleryProgress.innerHTML = `<div class="gallery-progress__text">${t('gallery.savingData')}</div>
       <div class="gallery-progress__bar"><div class="gallery-progress__fill" style="width:100%"></div></div>`;
     await saveGalleryData('Add gallery images via admin panel');
 
-    galleryProgress.innerHTML = `<div class="gallery-progress__text" style="color:var(--color-success)">${uploaded}/${files.length} photos uploaded!</div>`;
+    galleryProgress.innerHTML = `<div class="gallery-progress__text" style="color:var(--color-success)">${uploaded}/${files.length} ${t('gallery.uploaded')}</div>`;
     setTimeout(() => { galleryProgress.hidden = true; }, 3000);
 
     renderGallery();
@@ -1223,7 +1709,7 @@
     const btn = document.createElement('button');
     btn.id = 'btn-generate-pages';
     btn.className = 'btn btn--outline';
-    btn.textContent = 'Generate Detail Pages';
+    btn.textContent = t('projects.generatePages');
     btn.style.marginLeft = '12px';
     actions.appendChild(btn);
 
@@ -1263,7 +1749,7 @@
         status.textContent = `${generated} pages generated!`;
         status.className = 'publish-status success';
       } catch (err) {
-        status.textContent = 'Error: ' + err.message;
+        status.textContent = t('common.error') + err.message;
         status.className = 'publish-status error';
       }
       btnLoading(btn, false);
@@ -1460,37 +1946,37 @@
     modal.innerHTML = `<div class="admin-modal__backdrop"></div>
       <div class="admin-modal__content">
         <div class="admin-modal__header">
-          <h2>Add New Project</h2>
+          <h2>${t('newProject.title')}</h2>
           <button class="admin-modal__close">&times;</button>
         </div>
         <div class="admin-modal__body">
-          <div class="form-group"><label>Project Name</label><input type="text" id="np-name" placeholder="e.g. Serenity Heights"></div>
-          <div class="form-group"><label>Slug (auto)</label><input type="text" id="np-slug" placeholder="serenity-heights" readonly></div>
+          <div class="form-group"><label>${t('newProject.name')}</label><input type="text" id="np-name" placeholder="e.g. Serenity Heights"></div>
+          <div class="form-group"><label>${t('newProject.slug')}</label><input type="text" id="np-slug" placeholder="serenity-heights" readonly></div>
           <div style="display:flex;gap:16px;flex-wrap:wrap">
-            <div class="form-group" style="flex:1;min-width:140px"><label>Status</label>
+            <div class="form-group" style="flex:1;min-width:140px"><label>${t('newProject.status')}</label>
               <select id="np-status"><option value="pre-sale">Pre-Sale</option><option value="in-progress">In Progress</option><option value="completed">Completed</option></select>
             </div>
-            <div class="form-group" style="flex:1;min-width:140px"><label>Starting Price ($)</label><input type="number" id="np-price" placeholder="119000" min="0" step="1000"></div>
-            <div class="form-group" style="flex:1;min-width:140px"><label>Total Units</label><input type="number" id="np-units" value="1" min="1"></div>
+            <div class="form-group" style="flex:1;min-width:140px"><label>${t('newProject.startingPrice')}</label><input type="number" id="np-price" placeholder="119000" min="0" step="1000"></div>
+            <div class="form-group" style="flex:1;min-width:140px"><label>${t('newProject.totalUnits')}</label><input type="number" id="np-units" value="1" min="1"></div>
           </div>
           <div style="display:flex;gap:16px;flex-wrap:wrap">
-            <div class="form-group" style="flex:1;min-width:140px"><label>Bedrooms</label><input type="text" id="np-bedrooms" placeholder="2–3"></div>
-            <div class="form-group" style="flex:1;min-width:140px"><label>Handover</label><input type="text" id="np-handover" placeholder="Q1 2028"></div>
-            <div class="form-group" style="flex:1;min-width:140px"><label>Showcase Image</label><input type="text" id="np-image" placeholder="images/project/hero.jpg"></div>
+            <div class="form-group" style="flex:1;min-width:140px"><label>${t('newProject.bedrooms')}</label><input type="text" id="np-bedrooms" placeholder="2–3"></div>
+            <div class="form-group" style="flex:1;min-width:140px"><label>${t('newProject.handover')}</label><input type="text" id="np-handover" placeholder="Q1 2028"></div>
+            <div class="form-group" style="flex:1;min-width:140px"><label>${t('newProject.showcaseImage')}</label><input type="text" id="np-image" placeholder="images/project/hero.jpg"></div>
           </div>
-          <h3 style="margin-top:16px">Showcase Text (EN)</h3>
-          <div class="form-group"><label>Short Subtitle</label><input type="text" id="np-subtitle" placeholder="12 modern villas with jungle views"></div>
-          <div class="form-group"><label>Description</label><textarea id="np-desc" rows="2" placeholder="Full description for projects page"></textarea></div>
-          <h3 style="margin-top:16px">Comparison Data</h3>
+          <h3 style="margin-top:16px">${t('newProject.showcaseText')}</h3>
+          <div class="form-group"><label>${t('newProject.subtitle')}</label><input type="text" id="np-subtitle" placeholder="12 modern villas with jungle views"></div>
+          <div class="form-group"><label>${t('newProject.desc')}</label><textarea id="np-desc" rows="2" placeholder="Full description for projects page"></textarea></div>
+          <h3 style="margin-top:16px">${t('newProject.comparisonData')}</h3>
           <div style="display:flex;gap:16px;flex-wrap:wrap">
-            <div class="form-group" style="flex:1;min-width:120px"><label>Area Range</label><input type="text" id="np-area" placeholder="100–200 m²"></div>
-            <div class="form-group" style="flex:1;min-width:120px"><label>Land Range</label><input type="text" id="np-land" placeholder="2–3 are"></div>
-            <div class="form-group" style="flex:1;min-width:120px"><label>Pool</label><input type="text" id="np-pool" placeholder="Private"></div>
+            <div class="form-group" style="flex:1;min-width:120px"><label>${t('newProject.areaRange')}</label><input type="text" id="np-area" placeholder="100–200 m²"></div>
+            <div class="form-group" style="flex:1;min-width:120px"><label>${t('newProject.landRange')}</label><input type="text" id="np-land" placeholder="2–3 are"></div>
+            <div class="form-group" style="flex:1;min-width:120px"><label>${t('newProject.pool')}</label><input type="text" id="np-pool" placeholder="Private"></div>
           </div>
         </div>
         <div class="admin-modal__footer">
-          <button class="btn btn--outline" id="np-cancel">Cancel</button>
-          <button class="btn btn--primary" id="np-create">Create Project</button>
+          <button class="btn btn--outline" id="np-cancel">${t('newProject.cancel')}</button>
+          <button class="btn btn--primary" id="np-create">${t('newProject.create')}</button>
         </div>
       </div>`;
 
@@ -1511,8 +1997,8 @@
     $('#np-create').addEventListener('click', () => {
       const name = $('#np-name').value.trim();
       const slug = $('#np-slug').value.trim();
-      if (!name || !slug) { alert('Name is required'); return; }
-      if (projectsData[slug]) { alert('Project with this slug already exists'); return; }
+      if (!name || !slug) { alert(t('newProject.nameRequired')); return; }
+      if (projectsData[slug]) { alert(t('newProject.slugExists')); return; }
 
       const status = $('#np-status').value;
       const price = +$('#np-price').value || 0;
@@ -1631,10 +2117,10 @@
       input.disabled = !!rate.auto;
     }
     if (rate.updatedAt) {
-      const modeLabel = rate.auto ? ' (auto)' : ' (manual)';
-      info.innerHTML = `<p><strong>Current rate:</strong> 1 USD = ${Number(rate.usdToIdr).toLocaleString('id-ID')} IDR${modeLabel} &bull; <strong>Updated:</strong> ${rate.updatedAt}</p>`;
+      const modeLabel = rate.auto ? ' ' + t('rate.autoMode') : ' ' + t('rate.manual');
+      info.innerHTML = `<p><strong>${t('rate.currentRate')}</strong> 1 USD = ${Number(rate.usdToIdr).toLocaleString('id-ID')} IDR${modeLabel} &bull; <strong>${t('rate.updated')}</strong> ${rate.updatedAt}</p>`;
     } else {
-      info.innerHTML = '<p style="color:var(--color-text-dim)">Default rate. Update to show accurate IDR prices on the site.</p>';
+      info.innerHTML = `<p style="color:var(--color-text-dim)">${t('rate.defaultMsg')}</p>`;
     }
   }
 
@@ -1663,11 +2149,11 @@
       if (!siteData) loadSiteData();
       const input = $('#rate-input');
       const newRate = parseInt(input.value, 10);
-      if (!newRate || newRate < 1000) { alert('Enter a valid rate (e.g. 16500)'); return; }
+      if (!newRate || newRate < 1000) { alert(t('rate.invalidRate')); return; }
 
       btnLoading(rateSaveBtn, true);
       const status = $('#rate-save-status');
-      status.textContent = 'Saving...';
+      status.textContent = t('common.saving');
       status.className = 'publish-status';
 
       try {
@@ -1676,12 +2162,12 @@
         siteData.exchangeRate.updatedAt = new Date().toISOString().split('T')[0];
         const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
         await commitFile('data/site-data.js', content, 'Update exchange rate: 1 USD = ' + newRate + ' IDR');
-        status.textContent = 'Saved! Site updating (~1-2 min)';
+        status.textContent = t('common.saved');
         status.className = 'publish-status success';
         renderRateInfo();
         updateRateLimit();
       } catch (err) {
-        status.textContent = 'Error: ' + err.message;
+        status.textContent = t('common.error') + err.message;
         status.className = 'publish-status error';
       }
       btnLoading(rateSaveBtn, false);
@@ -1694,9 +2180,9 @@
     if (!info) return;
     const guide = siteData.investmentGuide;
     if (guide.updatedAt) {
-      info.innerHTML = `<p><strong>Current file:</strong> ${escAttr(guide.path)}</p><p><strong>Version:</strong> ${guide.version} &bull; <strong>Updated:</strong> ${guide.updatedAt}</p>`;
+      info.innerHTML = `<p><strong>${t('guide.currentFile')}</strong> ${escAttr(guide.path)}</p><p><strong>${t('guide.version')}</strong> ${guide.version} &bull; <strong>${t('guide.updated')}</strong> ${guide.updatedAt}</p>`;
     } else {
-      info.innerHTML = '<p style="color:var(--color-text-dim)">No PDF uploaded yet. Upload a file to enable the Investment Guide download.</p>';
+      info.innerHTML = `<p style="color:var(--color-text-dim)">${t('guide.noFile')}</p>`;
     }
   }
 
@@ -1706,10 +2192,10 @@
   }
 
   function validateWhatsApp(val) {
-    if (!val) return { ok: false, msg: 'Required' };
-    if (/[^0-9]/.test(val)) return { ok: false, msg: 'Digits only — no +, spaces or dashes' };
-    if (val.length < 10) return { ok: false, msg: 'Too short — include country code (e.g. 62...)' };
-    if (val.length > 15) return { ok: false, msg: 'Too long — max 15 digits' };
+    if (!val) return { ok: false, msg: t('validate.wa.required') };
+    if (/[^0-9]/.test(val)) return { ok: false, msg: t('validate.wa.digitsOnly') };
+    if (val.length < 10) return { ok: false, msg: t('validate.wa.tooShort') };
+    if (val.length > 15) return { ok: false, msg: t('validate.wa.tooLong') };
     return { ok: true };
   }
 
@@ -1726,7 +2212,7 @@
       return;
     }
     if (result.ok) {
-      preview.textContent = 'Link: wa.me/' + clean;
+      preview.textContent = t('validate.wa.link') + clean;
       preview.classList.remove('field-hint--error');
       input.classList.remove('input--error');
       input.classList.add('input--ok');
@@ -1739,9 +2225,9 @@
   }
 
   function validatePhone(val) {
-    if (!val) return { ok: false, msg: 'Required' };
+    if (!val) return { ok: false, msg: t('validate.phone.required') };
     const digits = val.replace(/[^0-9]/g, '');
-    if (digits.length < 10) return { ok: false, msg: 'Too short' };
+    if (digits.length < 10) return { ok: false, msg: t('validate.phone.tooShort') };
     return { ok: true };
   }
 
@@ -1800,17 +2286,17 @@
       };
 
       btnLoading(contactsSaveBtn, true);
-      status.textContent = 'Saving...';
+      status.textContent = t('common.saving');
       status.className = 'publish-status';
 
       try {
         const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
         await commitFile('data/site-data.js', content, 'Update contact info via admin panel');
-        status.textContent = 'Saved! Site updating (~1-2 min)';
+        status.textContent = t('common.saved');
         status.className = 'publish-status success';
         updateRateLimit();
       } catch (err) {
-        status.textContent = 'Error: ' + err.message;
+        status.textContent = t('common.error') + err.message;
         status.className = 'publish-status error';
       }
       btnLoading(contactsSaveBtn, false);
@@ -1827,13 +2313,13 @@
       const file = guideFileInput.files[0];
       if (!file) return;
       if (!file.name.endsWith('.pdf')) {
-        alert('Please select a PDF file');
+        alert(t('guide.selectPdf'));
         return;
       }
 
       const status = $('#guide-upload-status');
       btnLoading(guideUploadBtn, true);
-      status.textContent = 'Uploading PDF...';
+      status.textContent = t('guide.uploading');
       status.className = 'publish-status';
 
       try {
@@ -1857,12 +2343,12 @@
         const siteDataContent = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
         await commitFile('data/site-data.js', siteDataContent, 'Update site data: investment guide metadata');
 
-        status.textContent = 'Uploaded! Site updating (~1-2 min)';
+        status.textContent = t('common.saved');
         status.className = 'publish-status success';
         renderGuideInfo();
         updateRateLimit();
       } catch (err) {
-        status.textContent = 'Error: ' + err.message;
+        status.textContent = t('common.error') + err.message;
         status.className = 'publish-status error';
       }
       btnLoading(guideUploadBtn, false);
@@ -1890,7 +2376,7 @@
     const sorted = faqData.slice().sort((a, b) => (a.order || 99) - (b.order || 99));
 
     if (!sorted.length) {
-      editor.innerHTML = '<div class="empty-state"><div class="empty-state__icon">&#10067;</div><div class="empty-state__text">No FAQ items yet. Click "+ Add Question" to create one.</div></div>';
+      editor.innerHTML = `<div class="empty-state"><div class="empty-state__icon">&#10067;</div><div class="empty-state__text">${t('faq.noItems')}</div></div>`;
       return;
     }
 
@@ -1907,8 +2393,8 @@
         </div>
         ${LANGS.map(lng => `<div class="faq-editor-lang">
           <div class="faq-editor-lang__label">${LANG_NAMES[lng]}</div>
-          <div class="form-group"><label>Question</label><input type="text" data-faq-field="question" data-faq-i="${i}" data-faq-lng="${lng}" value="${escAttr(item.question[lng] || '')}"></div>
-          <div class="form-group"><label>Answer</label><textarea data-faq-field="answer" data-faq-i="${i}" data-faq-lng="${lng}" rows="3">${escAttr(item.answer[lng] || '')}</textarea></div>
+          <div class="form-group"><label>${t('faq.question')}</label><input type="text" data-faq-field="question" data-faq-i="${i}" data-faq-lng="${lng}" value="${escAttr(item.question[lng] || '')}"></div>
+          <div class="form-group"><label>${t('faq.answer')}</label><textarea data-faq-field="answer" data-faq-i="${i}" data-faq-lng="${lng}" rows="3">${escAttr(item.answer[lng] || '')}</textarea></div>
         </div>`).join('')}
       </div>`;
     }).join('');
@@ -1992,18 +2478,18 @@
       if (!faqChanged || !faqData) return;
       btnLoading(faqPublishBtn, true);
       const status = $('#faq-publish-status');
-      status.textContent = 'Publishing FAQ...';
+      status.textContent = t('faq.publishing');
       status.className = 'publish-status';
 
       try {
         const content = buildFaqDataJS();
         await commitFile('data/faq-data.js', content, 'Update FAQ data via admin panel');
         faqChanged = false;
-        status.textContent = 'Published! Site updating (~1-2 min)';
+        status.textContent = t('faq.published');
         status.className = 'publish-status success';
         updateRateLimit();
       } catch (err) {
-        status.textContent = 'Error: ' + err.message;
+        status.textContent = t('common.error') + err.message;
         status.className = 'publish-status error';
       }
       btnLoading(faqPublishBtn, false);
@@ -2044,7 +2530,7 @@
     const sorted = testimonialsData.slice().sort((a, b) => (a.order || 99) - (b.order || 99));
 
     if (!sorted.length) {
-      editor.innerHTML = '<div class="empty-state"><div class="empty-state__icon">&#128172;</div><div class="empty-state__text">No testimonials yet. Click "+ Add Testimonial" to create one.</div></div>';
+      editor.innerHTML = `<div class="empty-state"><div class="empty-state__icon">&#128172;</div><div class="empty-state__text">${t('test.noItems')}</div></div>`;
       return;
     }
 
@@ -2060,13 +2546,13 @@
           </div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
-          <div class="form-group"><label>Stars</label><input type="number" data-test-field="stars" data-test-i="${i}" min="1" max="5" value="${item.stars || 5}"></div>
+          <div class="form-group"><label>${t('test.stars')}</label><input type="number" data-test-field="stars" data-test-i="${i}" min="1" max="5" value="${item.stars || 5}"></div>
         </div>
         ${LANGS.map(lng => `<div class="faq-editor-lang">
           <div class="faq-editor-lang__label">${LANGS_FULL[lng] || lng}</div>
-          <div class="form-group"><label>Name</label><input type="text" data-test-field="name" data-test-i="${i}" data-test-lng="${lng}" value="${escAttr(item.name[lng] || '')}"></div>
-          <div class="form-group"><label>Role</label><input type="text" data-test-field="role" data-test-i="${i}" data-test-lng="${lng}" value="${escAttr(item.role[lng] || '')}"></div>
-          <div class="form-group"><label>Text</label><textarea data-test-field="text" data-test-i="${i}" data-test-lng="${lng}" rows="3">${escAttr(item.text[lng] || '')}</textarea></div>
+          <div class="form-group"><label>${t('test.name')}</label><input type="text" data-test-field="name" data-test-i="${i}" data-test-lng="${lng}" value="${escAttr(item.name[lng] || '')}"></div>
+          <div class="form-group"><label>${t('test.role')}</label><input type="text" data-test-field="role" data-test-i="${i}" data-test-lng="${lng}" value="${escAttr(item.role[lng] || '')}"></div>
+          <div class="form-group"><label>${t('test.text')}</label><textarea data-test-field="text" data-test-i="${i}" data-test-lng="${lng}" rows="3">${escAttr(item.text[lng] || '')}</textarea></div>
         </div>`).join('')}
       </div>`;
     }).join('');
@@ -2137,18 +2623,18 @@
       if (!testimonialsChanged || !testimonialsData) return;
       btnLoading(testPublishBtn, true);
       const status = $('#testimonials-publish-status');
-      status.textContent = 'Publishing testimonials...';
+      status.textContent = t('test.publishing');
       status.className = 'publish-status';
 
       try {
         const content = '/* eslint-disable */\nconst TESTIMONIALS_DATA = ' + JSON.stringify(testimonialsData, null, 2) + ';\n';
         await commitFile('data/testimonials-data.js', content, 'Update testimonials via admin panel');
         testimonialsChanged = false;
-        status.textContent = 'Published! Site updating (~1-2 min)';
+        status.textContent = t('test.published');
         status.className = 'publish-status success';
         updateRateLimit();
       } catch (err) {
-        status.textContent = 'Error: ' + err.message;
+        status.textContent = t('common.error') + err.message;
         status.className = 'publish-status error';
       }
       btnLoading(testPublishBtn, false);
@@ -2280,7 +2766,7 @@
         const hexInput = $('#color-' + key + '-hex');
         const val = hexInput ? hexInput.value.trim() : '';
         if (!isValidHex(val)) {
-          status.textContent = 'Invalid hex for ' + key;
+          status.textContent = t('colors.invalidHex') + key;
           status.className = 'publish-status error';
           return;
         }
@@ -2288,16 +2774,16 @@
       }
       siteData.colors = colors;
       btnLoading(colorsSaveBtn, true);
-      status.textContent = 'Saving...';
+      status.textContent = t('common.saving');
       status.className = 'publish-status';
       try {
         const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
         await commitFile('data/site-data.js', content, 'Update site colors via admin panel');
-        status.textContent = 'Saved! Site updating (~1-2 min)';
+        status.textContent = t('common.saved');
         status.className = 'publish-status success';
         updateRateLimit();
       } catch (err) {
-        status.textContent = 'Error: ' + err.message;
+        status.textContent = t('common.error') + err.message;
         status.className = 'publish-status error';
       }
       btnLoading(colorsSaveBtn, false);
@@ -2320,11 +2806,21 @@
       }
       const status = $('#colors-save-status');
       if (status) {
-        status.textContent = 'Reset to defaults (not saved yet)';
+        status.textContent = t('colors.resetDone');
         status.className = 'publish-status';
       }
     });
   }
+
+  // ─── Language Toggle ───
+  document.querySelectorAll('[data-admin-lang]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      setAdminLang(btn.dataset.adminLang);
+    });
+  });
+
+  // Apply saved language on load (for login/pat screens)
+  translateUI();
 
   // ─── Helpers ───
   function escAttr(str) {

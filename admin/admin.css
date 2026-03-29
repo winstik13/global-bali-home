@@ -57,6 +57,16 @@ body {
   display: none !important;
 }
 
+.login-lang {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 10;
+}
+
 .login-card {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
@@ -400,6 +410,42 @@ body {
 .admin-header__user {
   font-size: 0.8rem;
   color: var(--color-text-dim);
+}
+
+.admin-header__lang {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.admin-header__lang-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-dim);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+  transition: color 0.2s, background 0.2s;
+}
+
+.admin-header__lang-btn:hover {
+  color: var(--color-text);
+  background: rgba(225, 217, 201, 0.08);
+}
+
+.admin-header__lang-btn.active {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.admin-header__lang-sep {
+  color: var(--color-text-dim);
+  opacity: 0.3;
+  font-size: 0.75rem;
+  user-select: none;
 }
 
 /* ─── NAV TABS ─── */

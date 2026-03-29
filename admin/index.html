@@ -15,22 +15,27 @@
 
   <!-- Login Screen -->
   <div id="login-screen" class="login-screen">
+    <div class="login-lang">
+      <button class="admin-header__lang-btn active" data-admin-lang="en">EN</button>
+      <span class="admin-header__lang-sep">|</span>
+      <button class="admin-header__lang-btn" data-admin-lang="ru">RU</button>
+    </div>
     <div class="login-card">
       <div class="login-card__logo">
         <img src="../images/common/LOGO.png" alt="Global Bali Home" height="60">
       </div>
-      <h1 class="login-card__title">Admin Panel</h1>
+      <h1 class="login-card__title" data-i18n="login.title">Admin Panel</h1>
       <form id="login-form" class="login-form">
         <div class="form-group">
-          <label for="login-email">Email</label>
+          <label for="login-email" data-i18n="login.email">Email</label>
           <input type="email" id="login-email" placeholder="admin@example.com" required autocomplete="email">
         </div>
         <div class="form-group">
-          <label for="login-password">Password</label>
+          <label for="login-password" data-i18n="login.password">Password</label>
           <input type="password" id="login-password" placeholder="Password" required autocomplete="current-password">
         </div>
         <div id="login-error" class="login-error" hidden></div>
-        <button type="submit" class="btn btn--primary btn--full">Sign In</button>
+        <button type="submit" class="btn btn--primary btn--full" data-i18n="login.submit">Sign In</button>
       </form>
     </div>
     <div class="login-watermark">
@@ -44,18 +49,18 @@
       <div class="login-card__logo">
         <img src="../images/common/LOGO.png" alt="Global Bali Home" height="60">
       </div>
-      <h1 class="login-card__title">GitHub Access</h1>
-      <p class="login-card__desc">Enter your GitHub Personal Access Token to enable publishing.</p>
+      <h1 class="login-card__title" data-i18n="pat.title">GitHub Access</h1>
+      <p class="login-card__desc" data-i18n="pat.desc">Enter your GitHub Personal Access Token to enable publishing.</p>
       <form id="pat-form" class="login-form">
         <div class="form-group">
-          <label for="pat-input">Personal Access Token</label>
+          <label for="pat-input" data-i18n="pat.label">Personal Access Token</label>
           <input type="password" id="pat-input" placeholder="github_pat_..." required>
         </div>
         <label class="checkbox-row">
-          <input type="checkbox" id="pat-remember"> Remember on this device
+          <input type="checkbox" id="pat-remember"> <span data-i18n="pat.remember">Remember on this device</span>
         </label>
         <div id="pat-error" class="login-error" hidden></div>
-        <button type="submit" class="btn btn--primary btn--full">Connect</button>
+        <button type="submit" class="btn btn--primary btn--full" data-i18n="pat.submit">Connect</button>
       </form>
     </div>
   </div>
@@ -67,34 +72,39 @@
     <header class="admin-header">
       <div class="admin-header__left">
         <img src="../images/common/LOGO.png" alt="Global Bali Home" height="36">
-        <span class="admin-header__title">Admin Panel</span>
+        <span class="admin-header__title" data-i18n="header.title">Admin Panel</span>
       </div>
       <div class="admin-header__right">
         <div class="admin-header__rate" id="header-rate">
-          <span class="admin-header__rate-label">USD/IDR</span>
+          <span class="admin-header__rate-label" data-i18n="header.rateLabel">USD/IDR</span>
           <span class="admin-header__rate-value" id="header-rate-value">—</span>
           <span class="admin-header__rate-time" id="header-rate-time"></span>
         </div>
+        <div class="admin-header__lang">
+          <button class="admin-header__lang-btn active" data-admin-lang="en">EN</button>
+          <span class="admin-header__lang-sep">|</span>
+          <button class="admin-header__lang-btn" data-admin-lang="ru">RU</button>
+        </div>
         <span id="admin-user" class="admin-header__user"></span>
-        <button id="btn-logout" class="btn btn--outline btn--sm">Sign Out</button>
+        <button id="btn-logout" class="btn btn--outline btn--sm" data-i18n="header.signOut">Sign Out</button>
       </div>
     </header>
 
     <!-- Nav -->
     <nav class="admin-nav">
-      <button class="admin-nav__btn active" data-tab="dashboard">Dashboard</button>
-      <button class="admin-nav__btn" data-tab="projects">Projects</button>
-      <button class="admin-nav__btn" data-tab="seo">SEO</button>
-      <button class="admin-nav__btn" data-tab="gallery">Gallery</button>
-      <button class="admin-nav__btn" data-tab="faq">FAQ</button>
-      <button class="admin-nav__btn" data-tab="testimonials">Testimonials</button>
-      <button class="admin-nav__btn" data-tab="colors">Colors</button>
+      <button class="admin-nav__btn active" data-tab="dashboard" data-i18n="nav.dashboard">Dashboard</button>
+      <button class="admin-nav__btn" data-tab="projects" data-i18n="nav.projects">Projects</button>
+      <button class="admin-nav__btn" data-tab="seo" data-i18n="nav.seo">SEO</button>
+      <button class="admin-nav__btn" data-tab="gallery" data-i18n="nav.gallery">Gallery</button>
+      <button class="admin-nav__btn" data-tab="faq" data-i18n="nav.faq">FAQ</button>
+      <button class="admin-nav__btn" data-tab="testimonials" data-i18n="nav.testimonials">Testimonials</button>
+      <button class="admin-nav__btn" data-tab="colors" data-i18n="nav.colors">Colors</button>
     </nav>
 
     <!-- Tab: Dashboard -->
     <main class="admin-content">
       <section id="tab-dashboard" class="admin-tab active">
-        <h2>Dashboard</h2>
+        <h2 data-i18n="dash.title">Dashboard</h2>
         <div id="dashboard-cards"></div>
         <div class="dashboard-status">
           <span id="last-update"></span>
@@ -104,22 +114,22 @@
         <div class="editor-section editor-section--has-help" style="margin-top:24px">
           <button class="editor-help-btn" data-help="rate" aria-label="Help">?</button>
           <div class="editor-help-popup" id="help-rate" hidden>
-            <p><strong>Manual:</strong> Enter the rate manually and click Save.</p>
-            <p><strong>Auto:</strong> Rate updates from API every hour. Manual input is disabled.</p>
-            <p><strong>Fallback:</strong> If API is unavailable, the last saved rate is used on the site.</p>
+            <p data-i18n="help.rate.manual"><strong>Manual:</strong> Enter the rate manually and click Save.</p>
+            <p data-i18n="help.rate.auto"><strong>Auto:</strong> Rate updates from API every hour. Manual input is disabled.</p>
+            <p data-i18n="help.rate.fallback"><strong>Fallback:</strong> If API is unavailable, the last saved rate is used on the site.</p>
           </div>
-          <h3>Exchange Rate (USD → IDR)</h3>
+          <h3 data-i18n="rate.title">Exchange Rate (USD → IDR)</h3>
           <div class="guide-upload">
             <div id="rate-info" class="guide-info"></div>
             <div class="guide-actions" style="gap:8px">
               <label class="auto-rate-toggle">
                 <input type="checkbox" id="rate-auto">
-                <span>Auto (live rate from API)</span>
+                <span data-i18n="rate.auto">Auto (live rate from API)</span>
               </label>
               <div class="form-group" style="margin:0;flex:0 0 160px">
                 <input type="number" id="rate-input" min="1000" step="100" placeholder="16500" style="width:100%">
               </div>
-              <button id="btn-rate-save" class="btn btn--primary btn--sm">Save Rate</button>
+              <button id="btn-rate-save" class="btn btn--primary btn--sm" data-i18n="rate.save">Save Rate</button>
               <span id="rate-save-status" class="publish-status"></span>
             </div>
           </div>
@@ -128,43 +138,43 @@
         <div class="editor-section editor-section--has-help" style="margin-top:24px">
           <button class="editor-help-btn" data-help="contacts" aria-label="Help">?</button>
           <div class="editor-help-popup" id="help-contacts" hidden>
-            <p><strong>Phone:</strong> Any format with spaces/dashes, start with +country code.</p>
-            <p><strong>WhatsApp:</strong> DIGITS ONLY, no +, spaces or dashes. Example: 6281338741177</p>
-            <p><strong>Email:</strong> Standard email format.</p>
-            <p><strong>Location:</strong> Display text, translate manually for each language.</p>
+            <p data-i18n="help.contacts.phone"><strong>Phone:</strong> Any format with spaces/dashes, start with +country code.</p>
+            <p data-i18n="help.contacts.whatsapp"><strong>WhatsApp:</strong> DIGITS ONLY, no +, spaces or dashes. Example: 6281338741177</p>
+            <p data-i18n="help.contacts.email"><strong>Email:</strong> Standard email format.</p>
+            <p data-i18n="help.contacts.location"><strong>Location:</strong> Display text, translate manually for each language.</p>
           </div>
-          <h3>Contact Information</h3>
+          <h3 data-i18n="contacts.title">Contact Information</h3>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
             <div class="form-group">
-              <label>Phone</label>
+              <label data-i18n="contacts.phone">Phone</label>
               <input type="tel" id="contact-phone" placeholder="+62 813 251 438 49">
-              <small class="field-hint">Display format, e.g. +62 813 251 438 49</small>
+              <small class="field-hint" data-i18n="contacts.hint.phone">Display format, e.g. +62 813 251 438 49</small>
             </div>
             <div class="form-group">
-              <label>WhatsApp Number</label>
+              <label data-i18n="contacts.whatsapp">WhatsApp Number</label>
               <input type="tel" id="contact-whatsapp" placeholder="6281338741177">
-              <small class="field-hint">Digits only, with country code, no +</small>
+              <small class="field-hint" data-i18n="contacts.hint.whatsapp">Digits only, with country code, no +</small>
               <small class="field-hint field-hint--preview" id="wa-preview"></small>
             </div>
             <div class="form-group">
-              <label>Email</label>
+              <label data-i18n="contacts.email">Email</label>
               <input type="email" id="contact-email" placeholder="office@globalbalihome.com">
             </div>
             <div class="form-group">
-              <label>Location (EN)</label>
+              <label data-i18n="contacts.locationEn">Location (EN)</label>
               <input type="text" id="contact-location-en" placeholder="Ubud, Bali, Indonesia">
             </div>
             <div class="form-group">
-              <label>Location (RU)</label>
+              <label data-i18n="contacts.locationRu">Location (RU)</label>
               <input type="text" id="contact-location-ru" placeholder="Убуд, Бали, Индонезия">
             </div>
             <div class="form-group">
-              <label>Location (ID)</label>
+              <label data-i18n="contacts.locationId">Location (ID)</label>
               <input type="text" id="contact-location-id" placeholder="Ubud, Bali, Indonesia">
             </div>
           </div>
           <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
-            <button id="btn-contacts-save" class="btn btn--primary btn--sm">Save Contacts</button>
+            <button id="btn-contacts-save" class="btn btn--primary btn--sm" data-i18n="contacts.save">Save Contacts</button>
             <span id="contacts-save-status" class="publish-status"></span>
           </div>
         </div>
@@ -172,15 +182,15 @@
         <div class="editor-section editor-section--has-help" style="margin-top:24px">
           <button class="editor-help-btn" data-help="guide" aria-label="Help">?</button>
           <div class="editor-help-popup" id="help-guide" hidden>
-            <p><strong>Format:</strong> PDF only.</p>
-            <p><strong>After upload:</strong> File is committed to the repository and available to site visitors.</p>
-            <p><strong>Deploy time:</strong> ~1-2 minutes after upload.</p>
+            <p data-i18n="help.guide.format"><strong>Format:</strong> PDF only.</p>
+            <p data-i18n="help.guide.afterUpload"><strong>After upload:</strong> File is committed to the repository and available to site visitors.</p>
+            <p data-i18n="help.guide.deployTime"><strong>Deploy time:</strong> ~1-2 minutes after upload.</p>
           </div>
-          <h3>Investment Guide PDF</h3>
+          <h3 data-i18n="guide.title">Investment Guide PDF</h3>
           <div class="guide-upload">
             <div id="guide-info" class="guide-info"></div>
             <div class="guide-actions">
-              <button id="btn-guide-upload" class="btn btn--primary btn--sm">Upload PDF</button>
+              <button id="btn-guide-upload" class="btn btn--primary btn--sm" data-i18n="guide.upload">Upload PDF</button>
               <input type="file" id="guide-file-input" accept=".pdf" hidden>
               <span id="guide-upload-status" class="publish-status"></span>
             </div>
@@ -190,29 +200,29 @@
 
       <!-- Tab: Projects -->
       <section id="tab-projects" class="admin-tab" hidden>
-        <h2>Project Editor</h2>
+        <h2 data-i18n="projects.title">Project Editor</h2>
         <div class="project-tabs"></div>
         <div id="project-editor"></div>
         <div class="editor-actions">
-          <button id="btn-publish" class="btn btn--primary">Publish Changes</button>
+          <button id="btn-publish" class="btn btn--primary" data-i18n="projects.publish">Publish Changes</button>
           <span id="publish-status" class="publish-status"></span>
         </div>
       </section>
 
       <!-- Tab: SEO -->
       <section id="tab-seo" class="admin-tab" hidden>
-        <h2>SEO Editor</h2>
+        <h2 data-i18n="seo.title">SEO Editor</h2>
         <div class="seo-controls">
           <div class="form-group">
-            <label for="seo-page">Page</label>
+            <label for="seo-page" data-i18n="seo.page">Page</label>
             <select id="seo-page">
-              <option value="">— Select page —</option>
-              <option value="index.html">Home</option>
-              <option value="about.html">About</option>
-              <option value="projects.html">Projects</option>
-              <option value="services.html">Services</option>
-              <option value="gallery.html">Gallery</option>
-              <option value="contacts.html">Contacts</option>
+              <option value="" data-i18n="seo.selectPage">— Select page —</option>
+              <option value="index.html" data-i18n="seo.home">Home</option>
+              <option value="about.html" data-i18n="seo.about">About</option>
+              <option value="projects.html" data-i18n="seo.projects">Projects</option>
+              <option value="services.html" data-i18n="seo.services">Services</option>
+              <option value="gallery.html" data-i18n="seo.gallery">Gallery</option>
+              <option value="contacts.html" data-i18n="seo.contacts">Contacts</option>
             </select>
           </div>
         </div>
@@ -221,61 +231,61 @@
 
       <!-- Tab: Gallery -->
       <section id="tab-gallery" class="admin-tab" hidden>
-        <h2>Gallery Manager</h2>
+        <h2 data-i18n="gallery.title">Gallery Manager</h2>
         <div class="gallery-controls">
           <select id="gallery-project"></select>
           <span id="gallery-count" class="gallery-count"></span>
-          <button id="btn-gallery-upload" class="btn btn--primary btn--sm">Upload Photos</button>
+          <button id="btn-gallery-upload" class="btn btn--primary btn--sm" data-i18n="gallery.upload">Upload Photos</button>
           <input type="file" id="gallery-file-input" accept="image/*" multiple hidden>
         </div>
         <div id="gallery-upload-progress" class="gallery-progress" hidden></div>
         <div id="gallery-drop-zone" class="gallery-drop-zone">
-          <div class="gallery-drop-zone__text">Drag & drop images here or use Upload button</div>
+          <div class="gallery-drop-zone__text" data-i18n="gallery.dragDrop">Drag & drop images here or use Upload button</div>
         </div>
         <div id="gallery-grid" class="admin-gallery-grid"></div>
       </section>
 
       <!-- Tab: FAQ -->
       <section id="tab-faq" class="admin-tab" hidden>
-        <h2>FAQ Editor</h2>
+        <h2 data-i18n="faq.title">FAQ Editor</h2>
         <div id="faq-editor"></div>
         <div class="editor-actions">
-          <button id="btn-faq-add" class="btn btn--outline">+ Add Question</button>
-          <button id="btn-faq-publish" class="btn btn--primary">Publish FAQ</button>
+          <button id="btn-faq-add" class="btn btn--outline" data-i18n="faq.addQuestion">+ Add Question</button>
+          <button id="btn-faq-publish" class="btn btn--primary" data-i18n="faq.publish">Publish FAQ</button>
           <span id="faq-publish-status" class="publish-status"></span>
         </div>
       </section>
 
       <!-- Tab: Colors -->
       <section id="tab-colors" class="admin-tab" hidden>
-        <h2>Site Colors</h2>
+        <h2 data-i18n="colors.title">Site Colors</h2>
 
         <div class="editor-section editor-section--has-help">
           <button class="editor-help-btn" data-help="colors" aria-label="Help">?</button>
           <div class="editor-help-popup" id="help-colors" hidden>
-            <p><strong>Text color</strong> determines derived colors (muted text, borders).</p>
-            <p><strong>Live preview:</strong> Changes apply instantly in admin panel.</p>
-            <p><strong>On site:</strong> Colors apply after Save + ~1-2 min deploy.</p>
-            <p>Use <strong>Reset to Defaults</strong> to restore original palette.</p>
+            <p data-i18n="help.colors.text"><strong>Text color</strong> determines derived colors (muted text, borders).</p>
+            <p data-i18n="help.colors.live"><strong>Live preview:</strong> Changes apply instantly in admin panel.</p>
+            <p data-i18n="help.colors.site"><strong>On site:</strong> Colors apply after Save + ~1-2 min deploy.</p>
+            <p data-i18n="help.colors.reset">Use <strong>Reset to Defaults</strong> to restore original palette.</p>
           </div>
-          <h3>Backgrounds</h3>
+          <h3 data-i18n="colors.backgrounds">Backgrounds</h3>
           <div class="color-group">
             <div class="color-picker-row">
-              <label>Main Background</label>
+              <label data-i18n="colors.mainBg">Main Background</label>
               <div class="color-input-pair">
                 <input type="color" id="color-bg" value="#1a1a14">
                 <input type="text" id="color-bg-hex" class="color-hex-input" value="#1a1a14" maxlength="7" placeholder="#1a1a14">
               </div>
             </div>
             <div class="color-picker-row">
-              <label>Alternate Background</label>
+              <label data-i18n="colors.altBg">Alternate Background</label>
               <div class="color-input-pair">
                 <input type="color" id="color-bgAlt" value="#111110">
                 <input type="text" id="color-bgAlt-hex" class="color-hex-input" value="#111110" maxlength="7" placeholder="#111110">
               </div>
             </div>
             <div class="color-picker-row">
-              <label>Card / Panel</label>
+              <label data-i18n="colors.cardPanel">Card / Panel</label>
               <div class="color-input-pair">
                 <input type="color" id="color-bgCard" value="#2a2a20">
                 <input type="text" id="color-bgCard-hex" class="color-hex-input" value="#2a2a20" maxlength="7" placeholder="#2a2a20">
@@ -285,23 +295,23 @@
         </div>
 
         <div class="editor-section">
-          <h3>Text & Borders</h3>
-          <p class="color-hint">Muted text, dim text, and border colors are automatically derived from the primary text color.</p>
+          <h3 data-i18n="colors.textBorders">Text & Borders</h3>
+          <p class="color-hint" data-i18n="colors.derivedHint">Muted text, dim text, and border colors are automatically derived from the primary text color.</p>
           <div class="color-group">
             <div class="color-picker-row">
-              <label>Primary Text</label>
+              <label data-i18n="colors.primaryText">Primary Text</label>
               <div class="color-input-pair">
                 <input type="color" id="color-text" value="#E1D9C9">
                 <input type="text" id="color-text-hex" class="color-hex-input" value="#E1D9C9" maxlength="7" placeholder="#E1D9C9">
               </div>
               <div class="color-derived" id="text-derived-preview">
-                <span class="color-swatch" id="swatch-muted"></span> Muted 75%
-                <span class="color-swatch" id="swatch-dim"></span> Dim 50%
-                <span class="color-swatch" id="swatch-border"></span> Border 10%
+                <span class="color-swatch" id="swatch-muted"></span> <span data-i18n="colors.muted">Muted 75%</span>
+                <span class="color-swatch" id="swatch-dim"></span> <span data-i18n="colors.dim">Dim 50%</span>
+                <span class="color-swatch" id="swatch-border"></span> <span data-i18n="colors.border">Border 10%</span>
               </div>
             </div>
             <div class="color-picker-row">
-              <label>Cream (Buttons)</label>
+              <label data-i18n="colors.cream">Cream (Buttons)</label>
               <div class="color-input-pair">
                 <input type="color" id="color-cream" value="#F7F7F0">
                 <input type="text" id="color-cream-hex" class="color-hex-input" value="#F7F7F0" maxlength="7" placeholder="#F7F7F0">
@@ -311,10 +321,10 @@
         </div>
 
         <div class="editor-section">
-          <h3>Accent</h3>
+          <h3 data-i18n="colors.accent">Accent</h3>
           <div class="color-group">
             <div class="color-picker-row">
-              <label>Brand Accent</label>
+              <label data-i18n="colors.brandAccent">Brand Accent</label>
               <div class="color-input-pair">
                 <input type="color" id="color-accent" value="#6B8F4E">
                 <input type="text" id="color-accent-hex" class="color-hex-input" value="#6B8F4E" maxlength="7" placeholder="#6B8F4E">
@@ -324,19 +334,19 @@
         </div>
 
         <div style="margin-top:16px;display:flex;align-items:center;gap:12px">
-          <button id="btn-colors-save" class="btn btn--primary">Save Colors</button>
-          <button id="btn-colors-reset" class="btn btn--outline">Reset to Defaults</button>
+          <button id="btn-colors-save" class="btn btn--primary" data-i18n="colors.save">Save Colors</button>
+          <button id="btn-colors-reset" class="btn btn--outline" data-i18n="colors.reset">Reset to Defaults</button>
           <span id="colors-save-status" class="publish-status"></span>
         </div>
       </section>
 
       <!-- Tab: Testimonials -->
       <section id="tab-testimonials" class="admin-tab" hidden>
-        <h2>Testimonials Editor</h2>
+        <h2 data-i18n="test.title">Testimonials Editor</h2>
         <div id="testimonials-editor"></div>
         <div class="editor-actions">
-          <button id="btn-testimonial-add" class="btn btn--outline">+ Add Testimonial</button>
-          <button id="btn-testimonials-publish" class="btn btn--primary">Publish Testimonials</button>
+          <button id="btn-testimonial-add" class="btn btn--outline" data-i18n="test.add">+ Add Testimonial</button>
+          <button id="btn-testimonials-publish" class="btn btn--primary" data-i18n="test.publish">Publish Testimonials</button>
           <span id="testimonials-publish-status" class="publish-status"></span>
         </div>
       </section>
