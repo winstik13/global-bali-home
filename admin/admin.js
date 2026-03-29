@@ -1082,7 +1082,6 @@
       const badgeClassMap = { 'pre-sale': 'presale', 'in-progress': 'progress', 'completed': 'completed', 'sold-out': 'soldout' };
       const badgeClass = badgeClassMap[dashStatus] || 'progress';
       const badgeText = t('dash.status_' + dashStatus);
-      const cardColor = cardColors[idx % cardColors.length];
 
       // Price range
       let prices = [];
