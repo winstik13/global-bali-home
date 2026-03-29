@@ -1313,17 +1313,27 @@
 
     // Floor Plans
     if (!p.floorPlans) p.floorPlans = {};
-    // Migrate old flat format { type: "url" } → { type: { "Ground Floor": "url" } }
+    // Migrate: ensure { floors, specs } structure
+    const specIconOptions = ['bedrooms', 'bathrooms', 'building', 'plot', 'pool', 'terrace', 'parking', 'garden'];
     Object.keys(p.floorPlans).forEach(type => {
-      if (typeof p.floorPlans[type] === 'string') {
-        p.floorPlans[type] = { 'Ground Floor': p.floorPlans[type] };
+      const entry = p.floorPlans[type];
+      if (typeof entry === 'string') {
+        p.floorPlans[type] = { floors: { 'Ground Floor': entry }, specs: [] };
+      } else if (!entry.floors) {
+        const floors = {};
+        const specs = entry.specs || [];
+        Object.keys(entry).forEach(k => { if (k !== 'specs') floors[k] = entry[k]; });
+        p.floorPlans[type] = { floors, specs };
       }
+      if (!p.floorPlans[type].specs) p.floorPlans[type].specs = [];
     });
     const planTypes = Object.keys(p.floorPlans);
     html += `<div class="editor-section"><h3>${t('projects.floorPlans')}</h3>
       <div class="floor-plans-types">`;
     planTypes.forEach(type => {
-      const floors = p.floorPlans[type] || {};
+      const data = p.floorPlans[type];
+      const floors = data.floors || {};
+      const specs = data.specs || [];
       const floorKeys = Object.keys(floors);
       html += `<div class="fp-type" data-plan-type="${type}">
         <div class="fp-type__header">
@@ -1332,6 +1342,21 @@
             <button class="btn btn--outline btn--sm fp-add-floor" data-type="${type}">+ Floor</button>
             <button class="btn--icon btn--danger fp-delete-type" data-type="${type}" title="Delete type">&times;</button>
           </div>
+        </div>
+        <div class="fp-type__specs">
+          <div class="fp-specs-label">Specs</div>
+          <div class="fp-specs-list">`;
+      specs.forEach((s, si) => {
+        html += `<div class="fp-spec-row">
+          <select class="fp-spec-icon" data-type="${type}" data-si="${si}">
+            ${specIconOptions.map(ico => `<option value="${ico}"${ico === s.icon ? ' selected' : ''}>${ico}</option>`).join('')}
+          </select>
+          <input type="text" class="fp-spec-text" data-type="${type}" data-si="${si}" value="${s.text}" placeholder="e.g. 2 Bedrooms">
+          <button class="btn--icon btn--danger fp-spec-delete" data-type="${type}" data-si="${si}">&times;</button>
+        </div>`;
+      });
+      html += `</div>
+          <button class="btn btn--outline btn--sm fp-add-spec" data-type="${type}" style="margin-top:6px">+ Spec</button>
         </div>
         <div class="fp-type__floors">`;
       floorKeys.forEach(floor => {
@@ -1568,7 +1593,7 @@
               body: JSON.stringify(body)
             });
             if (res.ok) {
-              p.floorPlans[type][floor] = path;
+              p.floorPlans[type].floors[floor] = path;
               markChanged();
               renderProjectEditor();
             }
@@ -1585,7 +1610,7 @@
       btn.addEventListener('click', () => {
         const { type, floor } = btn.dataset;
         if (!confirm(`Remove image for "${type} — ${floor}"?`)) return;
-        p.floorPlans[type][floor] = '';
+        p.floorPlans[type].floors[floor] = '';
         markChanged();
         renderProjectEditor();
       });
@@ -1596,8 +1621,8 @@
       btn.addEventListener('click', () => {
         const { type, floor } = btn.dataset;
         if (!confirm(`Delete floor "${floor}" from "${type}"?`)) return;
-        delete p.floorPlans[type][floor];
-        if (!Object.keys(p.floorPlans[type]).length) delete p.floorPlans[type];
+        delete p.floorPlans[type].floors[floor];
+        if (!Object.keys(p.floorPlans[type].floors).length) delete p.floorPlans[type];
         markChanged();
         renderProjectEditor();
       });
@@ -1621,8 +1646,46 @@
         const name = prompt('Floor name (e.g. "Upper Floor", "Roof Terrace"):');
         if (!name || !name.trim()) return;
         const trimmed = name.trim();
-        if (p.floorPlans[type][trimmed] !== undefined) { alert('This floor already exists'); return; }
-        p.floorPlans[type][trimmed] = '';
+        if (p.floorPlans[type].floors[trimmed] !== undefined) { alert('This floor already exists'); return; }
+        p.floorPlans[type].floors[trimmed] = '';
+        markChanged();
+        renderProjectEditor();
+      });
+    });
+
+    // Specs: icon change
+    editor.querySelectorAll('.fp-spec-icon').forEach(sel => {
+      sel.addEventListener('change', () => {
+        const { type, si } = sel.dataset;
+        p.floorPlans[type].specs[+si].icon = sel.value;
+        markChanged();
+      });
+    });
+
+    // Specs: text change
+    editor.querySelectorAll('.fp-spec-text').forEach(inp => {
+      inp.addEventListener('input', () => {
+        const { type, si } = inp.dataset;
+        p.floorPlans[type].specs[+si].text = inp.value;
+        markChanged();
+      });
+    });
+
+    // Specs: delete
+    editor.querySelectorAll('.fp-spec-delete').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const { type, si } = btn.dataset;
+        p.floorPlans[type].specs.splice(+si, 1);
+        markChanged();
+        renderProjectEditor();
+      });
+    });
+
+    // Specs: add
+    editor.querySelectorAll('.fp-add-spec').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const type = btn.dataset.type;
+        p.floorPlans[type].specs.push({ icon: 'bedrooms', text: '' });
         markChanged();
         renderProjectEditor();
       });
@@ -1651,7 +1714,7 @@
         if (!name || !name.trim()) return;
         const trimmed = name.trim();
         if (p.floorPlans[trimmed] !== undefined) { alert('This type already exists'); return; }
-        p.floorPlans[trimmed] = { 'Ground Floor': '' };
+        p.floorPlans[trimmed] = { floors: { 'Ground Floor': '' }, specs: [] };
         markChanged();
         renderProjectEditor();
       });

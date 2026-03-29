@@ -1921,6 +1921,17 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     });
 
     // --- Floor Plans ---
+    var fpIcons = {
+      bedrooms: '<svg viewBox="0 0 48 48" fill="none"><path d="M8 32V18a2 2 0 012-2h28a2 2 0 012 2v14" stroke="currentColor" stroke-width="1.5"/><path d="M4 32h40v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4z" stroke="currentColor" stroke-width="1.5"/><rect x="12" y="20" width="10" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="26" y="20" width="10" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>',
+      bathrooms: '<svg viewBox="0 0 48 48" fill="none"><path d="M18 8h-4a2 2 0 00-2 2v14" stroke="currentColor" stroke-width="1.5"/><rect x="8" y="24" width="32" height="4" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M12 28v6a4 4 0 004 4h16a4 4 0 004-4v-6" stroke="currentColor" stroke-width="1.5"/><circle cx="20" cy="16" r="1" fill="currentColor"/><circle cx="24" cy="14" r="1" fill="currentColor"/><circle cx="28" cy="16" r="1" fill="currentColor"/><circle cx="22" cy="19" r="1" fill="currentColor"/><circle cx="26" cy="19" r="1" fill="currentColor"/></svg>',
+      building: '<svg viewBox="0 0 48 48" fill="none"><path d="M10 38V14l14-6 14 6v24" stroke="currentColor" stroke-width="1.5"/><path d="M10 38h28" stroke="currentColor" stroke-width="1.5"/><rect x="20" y="26" width="8" height="12" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="15" y="18" width="6" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="27" y="18" width="6" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>',
+      plot: '<svg viewBox="0 0 48 48" fill="none"><path d="M6 38l8-24h20l8 24H6z" stroke="currentColor" stroke-width="1.5"/><path d="M14 14v-4h20v4" stroke="currentColor" stroke-width="1.5"/><path d="M18 22v8M24 20v12M30 22v8" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 2"/></svg>',
+      pool: '<svg viewBox="0 0 48 48" fill="none"><rect x="8" y="12" width="32" height="20" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 36c4-3 8 3 12 0s8 3 12 0s8 3 12 0" stroke="currentColor" stroke-width="1.5"/><path d="M14 12V8M34 12V8" stroke="currentColor" stroke-width="1.5"/><path d="M14 8h20" stroke="currentColor" stroke-width="1.5"/></svg>',
+      terrace: '<svg viewBox="0 0 48 48" fill="none"><path d="M6 38h36M10 38V22h28v16" stroke="currentColor" stroke-width="1.5"/><path d="M10 22L24 10l14 12" stroke="currentColor" stroke-width="1.5"/><path d="M6 28h4M38 28h4M6 33h4M38 33h4" stroke="currentColor" stroke-width="1.5"/><path d="M18 38V28h12v10" stroke="currentColor" stroke-width="1.5"/></svg>',
+      parking: '<svg viewBox="0 0 48 48" fill="none"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="1.5"/><path d="M18 34V14h8a6 6 0 010 12h-8" stroke="currentColor" stroke-width="1.5"/></svg>',
+      garden: '<svg viewBox="0 0 48 48" fill="none"><path d="M24 38V22" stroke="currentColor" stroke-width="1.5"/><path d="M24 22c-8 0-12-6-10-12 4 2 10 4 10 12z" stroke="currentColor" stroke-width="1.5"/><path d="M24 22c8 0 12-6 10-12-4 2-10 4-10 12z" stroke="currentColor" stroke-width="1.5"/><path d="M16 38h16" stroke="currentColor" stroke-width="1.5"/></svg>'
+    };
+
     document.querySelectorAll('.floor-plans-showcase[data-project]').forEach(function(el) {
       var key = el.dataset.project;
       var proj = PD[key];
@@ -1928,15 +1939,21 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       var types = Object.keys(proj.floorPlans);
       if (!types.length) return;
 
-      // Migrate old flat format
+      // Normalize data: ensure { floors, specs } structure
       types.forEach(function(t) {
-        if (typeof proj.floorPlans[t] === 'string') {
-          proj.floorPlans[t] = { 'Ground Floor': proj.floorPlans[t] };
+        var entry = proj.floorPlans[t];
+        if (typeof entry === 'string') {
+          proj.floorPlans[t] = { floors: { 'Ground Floor': entry }, specs: [] };
+        } else if (!entry.floors) {
+          var floors = {};
+          var specs = entry.specs || [];
+          Object.keys(entry).forEach(function(k) { if (k !== 'specs') floors[k] = entry[k]; });
+          proj.floorPlans[t] = { floors: floors, specs: specs };
         }
       });
 
       var comingSoon = dataLang === 'ru' ? 'Скоро' : dataLang === 'id' ? 'Segera' : 'Coming Soon';
-      var placeholderSvg = '<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="16" width="56" height="48" rx="3" stroke="currentColor" stroke-width="1.5"/><line x1="12" y1="40" x2="68" y2="40" stroke="currentColor" stroke-width="1.5"/><line x1="40" y1="16" x2="40" y2="64" stroke="currentColor" stroke-width="1.5"/><rect x="18" y="22" width="10" height="12" rx="1" stroke="currentColor" stroke-width="1"/><rect x="46" y="22" width="10" height="12" rx="1" stroke="currentColor" stroke-width="1"/><rect x="18" y="46" width="16" height="12" rx="1" stroke="currentColor" stroke-width="1"/><circle cx="56" cy="52" r="5" stroke="currentColor" stroke-width="1"/></svg>';
+      var placeholderSvg = '<svg viewBox="0 0 80 80" fill="none"><rect x="12" y="16" width="56" height="48" rx="3" stroke="currentColor" stroke-width="1.5"/><line x1="12" y1="40" x2="68" y2="40" stroke="currentColor" stroke-width="1.5"/><line x1="40" y1="16" x2="40" y2="64" stroke="currentColor" stroke-width="1.5"/><rect x="18" y="22" width="10" height="12" rx="1" stroke="currentColor" stroke-width="1"/><rect x="46" y="22" width="10" height="12" rx="1" stroke="currentColor" stroke-width="1"/></svg>';
 
       // Type selector tabs
       var html = '<div class="fp-tabs">';
@@ -1947,11 +1964,23 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
 
       // Content panels per type
       types.forEach(function(type, i) {
-        var floors = proj.floorPlans[type];
+        var data = proj.floorPlans[type];
+        var floors = data.floors;
+        var specs = data.specs || [];
         var floorKeys = Object.keys(floors);
         var hasMultiFloor = floorKeys.length > 1;
 
         html += '<div class="fp-panel' + (i === 0 ? ' fp-panel--active' : '') + '" data-fp-panel="' + type + '">';
+
+        // Specs grid
+        if (specs.length) {
+          html += '<div class="fp-specs">';
+          specs.forEach(function(s) {
+            var icon = fpIcons[s.icon] || '';
+            html += '<div class="fp-specs__item"><div class="fp-specs__icon">' + icon + '</div><div class="fp-specs__text">' + s.text + '</div></div>';
+          });
+          html += '</div>';
+        }
 
         // Floor tabs (only if multiple floors)
         if (hasMultiFloor) {

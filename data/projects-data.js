@@ -288,19 +288,45 @@ const PROJECTS_DATA = {
     ],
     "floorPlans": {
       "Type A — 2BR Single Story": {
-        "Ground Floor": "images/serenity-villas/plans/type-a-—-2br-single-story.webp"
+        "floors": { "Ground Floor": "images/serenity-villas/plans/type-a-—-2br-single-story.webp" },
+        "specs": [
+          { "icon": "bedrooms", "text": "2 Bedrooms" },
+          { "icon": "bathrooms", "text": "3 Bathrooms" },
+          { "icon": "building", "text": "Building size 122 sq m" },
+          { "icon": "plot", "text": "Plot area 280 sq m" },
+          { "icon": "pool", "text": "Swimming pool 23 sq m" },
+          { "icon": "terrace", "text": "Terrace 66 sq m" }
+        ]
       },
       "Type B — 2BR Two Story": {
-        "Ground Floor": "images/serenity-villas/plans/2-bedroom.webp",
-        "Upper Floor": ""
+        "floors": { "Ground Floor": "images/serenity-villas/plans/2-bedroom.webp", "Upper Floor": "" },
+        "specs": [
+          { "icon": "bedrooms", "text": "2 Bedrooms" },
+          { "icon": "bathrooms", "text": "3 Bathrooms" },
+          { "icon": "building", "text": "Building size 184 sq m" },
+          { "icon": "plot", "text": "Plot area 240 sq m" },
+          { "icon": "pool", "text": "Swimming pool 20 sq m" }
+        ]
       },
       "Type B — 3BR Two Story": {
-        "Ground Floor": "",
-        "Upper Floor": ""
+        "floors": { "Ground Floor": "", "Upper Floor": "" },
+        "specs": [
+          { "icon": "bedrooms", "text": "3 Bedrooms" },
+          { "icon": "bathrooms", "text": "3 Bathrooms" },
+          { "icon": "building", "text": "Building size 210 sq m" },
+          { "icon": "plot", "text": "Plot area 230 sq m" },
+          { "icon": "pool", "text": "Swimming pool 23 sq m" }
+        ]
       },
       "Type C — 2BR Two Story": {
-        "Ground Floor": "",
-        "Upper Floor": ""
+        "floors": { "Ground Floor": "", "Upper Floor": "" },
+        "specs": [
+          { "icon": "bedrooms", "text": "2 Bedrooms" },
+          { "icon": "bathrooms", "text": "2 Bathrooms" },
+          { "icon": "building", "text": "Building size 168 sq m" },
+          { "icon": "plot", "text": "Plot area 230 sq m" },
+          { "icon": "pool", "text": "Swimming pool 18 sq m" }
+        ]
       }
     }
   },
@@ -512,18 +538,44 @@ const PROJECTS_DATA = {
     ],
     "floorPlans": {
       "Type A — 4.5BR Villa": {
-        "Ground Floor": ""
+        "floors": { "Ground Floor": "" },
+        "specs": [
+          { "icon": "bedrooms", "text": "4.5 Bedrooms" },
+          { "icon": "bathrooms", "text": "5 Bathrooms" },
+          { "icon": "building", "text": "Building size 230 sq m" },
+          { "icon": "plot", "text": "Plot area 900 sq m" },
+          { "icon": "pool", "text": "Private pool" }
+        ]
       },
       "Type A — 4.5BR Villa Large": {
-        "Ground Floor": ""
+        "floors": { "Ground Floor": "" },
+        "specs": [
+          { "icon": "bedrooms", "text": "4.5 Bedrooms" },
+          { "icon": "bathrooms", "text": "5 Bathrooms" },
+          { "icon": "building", "text": "Building size 250 sq m" },
+          { "icon": "plot", "text": "Plot area 1400 sq m" },
+          { "icon": "pool", "text": "Private pool" }
+        ]
       },
       "Type B — 2BR Villa": {
-        "Ground Floor": "",
-        "Upper Floor": ""
+        "floors": { "Ground Floor": "", "Upper Floor": "" },
+        "specs": [
+          { "icon": "bedrooms", "text": "2 Bedrooms" },
+          { "icon": "bathrooms", "text": "2 Bathrooms" },
+          { "icon": "building", "text": "Building size 180 sq m" },
+          { "icon": "plot", "text": "Plot area 350 sq m" },
+          { "icon": "pool", "text": "Private pool" }
+        ]
       },
       "Type B — 2BR Villa Compact": {
-        "Ground Floor": "",
-        "Upper Floor": ""
+        "floors": { "Ground Floor": "", "Upper Floor": "" },
+        "specs": [
+          { "icon": "bedrooms", "text": "2 Bedrooms" },
+          { "icon": "bathrooms", "text": "2 Bathrooms" },
+          { "icon": "building", "text": "Building size 155 sq m" },
+          { "icon": "plot", "text": "Plot area 350 sq m" },
+          { "icon": "pool", "text": "Private pool" }
+        ]
       }
     }
   },
@@ -716,11 +768,22 @@ const PROJECTS_DATA = {
     ],
     "floorPlans": {
       "Type A — 1BR Villa": {
-        "Ground Floor": ""
+        "floors": { "Ground Floor": "" },
+        "specs": [
+          { "icon": "bedrooms", "text": "1 Bedroom" },
+          { "icon": "bathrooms", "text": "1 Bathroom" },
+          { "icon": "building", "text": "Building size 50 sq m" },
+          { "icon": "plot", "text": "Plot area 116 sq m" }
+        ]
       },
       "Type B — 2BR Villa": {
-        "Ground Floor": "",
-        "Upper Floor": ""
+        "floors": { "Ground Floor": "", "Upper Floor": "" },
+        "specs": [
+          { "icon": "bedrooms", "text": "2 Bedrooms" },
+          { "icon": "bathrooms", "text": "2 Bathrooms" },
+          { "icon": "building", "text": "Building size 84 sq m" },
+          { "icon": "plot", "text": "Plot area 154 sq m" }
+        ]
       }
     }
   },
