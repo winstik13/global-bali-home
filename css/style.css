@@ -26,6 +26,15 @@
   --color-border: rgba(225, 217, 201, 0.1);
   --color-border-hover: rgba(225, 217, 201, 0.25);
 
+  /* UI Colors */
+  --color-hover-bg: rgba(225, 217, 201, 0.05);
+  --color-error: #c0392b;
+  --color-error-light: #e74c3c;
+  --color-status-booked: #8B7355;
+  --color-status-resale: #C4A44A;
+  --color-whatsapp: #25D366;
+  --color-presale: #d99331;
+
   /* Typography */
   --font-heading: 'Playfair Display', Georgia, serif;
   --font-body: 'Montserrat', sans-serif;
@@ -370,7 +379,7 @@ p {
 }
 
 .header__lang-dropdown a:hover {
-  background: rgba(225, 217, 201, 0.05);
+  background: var(--color-hover-bg);
   color: var(--color-cream);
 }
 
@@ -873,7 +882,7 @@ td .price-idr {
 
 .btn--outline:hover {
   border-color: var(--color-text);
-  background: rgba(225, 217, 201, 0.05);
+  background: var(--color-hover-bg);
 }
 
 /* --- Why Bali (video background) --- */
@@ -1723,7 +1732,7 @@ td .price-idr {
   .quiz__option:hover {
     border-color: var(--color-text);
     color: var(--color-text);
-    background: rgba(225, 217, 201, 0.05);
+    background: var(--color-hover-bg);
   }
   .quiz__option:hover .quiz__option-icon svg {
     stroke: var(--color-text);
@@ -1733,7 +1742,7 @@ td .price-idr {
 .quiz__option:active {
   border-color: var(--color-text);
   color: var(--color-text);
-  background: rgba(225, 217, 201, 0.05);
+  background: var(--color-hover-bg);
 }
 
 .quiz__option-icon {
@@ -1909,7 +1918,7 @@ td .price-idr {
 
 .form-group .error-msg {
   font-size: var(--font-xs);
-  color: #c0392b;
+  color: var(--color-error);
   margin-top: 6px;
   display: none;
 }
@@ -1917,20 +1926,20 @@ td .price-idr {
 .form-group.error input,
 .form-group.error select,
 .form-group.error textarea {
-  border-color: #c0392b;
+  border-color: var(--color-error);
 }
 
 .form-group.error .error-msg { display: block; }
 
 /* Inline field validation (quiz, exit-popup, lead-magnet) */
 .field-error {
-  border-color: #c0392b !important;
+  border-color: var(--color-error) !important;
 }
 
 .field-error-msg {
   display: block;
   font-size: 0.72rem;
-  color: #e74c3c;
+  color: var(--color-error-light);
   margin-top: 6px;
   padding-left: 2px;
   animation: fieldErrorIn 0.3s ease;
@@ -2076,11 +2085,11 @@ td .price-idr {
 }
 
 .form-consent.error .form-consent__checkbox {
-  border-color: #c0392b;
+  border-color: var(--color-error);
 }
 
 .form-consent.error .form-consent__text {
-  color: #c0392b;
+  color: var(--color-error);
 }
 
 /* Contact info items */
@@ -2198,8 +2207,8 @@ td .price-idr {
 }
 
 .unit-table .status--available { color: var(--color-accent); font-weight: 600; }
-.unit-table .status--booked { color: #8B7355; font-weight: 600; }
-.unit-table .status--resale { color: #C4A44A; font-weight: 600; }
+.unit-table .status--booked { color: var(--color-status-booked); font-weight: 600; }
+.unit-table .status--resale { color: var(--color-status-resale); font-weight: 600; }
 
 .unit-table tr.unit--premium td {
   background: rgba(107, 143, 78, 0.06);
@@ -2259,7 +2268,7 @@ td .price-idr {
   z-index: 999;
   width: 52px;
   height: 52px;
-  background: #25D366;
+  background: var(--color-whatsapp);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -2310,8 +2319,8 @@ td .price-idr {
 }
 
 .project-card__badge--construction {
-  border-color: #8B7355;
-  color: #C4A44A;
+  border-color: var(--color-status-booked);
+  color: var(--color-status-resale);
 }
 
 /* --- Social Proof Bar --- */
@@ -2405,7 +2414,7 @@ td .price-idr {
 
 .comparison-table__badge--presale {
   background: rgba(217, 147, 49, 0.15);
-  color: #d99331;
+  color: var(--color-presale);
 }
 
 .comparison-table__cta {
@@ -2798,9 +2807,9 @@ td .price-idr {
   padding: 12px 28px;
   padding-left: 28px;
   margin-top: 12px;
-  background: #25D366;
+  background: var(--color-whatsapp);
   color: #fff;
-  border-color: #25D366;
+  border-color: var(--color-whatsapp);
 }
 
 .lead-magnet__wa:hover {
@@ -3026,6 +3035,7 @@ td .price-idr {
     gap: 28px;
     z-index: -1;
     overflow-y: auto;
+    max-height: calc(100vh - var(--header-height));
   }
 
   .header__nav::after {

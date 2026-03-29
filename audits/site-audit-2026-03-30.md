@@ -85,9 +85,9 @@
 
 ## 4. CSS
 
-**[CSS-1] Захардкоженные цвета вне CSS-переменных**
-- 11 мест: `#c0392b`, `#e74c3c` (ошибки), `#8B7355` (booked), `#C4A44A` (resale), `#25D366` (WhatsApp), `#d99331` (presale).
-- **Фикс:** вынести в переменные: `--color-error`, `--color-status-booked`, `--color-status-resale`, `--color-whatsapp`, `--color-presale`.
+**[CSS-1] ~~Захардкоженные цвета вне CSS-переменных~~ ✅ РЕШЕНО**
+- ~~11 мест с хардкоженными цветами.~~
+- **Исправлено:** добавлены переменные `--color-error`, `--color-error-light`, `--color-status-booked`, `--color-status-resale`, `--color-whatsapp`, `--color-presale`, `--color-hover-bg`. Все 14 вхождений заменены.
 
 **[CSS-2] Нет print-стилей**
 - Нет `@media print`. При печати: навигация, floating кнопки, анимации остаются.
@@ -98,14 +98,13 @@
 - На iPhone SE (375px) могут быть проблемы с layout.
 - **Фикс:** добавить `@media (max-width: 480px)` для критичных элементов.
 
-**[CSS-4] Мобильное меню без max-height**
-- `style.css:3028` — `.header__nav` имеет `overflow-y: auto` но без `max-height`.
-- Если меню длинное, может выйти за пределы viewport.
-- **Фикс:** добавить `max-height: calc(100vh - var(--header-height))`.
+**[CSS-4] ~~Мобильное меню без max-height~~ ✅ РЕШЕНО**
+- ~~`.header__nav` без `max-height`, могло выйти за viewport.~~
+- **Исправлено:** добавлено `max-height: calc(100vh - var(--header-height))`.
 
-**[CSS-5] Повторяющиеся rgba() значения без переменной**
-- `rgba(225, 217, 201, 0.05)` повторяется 3 раза (строки 373, 876, 1726).
-- **Фикс:** `--color-hover-bg: rgba(225, 217, 201, 0.05)`.
+**[CSS-5] ~~Повторяющиеся rgba() значения без переменной~~ ✅ РЕШЕНО (CSS-1)**
+- ~~`rgba(225, 217, 201, 0.05)` повторялся 4 раза.~~
+- **Исправлено в CSS-1:** заменено на `var(--color-hover-bg)`.
 
 ---
 
