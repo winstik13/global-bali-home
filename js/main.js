@@ -1632,13 +1632,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       if (!proj || !proj.heroStats) return;
       const stats = proj.heroStats[lang] || proj.heroStats.en;
       el.innerHTML = stats.map(s => {
-        var idrSub = '';
-        if (xRate && s.number && s.number.indexOf('$') === 0) {
-          var num = parseFloat(s.number.replace(/[^0-9.]/g, ''));
-          if (s.number.indexOf('K') > -1) num *= 1000;
-          if (num) idrSub = '<span class="price-idr">' + fmtIdr(num) + '</span>';
-        }
-        return '<div class="hero-stats__item"><div class="hero-stats__number">' + s.number + idrSub + '</div><div class="hero-stats__label">' + s.label + '</div></div>';
+        return '<div class="hero-stats__item"><div class="hero-stats__number">' + s.number + '</div><div class="hero-stats__label">' + s.label + '</div></div>';
       }).join('');
     });
 
