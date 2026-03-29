@@ -737,6 +737,7 @@ document.addEventListener('DOMContentLoaded', () => {
       updateLightboxInfo();
       lightbox.classList.add('active');
       document.body.style.overflow = 'hidden';
+      preloadAdjacent();
     };
 
     const closeLightbox = () => {
@@ -744,10 +745,19 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.style.overflow = '';
     };
 
+    const preloadAdjacent = () => {
+      if (lbImages.length < 2) return;
+      var next = new Image();
+      next.src = lbImages[(currentIndex + 1) % lbImages.length];
+      var prev = new Image();
+      prev.src = lbImages[(currentIndex - 1 + lbImages.length) % lbImages.length];
+    };
+
     const navigate = (dir) => {
       currentIndex = (currentIndex + dir + lbImages.length) % lbImages.length;
       lbImg.src = lbImages[currentIndex];
       updateLightboxInfo();
+      preloadAdjacent();
     };
 
     // Event delegation for dynamically created gallery items
