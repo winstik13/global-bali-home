@@ -1031,6 +1031,15 @@
     const container = $('#dashboard-cards');
     const projects = getProjectKeys();
 
+    // Recompute availability (resale counts as sold)
+    projects.forEach(key => {
+      const p = projectsData[key];
+      if (p.units) {
+        p.availability.sold = p.units.filter(u => u.status === 'sold' || u.status === 'booked' || u.status === 'resale').length;
+        p.availability.total = p.units.length;
+      }
+    });
+
     // Compute totals
     let totalUnits = 0, totalSold = 0, totalAvailable = 0, totalPotential = 0;
     const projectStats = projects.map(key => {
@@ -1089,7 +1098,7 @@
     // Project cards
     html += '<div class="dashboard-grid">';
     projectStats.forEach(({ key, p, sold, total, pct, left, potential }) => {
-      const isAllSoldDash = p.units ? p.units.every(u => u.status === 'sold') : (p.availability.sold >= p.availability.total);
+      const isAllSoldDash = p.units ? p.units.every(u => u.status === 'sold' || u.status === 'resale') : (p.availability.sold >= p.availability.total);
       const dashStatus = isAllSoldDash ? 'sold-out' : (p.status || 'in-progress');
       const badgeClassMap = { 'pre-sale': 'presale', 'in-progress': 'progress', 'completed': 'completed', 'sold-out': 'soldout' };
       const badgeClass = badgeClassMap[dashStatus] || 'progress';
@@ -1225,13 +1234,13 @@
     // Project Status + Availability (merged)
     const canEditSold = !p.units && p.unitTypes;
     if (p.units) {
-      p.availability.sold = p.units.filter(u => u.status === 'sold' || u.status === 'booked').length;
+      p.availability.sold = p.units.filter(u => u.status === 'sold' || u.status === 'booked' || u.status === 'resale').length;
       p.availability.total = p.units.length;
     } else if (p.unitTypes) {
       p.availability.total = p.unitTypes.reduce((s, ut) => s + ut.count, 0);
     }
     const availPct = p.availability.total ? Math.round(p.availability.sold / p.availability.total * 100) : 0;
-    const isAllSold = p.units ? p.units.every(u => u.status === 'sold') : (p.availability.sold >= p.availability.total);
+    const isAllSold = p.units ? p.units.every(u => u.status === 'sold' || u.status === 'resale') : (p.availability.sold >= p.availability.total);
     const effectiveStatus = isAllSold ? 'sold-out' : (p.status || 'in-progress');
     const statusOptions = ['pre-sale', 'in-progress', 'completed'];
     const badgeMap = { 'pre-sale': 'presale', 'in-progress': 'progress', 'completed': 'completed', 'sold-out': 'soldout' };
@@ -1573,7 +1582,7 @@
   function recalcAvailability() {
     const p = projectsData[currentProject];
     if (!p.units) return;
-    const sold = p.units.filter(u => u.status === 'sold' || u.status === 'booked').length;
+    const sold = p.units.filter(u => u.status === 'sold' || u.status === 'booked' || u.status === 'resale').length;
     p.availability.sold = sold;
     const soldInput = $('#avail-sold');
     if (soldInput) soldInput.value = sold;

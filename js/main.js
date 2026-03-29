@@ -1920,6 +1920,55 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       el.innerHTML = html;
     });
 
+    // --- Floor Plans ---
+    document.querySelectorAll('.floor-plans-showcase[data-project]').forEach(function(el) {
+      var key = el.dataset.project;
+      var proj = PD[key];
+      if (!proj || !proj.floorPlans) return;
+      var types = Object.keys(proj.floorPlans);
+      if (!types.length) return;
+      var html = '';
+      types.forEach(function(type) {
+        var img = proj.floorPlans[type];
+        if (img) {
+          html += '<div class="floor-plan-card">' +
+            '<div class="floor-plan-card__img" data-lightbox-src="' + img + '">' +
+              '<img src="' + img + '" alt="' + type + '" loading="lazy">' +
+            '</div>' +
+            '<div class="floor-plan-card__label">' + type + '</div>' +
+          '</div>';
+        } else {
+          html += '<div class="floor-plan-card floor-plan-card--placeholder">' +
+            '<div class="floor-plan-card__img">' +
+              '<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="16" width="56" height="48" rx="3" stroke="currentColor" stroke-width="1.5"/><line x1="12" y1="40" x2="68" y2="40" stroke="currentColor" stroke-width="1.5"/><line x1="40" y1="16" x2="40" y2="64" stroke="currentColor" stroke-width="1.5"/><rect x="18" y="22" width="10" height="12" rx="1" stroke="currentColor" stroke-width="1"/><rect x="46" y="22" width="10" height="12" rx="1" stroke="currentColor" stroke-width="1"/><rect x="18" y="46" width="16" height="12" rx="1" stroke="currentColor" stroke-width="1"/><circle cx="56" cy="52" r="5" stroke="currentColor" stroke-width="1"/></svg>' +
+              '<span class="floor-plan-card__coming">' + (dataLang === 'ru' ? 'Скоро' : dataLang === 'id' ? 'Segera' : 'Coming Soon') + '</span>' +
+            '</div>' +
+            '<div class="floor-plan-card__label">' + type + '</div>' +
+          '</div>';
+        }
+      });
+      el.innerHTML = html;
+
+      el.querySelectorAll('.floor-plan-card__img[data-lightbox-src]').forEach(function(card) {
+        card.addEventListener('click', function() {
+          var src = this.dataset.lightboxSrc;
+          if (!src) return;
+          var overlay = document.createElement('div');
+          overlay.className = 'floor-plan-lightbox';
+          overlay.innerHTML = '<div class="floor-plan-lightbox__backdrop"></div>' +
+            '<img src="' + src + '" class="floor-plan-lightbox__img" alt="">' +
+            '<button class="floor-plan-lightbox__close" aria-label="Close">&times;</button>';
+          document.body.appendChild(overlay);
+          requestAnimationFrame(function() { overlay.classList.add('active'); });
+          overlay.addEventListener('click', function(e) {
+            if (e.target === overlay.querySelector('img')) return;
+            overlay.classList.remove('active');
+            setTimeout(function() { overlay.remove(); }, 300);
+          });
+        });
+      });
+    });
+
     // --- Dynamic Footer Project Links ---
     document.querySelectorAll('[data-footer-projects]').forEach(function(container) {
       var keys = getProjectKeys();

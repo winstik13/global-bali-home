@@ -287,7 +287,10 @@ const PROJECTS_DATA = {
       }
     ],
     "floorPlans": {
-      "2 Bedroom": "images/serenity-villas/plans/2-bedroom.webp"
+      "Type A — 2BR Single Story": "",
+      "Type B — 2BR Two Story": "images/serenity-villas/plans/2-bedroom.webp",
+      "Type B — 3BR Two Story": "",
+      "Type C — 2BR Two Story": ""
     }
   },
   "serenity-estates": {
@@ -496,7 +499,12 @@ const PROJECTS_DATA = {
         "badge": null
       }
     ],
-    "floorPlans": {}
+    "floorPlans": {
+      "Type A — 4.5BR Villa": "",
+      "Type A — 4.5BR Villa Large": "",
+      "Type B — 2BR Villa": "",
+      "Type B — 2BR Villa Compact": ""
+    }
   },
   "serenity-village": {
     "slug": "serenity-village",
@@ -685,7 +693,10 @@ const PROJECTS_DATA = {
         "price": 187000
       }
     ],
-    "floorPlans": {}
+    "floorPlans": {
+      "Type A — 1BR Villa": "",
+      "Type B — 2BR Villa": ""
+    }
   },
   "comparisonLabels": {
     "en": {
