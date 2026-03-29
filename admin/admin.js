@@ -1219,26 +1219,16 @@
     const statusOptions = ['pre-sale', 'in-progress', 'completed'];
     const badgeMap = { 'pre-sale': 'presale', 'in-progress': 'progress', 'completed': 'completed', 'sold-out': 'soldout' };
     html += `<div class="editor-section"><h3>${t('projects.projectStatus')}</h3>
-      <div class="status-avail-row">
-        <div class="form-group">
-          <label>${t('projects.statusLabel')}</label>
-          <select id="project-status" ${isAllSold ? 'disabled' : ''}>
-            ${statusOptions.map(s => `<option value="${s}"${p.status === s ? ' selected' : ''}>${t('dash.status_' + s)}</option>`).join('')}
-            ${isAllSold ? `<option value="sold-out" selected>${t('dash.status_sold-out')}</option>` : ''}
-          </select>
-        </div>
-        <div class="form-group">
-          <label>${t('projects.sold')}</label>
-          <input type="number" id="avail-sold" value="${p.availability.sold}" min="0" max="${p.availability.total}" ${canEditSold ? '' : 'readonly'} style="width:80px">
-        </div>
-        <div class="form-group">
-          <label>${t('projects.total')}</label>
-          <input type="number" id="avail-total" value="${p.availability.total}" min="1" readonly style="width:80px">
-        </div>
-        <div class="status-avail-pct">
-          <span class="dash-card__badge dash-card__badge--${badgeMap[effectiveStatus] || 'progress'}">${t('dash.status_' + effectiveStatus)}</span>
-          <span class="status-pct">${availPct}%</span>
-        </div>
+      <div class="status-row">
+        <select id="project-status" ${isAllSold ? 'disabled' : ''}>
+          ${statusOptions.map(s => `<option value="${s}"${p.status === s ? ' selected' : ''}>${t('dash.status_' + s)}</option>`).join('')}
+          ${isAllSold ? `<option value="sold-out" selected>${t('dash.status_sold-out')}</option>` : ''}
+        </select>
+        ${canEditSold ? `<input type="number" id="avail-sold" value="${p.availability.sold}" min="0" max="${p.availability.total}" class="status-sold-input">` : `<input type="hidden" id="avail-sold" value="${p.availability.sold}">`}
+        <input type="hidden" id="avail-total" value="${p.availability.total}">
+        <span class="status-sold-text">${p.availability.sold} / ${p.availability.total} ${t('dash.sold').toLowerCase()}</span>
+        <div class="status-bar"><div class="status-bar__fill" style="width:${availPct}%"></div></div>
+        <span class="status-pct">${availPct}%</span>
       </div>
       ${isAllSold ? `<small class="field-hint">${t('projects.soldOutAuto')}</small>` : ''}
       ${!canEditSold && !isAllSold ? `<small class="field-hint">${t('projects.availAutoHint')}</small>` : ''}

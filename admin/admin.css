@@ -658,20 +658,11 @@ body {
 .dash-card__badge--completed { background: rgba(93, 173, 226, 0.2); color: #5dade2; }
 .dash-card__badge--soldout   { background: rgba(255, 255, 255, 0.06); color: var(--color-text-dim); }
 
-/* Project Status + Availability row */
-.status-avail-row {
+/* Project Status row */
+.status-row {
   display: flex;
-  gap: 20px;
-  align-items: flex-end;
-}
-.status-avail-row .form-group { margin-bottom: 0; }
-.status-avail-row select,
-.status-avail-row input { min-width: 0; }
-.status-avail-row input[readonly] {
-  border-bottom: 1px solid transparent;
-  color: var(--color-text-dim);
-  cursor: default;
-  opacity: 0.7;
+  align-items: center;
+  gap: 16px;
 }
 #project-status {
   background-color: var(--color-bg-card);
@@ -680,24 +671,51 @@ body {
   padding: 8px 28px 8px 10px;
   color: var(--color-cream);
   font-weight: 500;
+  font-size: 0.9rem;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23E1D9C9' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  cursor: pointer;
 }
-#project-status:focus {
-  border-color: var(--color-accent);
+#project-status:focus { border-color: var(--color-accent); outline: none; }
+#project-status option { background: var(--color-bg-card); color: var(--color-text); }
+.status-sold-text {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
 }
-#project-status option {
-  background: var(--color-bg-card);
-  color: var(--color-text);
+.status-sold-input {
+  width: 56px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-border-hover);
+  color: var(--color-cream);
+  font-size: 0.9rem;
+  padding: 4px 0;
+  text-align: center;
+  outline: none;
 }
-.status-avail-pct {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding-bottom: 4px;
+.status-sold-input:focus { border-bottom-color: var(--color-accent); }
+.status-bar {
+  flex: 1;
+  max-width: 160px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.status-bar__fill {
+  height: 100%;
+  background: var(--color-accent);
+  border-radius: 3px;
+  transition: width 0.5s ease;
 }
 .status-pct {
-  font-size: 1.3rem;
-  font-family: var(--font-heading);
-  color: var(--color-cream);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  min-width: 36px;
 }
 
 .dash-card__stats {
