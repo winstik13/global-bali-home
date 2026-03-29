@@ -2061,18 +2061,21 @@
 
       if (run.status === 'in_progress' || run.status === 'queued' || run.status === 'waiting') {
         el.className = 'admin-header__deploy admin-header__deploy--pending';
+        txt.setAttribute('data-i18n', 'deploy.deploying');
         txt.textContent = t('deploy.deploying');
         // Poll every 15s
         if (deployPollTimer) clearTimeout(deployPollTimer);
         deployPollTimer = setTimeout(checkDeployStatus, 15000);
       } else if (run.conclusion === 'success') {
         el.className = 'admin-header__deploy admin-header__deploy--success';
+        txt.setAttribute('data-i18n', 'deploy.live');
         txt.textContent = t('deploy.live');
         if (deployPollTimer) { clearTimeout(deployPollTimer); deployPollTimer = null; }
         // Hide after 30s
         setTimeout(() => { el.hidden = true; }, 30000);
       } else {
         el.className = 'admin-header__deploy admin-header__deploy--failed';
+        txt.setAttribute('data-i18n', 'deploy.failed');
         txt.textContent = t('deploy.failed');
         if (deployPollTimer) { clearTimeout(deployPollTimer); deployPollTimer = null; }
       }
