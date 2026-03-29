@@ -48,5 +48,12 @@ const SITE_DATA = {
     "touristArrivals": "16M+",
     "rentalYield": "12-15%",
     "propertyGrowth": "8-12%"
+  },
+  "analytics": {
+    "ga4": "",
+    "facebookPixel": "",
+    "yandexMetrika": "",
+    "clarity": "",
+    "gscVerification": ""
   }
 };

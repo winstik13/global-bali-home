@@ -20,6 +20,66 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // --- Inject analytics from SITE_DATA ---
+  if (typeof SITE_DATA !== 'undefined' && SITE_DATA.analytics) {
+    var an = SITE_DATA.analytics;
+
+    // Google Search Console verification
+    if (an.gscVerification) {
+      var gscMeta = document.createElement('meta');
+      gscMeta.name = 'google-site-verification';
+      gscMeta.content = an.gscVerification;
+      document.head.appendChild(gscMeta);
+    }
+
+    // Google Analytics 4
+    if (an.ga4) {
+      var gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + an.ga4;
+      document.head.appendChild(gaScript);
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function() { dataLayer.push(arguments); };
+      gtag('js', new Date());
+      gtag('config', an.ga4);
+    }
+
+    // Facebook Pixel
+    if (an.facebookPixel) {
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+      document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', an.facebookPixel);
+      fbq('track', 'PageView');
+    }
+
+    // Yandex Metrika
+    if (an.yandexMetrika) {
+      (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+      m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r)return;}
+      k=e.createElement(t);a=e.getElementsByTagName(t)[0];k.async=1;k.src=r;a.parentNode.insertBefore(k,a)})
+      (window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');
+      ym(Number(an.yandexMetrika), 'init', { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true });
+    }
+
+    // Microsoft Clarity
+    if (an.clarity) {
+      (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})
+      (window,document,'clarity','script',an.clarity);
+    }
+  }
+
+  // Analytics event helper — sends to all active trackers
+  function trackEvent(action, category, label) {
+    if (typeof gtag === 'function') gtag('event', action, { event_category: category, event_label: label });
+    if (typeof fbq === 'function') fbq('track', action === 'generate_lead' ? 'Lead' : (action === 'contact' ? 'Contact' : 'ViewContent'), { content_name: label });
+    if (typeof ym === 'function' && typeof SITE_DATA !== 'undefined' && SITE_DATA.analytics && SITE_DATA.analytics.yandexMetrika) ym(Number(SITE_DATA.analytics.yandexMetrika), 'reachGoal', action, { category: category, label: label });
+  }
+
   // --- Apply contacts from SITE_DATA ---
   if (typeof SITE_DATA !== 'undefined' && SITE_DATA.contacts) {
     var ct = SITE_DATA.contacts;
@@ -991,6 +1051,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (valid) {
+        trackEvent('generate_lead', 'contact_form', 'contact_page');
         const formWrap = contactForm.parentElement;
         contactForm.style.display = 'none';
         const success = document.createElement('div');
@@ -1190,6 +1251,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // TODO: Connect to backend when ready for production
       // Currently in test mode — no data is sent anywhere
       console.log('Quiz lead (test mode):', { name, email, phone, answers: quizAnswers, recommended: rec.project });
+      trackEvent('generate_lead', 'quiz', rec.project);
       sessionStorage.setItem('leadCaptured', 'true');
       quizBar.style.width = '100%';
       quizBody.innerHTML = `
@@ -1384,6 +1446,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       const name = nameInp ? nameInp.value.trim() : '';
       const email = emailInp ? emailInp.value.trim() : '';
       console.log('Lead magnet:', { name, email });
+      trackEvent('generate_lead', 'lead_magnet', 'investment_guide');
       sessionStorage.setItem('leadCaptured', 'true');
       var wrap = form.closest('.lead-magnet__form-wrap');
       var waNum2 = (typeof SITE_DATA !== 'undefined' && SITE_DATA.contacts) ? SITE_DATA.contacts.whatsapp : '6281338741177';
@@ -1401,6 +1464,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
           }
           if (cnt <= 0) {
             clearInterval(iv);
+            trackEvent('file_download', 'pdf', 'investment_guide');
             if (numEl) numEl.parentElement.innerHTML = '<a href="' + guidePath + '" target="_blank" rel="noopener noreferrer" class="btn btn--primary guide-open-btn">' + t.leadOpenBtn + '</a>';
           }
         }, 1000);
@@ -1420,6 +1484,9 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
 
   const hero = document.querySelector('.hero') || document.querySelector('.fullbleed-hero') || document.querySelector('.page-hero');
   const waBtn = document.querySelector('.whatsapp-float');
+  if (waBtn) {
+    waBtn.addEventListener('click', function() { trackEvent('contact', 'whatsapp', 'float_button'); });
+  }
   if (hero) {
     const showSticky = () => {
       const heroBottom = hero.getBoundingClientRect().bottom;
@@ -1503,6 +1570,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     if (!ok) return;
     const email = exitInput.value.trim();
     console.log('Exit popup lead:', { email });
+    trackEvent('generate_lead', 'exit_popup', 'investment_guide');
     sessionStorage.setItem('leadCaptured', 'true');
     var exitForm = exitOverlay.querySelector('.exit-popup__form');
     exitForm.innerHTML = `<p style="text-align:center;font-weight:600;padding:12px 0;">${t.exitSuccess}</p>`;

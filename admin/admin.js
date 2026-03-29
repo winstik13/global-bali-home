@@ -39,6 +39,7 @@
       'nav.gallery': 'Gallery',
       'nav.faq': 'FAQ',
       'nav.testimonials': 'Testimonials',
+      'nav.analytics': 'Analytics',
       'nav.settings': 'Settings',
       'dash.title': 'Dashboard',
       'dash.totalUnits': 'Total Units',
@@ -254,6 +255,23 @@
       'help.roi.investment': '<strong>Investment range:</strong> Min/max/step for the slider on homepage.',
       'help.roi.scenarios': '<strong>Scenarios:</strong> Yield and growth rates for Conservative/Normal/Optimistic.',
       'help.roi.occupancy': '<strong>Occupancy:</strong> Default occupancy rate and its slider range.',
+      'analytics.title': 'Analytics & Tracking',
+      'analytics.tracking': 'Tracking Services',
+      'analytics.seo': 'SEO Verification',
+      'analytics.ga4': 'Google Analytics 4',
+      'analytics.facebookPixel': 'Facebook Pixel',
+      'analytics.yandexMetrika': 'Yandex Metrika',
+      'analytics.clarity': 'Microsoft Clarity',
+      'analytics.gsc': 'Google Search Console',
+      'analytics.save': 'Save Analytics',
+      'analytics.hint.ga4': 'Measurement ID from GA4 property',
+      'analytics.hint.facebook': 'Pixel ID from Meta Events Manager',
+      'analytics.hint.yandex': 'Counter ID from metrika.yandex.ru',
+      'analytics.hint.clarity': 'Project ID from clarity.microsoft.com',
+      'analytics.hint.gsc': 'Verification code (content value of meta tag)',
+      'help.analytics.intro': '<strong>How it works:</strong> Paste your tracking IDs below. Scripts are injected automatically — no code changes needed.',
+      'help.analytics.empty': '<strong>Empty field</strong> = tracker disabled. Fill in only the services you use.',
+      'help.analytics.events': '<strong>Auto-tracked events:</strong> form submissions (contact, quiz, lead magnet, exit popup), WhatsApp clicks, PDF downloads.',
       'newProject.title': 'Add New Project',
       'newProject.name': 'Project Name',
       'newProject.slug': 'Slug',
@@ -326,6 +344,7 @@
       'nav.gallery': 'Галерея',
       'nav.faq': 'FAQ',
       'nav.testimonials': 'Отзывы',
+      'nav.analytics': 'Аналитика',
       'nav.settings': 'Настройки',
       'dash.title': 'Обзор',
       'dash.totalUnits': 'Всего юнитов',
@@ -541,6 +560,23 @@
       'help.roi.investment': '<strong>Диапазон инвестиций:</strong> Мин/макс/шаг для слайдера на главной.',
       'help.roi.scenarios': '<strong>Сценарии:</strong> Ставки доходности и роста для каждого сценария.',
       'help.roi.occupancy': '<strong>Заполняемость:</strong> Стандартное значение и диапазон слайдера.',
+      'analytics.title': 'Аналитика и трекинг',
+      'analytics.tracking': 'Сервисы трекинга',
+      'analytics.seo': 'SEO-верификация',
+      'analytics.ga4': 'Google Analytics 4',
+      'analytics.facebookPixel': 'Facebook Pixel',
+      'analytics.yandexMetrika': 'Яндекс Метрика',
+      'analytics.clarity': 'Microsoft Clarity',
+      'analytics.gsc': 'Google Search Console',
+      'analytics.save': 'Сохранить аналитику',
+      'analytics.hint.ga4': 'Measurement ID из свойства GA4',
+      'analytics.hint.facebook': 'Pixel ID из Meta Events Manager',
+      'analytics.hint.yandex': 'Номер счётчика с metrika.yandex.ru',
+      'analytics.hint.clarity': 'ID проекта с clarity.microsoft.com',
+      'analytics.hint.gsc': 'Код верификации (значение content мета-тега)',
+      'help.analytics.intro': '<strong>Как это работает:</strong> Вставьте ID трекеров ниже. Скрипты подключаются автоматически — менять код не нужно.',
+      'help.analytics.empty': '<strong>Пустое поле</strong> = трекер отключён. Заполняйте только те сервисы, которые используете.',
+      'help.analytics.events': '<strong>Авто-события:</strong> отправка форм (контакт, квиз, лид-магнит, exit popup), клики WhatsApp, скачивание PDF.',
       'newProject.title': 'Добавить проект',
       'newProject.name': 'Название проекта',
       'newProject.slug': 'Slug',
@@ -3482,6 +3518,59 @@
         status.textContent = t('colors.resetDone');
         status.className = 'publish-status';
       }
+    });
+  }
+
+  // ─── Analytics Tab ───
+  const ANALYTICS_FIELDS = [
+    { id: 'analytics-ga4', key: 'ga4' },
+    { id: 'analytics-facebook', key: 'facebookPixel' },
+    { id: 'analytics-yandex', key: 'yandexMetrika' },
+    { id: 'analytics-clarity', key: 'clarity' },
+    { id: 'analytics-gsc', key: 'gscVerification' }
+  ];
+
+  function renderAnalyticsForm() {
+    if (!siteData) loadSiteData();
+    const a = (siteData && siteData.analytics) || {};
+    for (const f of ANALYTICS_FIELDS) {
+      const input = $('#' + f.id);
+      if (input) input.value = a[f.key] || '';
+    }
+  }
+
+  const analyticsNavBtn = document.querySelector('.admin-nav__btn[data-tab="analytics"]');
+  if (analyticsNavBtn) {
+    analyticsNavBtn.addEventListener('click', () => {
+      renderAnalyticsForm();
+    });
+  }
+
+  const analyticsSaveBtn = $('#btn-analytics-save');
+  if (analyticsSaveBtn) {
+    analyticsSaveBtn.addEventListener('click', async () => {
+      if (!siteData) loadSiteData();
+      const status = $('#analytics-save-status');
+      const analytics = {};
+      for (const f of ANALYTICS_FIELDS) {
+        const input = $('#' + f.id);
+        analytics[f.key] = input ? input.value.trim() : '';
+      }
+      siteData.analytics = analytics;
+      btnLoading(analyticsSaveBtn, true);
+      status.textContent = t('common.saving');
+      status.className = 'publish-status';
+      try {
+        const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
+        await commitFile('data/site-data.js', content, 'Update analytics settings via admin panel');
+        status.textContent = t('common.saved');
+        status.className = 'publish-status success';
+        updateRateLimit();
+      } catch (err) {
+        status.textContent = t('common.error') + err.message;
+        status.className = 'publish-status error';
+      }
+      btnLoading(analyticsSaveBtn, false);
     });
   }
 
