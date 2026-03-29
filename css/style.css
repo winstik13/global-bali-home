@@ -472,9 +472,9 @@ p {
 }
 
 .hero h1 {
+  font-size: clamp(1.6rem, 3.5vw, 4.5rem);
   color: var(--color-cream);
   margin-bottom: 20px;
-  white-space: nowrap;
 }
 
 .hero h1 .text-accent {
@@ -491,11 +491,11 @@ p {
 }
 
 .hero__text {
-  font-size: var(--font-base);
+  font-size: clamp(0.8rem, 1.1vw, 1rem);
   font-weight: 400;
   color: var(--color-text-muted);
   max-width: 600px;
-  margin-bottom: 40px;
+  margin-bottom: clamp(24px, 3vw, 40px);
   line-height: 1.7;
 }
 
@@ -514,7 +514,7 @@ p {
 .hero__stat {
   flex: 1;
   text-align: center;
-  padding: 36px 24px;
+  padding: clamp(20px, 3vw, 36px) clamp(8px, 1.5vw, 24px);
   border-right: 1px solid rgba(225, 217, 201, 0.1);
 }
 
@@ -524,14 +524,14 @@ p {
 
 .hero__stat-number {
   font-family: var(--font-heading);
-  font-size: var(--font-xl);
+  font-size: clamp(1rem, 1.8vw, 1.75rem);
   color: var(--color-cream);
   margin-bottom: 10px;
   display: block;
 }
 
 .hero__stat-label {
-  font-size: var(--font-sm);
+  font-size: clamp(0.6rem, 0.9vw, 0.85rem);
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -2953,17 +2953,8 @@ td .price-idr {
     justify-content: flex-end;
   }
 
-  .hero h1 {
-    white-space: normal;
-  }
-
   .hero__tag {
     margin-bottom: 16px;
-  }
-
-  .hero__text {
-    font-size: var(--font-sm);
-    margin-bottom: 28px;
   }
 
   .hero__content {
@@ -2976,25 +2967,12 @@ td .price-idr {
   }
 
   .hero__stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    padding-bottom: 80px;
     border-top: 1px solid rgba(225, 217, 201, 0.15);
+    padding-bottom: 80px;
   }
 
   .hero__stat {
     border-right: none;
-    padding: 20px 8px;
-  }
-
-  .hero__stat-number {
-    font-size: var(--font-md);
-  }
-
-  .hero__stat-label {
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
   }
 
   .stats-grid,
