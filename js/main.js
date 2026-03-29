@@ -1144,7 +1144,7 @@ document.addEventListener('DOMContentLoaded', () => {
     openQuiz();
   });
 
-  const hero = document.querySelector('.hero') || document.querySelector('.page-hero');
+  const hero = document.querySelector('.hero') || document.querySelector('.fullbleed-hero') || document.querySelector('.page-hero');
   const waBtn = document.querySelector('.whatsapp-float');
   if (hero) {
     const showSticky = () => {
@@ -1152,10 +1152,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const isOverlayOpen = quizOverlay.classList.contains('active');
       if (heroBottom < 0 && !isOverlayOpen) {
         stickyCTA.classList.add('visible');
-        if (waBtn) waBtn.classList.add('lifted');
+        if (waBtn) { waBtn.classList.add('visible'); waBtn.classList.add('lifted'); }
       } else {
         stickyCTA.classList.remove('visible');
-        if (waBtn) waBtn.classList.remove('lifted');
+        if (waBtn) { waBtn.classList.remove('visible'); waBtn.classList.remove('lifted'); }
       }
     };
     let stickyTicking = false;

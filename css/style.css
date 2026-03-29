@@ -2249,7 +2249,16 @@ td .price-idr {
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 24px rgba(37, 211, 102, 0.25);
-  transition: transform var(--transition), box-shadow var(--transition);
+  opacity: 0;
+  transform: scale(0.5);
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease, box-shadow var(--transition);
+}
+
+.whatsapp-float.visible {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
 }
 
 .whatsapp-float:hover {
