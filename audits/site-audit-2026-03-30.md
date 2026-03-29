@@ -57,27 +57,25 @@
 - Требуется для GDPR и обработки данных.
 - **Фикс:** создать privacy-policy.html (EN/RU/ID), добавить ссылку в footer.
 
-**[SEO-2] Заголовки проектных страниц слишком короткие (37-38 символов)**
-- `project-serenity-villas.html`: "Serenity Villas — Global Bali Home" (37 символов).
-- Идеал 50-60 символов. Не содержат ключевых слов (Bali, villas, investment, цена).
-- **Фикс:** расширить, например: "Serenity Villas — Luxury Villas in Bali from $335K | Global Bali Home".
+**[SEO-2] ~~Заголовки проектных страниц слишком короткие~~ ✅ РЕШЕНО**
+- ~~Были 37-38 символов без ключевых слов.~~
+- **Исправлено:** EN "Serenity Villas in Bali from $335K — Global Bali Home" (55 символов), аналогично RU и ID. Все 9 файлов (title + og:title + twitter:title).
 
-**[SEO-3] Заголовки projects.html и contacts.html слишком короткие**
-- `projects.html`: "Our Projects — Global Bali Home" (34 символа).
-- `contacts.html`: "Contact Us — Global Bali Home" (31 символ).
-- **Фикс:** добавить ключевые слова (Bali, villa, investment, consultation).
+**[SEO-3] ~~Заголовки projects.html и contacts.html слишком короткие~~ ✅ РЕШЕНО**
+- ~~projects: 34 символа, contacts: 31 символ.~~
+- **Исправлено:** EN "Bali Villa Projects from $119K to $580K" / "Contact Us | Free Bali Villa Consultation". Все 6 файлов (title + og:title + twitter:title).
 
-**[SEO-4] Meta description без CTA на большинстве страниц**
-- about.html, projects.html, services.html — описания информативные, но без призыва к действию.
-- **Фикс:** добавить CTA-фразу ("Schedule a consultation", "Explore our projects").
+**[SEO-4] ~~Meta description без CTA на большинстве страниц~~ ✅ РЕШЕНО**
+- ~~about, projects, services — описания без призыва к действию.~~
+- **Исправлено:** добавлены CTA во все 9 файлов (meta description + og:description + twitter:description). EN: "Schedule a free consultation" / "Request pricing" / "Get a free consultation".
 
 **[SEO-5] Alt-тексты изображений слишком общие**
 - `alt="Aerial view"`, `alt="Living room"`, `alt="Bathroom"` — без упоминания проекта или локации.
 - **Фикс:** "Modern living room in Serenity Villas, Bali", "Aerial view of Serenity Estates complex".
 
-**[SEO-6] Нет JSON-LD LocalBusiness на contacts.html**
-- Есть FAQPage schema, но нет LocalBusiness с адресом, телефоном, часами работы.
-- **Фикс:** добавить дополнительный JSON-LD блок с LocalBusiness.
+**[SEO-6] ~~Нет JSON-LD LocalBusiness на contacts.html~~ ✅ РЕШЕНО**
+- ~~Была только FAQPage schema, без LocalBusiness.~~
+- **Исправлено:** добавлен RealEstateAgent JSON-LD с адресом, телефоном, email, geo, часами работы и соцсетями. Все 3 файла contacts.html.
 
 **[SEO-7] Нет VideoObject schema для hero-видео**
 - Главная, Why Bali, Wanayu секции используют `<video>`, но нет VideoObject structured data.
