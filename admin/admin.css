@@ -950,6 +950,21 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.floor-plan-card__label:hover {
+  color: var(--color-accent);
+}
+
+.floor-plan-card__rename-icon {
+  font-size: 0.7rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.floor-plan-card__label:hover .floor-plan-card__rename-icon {
+  opacity: 0.7;
 }
 
 .floor-plan-card__preview {

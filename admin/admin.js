@@ -1319,7 +1319,7 @@
     planTypes.forEach(type => {
       const path = p.floorPlans[type] || '';
       html += `<div class="floor-plan-card" data-plan-type="${type}">
-        <div class="floor-plan-card__label">${type}</div>
+        <div class="floor-plan-card__label" data-rename="${type}" title="Click to rename">${type} <span class="floor-plan-card__rename-icon">✎</span></div>
         <div class="floor-plan-card__preview">${path ? `<img src="../${path}" alt="${type}">` : `<span class="floor-plan-card__empty">${t('projects.noPlan')}</span>`}</div>
         <div class="floor-plan-card__actions">
           <label class="btn btn--outline btn--sm floor-plan-upload-label">
@@ -1567,6 +1567,21 @@
         const type = btn.dataset.type;
         if (!confirm(t('projects.confirmDeletePlan').replace('{type}', type))) return;
         delete p.floorPlans[type];
+        markChanged();
+        renderProjectEditor();
+      });
+    });
+
+    // Rename plan type
+    editor.querySelectorAll('.floor-plan-card__label[data-rename]').forEach(label => {
+      label.addEventListener('click', () => {
+        const oldName = label.dataset.rename;
+        const newName = prompt('Rename plan type:', oldName);
+        if (!newName || !newName.trim() || newName.trim() === oldName) return;
+        const trimmed = newName.trim();
+        if (p.floorPlans[trimmed] !== undefined) { alert('This type already exists'); return; }
+        p.floorPlans[trimmed] = p.floorPlans[oldName];
+        delete p.floorPlans[oldName];
         markChanged();
         renderProjectEditor();
       });
