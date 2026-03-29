@@ -50,7 +50,6 @@
       'dash.from': 'From',
       'dash.revenue': 'Revenue',
       'dash.editProject': 'Edit Project',
-      'projects.backToDash': '← Dashboard',
       'dash.viewOnSite': 'View on Site',
       'dash.recentChanges': 'Recent Changes',
       'dash.noChanges': 'No recent changes to project data.',
@@ -285,7 +284,6 @@
       'dash.from': 'От',
       'dash.revenue': 'Выручка',
       'dash.editProject': 'Редактировать',
-      'projects.backToDash': '← Дашборд',
       'dash.viewOnSite': 'На сайте',
       'dash.recentChanges': 'Последние изменения',
       'dash.noChanges': 'Нет недавних изменений.',
@@ -772,23 +770,8 @@
       btn.classList.add('active');
       $$('.admin-tab').forEach(tab => tab.hidden = true);
       $(`#tab-${btn.dataset.tab}`).hidden = false;
-      // Update breadcrumb when switching to Projects tab
-      if (btn.dataset.tab === 'projects') {
-        updateProjectBreadcrumb();
-      }
     });
   });
-
-  // Back to Dashboard from project breadcrumb
-  const backDashBtn = $('#btn-back-dash');
-  if (backDashBtn) {
-    backDashBtn.addEventListener('click', () => {
-      $$('.admin-nav__btn').forEach(b => b.classList.remove('active'));
-      $$('.admin-nav__btn').forEach(b => { if (b.dataset.tab === 'dashboard') b.classList.add('active'); });
-      $$('.admin-tab').forEach(tab => tab.hidden = true);
-      $('#tab-dashboard').hidden = false;
-    });
-  }
 
   // Project tabs are now generated dynamically in buildDynamicUI()
 
@@ -825,7 +808,6 @@
           btn.classList.add('active');
           currentProject = btn.dataset.proj;
           renderProjectEditor();
-          updateProjectBreadcrumb();
         });
       });
       const newProjBtn = $('#btn-new-project');
@@ -983,23 +965,12 @@
         $$('.project-tabs__btn').forEach(b => b.classList.remove('active'));
         $$('.project-tabs__btn').forEach(b => { if (b.dataset.proj === currentProject) b.classList.add('active'); });
         renderProjectEditor();
-        updateProjectBreadcrumb();
         $('#tab-projects').scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });
 
-    // Set initial breadcrumb
-    updateProjectBreadcrumb();
-
     // Load recent commits
     loadRecentCommits();
-  }
-
-  function updateProjectBreadcrumb() {
-    const nameEl = $('#breadcrumb-project');
-    if (!nameEl) return;
-    const p = projectsData && projectsData[currentProject];
-    nameEl.textContent = p ? p.name : currentProject;
   }
 
   async function loadRecentCommits() {

@@ -719,36 +719,6 @@ body {
   margin-top: 16px;
 }
 
-/* ─── PROJECT BREADCRUMB ─── */
-.project-breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-  font-size: 0.8rem;
-}
-.project-breadcrumb__back {
-  background: none;
-  border: none;
-  color: var(--color-accent);
-  cursor: pointer;
-  font-size: 0.8rem;
-  font-family: var(--font-body);
-  padding: 4px 8px;
-  border-radius: var(--radius-sm);
-  transition: background 0.2s;
-}
-.project-breadcrumb__back:hover {
-  background: rgba(107, 143, 78, 0.12);
-}
-.project-breadcrumb__sep {
-  color: var(--color-text-dim);
-}
-.project-breadcrumb__current {
-  color: var(--color-text);
-  font-weight: 600;
-}
-
 /* ─── PROJECT EDITOR ─── */
 .project-tabs {
   display: flex;
