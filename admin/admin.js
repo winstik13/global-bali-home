@@ -1312,16 +1312,11 @@
 
 
     // Floor Plans
-    const unitTypes = [];
-    if (p.units) {
-      p.units.forEach(u => { if (!unitTypes.includes(u.type)) unitTypes.push(u.type); });
-    } else if (p.unitTypes) {
-      p.unitTypes.forEach(ut => { if (!unitTypes.includes(ut.type)) unitTypes.push(ut.type); });
-    }
     if (!p.floorPlans) p.floorPlans = {};
+    const planTypes = Object.keys(p.floorPlans);
     html += `<div class="editor-section"><h3>${t('projects.floorPlans')}</h3>
       <div class="floor-plans-grid">`;
-    unitTypes.forEach(type => {
+    planTypes.forEach(type => {
       const path = p.floorPlans[type] || '';
       html += `<div class="floor-plan-card" data-plan-type="${type}">
         <div class="floor-plan-card__label">${type}</div>
@@ -1335,7 +1330,9 @@
         </div>
       </div>`;
     });
-    html += '</div></div>';
+    html += `</div>
+      <button class="btn btn--outline btn--sm" id="add-plan-type" style="margin-top:12px">+ Add Plan Type</button>
+    </div>`;
 
     // Hero Stats (4 languages)
     html += `<div class="editor-section"><h3>${t('projects.heroStats')}</h3>`;
@@ -1574,6 +1571,20 @@
         renderProjectEditor();
       });
     });
+
+    // Add plan type
+    const addPlanBtn = editor.querySelector('#add-plan-type');
+    if (addPlanBtn) {
+      addPlanBtn.addEventListener('click', () => {
+        const name = prompt('Plan type name (e.g. "Type A — 2BR Villa"):');
+        if (!name || !name.trim()) return;
+        const trimmed = name.trim();
+        if (p.floorPlans[trimmed] !== undefined) { alert('This type already exists'); return; }
+        p.floorPlans[trimmed] = '';
+        markChanged();
+        renderProjectEditor();
+      });
+    }
 
     // Add generate pages button
     addGeneratePagesButton();
