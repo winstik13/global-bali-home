@@ -13,6 +13,7 @@ marketing-audit.md
 # Audit reports
 audits/
 site-audit.js
+site-check.js
 
 # Admin setup docs
 admin/SETUP.md

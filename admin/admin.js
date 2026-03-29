@@ -729,6 +729,12 @@
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
+  // Security: escape HTML to prevent XSS in dynamic content
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
   const loginScreen = $('#login-screen');
   const patScreen = $('#pat-screen');
   const adminApp = $('#admin-app');
@@ -768,13 +774,12 @@
       $('#admin-user').textContent = user.email;
       startRateUpdates();
       // Check for stored PAT
-      githubPAT = localStorage.getItem('gbh_pat') || sessionStorage.getItem('gbh_pat') || '';
+      githubPAT = sessionStorage.getItem('gbh_pat') || '';
       if (githubPAT) {
         validatePAT(githubPAT).then(valid => {
           if (valid) {
             showAdmin();
           } else {
-            localStorage.removeItem('gbh_pat');
             sessionStorage.removeItem('gbh_pat');
             githubPAT = '';
             showPATScreen();
@@ -839,11 +844,7 @@
     const valid = await validatePAT(pat);
     if (valid) {
       githubPAT = pat;
-      if ($('#pat-remember').checked) {
-        localStorage.setItem('gbh_pat', pat);
-      } else {
-        sessionStorage.setItem('gbh_pat', pat);
-      }
+      sessionStorage.setItem('gbh_pat', pat);
       showAdmin();
     } else {
       patError.textContent = t('pat.error');
@@ -863,7 +864,6 @@
   // ─── Logout ───
   $('#btn-logout').addEventListener('click', () => {
     auth.signOut();
-    localStorage.removeItem('gbh_pat');
     sessionStorage.removeItem('gbh_pat');
     githubPAT = '';
   });
@@ -949,7 +949,7 @@
     const tabsContainer = $('.project-tabs');
     if (tabsContainer) {
       tabsContainer.innerHTML = keys.map((k, i) =>
-        `<button class="project-tabs__btn${i === 0 ? ' active' : ''}" data-proj="${k}">${projectsData[k].name}</button>`
+        `<button class="project-tabs__btn${i === 0 ? ' active' : ''}" data-proj="${k}">${escapeHtml(projectsData[k].name)}</button>`
       ).join('') + `<button class="project-tabs__btn project-tabs__btn--add" id="btn-new-project">${t('projects.newProject')}</button>`;
       tabsContainer.querySelectorAll('.project-tabs__btn[data-proj]').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -982,7 +982,7 @@
     if (galSelect) {
       galSelect.innerHTML = `<option value="">${t('gallery.selectProject')}</option>` + keys.map(k => {
         const shortName = k.replace('serenity-', '');
-        return `<option value="${shortName}">${projectsData[k].name}</option>`;
+        return `<option value="${shortName}">${escapeHtml(projectsData[k].name)}</option>`;
       }).join('');
     }
 
@@ -1088,7 +1088,7 @@
 
       html += `<div class="dash-card" data-card-project="${key}">
         <div class="dash-card__header">
-          <span class="dash-card__name">${p.name}</span>
+          <span class="dash-card__name">${escapeHtml(p.name)}</span>
           <span class="dash-card__badge dash-card__badge--${badgeClass}">${badgeText}</span>
         </div>
         <div class="dash-card__stats">
