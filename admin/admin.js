@@ -39,7 +39,7 @@
       'nav.gallery': 'Gallery',
       'nav.faq': 'FAQ',
       'nav.testimonials': 'Testimonials',
-      'nav.colors': 'Colors',
+      'nav.settings': 'Settings',
       'dash.title': 'Dashboard',
       'dash.totalUnits': 'Total Units',
       'dash.soldBooked': 'Sold / Booked',
@@ -297,7 +297,7 @@
       'nav.gallery': 'Галерея',
       'nav.faq': 'FAQ',
       'nav.testimonials': 'Отзывы',
-      'nav.colors': 'Цвета',
+      'nav.settings': 'Настройки',
       'dash.title': 'Обзор',
       'dash.totalUnits': 'Всего юнитов',
       'dash.soldBooked': 'Продано / Бронь',
@@ -3340,11 +3340,17 @@
     }
   }
 
-  // Colors tab activation
-  const colorsNavBtn = document.querySelector('.admin-nav__btn[data-tab="colors"]');
-  if (colorsNavBtn) {
-    colorsNavBtn.addEventListener('click', () => {
+  // Settings tab activation (colors + other settings)
+  const settingsNavBtn = document.querySelector('.admin-nav__btn[data-tab="settings"]');
+  if (settingsNavBtn) {
+    settingsNavBtn.addEventListener('click', () => {
       renderColorsTab();
+      renderRateInfo();
+      renderContactsForm();
+      renderGuideInfo();
+      renderSocialForm();
+      renderRoiForm();
+      renderStatsForm();
     });
   }
 

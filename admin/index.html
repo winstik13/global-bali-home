@@ -106,7 +106,7 @@
       <button class="admin-nav__btn" data-tab="gallery" data-i18n="nav.gallery">Gallery</button>
       <button class="admin-nav__btn" data-tab="faq" data-i18n="nav.faq">FAQ</button>
       <button class="admin-nav__btn" data-tab="testimonials" data-i18n="nav.testimonials">Testimonials</button>
-      <button class="admin-nav__btn" data-tab="colors" data-i18n="nav.colors">Colors</button>
+      <button class="admin-nav__btn" data-tab="settings" data-i18n="nav.settings">Settings</button>
     </nav>
 
     <!-- Tab: Dashboard -->
@@ -118,216 +118,6 @@
           <span id="last-update"></span>
           <span id="rate-limit"></span>
         </div>
-
-        <div class="editor-section editor-section--has-help" style="margin-top:24px">
-          <button class="editor-help-btn" data-help="contacts" aria-label="Help">?</button>
-          <div class="editor-help-popup" id="help-contacts" hidden>
-            <p data-i18n="help.contacts.phone"><strong>Phone:</strong> Any format with spaces/dashes, start with +country code.</p>
-            <p data-i18n="help.contacts.whatsapp"><strong>WhatsApp:</strong> DIGITS ONLY, no +, spaces or dashes. Example: 6281338741177</p>
-            <p data-i18n="help.contacts.email"><strong>Email:</strong> Standard email format.</p>
-            <p data-i18n="help.contacts.location"><strong>Location:</strong> Display text, translate manually for each language.</p>
-          </div>
-          <h3 data-i18n="contacts.title">Contact Information</h3>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-            <div class="form-group">
-              <label data-i18n="contacts.phone">Phone</label>
-              <input type="tel" id="contact-phone" placeholder="+62 813 251 438 49">
-              <small class="field-hint" data-i18n="contacts.hint.phone">Display format, e.g. +62 813 251 438 49</small>
-            </div>
-            <div class="form-group">
-              <label data-i18n="contacts.whatsapp">WhatsApp Number</label>
-              <input type="tel" id="contact-whatsapp" placeholder="6281338741177">
-              <small class="field-hint" data-i18n="contacts.hint.whatsapp">Digits only, with country code, no +</small>
-              <small class="field-hint field-hint--preview" id="wa-preview"></small>
-            </div>
-            <div class="form-group">
-              <label data-i18n="contacts.email">Email</label>
-              <input type="email" id="contact-email" placeholder="office@globalbalihome.com">
-            </div>
-            <div class="form-group">
-              <label data-i18n="contacts.locationEn">Location (EN)</label>
-              <input type="text" id="contact-location-en" placeholder="Ubud, Bali, Indonesia">
-            </div>
-            <div class="form-group">
-              <label data-i18n="contacts.locationRu">Location (RU)</label>
-              <input type="text" id="contact-location-ru" placeholder="Убуд, Бали, Индонезия">
-            </div>
-            <div class="form-group">
-              <label data-i18n="contacts.locationId">Location (ID)</label>
-              <input type="text" id="contact-location-id" placeholder="Ubud, Bali, Indonesia">
-            </div>
-          </div>
-          <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
-            <button id="btn-contacts-save" class="btn btn--primary btn--sm" data-i18n="contacts.save">Save Contacts</button>
-            <span id="contacts-save-status" class="publish-status"></span>
-          </div>
-        </div>
-
-        <div class="editor-section editor-section--has-help" style="margin-top:24px">
-          <button class="editor-help-btn" data-help="rate" aria-label="Help">?</button>
-          <div class="editor-help-popup" id="help-rate" hidden>
-            <p data-i18n="help.rate.manual"><strong>Manual:</strong> Enter the rate manually and click Save.</p>
-            <p data-i18n="help.rate.auto"><strong>Auto:</strong> Rate updates from API every hour. Manual input is disabled.</p>
-            <p data-i18n="help.rate.fallback"><strong>Fallback:</strong> If API is unavailable, the last saved rate is used on the site.</p>
-          </div>
-          <h3 data-i18n="rate.title">Exchange Rate (USD → IDR)</h3>
-          <div class="guide-upload">
-            <div id="rate-info" class="guide-info"></div>
-            <div class="guide-actions" style="gap:8px">
-              <label class="auto-rate-toggle">
-                <input type="checkbox" id="rate-auto">
-                <span data-i18n="rate.auto">Auto (live rate from API)</span>
-              </label>
-              <div class="form-group" style="margin:0;flex:0 0 160px">
-                <input type="number" id="rate-input" min="1000" step="100" placeholder="16500" style="width:100%">
-              </div>
-              <button id="btn-rate-save" class="btn btn--primary btn--sm" data-i18n="rate.save">Save Rate</button>
-              <span id="rate-save-status" class="publish-status"></span>
-            </div>
-          </div>
-        </div>
-
-        <div class="editor-section editor-section--has-help" style="margin-top:24px">
-          <button class="editor-help-btn" data-help="guide" aria-label="Help">?</button>
-          <div class="editor-help-popup" id="help-guide" hidden>
-            <p data-i18n="help.guide.format"><strong>Format:</strong> PDF only.</p>
-            <p data-i18n="help.guide.afterUpload"><strong>After upload:</strong> File is committed to the repository and available to site visitors.</p>
-            <p data-i18n="help.guide.deployTime"><strong>Deploy time:</strong> ~1-2 minutes after upload.</p>
-          </div>
-          <h3 data-i18n="guide.title">Investment Guide PDF</h3>
-          <div class="guide-upload">
-            <div id="guide-info" class="guide-info"></div>
-            <div class="guide-actions">
-              <button id="btn-guide-upload" class="btn btn--primary btn--sm" data-i18n="guide.upload">Upload PDF</button>
-              <input type="file" id="guide-file-input" accept=".pdf" hidden>
-              <span id="guide-upload-status" class="publish-status"></span>
-            </div>
-          </div>
-        </div>
-
-        <div class="editor-section" style="margin-top:24px">
-          <h3>Social Media</h3>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-            <div class="form-group">
-              <label>Facebook URL</label>
-              <input type="url" id="social-facebook" placeholder="https://www.facebook.com/...">
-            </div>
-            <div class="form-group">
-              <label>Instagram URL</label>
-              <input type="url" id="social-instagram" placeholder="https://www.instagram.com/...">
-            </div>
-          </div>
-          <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
-            <button id="btn-social-save" class="btn btn--primary btn--sm">Save Social</button>
-            <span id="social-save-status" class="publish-status"></span>
-          </div>
-        </div>
-
-        <div class="editor-section editor-section--has-help" style="margin-top:24px">
-          <button class="editor-help-btn" data-help="roi" aria-label="Help">?</button>
-          <div class="editor-help-popup" id="help-roi" hidden>
-            <p><strong>Investment range:</strong> Min/max/step for the slider on homepage.</p>
-            <p><strong>Scenarios:</strong> Yield and growth rates for Conservative/Normal/Optimistic.</p>
-            <p><strong>Occupancy:</strong> Default occupancy rate and its slider range.</p>
-          </div>
-          <h3>ROI Calculator Parameters</h3>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
-            <div class="form-group">
-              <label>Min Investment ($)</label>
-              <input type="number" id="roi-min" min="10000" step="10000" placeholder="100000">
-            </div>
-            <div class="form-group">
-              <label>Max Investment ($)</label>
-              <input type="number" id="roi-max" min="100000" step="10000" placeholder="1000000">
-            </div>
-            <div class="form-group">
-              <label>Step ($)</label>
-              <input type="number" id="roi-step" min="1000" step="1000" placeholder="10000">
-            </div>
-            <div class="form-group">
-              <label>Default Investment ($)</label>
-              <input type="number" id="roi-default" min="10000" step="10000" placeholder="335000">
-            </div>
-            <div class="form-group">
-              <label>Default Occupancy (%)</label>
-              <input type="number" id="roi-occ-default" min="10" max="100" placeholder="80">
-            </div>
-            <div class="form-group">
-              <label>Occupancy Range (%)</label>
-              <div style="display:flex;gap:8px">
-                <input type="number" id="roi-occ-min" min="0" max="100" placeholder="50" style="width:50%">
-                <input type="number" id="roi-occ-max" min="0" max="100" placeholder="95" style="width:50%">
-              </div>
-            </div>
-          </div>
-          <h4 style="margin:16px 0 8px;color:var(--color-text-muted)">Scenarios</h4>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
-            <div class="form-group">
-              <label>Conservative — Yield / Growth (%)</label>
-              <div style="display:flex;gap:8px">
-                <input type="number" id="roi-cons-yield" min="0" max="100" step="0.5" placeholder="8" style="width:50%">
-                <input type="number" id="roi-cons-growth" min="0" max="100" step="0.5" placeholder="6" style="width:50%">
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Normal — Yield / Growth (%)</label>
-              <div style="display:flex;gap:8px">
-                <input type="number" id="roi-norm-yield" min="0" max="100" step="0.5" placeholder="12" style="width:50%">
-                <input type="number" id="roi-norm-growth" min="0" max="100" step="0.5" placeholder="10" style="width:50%">
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Optimistic — Yield / Growth (%)</label>
-              <div style="display:flex;gap:8px">
-                <input type="number" id="roi-opt-yield" min="0" max="100" step="0.5" placeholder="15" style="width:50%">
-                <input type="number" id="roi-opt-growth" min="0" max="100" step="0.5" placeholder="12" style="width:50%">
-              </div>
-            </div>
-          </div>
-          <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
-            <button id="btn-roi-save" class="btn btn--primary btn--sm">Save ROI Settings</button>
-            <span id="roi-save-status" class="publish-status"></span>
-          </div>
-        </div>
-
-        <div class="editor-section" style="margin-top:24px">
-          <h3>Company Statistics</h3>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
-            <div class="form-group">
-              <label>Years in Bali</label>
-              <input type="text" id="stat-yearsInBali" placeholder="3+">
-            </div>
-            <div class="form-group">
-              <label>Villas Designed</label>
-              <input type="text" id="stat-villasDesigned" placeholder="43">
-            </div>
-            <div class="form-group">
-              <label>Occupancy Rate</label>
-              <input type="text" id="stat-occupancyRate" placeholder="80%+">
-            </div>
-            <div class="form-group">
-              <label>Founder Experience</label>
-              <input type="text" id="stat-founderExperience" placeholder="$1B+">
-            </div>
-            <div class="form-group">
-              <label>Tourist Arrivals</label>
-              <input type="text" id="stat-touristArrivals" placeholder="16M+">
-            </div>
-            <div class="form-group">
-              <label>Rental Yield</label>
-              <input type="text" id="stat-rentalYield" placeholder="12-15%">
-            </div>
-            <div class="form-group">
-              <label>Property Growth</label>
-              <input type="text" id="stat-propertyGrowth" placeholder="8-12%">
-            </div>
-          </div>
-          <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
-            <button id="btn-stats-save" class="btn btn--primary btn--sm">Save Statistics</button>
-            <span id="stats-save-status" class="publish-status"></span>
-          </div>
-        </div>
-
         <div id="dash-recent-changes" style="margin-top:24px"></div>
       </section>
 
@@ -397,10 +187,227 @@
       </section>
 
       <!-- Tab: Colors -->
-      <section id="tab-colors" class="admin-tab" hidden>
-        <h2 data-i18n="colors.title">Site Colors</h2>
+      <!-- Tab: Settings -->
+      <section id="tab-settings" class="admin-tab" hidden>
+        <h2 data-i18n="nav.settings">Settings</h2>
 
+        <!-- Contact Information -->
         <div class="editor-section editor-section--has-help">
+          <button class="editor-help-btn" data-help="contacts" aria-label="Help">?</button>
+          <div class="editor-help-popup" id="help-contacts" hidden>
+            <p data-i18n="help.contacts.phone"><strong>Phone:</strong> Any format with spaces/dashes, start with +country code.</p>
+            <p data-i18n="help.contacts.whatsapp"><strong>WhatsApp:</strong> DIGITS ONLY, no +, spaces or dashes. Example: 6281338741177</p>
+            <p data-i18n="help.contacts.email"><strong>Email:</strong> Standard email format.</p>
+            <p data-i18n="help.contacts.location"><strong>Location:</strong> Display text, translate manually for each language.</p>
+          </div>
+          <h3 data-i18n="contacts.title">Contact Information</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div class="form-group">
+              <label data-i18n="contacts.phone">Phone</label>
+              <input type="tel" id="contact-phone" placeholder="+62 813 251 438 49">
+              <small class="field-hint" data-i18n="contacts.hint.phone">Display format, e.g. +62 813 251 438 49</small>
+            </div>
+            <div class="form-group">
+              <label data-i18n="contacts.whatsapp">WhatsApp Number</label>
+              <input type="tel" id="contact-whatsapp" placeholder="6281338741177">
+              <small class="field-hint" data-i18n="contacts.hint.whatsapp">Digits only, with country code, no +</small>
+              <small class="field-hint field-hint--preview" id="wa-preview"></small>
+            </div>
+            <div class="form-group">
+              <label data-i18n="contacts.email">Email</label>
+              <input type="email" id="contact-email" placeholder="office@globalbalihome.com">
+            </div>
+            <div class="form-group">
+              <label data-i18n="contacts.locationEn">Location (EN)</label>
+              <input type="text" id="contact-location-en" placeholder="Ubud, Bali, Indonesia">
+            </div>
+            <div class="form-group">
+              <label data-i18n="contacts.locationRu">Location (RU)</label>
+              <input type="text" id="contact-location-ru" placeholder="Убуд, Бали, Индонезия">
+            </div>
+            <div class="form-group">
+              <label data-i18n="contacts.locationId">Location (ID)</label>
+              <input type="text" id="contact-location-id" placeholder="Ubud, Bali, Indonesia">
+            </div>
+          </div>
+          <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
+            <button id="btn-contacts-save" class="btn btn--primary btn--sm" data-i18n="contacts.save">Save Contacts</button>
+            <span id="contacts-save-status" class="publish-status"></span>
+          </div>
+        </div>
+
+        <!-- Social Media -->
+        <div class="editor-section" style="margin-top:24px">
+          <h3>Social Media</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div class="form-group">
+              <label>Facebook URL</label>
+              <input type="url" id="social-facebook" placeholder="https://www.facebook.com/...">
+            </div>
+            <div class="form-group">
+              <label>Instagram URL</label>
+              <input type="url" id="social-instagram" placeholder="https://www.instagram.com/...">
+            </div>
+          </div>
+          <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
+            <button id="btn-social-save" class="btn btn--primary btn--sm">Save Social</button>
+            <span id="social-save-status" class="publish-status"></span>
+          </div>
+        </div>
+
+        <!-- Exchange Rate -->
+        <div class="editor-section editor-section--has-help" style="margin-top:24px">
+          <button class="editor-help-btn" data-help="rate" aria-label="Help">?</button>
+          <div class="editor-help-popup" id="help-rate" hidden>
+            <p data-i18n="help.rate.manual"><strong>Manual:</strong> Enter the rate manually and click Save.</p>
+            <p data-i18n="help.rate.auto"><strong>Auto:</strong> Rate updates from API every hour. Manual input is disabled.</p>
+            <p data-i18n="help.rate.fallback"><strong>Fallback:</strong> If API is unavailable, the last saved rate is used on the site.</p>
+          </div>
+          <h3 data-i18n="rate.title">Exchange Rate (USD → IDR)</h3>
+          <div class="guide-upload">
+            <div id="rate-info" class="guide-info"></div>
+            <div class="guide-actions" style="gap:8px">
+              <label class="auto-rate-toggle">
+                <input type="checkbox" id="rate-auto">
+                <span data-i18n="rate.auto">Auto (live rate from API)</span>
+              </label>
+              <div class="form-group" style="margin:0;flex:0 0 160px">
+                <input type="number" id="rate-input" min="1000" step="100" placeholder="16500" style="width:100%">
+              </div>
+              <button id="btn-rate-save" class="btn btn--primary btn--sm" data-i18n="rate.save">Save Rate</button>
+              <span id="rate-save-status" class="publish-status"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Investment Guide PDF -->
+        <div class="editor-section editor-section--has-help" style="margin-top:24px">
+          <button class="editor-help-btn" data-help="guide" aria-label="Help">?</button>
+          <div class="editor-help-popup" id="help-guide" hidden>
+            <p data-i18n="help.guide.format"><strong>Format:</strong> PDF only.</p>
+            <p data-i18n="help.guide.afterUpload"><strong>After upload:</strong> File is committed to the repository and available to site visitors.</p>
+            <p data-i18n="help.guide.deployTime"><strong>Deploy time:</strong> ~1-2 minutes after upload.</p>
+          </div>
+          <h3 data-i18n="guide.title">Investment Guide PDF</h3>
+          <div class="guide-upload">
+            <div id="guide-info" class="guide-info"></div>
+            <div class="guide-actions">
+              <button id="btn-guide-upload" class="btn btn--primary btn--sm" data-i18n="guide.upload">Upload PDF</button>
+              <input type="file" id="guide-file-input" accept=".pdf" hidden>
+              <span id="guide-upload-status" class="publish-status"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Company Statistics -->
+        <div class="editor-section" style="margin-top:24px">
+          <h3>Company Statistics</h3>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+            <div class="form-group">
+              <label>Years in Bali</label>
+              <input type="text" id="stat-yearsInBali" placeholder="3+">
+            </div>
+            <div class="form-group">
+              <label>Villas Designed</label>
+              <input type="text" id="stat-villasDesigned" placeholder="43">
+            </div>
+            <div class="form-group">
+              <label>Occupancy Rate</label>
+              <input type="text" id="stat-occupancyRate" placeholder="80%+">
+            </div>
+            <div class="form-group">
+              <label>Founder Experience</label>
+              <input type="text" id="stat-founderExperience" placeholder="$1B+">
+            </div>
+            <div class="form-group">
+              <label>Tourist Arrivals</label>
+              <input type="text" id="stat-touristArrivals" placeholder="16M+">
+            </div>
+            <div class="form-group">
+              <label>Rental Yield</label>
+              <input type="text" id="stat-rentalYield" placeholder="12-15%">
+            </div>
+            <div class="form-group">
+              <label>Property Growth</label>
+              <input type="text" id="stat-propertyGrowth" placeholder="8-12%">
+            </div>
+          </div>
+          <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
+            <button id="btn-stats-save" class="btn btn--primary btn--sm">Save Statistics</button>
+            <span id="stats-save-status" class="publish-status"></span>
+          </div>
+        </div>
+
+        <!-- ROI Calculator Parameters -->
+        <div class="editor-section editor-section--has-help" style="margin-top:24px">
+          <button class="editor-help-btn" data-help="roi" aria-label="Help">?</button>
+          <div class="editor-help-popup" id="help-roi" hidden>
+            <p><strong>Investment range:</strong> Min/max/step for the slider on homepage.</p>
+            <p><strong>Scenarios:</strong> Yield and growth rates for Conservative/Normal/Optimistic.</p>
+            <p><strong>Occupancy:</strong> Default occupancy rate and its slider range.</p>
+          </div>
+          <h3>ROI Calculator Parameters</h3>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+            <div class="form-group">
+              <label>Min Investment ($)</label>
+              <input type="number" id="roi-min" min="10000" step="10000" placeholder="100000">
+            </div>
+            <div class="form-group">
+              <label>Max Investment ($)</label>
+              <input type="number" id="roi-max" min="100000" step="10000" placeholder="1000000">
+            </div>
+            <div class="form-group">
+              <label>Step ($)</label>
+              <input type="number" id="roi-step" min="1000" step="1000" placeholder="10000">
+            </div>
+            <div class="form-group">
+              <label>Default Investment ($)</label>
+              <input type="number" id="roi-default" min="10000" step="10000" placeholder="335000">
+            </div>
+            <div class="form-group">
+              <label>Default Occupancy (%)</label>
+              <input type="number" id="roi-occ-default" min="10" max="100" placeholder="80">
+            </div>
+            <div class="form-group">
+              <label>Occupancy Range (%)</label>
+              <div style="display:flex;gap:8px">
+                <input type="number" id="roi-occ-min" min="0" max="100" placeholder="50" style="width:50%">
+                <input type="number" id="roi-occ-max" min="0" max="100" placeholder="95" style="width:50%">
+              </div>
+            </div>
+          </div>
+          <h4 style="margin:16px 0 8px;color:var(--color-text-muted)">Scenarios</h4>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+            <div class="form-group">
+              <label>Conservative — Yield / Growth (%)</label>
+              <div style="display:flex;gap:8px">
+                <input type="number" id="roi-cons-yield" min="0" max="100" step="0.5" placeholder="8" style="width:50%">
+                <input type="number" id="roi-cons-growth" min="0" max="100" step="0.5" placeholder="6" style="width:50%">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Normal — Yield / Growth (%)</label>
+              <div style="display:flex;gap:8px">
+                <input type="number" id="roi-norm-yield" min="0" max="100" step="0.5" placeholder="12" style="width:50%">
+                <input type="number" id="roi-norm-growth" min="0" max="100" step="0.5" placeholder="10" style="width:50%">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Optimistic — Yield / Growth (%)</label>
+              <div style="display:flex;gap:8px">
+                <input type="number" id="roi-opt-yield" min="0" max="100" step="0.5" placeholder="15" style="width:50%">
+                <input type="number" id="roi-opt-growth" min="0" max="100" step="0.5" placeholder="12" style="width:50%">
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
+            <button id="btn-roi-save" class="btn btn--primary btn--sm">Save ROI Settings</button>
+            <span id="roi-save-status" class="publish-status"></span>
+          </div>
+        </div>
+
+        <!-- Site Colors -->
+        <div class="editor-section editor-section--has-help" style="margin-top:24px">
           <button class="editor-help-btn" data-help="colors" aria-label="Help">?</button>
           <div class="editor-help-popup" id="help-colors" hidden>
             <p data-i18n="help.colors.text"><strong>Text color</strong> determines derived colors (muted text, borders).</p>
@@ -408,7 +415,7 @@
             <p data-i18n="help.colors.site"><strong>On site:</strong> Colors apply after Save + ~1-2 min deploy.</p>
             <p data-i18n="help.colors.reset">Use <strong>Reset to Defaults</strong> to restore original palette.</p>
           </div>
-          <h3 data-i18n="colors.backgrounds">Backgrounds</h3>
+          <h3 data-i18n="colors.title">Site Colors</h3>
           <div class="color-group">
             <div class="color-picker-row">
               <label data-i18n="colors.mainBg">Main Background</label>
@@ -432,12 +439,7 @@
               </div>
             </div>
           </div>
-        </div>
-
-        <div class="editor-section">
-          <h3 data-i18n="colors.textBorders">Text & Borders</h3>
-          <p class="color-hint" data-i18n="colors.derivedHint">Muted text, dim text, and border colors are automatically derived from the primary text color.</p>
-          <div class="color-group">
+          <div class="color-group" style="margin-top:16px">
             <div class="color-picker-row">
               <label data-i18n="colors.primaryText">Primary Text</label>
               <div class="color-input-pair">
@@ -457,12 +459,6 @@
                 <input type="text" id="color-cream-hex" class="color-hex-input" value="#F7F7F0" maxlength="7" placeholder="#F7F7F0">
               </div>
             </div>
-          </div>
-        </div>
-
-        <div class="editor-section">
-          <h3 data-i18n="colors.accent">Accent</h3>
-          <div class="color-group">
             <div class="color-picker-row">
               <label data-i18n="colors.brandAccent">Brand Accent</label>
               <div class="color-input-pair">
@@ -471,12 +467,11 @@
               </div>
             </div>
           </div>
-        </div>
-
-        <div style="margin-top:16px;display:flex;align-items:center;gap:12px">
-          <button id="btn-colors-save" class="btn btn--primary" data-i18n="colors.save">Save Colors</button>
-          <button id="btn-colors-reset" class="btn btn--outline" data-i18n="colors.reset">Reset to Defaults</button>
-          <span id="colors-save-status" class="publish-status"></span>
+          <div style="margin-top:16px;display:flex;align-items:center;gap:12px">
+            <button id="btn-colors-save" class="btn btn--primary btn--sm" data-i18n="colors.save">Save Colors</button>
+            <button id="btn-colors-reset" class="btn btn--outline btn--sm" data-i18n="colors.reset">Reset to Defaults</button>
+            <span id="colors-save-status" class="publish-status"></span>
+          </div>
         </div>
       </section>
 
