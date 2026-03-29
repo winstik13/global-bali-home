@@ -30,6 +30,9 @@
       'header.title': 'Admin Panel',
       'header.rateLabel': 'USD / IDR',
       'header.signOut': 'Sign Out',
+      'deploy.deploying': 'Deploying...',
+      'deploy.live': 'Live!',
+      'deploy.failed': 'Deploy failed',
       'nav.dashboard': 'Dashboard',
       'nav.projects': 'Projects',
       'nav.seo': 'SEO',
@@ -283,6 +286,9 @@
       'header.title': 'Панель управления',
       'header.rateLabel': 'USD / IDR',
       'header.signOut': 'Выйти',
+      'deploy.deploying': 'Деплой...',
+      'deploy.live': 'Опубликовано!',
+      'deploy.failed': 'Ошибка деплоя',
       'nav.dashboard': 'Обзор',
       'nav.projects': 'Проекты',
       'nav.seo': 'SEO',
@@ -1922,6 +1928,46 @@
       const limit = data.resources.core.limit;
       $('#rate-limit').textContent = `API: ${remaining}/${limit} requests remaining`;
     } catch { /* ignore */ }
+    checkDeployStatus();
+  }
+
+  // ─── Deploy Status Indicator ───
+  let deployPollTimer = null;
+
+  async function checkDeployStatus() {
+    const el = $('#deploy-status');
+    if (!el) return;
+    try {
+      const res = await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/actions/runs?per_page=1&branch=master`, {
+        headers: { 'Authorization': `token ${githubPAT}` }
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      const run = data.workflow_runs && data.workflow_runs[0];
+      if (!run) return;
+
+      const dot = el.querySelector('.admin-header__deploy-dot');
+      const txt = el.querySelector('.admin-header__deploy-text');
+      el.hidden = false;
+
+      if (run.status === 'in_progress' || run.status === 'queued' || run.status === 'waiting') {
+        el.className = 'admin-header__deploy admin-header__deploy--pending';
+        txt.textContent = t('deploy.deploying');
+        // Poll every 15s
+        if (deployPollTimer) clearTimeout(deployPollTimer);
+        deployPollTimer = setTimeout(checkDeployStatus, 15000);
+      } else if (run.conclusion === 'success') {
+        el.className = 'admin-header__deploy admin-header__deploy--success';
+        txt.textContent = t('deploy.live');
+        if (deployPollTimer) { clearTimeout(deployPollTimer); deployPollTimer = null; }
+        // Hide after 30s
+        setTimeout(() => { el.hidden = true; }, 30000);
+      } else {
+        el.className = 'admin-header__deploy admin-header__deploy--failed';
+        txt.textContent = t('deploy.failed');
+        if (deployPollTimer) { clearTimeout(deployPollTimer); deployPollTimer = null; }
+      }
+    } catch { /* ignore — no Actions access or network error */ }
   }
 
   // ─── Generate Detail Pages ───

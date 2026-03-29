@@ -407,6 +407,59 @@ body {
   gap: 16px;
 }
 
+.admin-header__deploy {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.admin-header__deploy-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.admin-header__deploy--pending {
+  background: rgba(234, 179, 8, 0.1);
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  color: #eab308;
+}
+
+.admin-header__deploy--pending .admin-header__deploy-dot {
+  background: #eab308;
+  animation: deploy-pulse 1.5s ease-in-out infinite;
+}
+
+.admin-header__deploy--success {
+  background: rgba(107, 143, 78, 0.1);
+  border: 1px solid rgba(107, 143, 78, 0.3);
+  color: var(--color-accent);
+}
+
+.admin-header__deploy--success .admin-header__deploy-dot {
+  background: var(--color-accent);
+}
+
+.admin-header__deploy--failed {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+.admin-header__deploy--failed .admin-header__deploy-dot {
+  background: #ef4444;
+}
+
+@keyframes deploy-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
 .admin-header__rate {
   display: flex;
   align-items: center;
@@ -1677,7 +1730,7 @@ body {
   .login-card { margin: 20px; padding: 32px 24px; }
 
   .admin-header { padding: 0 16px; }
-  .admin-header__rate { display: none; }
+  .admin-header__rate, .admin-header__deploy { display: none; }
   .admin-nav { padding: 0 16px; overflow-x: auto; }
   .admin-content { padding: 20px 16px; }
 
