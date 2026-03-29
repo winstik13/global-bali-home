@@ -115,6 +115,7 @@
       'projects.publishing': 'Publishing...',
       'projects.published': 'Published! Site updating (~1-2 min)',
       'projects.projectStatus': 'Project Status',
+      'projects.statusLabel': 'Status',
       'projects.soldOutAuto': 'Auto: all units sold',
       'projects.units': 'Units',
       'projects.unitTypes': 'Unit Types',
@@ -425,6 +426,7 @@
       'projects.publishing': 'Публикация...',
       'projects.published': 'Опубликовано! Сайт обновится (~1-2 мин)',
       'projects.projectStatus': 'Статус проекта',
+      'projects.statusLabel': 'Статус',
       'projects.soldOutAuto': 'Авто: все юниты проданы',
       'projects.units': 'Юниты',
       'projects.unitTypes': 'Типы юнитов',
@@ -1203,21 +1205,43 @@
 
     let html = '';
 
-    // Project Status
+    // Project Status + Availability (merged)
+    const canEditSold = !p.units && p.unitTypes;
+    if (p.units) {
+      p.availability.sold = p.units.filter(u => u.status === 'sold' || u.status === 'booked').length;
+      p.availability.total = p.units.length;
+    } else if (p.unitTypes) {
+      p.availability.total = p.unitTypes.reduce((s, ut) => s + ut.count, 0);
+    }
+    const availPct = p.availability.total ? Math.round(p.availability.sold / p.availability.total * 100) : 0;
     const isAllSold = p.units ? p.units.every(u => u.status === 'sold') : (p.availability.sold >= p.availability.total);
     const effectiveStatus = isAllSold ? 'sold-out' : (p.status || 'in-progress');
     const statusOptions = ['pre-sale', 'in-progress', 'completed'];
+    const badgeMap = { 'pre-sale': 'presale', 'in-progress': 'progress', 'completed': 'completed', 'sold-out': 'soldout' };
     html += `<div class="editor-section"><h3>${t('projects.projectStatus')}</h3>
-      <div style="display:flex;gap:16px;align-items:center;">
-        <div class="form-group" style="width:200px">
+      <div class="status-avail-row">
+        <div class="form-group">
+          <label>${t('projects.statusLabel')}</label>
           <select id="project-status" ${isAllSold ? 'disabled' : ''}>
             ${statusOptions.map(s => `<option value="${s}"${p.status === s ? ' selected' : ''}>${t('dash.status_' + s)}</option>`).join('')}
             ${isAllSold ? `<option value="sold-out" selected>${t('dash.status_sold-out')}</option>` : ''}
           </select>
         </div>
-        <span class="dash-card__badge dash-card__badge--${effectiveStatus === 'pre-sale' ? 'presale' : effectiveStatus === 'completed' ? 'completed' : effectiveStatus === 'sold-out' ? 'soldout' : 'progress'}">${t('dash.status_' + effectiveStatus)}</span>
-        ${isAllSold ? `<small class="field-hint">${t('projects.soldOutAuto')}</small>` : ''}
+        <div class="form-group">
+          <label>${t('projects.sold')}</label>
+          <input type="number" id="avail-sold" value="${p.availability.sold}" min="0" max="${p.availability.total}" ${canEditSold ? '' : 'readonly'} style="width:80px">
+        </div>
+        <div class="form-group">
+          <label>${t('projects.total')}</label>
+          <input type="number" id="avail-total" value="${p.availability.total}" min="1" readonly style="width:80px">
+        </div>
+        <div class="status-avail-pct">
+          <span class="dash-card__badge dash-card__badge--${badgeMap[effectiveStatus] || 'progress'}">${t('dash.status_' + effectiveStatus)}</span>
+          <span class="status-pct">${availPct}%</span>
+        </div>
       </div>
+      ${isAllSold ? `<small class="field-hint">${t('projects.soldOutAuto')}</small>` : ''}
+      ${!canEditSold && !isAllSold ? `<small class="field-hint">${t('projects.availAutoHint')}</small>` : ''}
     </div>`;
 
     // Unit Table
@@ -1270,32 +1294,6 @@
       html += `</tbody></table><button class="btn btn--outline btn--sm" id="btn-add-utype" style="margin-top:8px">${t('projects.addType')}</button></div>`;
     }
 
-    // Availability (auto-calculated)
-    // For projects with units: both sold and total are computed from unit statuses
-    // For unitTypes (Village): total = sum of counts, sold is editable
-    const canEditSold = !p.units && p.unitTypes;
-    if (p.units) {
-      // Force recalc from units
-      p.availability.sold = p.units.filter(u => u.status === 'sold' || u.status === 'booked').length;
-      p.availability.total = p.units.length;
-    } else if (p.unitTypes) {
-      p.availability.total = p.unitTypes.reduce((s, ut) => s + ut.count, 0);
-    }
-    const availPct = p.availability.total ? Math.round(p.availability.sold / p.availability.total * 100) : 0;
-    html += `<div class="editor-section"><h3>${t('projects.availability')}</h3>
-      <div style="display:flex;gap:24px;align-items:center;">
-        <div class="form-group" style="width:120px">
-          <label>${t('projects.sold')}</label>
-          <input type="number" id="avail-sold" value="${p.availability.sold}" min="0" max="${p.availability.total}" ${canEditSold ? '' : 'readonly'}>
-        </div>
-        <div class="form-group" style="width:120px">
-          <label>${t('projects.total')}</label>
-          <input type="number" id="avail-total" value="${p.availability.total}" min="1" readonly>
-        </div>
-        <div style="font-size:1.3rem;font-family:var(--font-heading);color:var(--color-cream)">${availPct}%</div>
-      </div>
-      ${canEditSold ? '' : `<small class="field-hint" style="margin-top:4px;display:block">${t('projects.availAutoHint')}</small>`}
-    </div>`;
 
     // Hero Stats (4 languages)
     html += `<div class="editor-section"><h3>${t('projects.heroStats')}</h3>`;

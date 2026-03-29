@@ -658,6 +658,27 @@ body {
 .dash-card__badge--completed { background: rgba(93, 173, 226, 0.2); color: #5dade2; }
 .dash-card__badge--soldout   { background: rgba(255, 255, 255, 0.06); color: var(--color-text-dim); }
 
+/* Project Status + Availability row */
+.status-avail-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+}
+.status-avail-row .form-group { margin-bottom: 0; }
+.status-avail-row select,
+.status-avail-row input { min-width: 0; }
+.status-avail-pct {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 4px;
+}
+.status-pct {
+  font-size: 1.3rem;
+  font-family: var(--font-heading);
+  color: var(--color-cream);
+}
+
 .dash-card__stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
