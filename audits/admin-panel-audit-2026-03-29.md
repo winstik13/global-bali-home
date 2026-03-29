@@ -247,30 +247,23 @@
 
 ## 5. Что нужно ИЗМЕНИТЬ
 
-**[CHANGE-1] Контакты: реализовать массовое обновление HTML-файлов**
-- Текущее поведение: запись в `site-data.js` (строка 2312).
-- Нужно: дополнительно обновлять телефон/WhatsApp/email во всех 27 HTML-файлах через GitHub API (как SEO-редактор делает для мета-тегов).
-- Либо: перевести footer на data-атрибуты + JS-рендер из `site-data.js`.
+**[CHANGE-1] Контакты: обновлять все 27 HTML-файлов** ✅ РЕШЕНО (UX-4)
+- ~~Запись только в `site-data.js`.~~ → Все 27 файлов используют `data-contact=` атрибуты + JS подставляет из `site-data.js`.
 
-**[CHANGE-2] Цвета: генерация CSS-переменных в `style.css`**
-- Текущее поведение: запись в `site-data.js` (строка 2799). Цвета на сайт не применяются.
-- Нужно: читать `site-data.js` в `main.js` при загрузке и применять через `document.documentElement.style.setProperty()`.
-- Альтернатива: хранить отдельный файл `css/colors.css` с переменными и перегенерировать его через GitHub API.
+**[CHANGE-2] Цвета: применять к сайту через JS** ✅ РЕШЕНО
+- ~~Цвета на сайт не применяются.~~ → `main.js` читает `SITE_DATA.colors` и применяет через `setProperty()`, включая производные.
 
-**[CHANGE-3] SEO-редактор: добавить страницы проектов + ru/ id/ версии**
-- Текущий список: 6 основных страниц (строки 220–227).
-- Нужно: добавить `project-serenity-villas.html`, `project-serenity-estates.html`, `project-serenity-village.html` для всех 3 языков.
-- Итого должно быть: 9 страниц × 3 языка = 27 единиц для SEO-редактирования.
+**[CHANGE-3] SEO-редактор: все 27 страниц** ✅ РЕШЕНО
+- ~~Только 6 основных страниц.~~ → Страницы проектов добавляются динамически + табы языков EN/RU/ID для каждой страницы.
 
-**[CHANGE-4] "Generate Detail Pages": добавить diff и режим "только обновить данные"**
-- Сейчас: полная перезапись страницы (строка 1763).
-- Нужно: режим "обновить только данные проекта" (hero-stats, unit table, availability) без перезаписи кастомного контента.
-- Реализация: заменять только конкретные data-атрибуты в DOM, как делает SEO-редактор для мета-тегов.
+**[CHANGE-4] "Update SEO Only": обновлять JSON-LD цену** ✅ РЕШЕНО
+- ~~Только мета-теги.~~ → Теперь "Update SEO Only" также обновляет `lowPrice` в JSON-LD structured data. Юниты/availability/hero-stats уже динамические из `projects-data.js`.
 
-**[CHANGE-5] `buildDetailPage()`: добавить gallery-секцию и WhatsApp из site-data**
-- Генерируемая страница (строки 1805–1953) не содержит секцию с фотографиями проекта.
-- WhatsApp номер захардкожен: `6281338741177` (строка 1926) — не читается из `site-data.js`.
-- Footer захардкожен: `+62 813 251 438 49`, `office@globalbalihome.com`, `Ubud, Bali, Indonesia` (строки 1916–1918).
+**[CHANGE-5] `buildDetailPage()`: gallery + контакты из site-data + CTA quiz** ✅ РЕШЕНО
+- ~~Нет gallery-секции.~~ → Добавлена динамическая gallery из `GALLERY_DATA` через `data-project-gallery` + ссылка на полную галерею.
+- ~~Захардкоженные контакты.~~ → Footer использует `data-contact=` атрибуты, WhatsApp float — `data-contact="whatsapp-link"`.
+- ~~CTA ведёт на contacts.html.~~ → Заменено на `<button data-quiz>` для открытия квиза.
+- ~~Нет `site-data.js` в скриптах.~~ → Добавлены `site-data.js` и `gallery-data.js`.
 
 **[CHANGE-6] Подтверждение удаления на русском языке**
 - `confirm('Delete unit A1?')` (строка 1171), `confirm('Delete this FAQ item?')` (строка 2469) — всегда на английском.

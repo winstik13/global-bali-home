@@ -813,6 +813,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --- Project Gallery (detail pages) ---
+  document.querySelectorAll('[data-project-gallery]').forEach(function(container) {
+    if (typeof GALLERY_DATA === 'undefined') return;
+    var slug = container.getAttribute('data-project-gallery');
+    var key = slug.replace('serenity-', '');
+    var images = GALLERY_DATA[key];
+    if (!images || !images.length) return;
+    var prefix = document.querySelector('link[href^="../css/"]') ? '../' : '';
+    images.slice(0, 5).forEach(function(src) {
+      var div = document.createElement('div');
+      div.className = 'photo-mosaic__item';
+      var img = document.createElement('img');
+      img.src = prefix + src;
+      img.alt = src.split('/').pop().replace(/\.[^.]+$/, '').replace(/[_-]/g, ' ');
+      img.loading = 'lazy';
+      div.appendChild(img);
+      container.appendChild(div);
+    });
+  });
+
   // --- Dynamic FAQ Rendering from FAQ_DATA ---
   if (typeof FAQ_DATA !== 'undefined') {
     const faqList = document.querySelector('.faq-list');
