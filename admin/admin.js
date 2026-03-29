@@ -50,9 +50,13 @@
       'dash.totalPotential': 'Remaining Potential',
       'dash.preSale': 'Pre-Sale',
       'dash.inProgress': 'In Progress',
+      'dash.status_pre-sale': 'Pre-Sale',
+      'dash.status_in-progress': 'In Progress',
+      'dash.status_completed': 'Completed',
+      'dash.status_sold-out': 'Sold Out',
       'dash.sold': 'Sold',
       'dash.left': 'Left',
-      'dash.from': 'From',
+      'dash.priceRange': 'Price Range',
       'dash.editProject': 'Edit Project',
       'dash.viewOnSite': 'View on Site',
       'dash.recentChanges': 'Recent Changes',
@@ -110,6 +114,8 @@
       'projects.unsaved': 'Unsaved changes',
       'projects.publishing': 'Publishing...',
       'projects.published': 'Published! Site updating (~1-2 min)',
+      'projects.projectStatus': 'Project Status',
+      'projects.soldOutAuto': 'Auto: all units sold',
       'projects.units': 'Units',
       'projects.unitTypes': 'Unit Types',
       'projects.availability': 'Availability',
@@ -354,9 +360,13 @@
       'dash.totalPotential': 'Остаток',
       'dash.preSale': 'Предпродажа',
       'dash.inProgress': 'Строится',
+      'dash.status_pre-sale': 'Предпродажа',
+      'dash.status_in-progress': 'Строится',
+      'dash.status_completed': 'Завершён',
+      'dash.status_sold-out': 'Всё продано',
       'dash.sold': 'Продано',
       'dash.left': 'Осталось',
-      'dash.from': 'От',
+      'dash.priceRange': 'Диапазон цен',
       'dash.editProject': 'Редактировать',
       'dash.viewOnSite': 'На сайте',
       'dash.recentChanges': 'Последние изменения',
@@ -414,6 +424,8 @@
       'projects.unsaved': 'Есть несохранённые изменения',
       'projects.publishing': 'Публикация...',
       'projects.published': 'Опубликовано! Сайт обновится (~1-2 мин)',
+      'projects.projectStatus': 'Статус проекта',
+      'projects.soldOutAuto': 'Авто: все юниты проданы',
       'projects.units': 'Юниты',
       'projects.unitTypes': 'Типы юнитов',
       'projects.availability': 'Доступность',
@@ -1055,24 +1067,49 @@
 
     // Project cards
     html += '<div class="dashboard-grid">';
-    projectStats.forEach(({ key, p, sold, total, pct, left, potential }) => {
-      const badgeClass = p.status === 'pre-sale' ? 'presale' : 'progress';
-      const badgeText = p.status === 'pre-sale' ? t('dash.preSale') : t('dash.inProgress');
+    const cardColors = ['#6B8F4E', '#D4A94B', '#5DADE2'];
+    projectStats.forEach(({ key, p, sold, total, pct, left, potential }, idx) => {
+      const isAllSoldDash = p.units ? p.units.every(u => u.status === 'sold') : (p.availability.sold >= p.availability.total);
+      const dashStatus = isAllSoldDash ? 'sold-out' : (p.status || 'in-progress');
+      const badgeClassMap = { 'pre-sale': 'presale', 'in-progress': 'progress', 'completed': 'completed', 'sold-out': 'soldout' };
+      const badgeClass = badgeClassMap[dashStatus] || 'progress';
+      const badgeText = t('dash.status_' + dashStatus);
+      const cardColor = cardColors[idx % cardColors.length];
 
-      // Unit breakdown for Villas/Estates
-      let breakdown = '';
+      // Price range
+      let prices = [];
       if (p.units) {
-        const counts = { available: 0, booked: 0, sold: 0, resale: 0 };
-        p.units.forEach(u => { counts[u.status] = (counts[u.status] || 0) + 1; });
-        breakdown = `<div class="dash-card__breakdown">
-          ${counts.available ? `<span class="dash-break dash-break--available">${counts.available} ${t('dash.breakAvailable')}</span>` : ''}
-          ${counts.booked ? `<span class="dash-break dash-break--booked">${counts.booked} ${t('dash.breakBooked')}</span>` : ''}
-          ${counts.sold ? `<span class="dash-break dash-break--sold">${counts.sold} ${t('dash.breakSold')}</span>` : ''}
-          ${counts.resale ? `<span class="dash-break dash-break--resale">${counts.resale} ${t('dash.breakResale')}</span>` : ''}
-        </div>`;
+        p.units.forEach(u => { if (u.price) prices.push(u.price); });
+      } else if (p.unitTypes) {
+        p.unitTypes.forEach(ut => { prices.push(ut.price); });
       }
+      if (!prices.length) prices.push(p.startingPrice);
+      const minPrice = Math.min(...prices);
+      const maxPrice = Math.max(...prices);
+      const fmtPrice = v => v >= 1000000 ? '$' + (v / 1000000).toFixed(1) + 'M' : '$' + (v / 1000).toFixed(0) + 'K';
+      const priceRange = minPrice === maxPrice ? fmtPrice(minPrice) : fmtPrice(minPrice) + ' – ' + fmtPrice(maxPrice);
 
-      html += `<div class="dash-card" data-card-project="${key}">
+      // Segmented bar counts
+      const counts = { available: 0, booked: 0, sold: 0, resale: 0 };
+      if (p.units) {
+        p.units.forEach(u => { counts[u.status] = (counts[u.status] || 0) + 1; });
+      } else {
+        counts.sold = sold;
+        counts.available = total - sold;
+      }
+      const segSold = Math.round((counts.sold / total) * 100);
+      const segBooked = Math.round((counts.booked / total) * 100);
+      const segResale = Math.round((counts.resale / total) * 100);
+
+      // Segmented bar legend
+      const legend = [
+        counts.sold ? `<span class="seg-legend seg-legend--sold">${counts.sold} ${t('dash.breakSold')}</span>` : '',
+        counts.booked ? `<span class="seg-legend seg-legend--booked">${counts.booked} ${t('dash.breakBooked')}</span>` : '',
+        counts.resale ? `<span class="seg-legend seg-legend--resale">${counts.resale} ${t('dash.breakResale')}</span>` : '',
+        counts.available ? `<span class="seg-legend seg-legend--available">${counts.available} ${t('dash.breakAvailable')}</span>` : ''
+      ].filter(Boolean).join('');
+
+      html += `<div class="dash-card" data-card-project="${key}" style="border-left:3px solid ${cardColor}">
         <div class="dash-card__header">
           <span class="dash-card__name">${escapeHtml(p.name)}</span>
           <span class="dash-card__badge dash-card__badge--${badgeClass}">${badgeText}</span>
@@ -1080,14 +1117,18 @@
         <div class="dash-card__stats">
           <div><div class="dash-card__stat-value">${sold}/${total}</div><div class="dash-card__stat-label">${t('dash.sold')}</div></div>
           <div><div class="dash-card__stat-value">${left}</div><div class="dash-card__stat-label">${t('dash.left')}</div></div>
-          <div><div class="dash-card__stat-value">$${(p.startingPrice / 1000).toFixed(0)}K</div><div class="dash-card__stat-label">${t('dash.from')}</div></div>
-          <div><div class="dash-card__stat-value">$${potential >= 1000000 ? (potential / 1000000).toFixed(1) + 'M' : (potential / 1000).toFixed(0) + 'K'}</div><div class="dash-card__stat-label">${t('dash.totalPotential')}</div></div>
+          <div><div class="dash-card__stat-value">${priceRange}</div><div class="dash-card__stat-label">${t('dash.priceRange')}</div></div>
+          <div><div class="dash-card__stat-value">${fmtPrice(potential)}</div><div class="dash-card__stat-label">${t('dash.totalPotential')}</div></div>
         </div>
         <div class="dash-card__bar">
-          <div class="dash-card__bar-track"><div class="dash-card__bar-fill" style="width:${pct}%"></div></div>
+          <div class="dash-card__bar-track dash-card__bar-track--seg">
+            <div class="dash-card__seg dash-card__seg--sold" style="width:${segSold}%"></div>
+            <div class="dash-card__seg dash-card__seg--booked" style="width:${segBooked}%"></div>
+            <div class="dash-card__seg dash-card__seg--resale" style="width:${segResale}%"></div>
+          </div>
           <span class="dash-card__bar-label">${pct}%</span>
         </div>
-        ${breakdown}
+        <div class="seg-legend-row">${legend}</div>
         <div class="dash-card__actions">
           <button class="dash-card__edit btn btn--outline btn--sm" data-goto="${key}">${t('dash.editProject')}</button>
           <a href="https://winstik13.github.io/global-bali-home/${p.page || 'project-' + p.slug + '.html'}" target="_blank" rel="noopener" class="btn btn--outline btn--sm" style="text-decoration:none">${t('dash.viewOnSite')}</a>
@@ -1162,6 +1203,23 @@
 
     let html = '';
 
+    // Project Status
+    const isAllSold = p.units ? p.units.every(u => u.status === 'sold') : (p.availability.sold >= p.availability.total);
+    const effectiveStatus = isAllSold ? 'sold-out' : (p.status || 'in-progress');
+    const statusOptions = ['pre-sale', 'in-progress', 'completed'];
+    html += `<div class="editor-section"><h3>${t('projects.projectStatus')}</h3>
+      <div style="display:flex;gap:16px;align-items:center;">
+        <div class="form-group" style="width:200px">
+          <select id="project-status" ${isAllSold ? 'disabled' : ''}>
+            ${statusOptions.map(s => `<option value="${s}"${p.status === s ? ' selected' : ''}>${t('dash.status_' + s)}</option>`).join('')}
+            ${isAllSold ? `<option value="sold-out" selected>${t('dash.status_sold-out')}</option>` : ''}
+          </select>
+        </div>
+        <span class="dash-card__badge dash-card__badge--${effectiveStatus === 'pre-sale' ? 'presale' : effectiveStatus === 'completed' ? 'completed' : effectiveStatus === 'sold-out' ? 'soldout' : 'progress'}">${t('dash.status_' + effectiveStatus)}</span>
+        ${isAllSold ? `<small class="field-hint">${t('projects.soldOutAuto')}</small>` : ''}
+      </div>
+    </div>`;
+
     // Unit Table
     if (p.units) {
       html += `<div class="editor-section"><h3>${t('projects.units')}</h3>
@@ -1178,7 +1236,9 @@
           <td data-label="${t('projects.floors')}"><input type="number" data-unit="${i}" data-field="floors" class="unit-text" value="${u.floors}" style="width:48px" min="1" max="5"></td>
           <td data-label="${t('projects.area')}"><input type="text" data-unit="${i}" data-field="area" class="unit-text" value="${u.area}" style="width:72px"></td>
           <td data-label="${t('projects.land')}"><input type="text" data-unit="${i}" data-field="land" class="unit-text" value="${u.land}" style="width:72px"></td>
-          <td data-label="${t('projects.badge')}"><input type="text" data-unit="${i}" data-field="badge" class="unit-text" value="${u.badge || ''}" style="width:72px" placeholder="—"></td>
+          <td data-label="${t('projects.badge')}"><select data-unit="${i}" data-field="badge" class="unit-badge">
+            ${[['', '—'], ['Premium', 'Premium'], ['Front Row', 'Front Row'], ['Large Plot', 'Large Plot'], ['Corner', 'Corner'], ['Last Unit', 'Last Unit'], ['Best Seller', 'Best Seller']].map(([v, l]) => `<option value="${v}"${(u.badge || '') === v ? ' selected' : ''}>${l}</option>`).join('')}
+          </select></td>
           <td data-label="${t('projects.status')}"><select data-unit="${i}" data-field="status" class="unit-status">
             ${['available', 'booked', 'sold', 'resale'].map(s => `<option value="${s}"${u.status === s ? ' selected' : ''}>${s.charAt(0).toUpperCase() + s.slice(1)}</option>`).join('')}
           </select></td>
@@ -1265,6 +1325,16 @@
 
     editor.innerHTML = html;
 
+    // Bind project status
+    const statusSel = $('#project-status');
+    if (statusSel && !statusSel.disabled) {
+      statusSel.addEventListener('change', () => {
+        p.status = statusSel.value;
+        markChanged();
+        renderProjectEditor();
+      });
+    }
+
     // Bind change events — unit fields
     editor.querySelectorAll('.unit-text').forEach(inp => {
       inp.addEventListener('input', () => {
@@ -1272,8 +1342,6 @@
         const field = inp.dataset.field;
         if (field === 'floors') {
           p.units[idx][field] = +inp.value;
-        } else if (field === 'badge') {
-          p.units[idx][field] = inp.value || null;
         } else {
           p.units[idx][field] = inp.value;
         }
@@ -1285,6 +1353,14 @@
       sel.addEventListener('change', () => {
         const idx = +sel.dataset.unit;
         p.units[idx][sel.dataset.field] = sel.value;
+        markChanged();
+      });
+    });
+
+    editor.querySelectorAll('.unit-badge').forEach(sel => {
+      sel.addEventListener('change', () => {
+        const idx = +sel.dataset.unit;
+        p.units[idx].badge = sel.value || null;
         markChanged();
       });
     });

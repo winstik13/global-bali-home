@@ -653,8 +653,10 @@ body {
   padding: 4px 12px;
   border-radius: 2px;
 }
-.dash-card__badge--progress { background: rgba(107, 143, 78, 0.2); color: var(--color-accent); }
-.dash-card__badge--presale  { background: rgba(243, 156, 18, 0.2); color: var(--color-warning); }
+.dash-card__badge--progress  { background: rgba(107, 143, 78, 0.2); color: var(--color-accent); }
+.dash-card__badge--presale   { background: rgba(243, 156, 18, 0.2); color: var(--color-warning); }
+.dash-card__badge--completed { background: rgba(93, 173, 226, 0.2); color: #5dade2; }
+.dash-card__badge--soldout   { background: rgba(255, 255, 255, 0.06); color: var(--color-text-dim); }
 
 .dash-card__stats {
   display: grid;
@@ -690,12 +692,18 @@ body {
   overflow: hidden;
 }
 
-.dash-card__bar-fill {
+.dash-card__bar-track--seg {
+  display: flex;
+  background: rgba(107, 143, 78, 0.15);
+}
+
+.dash-card__seg {
   height: 100%;
-  background: var(--color-accent);
-  border-radius: 3px;
   transition: width 0.5s ease;
 }
+.dash-card__seg--sold   { background: var(--color-text-dim); }
+.dash-card__seg--booked { background: var(--color-warning); }
+.dash-card__seg--resale { background: #5dade2; }
 
 .dash-card__bar-label {
   font-size: 0.75rem;
@@ -704,24 +712,31 @@ body {
   min-width: 36px;
 }
 
-/* Unit breakdown */
-.dash-card__breakdown {
+/* Segmented bar legend */
+.seg-legend-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
 }
 
-.dash-break {
-  font-size: 0.7rem;
-  padding: 3px 10px;
+.seg-legend {
+  font-size: 0.68rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.seg-legend::before {
+  content: '';
+  width: 8px;
+  height: 8px;
   border-radius: 2px;
-  font-weight: 500;
+  display: inline-block;
 }
 
-.dash-break--available { background: rgba(107, 143, 78, 0.15); color: #8db86e; }
-.dash-break--booked    { background: rgba(243, 156, 18, 0.15); color: #f0b643; }
-.dash-break--sold      { background: rgba(255, 255, 255, 0.06); color: var(--color-text-dim); }
-.dash-break--resale    { background: rgba(52, 152, 219, 0.15); color: #5dade2; }
+.seg-legend--sold::before   { background: var(--color-text-dim); }
+.seg-legend--booked::before { background: var(--color-warning); }
+.seg-legend--resale::before { background: #5dade2; }
+.seg-legend--available::before { background: rgba(107, 143, 78, 0.4); }
 
 .dash-card__edit {
   align-self: flex-start;
