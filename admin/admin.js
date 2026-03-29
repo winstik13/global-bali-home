@@ -45,7 +45,8 @@
       'dash.soldBooked': 'Sold / Booked',
       'dash.available': 'Available',
       'dash.overallProgress': 'Overall Progress',
-      'dash.estRevenue': 'Est. Revenue',
+      'dash.soldRevenue': 'Sold Revenue',
+      'dash.totalPotential': 'Total Potential',
       'dash.preSale': 'Pre-Sale',
       'dash.inProgress': 'In Progress',
       'dash.sold': 'Sold',
@@ -331,7 +332,8 @@
       'dash.soldBooked': 'Продано / Бронь',
       'dash.available': 'Доступно',
       'dash.overallProgress': 'Общий прогресс',
-      'dash.estRevenue': 'Ожид. выручка',
+      'dash.soldRevenue': 'Выручка (продано)',
+      'dash.totalPotential': 'Потенциал (все)',
       'dash.preSale': 'Предпродажа',
       'dash.inProgress': 'Строится',
       'dash.sold': 'Продано',
@@ -958,7 +960,7 @@
     const projects = getProjectKeys();
 
     // Compute totals
-    let totalUnits = 0, totalSold = 0, totalAvailable = 0, totalRevenue = 0;
+    let totalUnits = 0, totalSold = 0, totalAvailable = 0, totalRevenue = 0, totalPotential = 0;
     const projectStats = projects.map(key => {
       const p = projectsData[key];
       const { sold, total } = p.availability;
@@ -968,16 +970,23 @@
       totalSold += sold;
       totalAvailable += left;
 
-      // Estimate revenue from sold units
+      // Revenue from sold/booked units
       let revenue = 0;
+      // Potential revenue from ALL units
+      let potential = 0;
       if (p.units) {
         p.units.forEach(u => {
+          const price = u.price || p.startingPrice;
+          potential += price;
           if (u.status === 'sold' || u.status === 'booked') {
-            revenue += u.price || p.startingPrice;
+            revenue += price;
           }
         });
       } else if (p.unitTypes) {
-        // Village: estimate from types proportionally
+        // Village: compute from unit types
+        p.unitTypes.forEach(ut => {
+          potential += ut.count * ut.price;
+        });
         const soldCount = sold;
         let assigned = 0;
         p.unitTypes.forEach(ut => {
@@ -988,8 +997,9 @@
         if (assigned < soldCount) revenue += (soldCount - assigned) * p.startingPrice;
       }
       totalRevenue += revenue;
+      totalPotential += potential;
 
-      return { key, p, sold, total, pct, left, revenue };
+      return { key, p, sold, total, pct, left, revenue, potential };
     });
 
     // Summary row
@@ -1012,8 +1022,12 @@
         <div class="dash-summary__label">${t('dash.overallProgress')}</div>
       </div>
       <div class="dash-summary__item">
-        <div class="dash-summary__value">$${(totalRevenue / 1000000).toFixed(1)}M</div>
-        <div class="dash-summary__label">${t('dash.estRevenue')}</div>
+        <div class="dash-summary__value">$${totalRevenue >= 1000000 ? (totalRevenue / 1000000).toFixed(1) + 'M' : (totalRevenue / 1000).toFixed(0) + 'K'}</div>
+        <div class="dash-summary__label">${t('dash.soldRevenue')}</div>
+      </div>
+      <div class="dash-summary__item">
+        <div class="dash-summary__value">$${totalPotential >= 1000000 ? (totalPotential / 1000000).toFixed(1) + 'M' : (totalPotential / 1000).toFixed(0) + 'K'}</div>
+        <div class="dash-summary__label">${t('dash.totalPotential')}</div>
       </div>
     </div>`;
 
