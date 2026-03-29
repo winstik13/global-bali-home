@@ -1513,12 +1513,20 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
           var inits = authorName.split(' ').map(function(w) { return w[0]; }).join('').slice(0, 2).toUpperCase();
           avatarHTML = '<span class="testimonials__avatar testimonials__avatar--initials">' + inits + '</span>';
         }
+        var verifiedHTML = '';
+        if (t.sourceName) {
+          var verifiedText = '✓ Verified via ' + t.sourceName;
+          verifiedHTML = t.sourceUrl
+            ? '<a class="testimonials__verified" href="' + t.sourceUrl + '" target="_blank" rel="noopener noreferrer">' + verifiedText + '</a>'
+            : '<span class="testimonials__verified">' + verifiedText + '</span>';
+        }
         return '<div class="testimonials__card reveal-stagger">' +
           '<div class="testimonials__stars">' + stars + '</div>' +
           '<blockquote class="testimonials__text">' + (t.text[lang] || t.text.en) + '</blockquote>' +
           '<div class="testimonials__author">' + avatarHTML + '<div class="testimonials__author-info">' +
           '<span class="testimonials__name">' + authorName + '</span>' +
           '<span class="testimonials__role">' + (t.role[lang] || t.role.en) + '</span>' +
+          verifiedHTML +
           '</div></div></div>';
       }).join('');
       // Re-observe for scroll reveal

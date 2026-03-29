@@ -193,6 +193,11 @@
       'test.avatar': 'Photo',
       'test.text': 'Text',
       'test.stars': 'Stars',
+      'test.sourceUrl': 'Review Link',
+      'test.sourceName': 'Source',
+      'test.sourceHint': 'e.g. Google Reviews, Trustpilot',
+      'test.copyFromEn': 'Copy from EN',
+      'faq.copyFromEn': 'Copy from EN',
       'colors.title': 'Site Colors',
       'colors.backgrounds': 'Backgrounds',
       'colors.textBorders': 'Text & Borders',
@@ -441,6 +446,11 @@
       'test.avatar': 'Фото',
       'test.text': 'Текст',
       'test.stars': 'Звёзды',
+      'test.sourceUrl': 'Ссылка на отзыв',
+      'test.sourceName': 'Источник',
+      'test.sourceHint': 'напр. Google Reviews, Trustpilot',
+      'test.copyFromEn': 'Скопировать из EN',
+      'faq.copyFromEn': 'Скопировать из EN',
       'colors.title': 'Цвета сайта',
       'colors.backgrounds': 'Фоны',
       'colors.textBorders': 'Текст и границы',
@@ -2679,7 +2689,7 @@
           </div>
         </div>
         ${LANGS.map(lng => `<div class="faq-editor-lang">
-          <div class="faq-editor-lang__label">${LANG_NAMES[lng]}</div>
+          <div class="faq-editor-lang__label">${LANG_NAMES[lng]}${lng !== 'en' ? ` <button class="btn btn--outline btn--xs" data-faq-copy-en="${i}" data-faq-copy-lng="${lng}">${t('faq.copyFromEn')}</button>` : ''}</div>
           <div class="form-group"><label>${t('faq.question')}</label><input type="text" data-faq-field="question" data-faq-i="${i}" data-faq-lng="${lng}" value="${escAttr(item.question[lng] || '')}"></div>
           <div class="form-group"><label>${t('faq.answer')}</label><textarea data-faq-field="answer" data-faq-i="${i}" data-faq-lng="${lng}" rows="3">${escAttr(item.answer[lng] || '')}</textarea></div>
         </div>`).join('')}
@@ -2736,6 +2746,19 @@
         if (!confirm(t('faq.confirmDelete'))) return;
         const i = +btn.dataset.faqDelete;
         faqData.splice(i, 1);
+        dirtyTabs.faq = true;
+        renderFaqEditor();
+      });
+    });
+
+    // Copy from EN
+    editor.querySelectorAll('[data-faq-copy-en]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const i = +btn.dataset.faqCopyEn;
+        const lng = btn.dataset.faqCopyLng;
+        ['question', 'answer'].forEach(field => {
+          faqData[i][field][lng] = faqData[i][field].en || '';
+        });
         dirtyTabs.faq = true;
         renderFaqEditor();
       });
@@ -2844,8 +2867,12 @@
           </div>
           <div class="form-group"><label>${t('test.stars')}</label><input type="number" data-test-field="stars" data-test-i="${i}" min="1" max="5" value="${item.stars || 5}"></div>
         </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+          <div class="form-group"><label>${t('test.sourceUrl')}</label><input type="url" data-test-field="sourceUrl" data-test-i="${i}" value="${escAttr(item.sourceUrl || '')}" placeholder="https://..."></div>
+          <div class="form-group"><label>${t('test.sourceName')}</label><input type="text" data-test-field="sourceName" data-test-i="${i}" value="${escAttr(item.sourceName || '')}" placeholder="${t('test.sourceHint')}"></div>
+        </div>
         ${LANGS.map(lng => `<div class="faq-editor-lang">
-          <div class="faq-editor-lang__label">${LANGS_FULL[lng] || lng}</div>
+          <div class="faq-editor-lang__label">${LANGS_FULL[lng] || lng}${lng !== 'en' ? ` <button class="btn btn--outline btn--xs" data-test-copy-en="${i}" data-test-copy-lng="${lng}">${t('test.copyFromEn')}</button>` : ''}</div>
           <div class="form-group"><label>${t('test.name')}</label><input type="text" data-test-field="name" data-test-i="${i}" data-test-lng="${lng}" value="${escAttr(item.name[lng] || '')}"></div>
           <div class="form-group"><label>${t('test.role')}</label><input type="text" data-test-field="role" data-test-i="${i}" data-test-lng="${lng}" value="${escAttr(item.role[lng] || '')}"></div>
           <div class="form-group"><label>${t('test.text')}</label><textarea data-test-field="text" data-test-i="${i}" data-test-lng="${lng}" rows="3">${escAttr(item.text[lng] || '')}</textarea></div>
@@ -2861,10 +2888,25 @@
         const lng = el.dataset.testLng;
         if (field === 'stars') {
           testimonialsData[i].stars = parseInt(el.value) || 5;
+        } else if (field === 'sourceUrl' || field === 'sourceName') {
+          testimonialsData[i][field] = el.value;
         } else {
           testimonialsData[i][field][lng] = el.value;
         }
         dirtyTabs.testimonials = true;
+      });
+    });
+
+    // Copy from EN buttons
+    editor.querySelectorAll('[data-test-copy-en]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const i = parseInt(btn.dataset.testCopyEn);
+        const lng = btn.dataset.testCopyLng;
+        ['name', 'role', 'text'].forEach(field => {
+          testimonialsData[i][field][lng] = testimonialsData[i][field].en || '';
+        });
+        dirtyTabs.testimonials = true;
+        renderTestimonialsEditor();
       });
     });
 
@@ -2937,6 +2979,8 @@
         role: { en: '', ru: '', id: '' },
         text: { en: '', ru: '', id: '' },
         stars: 5,
+        sourceUrl: '',
+        sourceName: '',
         order: maxOrder + 1
       });
       dirtyTabs.testimonials = true;

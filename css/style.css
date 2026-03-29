@@ -3394,6 +3394,19 @@ td .price-idr {
   color: var(--color-text-dim);
 }
 
+.testimonials__verified {
+  font-size: 0.7rem;
+  color: var(--color-accent);
+  text-decoration: none;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+a.testimonials__verified:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
 .testimonials__grid--duo {
   grid-template-columns: repeat(2, 1fr);
   max-width: 900px;
