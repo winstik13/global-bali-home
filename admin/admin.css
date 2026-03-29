@@ -350,6 +350,34 @@ body {
   gap: 16px;
 }
 
+.admin-header__rate {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(107, 143, 78, 0.1);
+  border: 1px solid rgba(107, 143, 78, 0.2);
+  border-radius: 8px;
+  font-size: 0.8rem;
+}
+
+.admin-header__rate-label {
+  color: var(--color-text-dim);
+  font-weight: 500;
+}
+
+.admin-header__rate-value {
+  color: var(--color-accent);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.admin-header__rate-time {
+  color: var(--color-text-dim);
+  font-size: 0.7rem;
+  opacity: 0.6;
+}
+
 .admin-header__user {
   font-size: 0.8rem;
   color: var(--color-text-dim);
@@ -1218,6 +1246,7 @@ body {
   .login-card { margin: 20px; padding: 32px 24px; }
 
   .admin-header { padding: 0 16px; }
+  .admin-header__rate { display: none; }
   .admin-nav { padding: 0 16px; overflow-x: auto; }
   .admin-content { padding: 20px 16px; }
 

@@ -25,6 +25,34 @@
   let projectsData = null;    // working copy of PROJECTS_DATA
   let pendingChanges = false;
 
+  // ─── Live Exchange Rate ───
+  let rateInterval = null;
+
+  async function fetchLiveRate() {
+    const valEl = document.getElementById('header-rate-value');
+    const timeEl = document.getElementById('header-rate-time');
+    if (!valEl) return;
+    try {
+      const res = await fetch('https://open.er-api.com/v6/latest/USD');
+      const data = await res.json();
+      if (data.result === 'success' && data.rates && data.rates.IDR) {
+        const rate = Math.round(data.rates.IDR);
+        valEl.textContent = rate.toLocaleString('id-ID');
+        const now = new Date();
+        timeEl.textContent = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+      }
+    } catch (e) {
+      valEl.textContent = '—';
+      timeEl.textContent = 'offline';
+    }
+  }
+
+  function startRateUpdates() {
+    fetchLiveRate();
+    if (rateInterval) clearInterval(rateInterval);
+    rateInterval = setInterval(fetchLiveRate, 3600000);
+  }
+
   // ─── DOM Refs ───
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
@@ -66,6 +94,7 @@
     if (user) {
       loginScreen.hidden = true;
       $('#admin-user').textContent = user.email;
+      startRateUpdates();
       // Check for stored PAT
       githubPAT = localStorage.getItem('gbh_pat') || sessionStorage.getItem('gbh_pat') || '';
       if (githubPAT) {
