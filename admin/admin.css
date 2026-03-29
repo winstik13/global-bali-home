@@ -1466,6 +1466,8 @@ body {
 .dash-card__actions .btn {
   text-align: center;
   justify-content: center;
+  display: flex;
+  align-items: center;
 }
 
 /* ─── RESPONSIVE ─── */
