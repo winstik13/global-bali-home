@@ -739,6 +739,7 @@
     renderContactsForm();
     renderGuideInfo();
     renderProjectEditor();
+    renderGallery();
     updateRateLimit();
   }
 
