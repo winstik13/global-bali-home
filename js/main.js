@@ -1859,12 +1859,30 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
   // --- Sticky CTA Bar (mobile) ---
   const stickyCTA = document.createElement('div');
   stickyCTA.className = 'sticky-cta';
-  stickyCTA.innerHTML = `<button class="sticky-cta__btn btn btn--primary" data-quiz>${t.stickyCta}</button>`;
+
+  // On project pages, sticky CTA opens tour popup instead of quiz
+  const heroStatsEl = document.querySelector('.hero-stats[data-project]');
+  const stickyProjectName = heroStatsEl ? {
+    'serenity-villas': 'Serenity Villas',
+    'serenity-estates': 'Serenity Estates',
+    'serenity-village': 'Serenity Village'
+  }[heroStatsEl.dataset.project] || '' : '';
+
+  if (stickyProjectName) {
+    const stickyTourLabel = lang === 'ru' ? 'Запланировать тур' : lang === 'id' ? 'Jadwalkan Tur' : 'Schedule a Tour';
+    stickyCTA.innerHTML = `<button class="sticky-cta__btn btn btn--primary">${stickyTourLabel}</button>`;
+    stickyCTA.querySelector('button').addEventListener('click', (e) => {
+      e.preventDefault();
+      openTour(stickyProjectName);
+    });
+  } else {
+    stickyCTA.innerHTML = `<button class="sticky-cta__btn btn btn--primary" data-quiz>${t.stickyCta}</button>`;
+    stickyCTA.querySelector('[data-quiz]').addEventListener('click', (e) => {
+      e.preventDefault();
+      openQuiz();
+    });
+  }
   document.body.appendChild(stickyCTA);
-  stickyCTA.querySelector('[data-quiz]').addEventListener('click', (e) => {
-    e.preventDefault();
-    openQuiz();
-  });
 
   const hero = document.querySelector('.hero') || document.querySelector('.fullbleed-hero') || document.querySelector('.page-hero');
   const waBtn = document.querySelector('.whatsapp-float');
@@ -1874,7 +1892,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
   if (hero) {
     const showSticky = () => {
       const heroBottom = hero.getBoundingClientRect().bottom;
-      const isOverlayOpen = quizOverlay.classList.contains('active');
+      const isOverlayOpen = quizOverlay.classList.contains('active') || tourOverlay.classList.contains('active');
       if (heroBottom < 0 && !isOverlayOpen) {
         stickyCTA.classList.add('visible');
         if (waBtn) { waBtn.classList.add('visible'); waBtn.classList.add('lifted'); }
