@@ -2316,7 +2316,6 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         { key: 'land', fn: function(k) { return PD[k].compLand || (comp[k] && comp[k].land) || '\u2014'; } },
         { key: 'units', fn: function(k) { return PD[k].totalUnits; } },
         { key: 'pool', fn: function(k) { var p = PD[k].compPool || (comp[k] && comp[k].pool); if (!p) return '\u2014'; return (typeof p === 'object') ? (p[dataLang] || p.en) : p; } },
-        { key: 'roi', fn: function(k) { return '12–15%'; }, accent: true },
         { key: 'handover', fn: function(k) { return PD[k].handover || '\u2014'; } },
         { key: 'status', fn: function(k) { return loc(PD[k].showcaseStatus) || '\u2014'; } }
       ];
