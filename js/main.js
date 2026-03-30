@@ -1404,7 +1404,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Attach quiz to CTA section buttons and header CTA
-  document.querySelectorAll('.cta-section .btn--primary, [data-quiz]').forEach(btn => {
+  // Exclude [data-tour] buttons — they open tour popup, not quiz
+  document.querySelectorAll('.cta-section .btn--primary:not([data-tour]), [data-quiz]').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       openQuiz();
