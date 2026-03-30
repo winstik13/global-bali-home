@@ -41,13 +41,14 @@ const SITE_DATA = {
     }
   },
   "stats": {
-    "yearsInBali": "3+",
+    "investorsWorldwide": "20+",
     "villasDesigned": "43",
     "occupancyRate": "80%+",
     "founderExperience": "$1B+",
     "touristArrivals": "16M+",
     "rentalYield": "12-15%",
-    "propertyGrowth": "8-12%"
+    "propertyGrowth": "8-12%",
+    "paybackPeriod": "7-8 yr"
   },
   "analytics": {
     "ga4": "",

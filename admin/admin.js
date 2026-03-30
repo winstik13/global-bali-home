@@ -264,13 +264,14 @@
       'social.instagram': 'Instagram URL',
       'social.save': 'Save Social',
       'stats.title': 'Company Statistics',
-      'stats.yearsInBali': 'Years in Bali',
-      'stats.villasDesigned': 'Villas Designed',
+      'stats.investorsWorldwide': 'Investors Worldwide',
+      'stats.villasDesigned': 'Villas in Portfolio',
       'stats.occupancyRate': 'Occupancy Rate',
-      'stats.founderExperience': 'Founder Experience',
+      'stats.founderExperience': 'Transaction Experience',
       'stats.touristArrivals': 'Tourist Arrivals',
       'stats.rentalYield': 'Rental Yield',
       'stats.propertyGrowth': 'Property Growth',
+      'stats.paybackPeriod': 'Payback Period',
       'stats.save': 'Save Statistics',
       'roi.title': 'ROI Calculator Parameters',
       'roi.scenarios': 'Scenarios',
@@ -602,13 +603,14 @@
       'social.instagram': 'URL Instagram',
       'social.save': 'Сохранить соцсети',
       'stats.title': 'Статистика компании',
-      'stats.yearsInBali': 'Лет на Бали',
-      'stats.villasDesigned': 'Вилл спроектировано',
+      'stats.investorsWorldwide': 'Инвесторов по миру',
+      'stats.villasDesigned': 'Виллы в портфолио',
       'stats.occupancyRate': 'Заполняемость',
-      'stats.founderExperience': 'Опыт основателя',
+      'stats.founderExperience': 'Опыт транзакций',
       'stats.touristArrivals': 'Приезд туристов',
       'stats.rentalYield': 'Арендная доходность',
       'stats.propertyGrowth': 'Рост стоимости',
+      'stats.paybackPeriod': 'Срок окупаемости',
       'stats.save': 'Сохранить статистику',
       'roi.title': 'Параметры ROI-калькулятора',
       'roi.scenarios': 'Сценарии',
@@ -3291,7 +3293,7 @@
   });
 
   // ─── Company Statistics ───
-  const STAT_KEYS = ['yearsInBali', 'villasDesigned', 'occupancyRate', 'founderExperience', 'touristArrivals', 'rentalYield', 'propertyGrowth'];
+  const STAT_KEYS = ['investorsWorldwide', 'villasDesigned', 'occupancyRate', 'founderExperience', 'touristArrivals', 'rentalYield', 'propertyGrowth', 'paybackPeriod'];
 
   function updateStatsPreview() {
     STAT_KEYS.forEach(key => {

@@ -363,13 +363,13 @@
         <!-- Company Statistics -->
         <div class="editor-section" style="margin-top:24px">
           <h3 data-i18n="stats.title">Company Statistics</h3>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
             <div class="form-group">
-              <label data-i18n="stats.yearsInBali">Years in Bali</label>
-              <input type="text" id="stat-yearsInBali" placeholder="3+">
+              <label data-i18n="stats.investorsWorldwide">Investors Worldwide</label>
+              <input type="text" id="stat-investorsWorldwide" placeholder="20+">
             </div>
             <div class="form-group">
-              <label data-i18n="stats.villasDesigned">Villas Designed</label>
+              <label data-i18n="stats.villasDesigned">Villas in Portfolio</label>
               <input type="text" id="stat-villasDesigned" placeholder="43">
             </div>
             <div class="form-group">
@@ -377,7 +377,7 @@
               <input type="text" id="stat-occupancyRate" placeholder="80%+">
             </div>
             <div class="form-group">
-              <label data-i18n="stats.founderExperience">Founder Experience</label>
+              <label data-i18n="stats.founderExperience">Transaction Experience</label>
               <input type="text" id="stat-founderExperience" placeholder="$1B+">
             </div>
             <div class="form-group">
@@ -392,6 +392,10 @@
               <label data-i18n="stats.propertyGrowth">Property Growth</label>
               <input type="text" id="stat-propertyGrowth" placeholder="8-12%">
             </div>
+            <div class="form-group">
+              <label data-i18n="stats.paybackPeriod">Payback Period</label>
+              <input type="text" id="stat-paybackPeriod" placeholder="7-8 yr">
+            </div>
           </div>
           <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
             <button id="btn-stats-save" class="btn btn--primary btn--sm" data-i18n="stats.save">Save Statistics</button>
@@ -401,25 +405,25 @@
             <h4 class="preview-label" data-i18n="preview.title">Preview</h4>
             <div class="stats-preview" id="stats-preview">
               <div class="stats-preview__card">
-                <div class="stats-preview__number" id="sp-yearsInBali">3+</div>
-                <div class="stats-preview__label">Years in Bali</div>
+                <div class="stats-preview__number" id="sp-investorsWorldwide">20+</div>
+                <div class="stats-preview__label">Investors</div>
               </div>
               <div class="stats-preview__card">
                 <div class="stats-preview__number" id="sp-villasDesigned">43</div>
-                <div class="stats-preview__label">Villas Designed</div>
+                <div class="stats-preview__label">Villas</div>
               </div>
               <div class="stats-preview__card">
                 <div class="stats-preview__number" id="sp-occupancyRate">80%+</div>
-                <div class="stats-preview__label">Occupancy Rate</div>
+                <div class="stats-preview__label">Occupancy</div>
               </div>
               <div class="stats-preview__card">
                 <div class="stats-preview__number" id="sp-founderExperience">$1B+</div>
-                <div class="stats-preview__label">Founder Exp.</div>
+                <div class="stats-preview__label">Experience</div>
               </div>
               <div class="stats-preview__sep"></div>
               <div class="stats-preview__card">
                 <div class="stats-preview__number" id="sp-touristArrivals">16M+</div>
-                <div class="stats-preview__label">Tourist Arrivals</div>
+                <div class="stats-preview__label">Tourists</div>
               </div>
               <div class="stats-preview__card">
                 <div class="stats-preview__number" id="sp-rentalYield">12-15%</div>
@@ -428,6 +432,10 @@
               <div class="stats-preview__card">
                 <div class="stats-preview__number" id="sp-propertyGrowth">8-12%</div>
                 <div class="stats-preview__label">Property Growth</div>
+              </div>
+              <div class="stats-preview__card">
+                <div class="stats-preview__number" id="sp-paybackPeriod">7-8 yr</div>
+                <div class="stats-preview__label">Payback</div>
               </div>
             </div>
           </div>
