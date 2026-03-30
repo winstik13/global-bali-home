@@ -162,7 +162,10 @@
       <section id="tab-gallery" class="admin-tab" hidden>
         <h2 data-i18n="gallery.title">Gallery Manager</h2>
         <div class="gallery-controls">
-          <select id="gallery-project"></select>
+          <div class="form-group">
+            <label for="gallery-project" data-i18n="gallery.project">Project</label>
+            <select id="gallery-project"></select>
+          </div>
           <span id="gallery-count" class="gallery-count"></span>
           <button id="btn-gallery-upload" class="btn btn--primary btn--sm" data-i18n="gallery.upload">Upload Photos</button>
           <input type="file" id="gallery-file-input" accept="image/*" multiple hidden>
