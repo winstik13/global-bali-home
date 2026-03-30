@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
       quizThankBtn: 'View',
       stepOf: 'Step',
       of: 'of',
-      stickyCta: 'Explore Villas',
+      stickyCta: 'Find My Villa',
       exitTag: 'Exclusive Guide',
       exitTitle: 'Before You Go — A Complimentary Resource',
       exitText: 'Access our comprehensive Bali Real Estate Investment Guide with market analysis, ROI projections, and expert insights.',
@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
       quizThankBtn: 'Смотреть',
       stepOf: 'Шаг',
       of: 'из',
-      stickyCta: 'Подобрать виллу',
+      stickyCta: 'Подобрать виллу мечты',
       exitTag: 'Эксклюзивный гид',
       exitTitle: 'Прежде чем уйти — бесплатный ресурс',
       exitText: 'Получите наш подробный гид по инвестициям в недвижимость Бали с анализом рынка, прогнозами доходности и экспертными оценками.',
@@ -367,7 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
       quizThankBtn: 'Lihat',
       stepOf: 'Langkah',
       of: 'dari',
-      stickyCta: 'Temukan Vila Anda',
+      stickyCta: 'Temukan Vila Impian',
       exitTag: 'Panduan Eksklusif',
       exitTitle: 'Sebelum Anda Pergi — Sumber Daya Gratis',
       exitText: 'Akses panduan investasi properti Bali kami yang komprehensif dengan analisis pasar, proyeksi ROI, dan wawasan ahli.',
@@ -1858,58 +1858,63 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
   });
 
   // --- Sticky CTA Bar (mobile) ---
-  const stickyCTA = document.createElement('div');
-  stickyCTA.className = 'sticky-cta';
-
-  // On project pages, sticky CTA opens tour popup instead of quiz
-  const heroStatsEl = document.querySelector('.hero-stats[data-project]');
-  const stickyProjectName = heroStatsEl ? {
-    'serenity-villas': 'Serenity Villas',
-    'serenity-estates': 'Serenity Estates',
-    'serenity-village': 'Serenity Village'
-  }[heroStatsEl.dataset.project] || '' : '';
-
-  if (stickyProjectName) {
-    const stickyTourLabel = lang === 'ru' ? 'Запланировать тур' : lang === 'id' ? 'Jadwalkan Tur' : 'Schedule a Tour';
-    stickyCTA.innerHTML = `<button class="sticky-cta__btn btn btn--primary">${stickyTourLabel}</button>`;
-    stickyCTA.querySelector('button').addEventListener('click', (e) => {
-      e.preventDefault();
-      openTour(stickyProjectName);
-    });
-  } else {
-    stickyCTA.innerHTML = `<button class="sticky-cta__btn btn btn--primary" data-quiz>${t.stickyCta}</button>`;
-    stickyCTA.querySelector('[data-quiz]').addEventListener('click', (e) => {
-      e.preventDefault();
-      openQuiz();
-    });
-  }
-  document.body.appendChild(stickyCTA);
-
+  const isContactsPage = window.location.pathname.includes('contacts');
   const hero = document.querySelector('.hero') || document.querySelector('.fullbleed-hero') || document.querySelector('.page-hero');
   const waBtn = document.querySelector('.whatsapp-float');
   if (waBtn) {
     waBtn.addEventListener('click', function() { trackEvent('contact', 'whatsapp', 'float_button'); });
   }
-  if (hero) {
-    const showSticky = () => {
-      const heroBottom = hero.getBoundingClientRect().bottom;
-      const isOverlayOpen = quizOverlay.classList.contains('active') || tourOverlay.classList.contains('active');
-      if (heroBottom < 0 && !isOverlayOpen) {
-        stickyCTA.classList.add('visible');
-        if (waBtn) { waBtn.classList.add('visible'); waBtn.classList.add('lifted'); }
-      } else {
-        stickyCTA.classList.remove('visible');
-        if (waBtn) { waBtn.classList.remove('visible'); waBtn.classList.remove('lifted'); }
-      }
-    };
-    let stickyTicking = false;
-    window.addEventListener('scroll', () => {
-      if (!stickyTicking) {
-        requestAnimationFrame(() => { showSticky(); stickyTicking = false; });
-        stickyTicking = true;
-      }
-    }, { passive: true });
-    showSticky();
+
+  // Skip sticky CTA on contacts page (already has contact form)
+  if (!isContactsPage) {
+    const stickyCTA = document.createElement('div');
+    stickyCTA.className = 'sticky-cta';
+
+    // On project pages, sticky CTA opens tour popup instead of quiz
+    const heroStatsEl = document.querySelector('.hero-stats[data-project]');
+    const stickyProjectName = heroStatsEl ? {
+      'serenity-villas': 'Serenity Villas',
+      'serenity-estates': 'Serenity Estates',
+      'serenity-village': 'Serenity Village'
+    }[heroStatsEl.dataset.project] || '' : '';
+
+    if (stickyProjectName) {
+      const stickyTourLabel = lang === 'ru' ? 'Запланировать тур' : lang === 'id' ? 'Jadwalkan Tur' : 'Schedule a Tour';
+      stickyCTA.innerHTML = `<button class="sticky-cta__btn btn btn--primary">${stickyTourLabel}</button>`;
+      stickyCTA.querySelector('button').addEventListener('click', (e) => {
+        e.preventDefault();
+        openTour(stickyProjectName);
+      });
+    } else {
+      stickyCTA.innerHTML = `<button class="sticky-cta__btn btn btn--primary" data-quiz>${t.stickyCta}</button>`;
+      stickyCTA.querySelector('[data-quiz]').addEventListener('click', (e) => {
+        e.preventDefault();
+        openQuiz();
+      });
+    }
+    document.body.appendChild(stickyCTA);
+
+    if (hero) {
+      const showSticky = () => {
+        const heroBottom = hero.getBoundingClientRect().bottom;
+        const isOverlayOpen = quizOverlay.classList.contains('active') || tourOverlay.classList.contains('active');
+        if (heroBottom < 0 && !isOverlayOpen) {
+          stickyCTA.classList.add('visible');
+          if (waBtn) { waBtn.classList.add('visible'); waBtn.classList.add('lifted'); }
+        } else {
+          stickyCTA.classList.remove('visible');
+          if (waBtn) { waBtn.classList.remove('visible'); waBtn.classList.remove('lifted'); }
+        }
+      };
+      let stickyTicking = false;
+      window.addEventListener('scroll', () => {
+        if (!stickyTicking) {
+          requestAnimationFrame(() => { showSticky(); stickyTicking = false; });
+          stickyTicking = true;
+        }
+      }, { passive: true });
+      showSticky();
+    }
   }
 
   // --- Exit Intent Popup ---
