@@ -1149,7 +1149,8 @@ td .price-idr {
 
 .why-bali-stats {
   display: flex;
-  gap: 48px;
+  flex-wrap: wrap;
+  gap: 32px 48px;
   margin: 40px 0;
   padding: 32px 0;
   border-top: 1px solid rgba(225, 217, 201, 0.15);
@@ -1160,12 +1161,14 @@ td .price-idr {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  flex: 1 0 120px;
 }
 
 .why-bali-stat strong {
   font-family: var(--font-heading);
   font-size: var(--font-3xl);
   color: var(--color-cream);
+  white-space: nowrap;
 }
 
 .why-bali-stat span {
