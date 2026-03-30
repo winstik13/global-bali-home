@@ -2329,7 +2329,7 @@ body {
 }
 
 .ep-preview-container {
-  background: rgba(10, 10, 8, 0.9);
+  background: rgba(10, 10, 8, 0.35);
   border-radius: 2px;
   padding: 32px 20px;
   display: flex;
