@@ -1275,6 +1275,10 @@ td .price-idr {
   max-width: 500px;
 }
 
+.cta-section .hero-cta {
+  justify-content: center;
+}
+
 /* --- Footer --- */
 .footer {
   background: var(--color-bg-alt);
