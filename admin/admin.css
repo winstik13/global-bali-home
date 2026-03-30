@@ -243,6 +243,14 @@ input[type="number"] {
   background: var(--color-bg);
 }
 
+.form-group textarea.textarea--flat {
+  border: none;
+  border-bottom: 1px solid var(--color-border-hover);
+  border-radius: 0;
+  padding: 10px 0;
+  background: transparent;
+}
+
 /* Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
