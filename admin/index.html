@@ -111,6 +111,10 @@
 
     <!-- Tab: Dashboard -->
     <main class="admin-content">
+      <div id="admin-loader" class="admin-loader">
+        <div class="admin-loader__spinner"></div>
+        <span class="admin-loader__text" data-i18n="dash.loading">Loading data...</span>
+      </div>
       <section id="tab-dashboard" class="admin-tab active">
         <h2 data-i18n="dash.title">Dashboard</h2>
         <div id="dashboard-cards"></div>
@@ -118,7 +122,7 @@
           <span id="last-update"></span>
           <span id="rate-limit"></span>
         </div>
-        <div id="dash-recent-changes" style="margin-top:24px"></div>
+        <div id="dash-recent-changes"></div>
       </section>
 
       <!-- Tab: Projects -->
@@ -148,10 +152,10 @@
               <option value="contacts.html" data-i18n="seo.contacts">Contacts</option>
             </select>
           </div>
-          <div class="seo-lang-tabs" id="seo-lang-tabs" hidden>
-            <button class="seo-lang-tab active" data-seo-lang="en">EN</button>
-            <button class="seo-lang-tab" data-seo-lang="ru">RU</button>
-            <button class="seo-lang-tab" data-seo-lang="id">ID</button>
+          <div class="lang-tabs" id="seo-lang-tabs" hidden>
+            <button class="lang-tab seo-lang-tab active" data-seo-lang="en">EN</button>
+            <button class="lang-tab seo-lang-tab" data-seo-lang="ru">RU</button>
+            <button class="lang-tab seo-lang-tab" data-seo-lang="id">ID</button>
           </div>
           <a id="seo-preview-link" class="btn btn--outline btn--sm" href="#" target="_blank" rel="noopener noreferrer" hidden data-i18n="seo.viewOnSite">View on Site ↗</a>
         </div>
@@ -173,7 +177,9 @@
         <div id="gallery-upload-preview" class="gallery-preview" hidden></div>
         <div id="gallery-upload-progress" class="gallery-progress" hidden></div>
         <div id="gallery-drop-zone" class="gallery-drop-zone">
+          <svg class="gallery-drop-zone__icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
           <div class="gallery-drop-zone__text" data-i18n="gallery.dragDrop">Drag & drop images here or use Upload button</div>
+          <div class="gallery-drop-zone__hint" data-i18n="gallery.formats">JPG, PNG, WebP — max 10 MB per file</div>
         </div>
         <div id="gallery-grid" class="admin-gallery-grid"></div>
       </section>
@@ -245,7 +251,7 @@
           </div>
         </div>
 
-        <div style="margin-top:16px;display:flex;align-items:center;gap:12px">
+        <div class="editor-actions editor-actions--inline">
           <button id="btn-analytics-save" class="btn btn--primary btn--sm" data-i18n="analytics.save">Save Analytics</button>
           <span id="analytics-save-status" class="publish-status"></span>
         </div>
@@ -255,8 +261,18 @@
       <section id="tab-settings" class="admin-tab" hidden>
         <h2 data-i18n="nav.settings">Settings</h2>
 
+        <nav class="settings-nav">
+          <a href="#set-contacts" data-i18n="contacts.title">Contacts</a>
+          <a href="#set-social" data-i18n="social.title">Social</a>
+          <a href="#set-rate" data-i18n="rate.navTitle">Rate</a>
+          <a href="#set-guide" data-i18n="guide.navTitle">Guide</a>
+          <a href="#set-stats" data-i18n="stats.navTitle">Stats</a>
+          <a href="#set-roi" data-i18n="roi.navTitle">ROI</a>
+          <a href="#set-colors" data-i18n="colors.navTitle">Colors</a>
+        </nav>
+
         <!-- Contact Information -->
-        <div class="editor-section editor-section--has-help">
+        <div id="set-contacts" class="editor-section editor-section--has-help">
           <button class="editor-help-btn" data-help="contacts" aria-label="Help">?</button>
           <div class="editor-help-popup" id="help-contacts" hidden>
             <p data-i18n="help.contacts.phone"><strong>Phone:</strong> Any format with spaces/dashes, start with +country code.</p>
@@ -294,14 +310,14 @@
               <input type="text" id="contact-location-id" placeholder="Ubud, Bali, Indonesia">
             </div>
           </div>
-          <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
+          <div class="editor-actions editor-actions--inline">
             <button id="btn-contacts-save" class="btn btn--primary btn--sm" data-i18n="contacts.save">Save Contacts</button>
             <span id="contacts-save-status" class="publish-status"></span>
           </div>
         </div>
 
         <!-- Social Media -->
-        <div class="editor-section" style="margin-top:24px">
+        <div id="set-social" class="editor-section">
           <h3 data-i18n="social.title">Social Media</h3>
           <div class="form-grid">
             <div class="form-group">
@@ -313,14 +329,14 @@
               <input type="url" id="social-instagram" placeholder="https://www.instagram.com/...">
             </div>
           </div>
-          <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
+          <div class="editor-actions editor-actions--inline">
             <button id="btn-social-save" class="btn btn--primary btn--sm" data-i18n="social.save">Save Social</button>
             <span id="social-save-status" class="publish-status"></span>
           </div>
         </div>
 
         <!-- Exchange Rate -->
-        <div class="editor-section editor-section--has-help" style="margin-top:24px">
+        <div id="set-rate" class="editor-section editor-section--has-help">
           <button class="editor-help-btn" data-help="rate" aria-label="Help">?</button>
           <div class="editor-help-popup" id="help-rate" hidden>
             <p data-i18n="help.rate.manual"><strong>Manual:</strong> Enter the rate manually and click Save.</p>
@@ -330,13 +346,13 @@
           <h3 data-i18n="rate.title">Exchange Rate (USD → IDR)</h3>
           <div class="guide-upload">
             <div id="rate-info" class="guide-info"></div>
-            <div class="guide-actions" style="gap:8px">
+            <div class="guide-actions">
               <label class="auto-rate-toggle">
                 <input type="checkbox" id="rate-auto">
                 <span data-i18n="rate.auto">Auto (live rate from API)</span>
               </label>
-              <div class="form-group" style="margin:0;flex:0 0 160px">
-                <input type="number" id="rate-input" min="1000" step="100" placeholder="16500" style="width:100%">
+              <div class="form-group">
+                <input type="number" id="rate-input" min="1000" step="100" placeholder="16500">
               </div>
               <button id="btn-rate-save" class="btn btn--primary btn--sm" data-i18n="rate.save">Save Rate</button>
               <span id="rate-save-status" class="publish-status"></span>
@@ -345,7 +361,7 @@
         </div>
 
         <!-- Investment Guide PDF -->
-        <div class="editor-section editor-section--has-help" style="margin-top:24px">
+        <div id="set-guide" class="editor-section editor-section--has-help">
           <button class="editor-help-btn" data-help="guide" aria-label="Help">?</button>
           <div class="editor-help-popup" id="help-guide" hidden>
             <p data-i18n="help.guide.format"><strong>Format:</strong> PDF only.</p>
@@ -364,7 +380,7 @@
         </div>
 
         <!-- Company Statistics -->
-        <div class="editor-section" style="margin-top:24px">
+        <div id="set-stats" class="editor-section">
           <h3 data-i18n="stats.title">Company Statistics</h3>
           <div class="form-grid--4">
             <div class="form-group">
@@ -400,11 +416,11 @@
               <input type="text" id="stat-paybackPeriod" placeholder="7-8 yr">
             </div>
           </div>
-          <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
+          <div class="editor-actions editor-actions--inline">
             <button id="btn-stats-save" class="btn btn--primary btn--sm" data-i18n="stats.save">Save Statistics</button>
             <span id="stats-save-status" class="publish-status"></span>
           </div>
-          <div style="margin-top:20px">
+          <div
             <h4 class="preview-label" data-i18n="preview.title">Preview</h4>
             <div class="stats-preview" id="stats-preview">
               <div class="stats-preview__card">
@@ -445,7 +461,7 @@
         </div>
 
         <!-- ROI Calculator Parameters -->
-        <div class="editor-section editor-section--has-help" style="margin-top:24px">
+        <div id="set-roi" class="editor-section editor-section--has-help">
           <button class="editor-help-btn" data-help="roi" aria-label="Help">?</button>
           <div class="editor-help-popup" id="help-roi" hidden>
             <p data-i18n="help.roi.investment"><strong>Investment range:</strong> Min/max/step for the slider on homepage.</p>
@@ -476,44 +492,44 @@
             </div>
             <div class="form-group">
               <label data-i18n="roi.occupancyRange">Occupancy Range (%)</label>
-              <div style="display:flex;gap:8px">
-                <input type="number" id="roi-occ-min" min="0" max="100" placeholder="50" style="width:50%">
-                <input type="number" id="roi-occ-max" min="0" max="100" placeholder="95" style="width:50%">
+              <div class="input-pair">
+                <input type="number" id="roi-occ-min" min="0" max="100" placeholder="50">
+                <input type="number" id="roi-occ-max" min="0" max="100" placeholder="95">
               </div>
             </div>
           </div>
-          <h4 style="margin:16px 0 8px;color:var(--color-text-muted)" data-i18n="roi.scenarios">Scenarios</h4>
+          <h4 data-i18n="roi.scenarios">Scenarios</h4>
           <div class="form-grid--3">
             <div class="form-group">
               <label data-i18n="roi.conservative">Conservative — Yield / Growth (%)</label>
-              <div style="display:flex;gap:8px">
-                <input type="number" id="roi-cons-yield" min="0" max="100" step="0.5" placeholder="8" style="width:50%">
-                <input type="number" id="roi-cons-growth" min="0" max="100" step="0.5" placeholder="6" style="width:50%">
+              <div class="input-pair">
+                <input type="number" id="roi-cons-yield" min="0" max="100" step="0.5" placeholder="8">
+                <input type="number" id="roi-cons-growth" min="0" max="100" step="0.5" placeholder="6">
               </div>
             </div>
             <div class="form-group">
               <label data-i18n="roi.normal">Normal — Yield / Growth (%)</label>
-              <div style="display:flex;gap:8px">
-                <input type="number" id="roi-norm-yield" min="0" max="100" step="0.5" placeholder="12" style="width:50%">
-                <input type="number" id="roi-norm-growth" min="0" max="100" step="0.5" placeholder="10" style="width:50%">
+              <div class="input-pair">
+                <input type="number" id="roi-norm-yield" min="0" max="100" step="0.5" placeholder="12">
+                <input type="number" id="roi-norm-growth" min="0" max="100" step="0.5" placeholder="10">
               </div>
             </div>
             <div class="form-group">
               <label data-i18n="roi.optimistic">Optimistic — Yield / Growth (%)</label>
-              <div style="display:flex;gap:8px">
-                <input type="number" id="roi-opt-yield" min="0" max="100" step="0.5" placeholder="15" style="width:50%">
-                <input type="number" id="roi-opt-growth" min="0" max="100" step="0.5" placeholder="12" style="width:50%">
+              <div class="input-pair">
+                <input type="number" id="roi-opt-yield" min="0" max="100" step="0.5" placeholder="15">
+                <input type="number" id="roi-opt-growth" min="0" max="100" step="0.5" placeholder="12">
               </div>
             </div>
           </div>
-          <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
+          <div class="editor-actions editor-actions--inline">
             <button id="btn-roi-save" class="btn btn--primary btn--sm" data-i18n="roi.save">Save ROI Settings</button>
             <span id="roi-save-status" class="publish-status"></span>
           </div>
         </div>
 
         <!-- Site Colors -->
-        <div class="editor-section editor-section--has-help" style="margin-top:24px">
+        <div id="set-colors" class="editor-section editor-section--has-help">
           <button class="editor-help-btn" data-help="colors" aria-label="Help">?</button>
           <div class="editor-help-popup" id="help-colors" hidden>
             <p data-i18n="help.colors.text"><strong>Text color</strong> determines derived colors (muted text, borders).</p>
@@ -545,7 +561,7 @@
               </div>
             </div>
           </div>
-          <div class="color-group" style="margin-top:16px">
+          <div class="color-group">
             <div class="color-picker-row">
               <label data-i18n="colors.primaryText">Primary Text</label>
               <div class="color-input-pair">
@@ -573,7 +589,7 @@
               </div>
             </div>
           </div>
-          <div style="margin-top:16px;display:flex;align-items:center;gap:12px">
+          <div class="editor-actions editor-actions--inline">
             <button id="btn-colors-save" class="btn btn--primary btn--sm" data-i18n="colors.save">Save Colors</button>
             <button id="btn-colors-reset" class="btn btn--outline btn--sm" data-i18n="colors.reset">Reset to Defaults</button>
             <span id="colors-save-status" class="publish-status"></span>
@@ -591,16 +607,16 @@
           <div class="ep-editor">
             <div class="editor-section">
               <h3 data-i18n="exitpopup.settings">Settings</h3>
-              <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+              <div class="settings-row">
                 <label class="auto-rate-toggle">
                   <input type="checkbox" id="exitpopup-enabled">
                   <span data-i18n="exitpopup.enabled">Enabled</span>
                 </label>
-                <div class="form-group" style="margin:0;flex:0 0 140px">
+                <div class="form-group">
                   <label data-i18n="exitpopup.delay">Trigger Delay (sec)</label>
                   <input type="number" id="exitpopup-delay" min="0" max="300" step="5" placeholder="30">
                 </div>
-                <div class="form-group" style="margin:0;flex:0 0 140px">
+                <div class="form-group">
                   <label data-i18n="exitpopup.countdown">Countdown (sec)</label>
                   <input type="number" id="exitpopup-countdown" min="1" max="30" step="1" placeholder="7">
                 </div>
@@ -609,10 +625,10 @@
 
             <div class="editor-section">
               <h3 data-i18n="exitpopup.content">Content</h3>
-              <div class="exitpopup-lang-tabs" style="display:flex;gap:8px;margin-bottom:12px">
-                <button type="button" class="btn btn--sm btn--outline exitpopup-lang-tab active" data-lang="en">EN</button>
-                <button type="button" class="btn btn--sm btn--outline exitpopup-lang-tab" data-lang="ru">RU</button>
-                <button type="button" class="btn btn--sm btn--outline exitpopup-lang-tab" data-lang="id">ID</button>
+              <div class="lang-tabs">
+                <button type="button" class="lang-tab exitpopup-lang-tab active" data-lang="en">EN</button>
+                <button type="button" class="lang-tab exitpopup-lang-tab" data-lang="ru">RU</button>
+                <button type="button" class="lang-tab exitpopup-lang-tab" data-lang="id">ID</button>
               </div>
 
               <div class="exitpopup-lang-panel" data-lang="en">
@@ -658,7 +674,7 @@
               </div>
             </div>
 
-            <div style="display:flex;align-items:center;gap:12px">
+            <div class="editor-actions editor-actions--inline">
               <button id="btn-exitpopup-save" class="btn btn--primary btn--sm" data-i18n="exitpopup.save">Save Exit Popup</button>
               <span id="exitpopup-save-status" class="publish-status"></span>
             </div>

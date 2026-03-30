@@ -43,6 +43,7 @@
       'nav.analytics': 'Analytics',
       'nav.settings': 'Settings',
       'dash.title': 'Dashboard',
+      'dash.loading': 'Loading data...',
       'dash.totalUnits': 'Total Units',
       'dash.soldBooked': 'Sold / Booked',
       'dash.available': 'Available',
@@ -71,6 +72,7 @@
       'dash.breakSold': 'sold',
       'dash.breakResale': 'resale',
       'rate.title': 'Exchange Rate (USD → IDR)',
+      'rate.navTitle': 'Rate',
       'rate.auto': 'Auto (live rate from API)',
       'rate.save': 'Save Rate',
       'rate.currentRate': 'Current rate:',
@@ -97,6 +99,7 @@
       'help.contacts.email': '<strong>Email:</strong> Standard email format.',
       'help.contacts.location': '<strong>Location:</strong> Display text, translate manually for each language.',
       'guide.title': 'Investment Guide PDF',
+      'guide.navTitle': 'Guide',
       'guide.upload': 'Upload PDF',
       'guide.currentFile': 'Current file:',
       'guide.version': 'Version:',
@@ -186,6 +189,7 @@
       'gallery.photos': 'photos',
       'gallery.noImages': 'No images in this project. Drag & drop or click Upload to add photos.',
       'gallery.dragDrop': 'Drag & drop images here or use Upload button',
+      'gallery.formats': 'JPG, PNG, WebP — max 10 MB per file',
       'gallery.uploading': 'Uploading',
       'gallery.savingData': 'Saving gallery data...',
       'gallery.uploaded': 'photos uploaded!',
@@ -222,6 +226,7 @@
       'test.copyFromEn': 'Copy from EN',
       'faq.copyFromEn': 'Copy from EN',
       'colors.title': 'Site Colors',
+      'colors.navTitle': 'Colors',
       'colors.backgrounds': 'Backgrounds',
       'colors.textBorders': 'Text & Borders',
       'colors.accent': 'Accent',
@@ -265,6 +270,7 @@
       'social.instagram': 'Instagram URL',
       'social.save': 'Save Social',
       'stats.title': 'Company Statistics',
+      'stats.navTitle': 'Stats',
       'stats.investorsWorldwide': 'Investors Worldwide',
       'stats.villasDesigned': 'Villas in Portfolio',
       'stats.occupancyRate': 'Occupancy Rate',
@@ -275,6 +281,7 @@
       'stats.paybackPeriod': 'Payback Period',
       'stats.save': 'Save Statistics',
       'roi.title': 'ROI Calculator Parameters',
+      'roi.navTitle': 'ROI',
       'roi.scenarios': 'Scenarios',
       'roi.minInvestment': 'Min Investment ($)',
       'roi.maxInvestment': 'Max Investment ($)',
@@ -383,6 +390,7 @@
       'nav.analytics': 'Аналитика',
       'nav.settings': 'Настройки',
       'dash.title': 'Обзор',
+      'dash.loading': 'Загрузка данных...',
       'dash.totalUnits': 'Всего юнитов',
       'dash.soldBooked': 'Продано / Бронь',
       'dash.available': 'Доступно',
@@ -411,6 +419,7 @@
       'dash.breakSold': 'продано',
       'dash.breakResale': 'перепродажа',
       'rate.title': 'Курс валют (USD → IDR)',
+      'rate.navTitle': 'Курс',
       'rate.auto': 'Авто (курс из API)',
       'rate.save': 'Сохранить курс',
       'rate.currentRate': 'Текущий курс:',
@@ -437,6 +446,7 @@
       'help.contacts.email': '<strong>Email:</strong> Стандартный формат email.',
       'help.contacts.location': '<strong>Адрес:</strong> Отображаемый текст, переводить вручную для каждого языка.',
       'guide.title': 'PDF Гид по инвестициям',
+      'guide.navTitle': 'Гид',
       'guide.upload': 'Загрузить PDF',
       'guide.currentFile': 'Текущий файл:',
       'guide.version': 'Версия:',
@@ -526,6 +536,7 @@
       'gallery.photos': 'фото',
       'gallery.noImages': 'Нет изображений. Перетащите файлы или нажмите Загрузить.',
       'gallery.dragDrop': 'Перетащите изображения сюда или нажмите Загрузить',
+      'gallery.formats': 'JPG, PNG, WebP — макс. 10 МБ на файл',
       'gallery.uploading': 'Загрузка',
       'gallery.savingData': 'Сохранение данных галереи...',
       'gallery.uploaded': 'фото загружено!',
@@ -562,6 +573,7 @@
       'test.copyFromEn': 'Скопировать из EN',
       'faq.copyFromEn': 'Скопировать из EN',
       'colors.title': 'Цвета сайта',
+      'colors.navTitle': 'Цвета',
       'colors.backgrounds': 'Фоны',
       'colors.textBorders': 'Текст и границы',
       'colors.accent': 'Акцент',
@@ -605,6 +617,7 @@
       'social.instagram': 'URL Instagram',
       'social.save': 'Сохранить соцсети',
       'stats.title': 'Статистика компании',
+      'stats.navTitle': 'Стат.',
       'stats.investorsWorldwide': 'Инвесторов по миру',
       'stats.villasDesigned': 'Виллы в портфолио',
       'stats.occupancyRate': 'Заполняемость',
@@ -615,6 +628,7 @@
       'stats.paybackPeriod': 'Срок окупаемости',
       'stats.save': 'Сохранить статистику',
       'roi.title': 'Параметры ROI-калькулятора',
+      'roi.navTitle': 'ROI',
       'roi.scenarios': 'Сценарии',
       'roi.minInvestment': 'Мин. инвестиция ($)',
       'roi.maxInvestment': 'Макс. инвестиция ($)',
@@ -756,7 +770,24 @@
   let currentProject = 'serenity-villas';
   let projectsData = null;    // working copy of PROJECTS_DATA
   let pendingChanges = false;
-  const dirtyTabs = { projects: false, faq: false, testimonials: false, seo: false, colors: false, contacts: false, rate: false, exitpopup: false };
+  const _dirtyState = { projects: false, faq: false, testimonials: false, seo: false, colors: false, contacts: false, rate: false, exitpopup: false };
+  const dirtyTabs = new Proxy(_dirtyState, {
+    set(target, prop, value) {
+      target[prop] = value;
+      updateDirtyIndicators();
+      return true;
+    }
+  });
+
+  function updateDirtyIndicators() {
+    // Map dirty keys to nav tab names (rate/contacts/colors share "settings" tab)
+    const tabMap = { rate: 'settings', contacts: 'settings', colors: 'settings' };
+    document.querySelectorAll('.admin-nav__btn[data-tab]').forEach(btn => {
+      const tab = btn.dataset.tab;
+      const isDirty = Object.entries(_dirtyState).some(([key, val]) => val && (tabMap[key] || key) === tab);
+      btn.classList.toggle('dirty', isDirty);
+    });
+  }
 
   function getActiveTab() {
     const btn = document.querySelector('.admin-nav__btn.active');
@@ -764,7 +795,7 @@
   }
 
   function isAnyDirty() {
-    return Object.values(dirtyTabs).some(v => v);
+    return Object.values(_dirtyState).some(v => v);
   }
 
   // ─── Live Exchange Rate ───
@@ -966,6 +997,9 @@
     loadFaqData();
     loadTestimonialsData();
     updateRateLimit();
+    // Hide loading spinner
+    const loader = document.getElementById('admin-loader');
+    if (loader) loader.hidden = true;
   }
 
   // ─── Unsaved Changes Warning ───
