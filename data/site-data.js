@@ -35,9 +35,18 @@ const SITE_DATA = {
     "occupancyStep": 5,
     "defaultOccupancy": 80,
     "scenarios": {
-      "conservative": { "yield": 0.08, "growth": 0.06 },
-      "normal": { "yield": 0.12, "growth": 0.10 },
-      "optimistic": { "yield": 0.15, "growth": 0.12 }
+      "conservative": {
+        "yield": 0.08,
+        "growth": 0.06
+      },
+      "normal": {
+        "yield": 0.12,
+        "growth": 0.1
+      },
+      "optimistic": {
+        "yield": 0.15,
+        "growth": 0.12
+      }
     }
   },
   "stats": {
@@ -90,5 +99,13 @@ const SITE_DATA = {
         "openBtn": "Buka Panduan"
       }
     }
+  },
+  "colors": {
+    "bg": "#1a1a14",
+    "bgAlt": "#111110",
+    "bgCard": "#2a2a20",
+    "accent": "#6B8F4E",
+    "text": "#E1D9C9",
+    "cream": "#F7F7F0"
   }
 };
