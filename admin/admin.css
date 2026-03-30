@@ -1253,11 +1253,12 @@ body {
   align-items: center;
   justify-content: center;
 }
-.btn--danger {
+.btn--icon.btn--danger {
   background: transparent;
   color: var(--color-text-dim);
+  border-color: transparent;
 }
-.btn--danger:hover {
+.btn--icon.btn--danger:hover {
   background: var(--color-danger);
   color: #fff;
 }
