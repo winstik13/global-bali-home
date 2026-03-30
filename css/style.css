@@ -1135,7 +1135,7 @@ td .price-idr {
 .why-bali__content {
   position: relative;
   z-index: 1;
-  max-width: 720px;
+  max-width: 900px;
 }
 
 .why-bali__content h2 {
@@ -1145,12 +1145,12 @@ td .price-idr {
 .why-bali__content p {
   margin-bottom: 16px;
   color: var(--color-text-muted);
+  max-width: 680px;
 }
 
 .why-bali-stats {
   display: flex;
-  flex-wrap: wrap;
-  gap: 32px 48px;
+  gap: 0;
   margin: 40px 0;
   padding: 32px 0;
   border-top: 1px solid rgba(225, 217, 201, 0.15);
@@ -1160,9 +1160,16 @@ td .price-idr {
 .why-bali-stat {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   flex: 1 1 0;
   min-width: 0;
+  padding: 0 32px;
+  border-left: 1px solid rgba(225, 217, 201, 0.15);
+}
+
+.why-bali-stat:first-child {
+  padding-left: 0;
+  border-left: none;
 }
 
 .why-bali-stat strong {
@@ -3825,6 +3832,11 @@ td .price-idr {
   .why-bali-stats {
     flex-direction: column;
     gap: 20px;
+  }
+
+  .why-bali-stat {
+    padding: 0;
+    border-left: none;
   }
 
   .quiz {
