@@ -147,12 +147,16 @@ body {
 /* ─── FORM ELEMENTS ─── */
 .login-form { display: flex; flex-direction: column; gap: 20px; }
 
-.form-group { display: flex; flex-direction: column; gap: var(--sp-sm); }
+.form-group { display: flex; flex-direction: column; gap: var(--sp-sm); margin-bottom: var(--sp-md); }
+.form-group:last-child { margin-bottom: 0; }
 
 /* Form grid layouts */
 .form-grid      { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 16px; }
 .form-grid--3   { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px 16px; }
 .form-grid--4   { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px 16px; }
+.form-grid .form-group,
+.form-grid--3 .form-group,
+.form-grid--4 .form-group { margin-bottom: 0; }
 
 .form-group label {
   font-size: var(--label-size);
