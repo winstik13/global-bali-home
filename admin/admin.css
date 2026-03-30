@@ -190,6 +190,17 @@ body {
   border-bottom-color: var(--color-accent);
 }
 
+/* Number input spinners */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 .field-hint {
   font-size: 0.7rem;
   color: var(--color-text-dim);
