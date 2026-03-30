@@ -187,6 +187,37 @@ document.addEventListener('DOMContentLoaded', () => {
       valName: 'Please enter your name',
       valEmail: 'Please enter a valid email',
       valConsent: 'Please accept the privacy policy',
+      // Tour popup
+      tourTitle: 'Schedule a Private Tour',
+      tourSteps: [
+        {
+          question: 'Which project interests you?',
+          options: ['Serenity Villas', 'Serenity Estates', 'Serenity Village', 'Not sure yet']
+        },
+        {
+          question: 'When are you in Bali?',
+          options: ['I\'m already here', 'Within 2 weeks', 'Within a month', 'Planning a trip']
+        },
+        {
+          question: 'What would you like to see?',
+          multi: true,
+          options: ['Construction site visit', 'Meet the architect', 'Investment terms review', 'View completed villas', 'Explore the area']
+        }
+      ],
+      tourFormTitle: 'How can we reach you?',
+      tourFormSub: 'Our manager will contact you within 2 hours to confirm the tour details.',
+      tourName: 'Your name',
+      tourWhatsapp: 'WhatsApp or phone number',
+      tourEmail: 'Email (optional)',
+      tourTime: 'Preferred time',
+      tourTimeOptions: ['Morning (9–12)', 'Afternoon (12–17)', 'Evening (17–20)', 'Any time'],
+      tourComment: 'Any special requests? (optional)',
+      tourConsent: 'I agree to the processing of my personal data in accordance with the Privacy Policy',
+      tourSubmit: 'Request a Tour',
+      tourThankTitle: 'Tour Request Sent!',
+      tourThankText: 'Our manager will contact you within 2 hours to arrange the details.',
+      tourThankWa: 'Message us on WhatsApp',
+      tourThankProject: 'Learn more about',
       descs: {
         village: {
           'Rental income': 'Compact villas from $119K — ideal for short-term rental with strong occupancy rates and low entry cost.',
@@ -254,6 +285,37 @@ document.addEventListener('DOMContentLoaded', () => {
       valName: 'Пожалуйста, введите имя',
       valEmail: 'Введите корректный email',
       valConsent: 'Необходимо согласие с политикой',
+      // Tour popup
+      tourTitle: 'Запланировать частный тур',
+      tourSteps: [
+        {
+          question: 'Какой проект вас интересует?',
+          options: ['Serenity Villas', 'Serenity Estates', 'Serenity Village', 'Ещё не определился']
+        },
+        {
+          question: 'Когда вы на Бали?',
+          options: ['Я уже здесь', 'В ближайшие 2 недели', 'В ближайший месяц', 'Планирую поездку']
+        },
+        {
+          question: 'Что хотите увидеть?',
+          multi: true,
+          options: ['Осмотр стройплощадки', 'Встреча с архитектором', 'Обзор условий инвестиций', 'Показ готовых вилл', 'Знакомство с районом']
+        }
+      ],
+      tourFormTitle: 'Как с вами связаться?',
+      tourFormSub: 'Наш менеджер свяжется с вами в течение 2 часов для подтверждения деталей тура.',
+      tourName: 'Ваше имя',
+      tourWhatsapp: 'WhatsApp или телефон',
+      tourEmail: 'Email (необязательно)',
+      tourTime: 'Удобное время',
+      tourTimeOptions: ['Утро (9–12)', 'День (12–17)', 'Вечер (17–20)', 'Любое время'],
+      tourComment: 'Особые пожелания? (необязательно)',
+      tourConsent: 'Я согласен на обработку персональных данных в соответствии с Политикой конфиденциальности',
+      tourSubmit: 'Запросить тур',
+      tourThankTitle: 'Заявка на тур отправлена!',
+      tourThankText: 'Наш менеджер свяжется с вами в течение 2 часов для согласования деталей.',
+      tourThankWa: 'Написать в WhatsApp',
+      tourThankProject: 'Подробнее о проекте',
       descs: {
         village: {
           'Rental income': 'Компактные виллы от $119K — идеально для краткосрочной аренды с высокой заполняемостью и низким порогом входа.',
@@ -321,6 +383,37 @@ document.addEventListener('DOMContentLoaded', () => {
       valName: 'Silakan masukkan nama Anda',
       valEmail: 'Masukkan email yang valid',
       valConsent: 'Harap setujui kebijakan privasi',
+      // Tour popup
+      tourTitle: 'Jadwalkan Tur Pribadi',
+      tourSteps: [
+        {
+          question: 'Proyek mana yang menarik bagi Anda?',
+          options: ['Serenity Villas', 'Serenity Estates', 'Serenity Village', 'Belum yakin']
+        },
+        {
+          question: 'Kapan Anda di Bali?',
+          options: ['Saya sudah di sini', 'Dalam 2 minggu', 'Dalam sebulan', 'Merencanakan perjalanan']
+        },
+        {
+          question: 'Apa yang ingin Anda lihat?',
+          multi: true,
+          options: ['Kunjungan lokasi konstruksi', 'Bertemu arsitek', 'Tinjauan ketentuan investasi', 'Lihat villa yang selesai', 'Jelajahi area']
+        }
+      ],
+      tourFormTitle: 'Bagaimana kami dapat menghubungi Anda?',
+      tourFormSub: 'Manajer kami akan menghubungi Anda dalam 2 jam untuk mengonfirmasi detail tur.',
+      tourName: 'Nama Anda',
+      tourWhatsapp: 'WhatsApp atau nomor telepon',
+      tourEmail: 'Email (opsional)',
+      tourTime: 'Waktu yang diinginkan',
+      tourTimeOptions: ['Pagi (9–12)', 'Siang (12–17)', 'Sore (17–20)', 'Kapan saja'],
+      tourComment: 'Permintaan khusus? (opsional)',
+      tourConsent: 'Saya menyetujui pemrosesan data pribadi saya sesuai dengan Kebijakan Privasi',
+      tourSubmit: 'Minta Tur',
+      tourThankTitle: 'Permintaan Tur Terkirim!',
+      tourThankText: 'Manajer kami akan menghubungi Anda dalam 2 jam untuk mengatur detailnya.',
+      tourThankWa: 'Hubungi kami di WhatsApp',
+      tourThankProject: 'Pelajari lebih lanjut tentang',
       descs: {
         village: {
           'Rental income': 'Vila kompak mulai $119K — ideal untuk sewa jangka pendek dengan tingkat hunian tinggi dan biaya masuk rendah.',
@@ -1315,6 +1408,277 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       openQuiz();
+    });
+  });
+
+  // --- Tour Booking Popup ---
+  const tourIcons = [
+    // Step 1: Projects
+    [
+      '<svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><rect x="9" y="10" width="6" height="5" rx="0.5"/><path d="M12 15v6"/></svg>',
+      '<svg viewBox="0 0 24 24"><path d="M3 21h18M9 21V13h6v8"/><path d="M3 7l9-4 9 4"/><rect x="5" y="7" width="14" height="14" rx="0" fill="none"/></svg>',
+      '<svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V8l4-3v16"/><path d="M9 21V5l6-3v19"/><path d="M15 21V4l4 3v14"/></svg>',
+      '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>'
+    ],
+    // Step 2: When in Bali
+    [
+      '<svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+      '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h2v2H8z"/></svg>',
+      '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M14 14h2v2h-2z"/></svg>',
+      '<svg viewBox="0 0 24 24"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.4-.1.9.3 1.1L11 12l-2 3H6l-1 1 3 2 2 3 1-1v-3l3-2 3.7 7.3c.2.4.7.6 1.1.3l.5-.3c.4-.2.5-.6.5-1.1z"/></svg>'
+    ],
+    // Step 3: What to see (checkboxes)
+    [
+      '<svg viewBox="0 0 24 24"><path d="M2 20h20"/><path d="M5 20V8l5-3 5 3v12"/><path d="M15 20V10l5-3v13"/><rect x="8" y="10" width="4" height="3" rx="0.5"/></svg>',
+      '<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>',
+      '<svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',
+      '<svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/><path d="M9 7h6"/></svg>',
+      '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>'
+    ]
+  ];
+
+  const tourProjectUrls = {
+    'Serenity Villas': 'project-serenity-villas.html',
+    'Serenity Estates': 'project-serenity-estates.html',
+    'Serenity Village': 'project-serenity-village.html'
+  };
+
+  const tourSteps = t.tourSteps.map((step, i) => ({
+    question: step.question,
+    multi: step.multi || false,
+    options: step.options.map((label, j) => ({ icon: tourIcons[i][j], label }))
+  }));
+
+  const tourOverlay = document.createElement('div');
+  tourOverlay.className = 'tour-overlay';
+  tourOverlay.innerHTML = `
+    <div class="tour" role="dialog" aria-modal="true" aria-label="${t.tourTitle}">
+      <button class="tour__close" aria-label="Close">&times;</button>
+      <div class="tour__progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"><div class="tour__progress-bar"></div></div>
+      <div class="tour__body"></div>
+    </div>
+  `;
+  document.body.appendChild(tourOverlay);
+
+  const tourBody = tourOverlay.querySelector('.tour__body');
+  const tourBar = tourOverlay.querySelector('.tour__progress-bar');
+  const tourProgressBar = tourOverlay.querySelector('.tour__progress');
+  let tourStep = 0;
+  let tourAnswers = [];
+  let tourMultiSelected = [];
+  const tourTotalSteps = tourSteps.length + 1; // steps + contact form
+
+  const updateTourProgress = () => {
+    const pct = Math.round((tourStep + 1) / (tourTotalSteps + 1) * 100);
+    tourBar.style.width = pct + '%';
+    tourProgressBar.setAttribute('aria-valuenow', pct);
+  };
+
+  const renderTourStep = () => {
+    updateTourProgress();
+    const step = tourSteps[tourStep];
+
+    if (step.multi) {
+      // Multi-select step (checkboxes)
+      tourMultiSelected = [];
+      tourBody.innerHTML = `
+        <p class="tour__step-label">${t.stepOf} ${tourStep + 1} ${t.of} ${tourTotalSteps}</p>
+        <h3 class="tour__question">${step.question}</h3>
+        <div class="tour__options tour__options--multi">
+          ${step.options.map((opt, idx) => `<label class="tour__checkbox"><input type="checkbox" value="${idx}"><span class="tour__checkbox-icon">${opt.icon}</span><span>${opt.label}</span></label>`).join('')}
+        </div>
+        <button class="btn btn--primary tour__continue" style="width:100%;margin-top:24px;" disabled>${t.tourSubmit.replace(/tour|tur|тур/i, '').trim() || 'Continue'}</button>
+        ${tourStep > 0 ? `<button class="tour__back">&larr; ${t.quizBack}</button>` : ''}
+      `;
+
+      const continueBtn = tourBody.querySelector('.tour__continue');
+      continueBtn.textContent = lang === 'ru' ? 'Продолжить' : lang === 'id' ? 'Lanjutkan' : 'Continue';
+
+      tourBody.querySelectorAll('.tour__checkbox input').forEach(cb => {
+        cb.addEventListener('change', () => {
+          tourMultiSelected = Array.from(tourBody.querySelectorAll('.tour__checkbox input:checked')).map(c => step.options[c.value].label);
+          // Toggle active class on label
+          cb.closest('.tour__checkbox').classList.toggle('active', cb.checked);
+          continueBtn.disabled = tourMultiSelected.length === 0;
+        });
+      });
+
+      continueBtn.addEventListener('click', () => {
+        tourAnswers[tourStep] = tourMultiSelected;
+        tourStep++;
+        renderTourForm();
+      });
+    } else {
+      // Single-select step (buttons)
+      tourBody.innerHTML = `
+        <p class="tour__step-label">${t.stepOf} ${tourStep + 1} ${t.of} ${tourTotalSteps}</p>
+        <h3 class="tour__question">${step.question}</h3>
+        <div class="tour__options">
+          ${step.options.map(opt => `<button class="tour__option"><span class="tour__option-icon">${opt.icon}</span><span>${opt.label}</span></button>`).join('')}
+        </div>
+        ${tourStep > 0 ? `<button class="tour__back">&larr; ${t.quizBack}</button>` : ''}
+      `;
+
+      tourBody.querySelectorAll('.tour__option').forEach((btn, idx) => {
+        btn.addEventListener('click', () => {
+          btn.blur();
+          tourAnswers[tourStep] = step.options[idx].label;
+          tourStep++;
+          if (tourStep < tourSteps.length) {
+            renderTourStep();
+          } else {
+            renderTourForm();
+          }
+        });
+      });
+    }
+
+    // Back button
+    const backBtn = tourBody.querySelector('.tour__back');
+    if (backBtn) {
+      backBtn.addEventListener('click', () => {
+        tourStep--;
+        renderTourStep();
+      });
+    }
+  };
+
+  const renderTourForm = () => {
+    updateTourProgress();
+    const selectedProject = tourAnswers[0] || '';
+    tourBody.innerHTML = `
+      <p class="tour__step-label">${t.tourFormTitle}</p>
+      <h3 class="tour__question" style="font-size:1.2rem;margin-bottom:8px;">${t.tourTitle}</h3>
+      <p class="tour__form-sub">${t.tourFormSub}</p>
+      <form class="tour__form" novalidate>
+        <input type="text" class="tour__input" name="tour-name" placeholder="${t.tourName}" required>
+        <input type="tel" class="tour__input" name="tour-whatsapp" placeholder="${t.tourWhatsapp}" required>
+        <input type="email" class="tour__input" name="tour-email" placeholder="${t.tourEmail}">
+        <div class="tour__time-group">
+          <label class="tour__time-label">${t.tourTime}</label>
+          <div class="tour__time-options">
+            ${t.tourTimeOptions.map((opt, i) => `<label class="tour__time-option${i === 3 ? ' active' : ''}"><input type="radio" name="tour-time" value="${opt}"${i === 3 ? ' checked' : ''}><span>${opt}</span></label>`).join('')}
+          </div>
+        </div>
+        <textarea class="tour__input tour__textarea" name="tour-comment" placeholder="${t.tourComment}" rows="2"></textarea>
+        <div class="form-consent" id="tour-consent-group">
+          <input type="checkbox" class="form-consent__checkbox" id="tour-consent" name="tour-consent">
+          <label class="form-consent__text" for="tour-consent">${t.tourConsent}</label>
+        </div>
+        <button type="submit" class="btn btn--primary" style="width:100%;">${t.tourSubmit}</button>
+      </form>
+      <button class="tour__back">&larr; ${t.quizBack}</button>
+    `;
+
+    // Time option toggle
+    tourBody.querySelectorAll('.tour__time-option input').forEach(radio => {
+      radio.addEventListener('change', () => {
+        tourBody.querySelectorAll('.tour__time-option').forEach(el => el.classList.remove('active'));
+        radio.closest('.tour__time-option').classList.add('active');
+      });
+    });
+
+    // Form submit
+    tourBody.querySelector('.tour__form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nameInput = tourBody.querySelector('[name="tour-name"]');
+      const waInput = tourBody.querySelector('[name="tour-whatsapp"]');
+      let valid = true;
+
+      if (!validateField(nameInput, 'name')) valid = false;
+      // Validate WhatsApp - treat as name (non-empty)
+      if (!waInput.value.trim()) {
+        waInput.classList.add('field-error');
+        valid = false;
+      } else {
+        waInput.classList.remove('field-error');
+      }
+
+      const consentGroup = tourBody.querySelector('#tour-consent-group');
+      const consentBox = tourBody.querySelector('#tour-consent');
+      if (consentGroup && consentBox && !consentBox.checked) {
+        consentGroup.classList.add('error');
+        showFieldError(consentBox, t.valConsent);
+        valid = false;
+      }
+      if (!valid) return;
+
+      const data = {
+        name: nameInput.value.trim(),
+        whatsapp: waInput.value.trim(),
+        email: (tourBody.querySelector('[name="tour-email"]').value || '').trim(),
+        time: (tourBody.querySelector('[name="tour-time"]:checked') || {}).value || '',
+        comment: (tourBody.querySelector('[name="tour-comment"]').value || '').trim(),
+        project: tourAnswers[0] || '',
+        whenInBali: tourAnswers[1] || '',
+        interests: tourAnswers[2] || [],
+        lang: lang
+      };
+
+      console.log('Tour booking lead (test mode):', data);
+      trackEvent('generate_lead', 'tour_booking', data.project);
+      sessionStorage.setItem('leadCaptured', 'true');
+
+      // Thank you screen
+      tourBar.style.width = '100%';
+      const projectUrl = tourProjectUrls[data.project] || '';
+      const waNum = (typeof SITE_DATA !== 'undefined' && SITE_DATA.contacts) ? SITE_DATA.contacts.whatsapp : '6281338741177';
+      tourBody.innerHTML = `
+        <div class="tour__result">
+          <div class="tour__result-icon">
+            <svg viewBox="0 0 24 24" width="48" height="48"><circle cx="12" cy="12" r="10" stroke="var(--color-accent)" stroke-width="1.5" fill="none"/><path d="M8 12l3 3 5-5" stroke="var(--color-accent)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="tour__question">${t.tourThankTitle}</h3>
+          <p class="tour__result-desc">${t.tourThankText}</p>
+          <a href="https://wa.me/${waNum}" target="_blank" rel="noopener noreferrer" class="btn btn--primary" style="width:100%;margin-bottom:12px;">
+            <svg viewBox="0 0 24 24" width="18" height="18" style="vertical-align:middle;margin-right:8px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="var(--color-bg)"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" stroke="var(--color-bg)" stroke-width="0" fill="var(--color-accent)"/></svg>
+            ${t.tourThankWa}
+          </a>
+          ${projectUrl ? `<a href="${projectUrl}" class="tour__project-link">${t.tourThankProject} ${data.project} &rarr;</a>` : ''}
+        </div>
+      `;
+    });
+
+    // Back button
+    tourBody.querySelector('.tour__back').addEventListener('click', () => {
+      tourStep = tourSteps.length - 1;
+      renderTourStep();
+    });
+  };
+
+  const openTour = (preselectedProject) => {
+    tourStep = 0;
+    tourAnswers.length = 0;
+    tourMultiSelected = [];
+    // If triggered from a specific project page, pre-select project and skip step 1
+    if (preselectedProject) {
+      tourAnswers[0] = preselectedProject;
+      tourStep = 1;
+    }
+    renderTourStep();
+    tourOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeTour = () => {
+    tourOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+
+  tourOverlay.querySelector('.tour__close').addEventListener('click', closeTour);
+  tourOverlay.addEventListener('click', (e) => {
+    if (e.target === tourOverlay) closeTour();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && tourOverlay.classList.contains('active')) closeTour();
+  });
+
+  // Attach tour to [data-tour] buttons
+  document.querySelectorAll('[data-tour]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const project = btn.dataset.tour || '';
+      openTour(project || null);
     });
   });
 
