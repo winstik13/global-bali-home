@@ -325,6 +325,7 @@
       'newProject.create': 'Create Project',
       'newProject.nameRequired': 'Name is required',
       'newProject.slugExists': 'Project with this slug already exists',
+      'preview.title': 'Preview',
       'common.saving': 'Saving...',
       'common.saved': 'Saved! Site updating (~1-2 min)',
       'common.error': 'Error: ',
@@ -662,6 +663,7 @@
       'newProject.create': 'Создать проект',
       'newProject.nameRequired': 'Укажите название',
       'newProject.slugExists': 'Проект с таким slug уже существует',
+      'preview.title': 'Превью',
       'common.saving': 'Сохранение...',
       'common.saved': 'Сохранено! Сайт обновится (~1-2 мин)',
       'common.error': 'Ошибка: ',
@@ -3291,6 +3293,14 @@
   // ─── Company Statistics ───
   const STAT_KEYS = ['yearsInBali', 'villasDesigned', 'occupancyRate', 'founderExperience', 'touristArrivals', 'rentalYield', 'propertyGrowth'];
 
+  function updateStatsPreview() {
+    STAT_KEYS.forEach(key => {
+      const preview = $(`#sp-${key}`);
+      const input = $(`#stat-${key}`);
+      if (preview && input) preview.textContent = input.value || '—';
+    });
+  }
+
   function renderStatsForm() {
     if (!siteData) return;
     const stats = siteData.stats || {};
@@ -3298,7 +3308,14 @@
       const el = $(`#stat-${key}`);
       if (el) el.value = stats[key] || '';
     });
+    updateStatsPreview();
   }
+
+  // Live stats preview
+  STAT_KEYS.forEach(key => {
+    const el = $(`#stat-${key}`);
+    if (el) el.addEventListener('input', () => { updateStatsPreview(); });
+  });
 
   $('#btn-stats-save')?.addEventListener('click', async () => {
     const btn = $('#btn-stats-save');
@@ -3325,6 +3342,7 @@
   // ─── FAQ Editor ───
   let faqData = null;
   // faqChanged is now dirtyTabs.faq
+  let faqPreviewLang = 'en';
 
   function loadFaqData() {
     if (typeof FAQ_DATA !== 'undefined') {
@@ -3332,6 +3350,28 @@
     } else {
       faqData = [];
     }
+  }
+
+  function updateFaqPreview() {
+    const container = $('#faq-preview');
+    if (!container || !faqData) return;
+    const sorted = faqData.slice().sort((a, b) => (a.order || 99) - (b.order || 99));
+    if (!sorted.length) {
+      container.innerHTML = '<p style="color:var(--color-text-muted);font-size:0.8rem;text-align:center;padding:24px 0">' + t('faq.noItems') + '</p>';
+      return;
+    }
+    container.innerHTML = sorted.map((item, idx) => {
+      const q = item.question[faqPreviewLang] || item.question.en || '';
+      const a = item.answer[faqPreviewLang] || item.answer.en || '';
+      return '<div class="faq-preview__item' + (idx === 0 ? ' open' : '') + '">' +
+        '<div class="faq-preview__q">' + escapeHtml(q) + '</div>' +
+        '<div class="faq-preview__a"><div class="faq-preview__a-inner">' + escapeHtml(a) + '</div></div></div>';
+    }).join('');
+    container.querySelectorAll('.faq-preview__q').forEach(q => {
+      q.addEventListener('click', () => {
+        q.parentElement.classList.toggle('open');
+      });
+    });
   }
 
   function renderFaqEditor() {
@@ -3365,6 +3405,8 @@
       </div>`;
     }).join('');
 
+    updateFaqPreview();
+
     // Bind input events
     editor.querySelectorAll('[data-faq-field]').forEach(el => {
       el.addEventListener('input', () => {
@@ -3372,7 +3414,9 @@
         const field = el.dataset.faqField;
         const lng = el.dataset.faqLng;
         faqData[i][field][lng] = el.value;
+        faqPreviewLang = lng;
         dirtyTabs.faq = true;
+        updateFaqPreview();
       });
     });
 
@@ -3491,7 +3535,45 @@
   // ─── Testimonials Editor ───
   const LANGS_FULL = { en: 'English', ru: 'Русский', id: 'Bahasa Indonesia' };
   let testimonialsData = null;
-  // testimonialsChanged is now dirtyTabs.testimonials
+  let testPreviewIdx = 0;
+  let testPreviewLang = 'en';
+
+  function updateTestPreview() {
+    const container = $('#test-preview');
+    if (!container || !testimonialsData || !testimonialsData.length) {
+      if (container) container.innerHTML = '<p style="color:var(--color-text-muted);font-size:0.8rem;text-align:center;padding:24px 0">' + t('test.noItems') + '</p>';
+      return;
+    }
+    const sorted = testimonialsData.slice().sort((a, b) => (a.order || 99) - (b.order || 99));
+    const idx = Math.min(testPreviewIdx, sorted.length - 1);
+    const item = sorted[idx];
+    const lng = testPreviewLang;
+    const name = item.name[lng] || item.name.en || '';
+    const role = item.role[lng] || item.role.en || '';
+    const text = item.text[lng] || item.text.en || '';
+    const stars = '★'.repeat(item.stars || 5);
+    let avatarHTML;
+    if (item.avatar) {
+      avatarHTML = '<img class="test-preview__avatar" src="../' + item.avatar + '" alt="">';
+    } else {
+      const inits = name.split(' ').map(w => w[0] || '').join('').slice(0, 2).toUpperCase() || '??';
+      avatarHTML = '<span class="test-preview__avatar test-preview__avatar--initials">' + inits + '</span>';
+    }
+    let verifiedHTML = '';
+    if (item.sourceName) {
+      verifiedHTML = '<span class="test-preview__verified">✓ Verified via ' + escapeHtml(item.sourceName) + '</span>';
+    }
+    container.innerHTML = '<div class="test-preview__card">' +
+      '<div class="test-preview__stars">' + stars + '</div>' +
+      '<blockquote class="test-preview__text">' + escapeHtml(text) + '</blockquote>' +
+      '<div class="test-preview__author">' + avatarHTML +
+      '<div class="test-preview__info">' +
+      '<span class="test-preview__name">' + escapeHtml(name) + '</span>' +
+      '<span class="test-preview__role">' + escapeHtml(role) + '</span>' +
+      verifiedHTML +
+      '</div></div></div>' +
+      '<p class="test-preview__hint">#' + (idx + 1) + ' / ' + sorted.length + '</p>';
+  }
 
   function loadTestimonialsData() {
     if (typeof TESTIMONIALS_DATA !== 'undefined') {
@@ -3549,6 +3631,8 @@
       </div>`;
     }).join('');
 
+    updateTestPreview();
+
     // Bind input changes
     editor.querySelectorAll('[data-test-field]').forEach(el => {
       el.addEventListener('input', () => {
@@ -3561,8 +3645,13 @@
           testimonialsData[i][field] = el.value;
         } else {
           testimonialsData[i][field][lng] = el.value;
+          testPreviewLang = lng;
         }
+        // Find which sorted index this item is at
+        const sorted = testimonialsData.slice().sort((a, b) => (a.order || 99) - (b.order || 99));
+        testPreviewIdx = sorted.indexOf(testimonialsData[i]);
         dirtyTabs.testimonials = true;
+        updateTestPreview();
       });
     });
 

@@ -178,11 +178,19 @@
       <!-- Tab: FAQ -->
       <section id="tab-faq" class="admin-tab" hidden>
         <h2 data-i18n="faq.title">FAQ Editor</h2>
-        <div id="faq-editor"></div>
-        <div class="editor-actions">
-          <button id="btn-faq-add" class="btn btn--outline" data-i18n="faq.addQuestion">+ Add Question</button>
-          <button id="btn-faq-publish" class="btn btn--primary" data-i18n="faq.publish">Publish FAQ</button>
-          <span id="faq-publish-status" class="publish-status"></span>
+        <div class="preview-layout">
+          <div class="preview-layout__editor">
+            <div id="faq-editor"></div>
+            <div class="editor-actions">
+              <button id="btn-faq-add" class="btn btn--outline" data-i18n="faq.addQuestion">+ Add Question</button>
+              <button id="btn-faq-publish" class="btn btn--primary" data-i18n="faq.publish">Publish FAQ</button>
+              <span id="faq-publish-status" class="publish-status"></span>
+            </div>
+          </div>
+          <div class="preview-layout__preview">
+            <h3 class="preview-label" data-i18n="preview.title">Preview</h3>
+            <div class="faq-preview" id="faq-preview"></div>
+          </div>
         </div>
       </section>
 
@@ -388,6 +396,40 @@
           <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
             <button id="btn-stats-save" class="btn btn--primary btn--sm" data-i18n="stats.save">Save Statistics</button>
             <span id="stats-save-status" class="publish-status"></span>
+          </div>
+          <div style="margin-top:20px">
+            <h4 class="preview-label" data-i18n="preview.title">Preview</h4>
+            <div class="stats-preview" id="stats-preview">
+              <div class="stats-preview__card">
+                <div class="stats-preview__number" id="sp-yearsInBali">3+</div>
+                <div class="stats-preview__label">Years in Bali</div>
+              </div>
+              <div class="stats-preview__card">
+                <div class="stats-preview__number" id="sp-villasDesigned">43</div>
+                <div class="stats-preview__label">Villas Designed</div>
+              </div>
+              <div class="stats-preview__card">
+                <div class="stats-preview__number" id="sp-occupancyRate">80%+</div>
+                <div class="stats-preview__label">Occupancy Rate</div>
+              </div>
+              <div class="stats-preview__card">
+                <div class="stats-preview__number" id="sp-founderExperience">$1B+</div>
+                <div class="stats-preview__label">Founder Exp.</div>
+              </div>
+              <div class="stats-preview__sep"></div>
+              <div class="stats-preview__card">
+                <div class="stats-preview__number" id="sp-touristArrivals">16M+</div>
+                <div class="stats-preview__label">Tourist Arrivals</div>
+              </div>
+              <div class="stats-preview__card">
+                <div class="stats-preview__number" id="sp-rentalYield">12-15%</div>
+                <div class="stats-preview__label">Rental Yield</div>
+              </div>
+              <div class="stats-preview__card">
+                <div class="stats-preview__number" id="sp-propertyGrowth">8-12%</div>
+                <div class="stats-preview__label">Property Growth</div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -637,11 +679,19 @@
       <!-- Tab: Testimonials -->
       <section id="tab-testimonials" class="admin-tab" hidden>
         <h2 data-i18n="test.title">Testimonials Editor</h2>
-        <div id="testimonials-editor"></div>
-        <div class="editor-actions">
-          <button id="btn-testimonial-add" class="btn btn--outline" data-i18n="test.add">+ Add Testimonial</button>
-          <button id="btn-testimonials-publish" class="btn btn--primary" data-i18n="test.publish">Publish Testimonials</button>
-          <span id="testimonials-publish-status" class="publish-status"></span>
+        <div class="preview-layout">
+          <div class="preview-layout__editor">
+            <div id="testimonials-editor"></div>
+            <div class="editor-actions">
+              <button id="btn-testimonial-add" class="btn btn--outline" data-i18n="test.add">+ Add Testimonial</button>
+              <button id="btn-testimonials-publish" class="btn btn--primary" data-i18n="test.publish">Publish Testimonials</button>
+              <span id="testimonials-publish-status" class="publish-status"></span>
+            </div>
+          </div>
+          <div class="preview-layout__preview">
+            <h3 class="preview-label" data-i18n="preview.title">Preview</h3>
+            <div class="test-preview" id="test-preview"></div>
+          </div>
         </div>
       </section>
     </main>

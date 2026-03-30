@@ -2059,6 +2059,235 @@ body {
   }
 }
 
+/* ─── Shared Preview Layout ─── */
+.preview-layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 32px;
+  align-items: start;
+}
+
+.preview-layout__editor {
+  min-width: 0;
+}
+
+.preview-layout__preview {
+  position: sticky;
+  top: 80px;
+}
+
+.preview-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+}
+
+@media (max-width: 1024px) {
+  .preview-layout {
+    grid-template-columns: 1fr;
+  }
+  .preview-layout__preview {
+    position: static;
+  }
+}
+
+/* ─── FAQ Preview ─── */
+.faq-preview {
+  background: var(--color-bg, #1a1a14);
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  padding: 24px;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.faq-preview__item {
+  border-bottom: 1px solid rgba(225, 217, 201, 0.1);
+}
+
+.faq-preview__item:last-child {
+  border-bottom: none;
+}
+
+.faq-preview__q {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.85rem;
+  color: var(--color-text, #E1D9C9);
+  padding: 16px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.faq-preview__q::after {
+  content: '+';
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: rgba(225, 217, 201, 0.5);
+  flex-shrink: 0;
+  margin-left: 12px;
+  transition: transform 0.3s;
+}
+
+.faq-preview__item.open .faq-preview__q::after {
+  transform: rotate(45deg);
+}
+
+.faq-preview__a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.faq-preview__item.open .faq-preview__a {
+  max-height: 300px;
+}
+
+.faq-preview__a-inner {
+  padding-bottom: 16px;
+  font-size: 0.75rem;
+  color: rgba(225, 217, 201, 0.6);
+  line-height: 1.7;
+}
+
+/* ─── Testimonial Preview ─── */
+.test-preview {
+  background: var(--color-bg, #1a1a14);
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  padding: 24px;
+}
+
+.test-preview__card {
+  background: var(--color-bg-card, #2a2a20);
+  border: 1px solid rgba(225, 217, 201, 0.1);
+  border-radius: 4px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.test-preview__stars {
+  color: var(--color-accent, #6B8F4E);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+}
+
+.test-preview__text {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.8rem;
+  color: rgba(225, 217, 201, 0.6);
+  line-height: 1.8;
+  font-style: italic;
+  flex: 1;
+}
+
+.test-preview__author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(225, 217, 201, 0.1);
+}
+
+.test-preview__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.test-preview__avatar--initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(107, 143, 78, 0.15);
+  color: var(--color-accent, #6B8F4E);
+  font-weight: 700;
+  font-size: 0.75rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.test-preview__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.test-preview__name {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-text, #E1D9C9);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.test-preview__role {
+  font-size: 0.65rem;
+  color: rgba(225, 217, 201, 0.4);
+}
+
+.test-preview__verified {
+  font-size: 0.6rem;
+  color: var(--color-accent, #6B8F4E);
+  opacity: 0.8;
+}
+
+.test-preview__hint {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: 12px;
+}
+
+/* ─── Stats Preview ─── */
+.stats-preview {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: var(--color-bg, #1a1a14);
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  padding: 16px;
+}
+
+.stats-preview__card {
+  flex: 1;
+  min-width: 80px;
+  text-align: center;
+  padding: 12px 8px;
+  border: 1px solid rgba(225, 217, 201, 0.1);
+}
+
+.stats-preview__number {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: #F7F7F0;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.stats-preview__label {
+  font-size: 0.55rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(225, 217, 201, 0.4);
+  line-height: 1.3;
+}
+
+.stats-preview__sep {
+  width: 100%;
+  height: 0;
+  flex-basis: 100%;
+}
+
 /* ─── Exit Popup Tab ─── */
 .exitpopup-lang-tab.active {
   background: var(--color-accent);
