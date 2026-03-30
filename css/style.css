@@ -1161,7 +1161,8 @@ td .price-idr {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  flex: 1 0 120px;
+  flex: 1 1 0;
+  min-width: 0;
 }
 
 .why-bali-stat strong {
