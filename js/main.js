@@ -2310,23 +2310,27 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       html += '</tr></thead><tbody>';
       var comp = PD.comparisonData || {};
       var rows = [
-        { key: 'price', fn: function(k) { var p = (comp[k] && comp[k].price) || ('$' + (PD[k].startingPrice / 1000 | 0) + 'K'); var idr = fmtIdr(PD[k].startingPrice); return p + (idr ? '<span class="price-idr">' + idr + '</span>' : ''); } },
+        { key: 'price', accent: true, fn: function(k) { var p = (comp[k] && comp[k].price) || ('$' + (PD[k].startingPrice / 1000 | 0) + 'K'); var idr = fmtIdr(PD[k].startingPrice); return p + (idr ? '<span class="price-idr">' + idr + '</span>' : ''); } },
         { key: 'bedrooms', fn: function(k) { return PD[k].bedrooms; } },
         { key: 'area', fn: function(k) { return PD[k].compArea || (comp[k] && comp[k].area) || '\u2014'; } },
         { key: 'land', fn: function(k) { return PD[k].compLand || (comp[k] && comp[k].land) || '\u2014'; } },
         { key: 'units', fn: function(k) { return PD[k].totalUnits; } },
         { key: 'pool', fn: function(k) { var p = PD[k].compPool || (comp[k] && comp[k].pool); if (!p) return '\u2014'; return (typeof p === 'object') ? (p[dataLang] || p.en) : p; } },
+        { key: 'roi', fn: function(k) { return '12–15%'; }, accent: true },
         { key: 'handover', fn: function(k) { return PD[k].handover || '\u2014'; } },
         { key: 'status', fn: function(k) { return loc(PD[k].showcaseStatus) || '\u2014'; } }
       ];
       rows.forEach(function(r) {
         html += '<tr><td>' + labels[r.key] + '</td>';
-        projects.forEach(function(k) { html += '<td>' + r.fn(k) + '</td>'; });
+        projects.forEach(function(k) {
+          var cls = r.accent ? ' class="comparison-table__value--accent"' : '';
+          html += '<td' + cls + '>' + r.fn(k) + '</td>';
+        });
         html += '</tr>';
       });
-      html += '<tr><td></td>';
+      html += '<tr><td class="comparison-table__cta"></td>';
       projects.forEach(function(k) {
-        html += '<td><a href="' + PD[k].page + '" class="btn btn--primary btn--sm">' + labels.cta + '</a></td>';
+        html += '<td class="comparison-table__cta"><a href="' + PD[k].page + '" class="btn btn--outline">' + labels.cta + '</a><button class="btn btn--primary" data-tour="' + PD[k].name + '">' + labels.tour + '</button></td>';
       });
       html += '</tr></tbody>';
       el.innerHTML = html;

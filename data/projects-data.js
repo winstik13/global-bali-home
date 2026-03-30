@@ -795,9 +795,11 @@ const PROJECTS_DATA = {
       "land": "Land",
       "units": "Total Units",
       "pool": "Pool",
+      "roi": "Projected ROI",
       "handover": "Handover",
-      "status": "Status",
-      "cta": "View Details"
+      "status": "Availability",
+      "cta": "View Details",
+      "tour": "Book a Tour"
     },
     "ru": {
       "price": "Цена от",
@@ -806,9 +808,11 @@ const PROJECTS_DATA = {
       "land": "Земля",
       "units": "Всего юнитов",
       "pool": "Бассейн",
+      "roi": "Прогноз ROI",
       "handover": "Сдача",
-      "status": "Статус",
-      "cta": "Подробнее"
+      "status": "Наличие",
+      "cta": "Подробнее",
+      "tour": "Записаться на тур"
     },
     "id": {
       "price": "Harga mulai",
@@ -817,9 +821,11 @@ const PROJECTS_DATA = {
       "land": "Lahan",
       "units": "Total Unit",
       "pool": "Kolam",
+      "roi": "Proyeksi ROI",
       "handover": "Serah Terima",
-      "status": "Status",
-      "cta": "Lihat Detail"
+      "status": "Ketersediaan",
+      "cta": "Lihat Detail",
+      "tour": "Pesan Tur"
     }
   },
   "comparisonData": {
