@@ -55,5 +55,39 @@ const SITE_DATA = {
     "yandexMetrika": "",
     "clarity": "",
     "gscVerification": ""
+  },
+  "exitPopup": {
+    "enabled": true,
+    "delay": 30,
+    "countdown": 7,
+    "texts": {
+      "en": {
+        "tag": "Exclusive Guide",
+        "title": "Before You Go — A Complimentary Resource",
+        "text": "Access our comprehensive Bali Real Estate Investment Guide with market analysis, ROI projections, and expert insights.",
+        "placeholder": "Your email address",
+        "submit": "Access the Investment Guide",
+        "success": "Your guide will be ready in",
+        "openBtn": "Open the Guide"
+      },
+      "ru": {
+        "tag": "Эксклюзивный гид",
+        "title": "Прежде чем уйти — бесплатный ресурс",
+        "text": "Получите наш подробный гид по инвестициям в недвижимость Бали с анализом рынка, прогнозами доходности и экспертными оценками.",
+        "placeholder": "Ваш email",
+        "submit": "Получить инвестиционный гид",
+        "success": "Ваш гид будет готов через",
+        "openBtn": "Открыть гид"
+      },
+      "id": {
+        "tag": "Panduan Eksklusif",
+        "title": "Sebelum Anda Pergi — Sumber Daya Gratis",
+        "text": "Akses panduan investasi properti Bali kami yang komprehensif dengan analisis pasar, proyeksi ROI, dan wawasan ahli.",
+        "placeholder": "Alamat email Anda",
+        "submit": "Akses Panduan Investasi",
+        "success": "Panduan Anda akan siap dalam",
+        "openBtn": "Buka Panduan"
+      }
+    }
   }
 };

@@ -242,6 +242,23 @@
       'help.colors.live': '<strong>Live preview:</strong> Changes apply instantly in admin panel.',
       'help.colors.site': '<strong>On site:</strong> Colors apply after Save + ~1-2 min deploy.',
       'help.colors.reset': 'Use <strong>Reset to Defaults</strong> to restore original palette.',
+      'nav.exitpopup': 'Exit Popup',
+      'exitpopup.title': 'Exit Intent Popup',
+      'exitpopup.settings': 'Settings',
+      'exitpopup.content': 'Content',
+      'exitpopup.preview': 'Preview',
+      'exitpopup.enabled': 'Enabled',
+      'exitpopup.delay': 'Trigger Delay (sec)',
+      'exitpopup.countdown': 'Countdown (sec)',
+      'exitpopup.field.tag': 'Badge Text',
+      'exitpopup.field.title': 'Popup Title',
+      'exitpopup.field.text': 'Description',
+      'exitpopup.field.placeholder': 'Email Placeholder',
+      'exitpopup.field.submit': 'Submit Button',
+      'exitpopup.field.success': 'Success Message',
+      'exitpopup.field.openBtn': 'Open Guide Button',
+      'exitpopup.hint.success': 'Countdown number is appended automatically',
+      'exitpopup.save': 'Save Exit Popup',
       'social.title': 'Social Media',
       'social.facebook': 'Facebook URL',
       'social.instagram': 'Instagram URL',
@@ -562,6 +579,23 @@
       'help.colors.live': '<strong>Предпросмотр:</strong> Изменения видны мгновенно в админке.',
       'help.colors.site': '<strong>На сайте:</strong> Цвета применятся после сохранения + ~1-2 мин.',
       'help.colors.reset': 'Используйте <strong>Сбросить</strong> для возврата палитры.',
+      'nav.exitpopup': 'Exit Popup',
+      'exitpopup.title': 'Exit Intent попап',
+      'exitpopup.settings': 'Настройки',
+      'exitpopup.content': 'Контент',
+      'exitpopup.preview': 'Превью',
+      'exitpopup.enabled': 'Включён',
+      'exitpopup.delay': 'Задержка срабатывания (сек)',
+      'exitpopup.countdown': 'Обратный отсчёт (сек)',
+      'exitpopup.field.tag': 'Бейдж',
+      'exitpopup.field.title': 'Заголовок попапа',
+      'exitpopup.field.text': 'Описание',
+      'exitpopup.field.placeholder': 'Плейсхолдер email',
+      'exitpopup.field.submit': 'Кнопка отправки',
+      'exitpopup.field.success': 'Сообщение об успехе',
+      'exitpopup.field.openBtn': 'Кнопка открытия гида',
+      'exitpopup.hint.success': 'Число обратного отсчёта добавляется автоматически',
+      'exitpopup.save': 'Сохранить Exit Popup',
       'social.title': 'Социальные сети',
       'social.facebook': 'URL Facebook',
       'social.instagram': 'URL Instagram',
@@ -716,7 +750,7 @@
   let currentProject = 'serenity-villas';
   let projectsData = null;    // working copy of PROJECTS_DATA
   let pendingChanges = false;
-  const dirtyTabs = { projects: false, faq: false, testimonials: false, seo: false, colors: false, contacts: false, rate: false };
+  const dirtyTabs = { projects: false, faq: false, testimonials: false, seo: false, colors: false, contacts: false, rate: false, exitpopup: false };
 
   function getActiveTab() {
     const btn = document.querySelector('.admin-nav__btn.active');
@@ -919,6 +953,7 @@
     renderSocialForm();
     renderRoiForm();
     renderStatsForm();
+    populateExitPopup();
     renderProjectEditor();
     renderGallery();
     renderColorsTab();
@@ -2905,6 +2940,7 @@
     }
     if (!siteData.exchangeRate) siteData.exchangeRate = { usdToIdr: 16500, updatedAt: '' };
     if (!siteData.contacts) siteData.contacts = { phone: '', phoneRaw: '', whatsapp: '', email: '', location: { en: '', ru: '', id: '' } };
+    if (!siteData.exitPopup) siteData.exitPopup = { enabled: true, delay: 30, countdown: 7, texts: { en: {}, ru: {}, id: {} } };
   }
 
   function renderRateInfo() {
@@ -3876,6 +3912,115 @@
         status.className = 'publish-status error';
       }
       btnLoading(analyticsSaveBtn, false);
+    });
+  }
+
+  // ─── Exit Intent Popup Settings ───
+  const EP_LANGS = ['en', 'ru', 'id'];
+  const EP_FIELDS = ['tag', 'title', 'text', 'placeholder', 'submit', 'success', 'openBtn'];
+  let epActiveLang = 'en';
+
+  function updateEpPreview() {
+    const lang = epActiveLang;
+    const tagEl = $('#ep-preview-tag');
+    const titleEl = $('#ep-preview-title');
+    const textEl = $('#ep-preview-text');
+    const placeholderEl = $('#ep-preview-placeholder');
+    const submitEl = $('#ep-preview-submit');
+    const tagVal = ($(`#exitpopup-${lang}-tag`) || {}).value || '';
+    const titleVal = ($(`#exitpopup-${lang}-title`) || {}).value || '';
+    const textVal = ($(`#exitpopup-${lang}-text`) || {}).value || '';
+    const placeholderVal = ($(`#exitpopup-${lang}-placeholder`) || {}).value || '';
+    const submitVal = ($(`#exitpopup-${lang}-submit`) || {}).value || '';
+    if (tagEl) tagEl.textContent = tagVal;
+    if (titleEl) titleEl.textContent = titleVal;
+    if (textEl) textEl.textContent = textVal;
+    if (placeholderEl) placeholderEl.placeholder = placeholderVal;
+    if (submitEl) submitEl.textContent = submitVal;
+  }
+
+  function populateExitPopup() {
+    if (!siteData) loadSiteData();
+    const ep = siteData.exitPopup || {};
+    const enabledBox = $('#exitpopup-enabled');
+    if (enabledBox) enabledBox.checked = ep.enabled !== false;
+    const delayInput = $('#exitpopup-delay');
+    if (delayInput) delayInput.value = ep.delay || 30;
+    const countdownInput = $('#exitpopup-countdown');
+    if (countdownInput) countdownInput.value = ep.countdown || 7;
+    EP_LANGS.forEach(lang => {
+      const texts = (ep.texts && ep.texts[lang]) || {};
+      EP_FIELDS.forEach(field => {
+        const el = $(`#exitpopup-${lang}-${field}`);
+        if (!el) return;
+        let val = texts[field] || '';
+        if (field === 'success') {
+          val = val.replace(/<span class="countdown-num">\d+<\/span>/, '').trim();
+        }
+        el.value = val;
+      });
+    });
+    updateEpPreview();
+  }
+
+  // Live preview: update on every keystroke
+  document.querySelectorAll('.ep-live').forEach(input => {
+    input.addEventListener('input', () => { updateEpPreview(); });
+  });
+
+  // Language tab switching
+  document.querySelectorAll('.exitpopup-lang-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.exitpopup-lang-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      epActiveLang = tab.dataset.lang;
+      document.querySelectorAll('.exitpopup-lang-panel').forEach(p => {
+        p.hidden = p.dataset.lang !== epActiveLang;
+      });
+      updateEpPreview();
+    });
+  });
+
+  // Save handler
+  const exitPopupSaveBtn = $('#btn-exitpopup-save');
+  if (exitPopupSaveBtn) {
+    exitPopupSaveBtn.addEventListener('click', async () => {
+      if (!siteData) loadSiteData();
+      const status = $('#exitpopup-save-status');
+      const countdown = parseInt($('#exitpopup-countdown')?.value, 10) || 7;
+      siteData.exitPopup = {
+        enabled: !!$('#exitpopup-enabled')?.checked,
+        delay: parseInt($('#exitpopup-delay')?.value, 10) || 30,
+        countdown: countdown,
+        texts: {}
+      };
+      EP_LANGS.forEach(lang => {
+        const g = (field) => ($(`#exitpopup-${lang}-${field}`) || {}).value || '';
+        const successText = g('success');
+        siteData.exitPopup.texts[lang] = {
+          tag: g('tag'),
+          title: g('title'),
+          text: g('text'),
+          placeholder: g('placeholder'),
+          submit: g('submit'),
+          success: successText ? successText + ' <span class="countdown-num">' + countdown + '</span>' : '',
+          openBtn: g('openBtn')
+        };
+      });
+      btnLoading(exitPopupSaveBtn, true);
+      status.textContent = t('common.saving');
+      status.className = 'publish-status';
+      try {
+        const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
+        await commitFile('data/site-data.js', content, 'Update exit popup settings via admin panel');
+        status.textContent = t('common.saved');
+        status.className = 'publish-status success';
+        updateRateLimit();
+      } catch (err) {
+        status.textContent = t('common.error') + err.message;
+        status.className = 'publish-status error';
+      }
+      btnLoading(exitPopupSaveBtn, false);
     });
   }
 

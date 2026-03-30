@@ -345,6 +345,19 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const t = i18n[lang] || i18n[lang.split('-')[0]] || i18n.en;
+
+  // Override exit popup texts from SITE_DATA if available
+  if (typeof SITE_DATA !== 'undefined' && SITE_DATA.exitPopup && SITE_DATA.exitPopup.texts) {
+    var epTexts = SITE_DATA.exitPopup.texts[lang] || SITE_DATA.exitPopup.texts.en || {};
+    if (epTexts.tag) t.exitTag = epTexts.tag;
+    if (epTexts.title) t.exitTitle = epTexts.title;
+    if (epTexts.text) t.exitText = epTexts.text;
+    if (epTexts.placeholder) t.exitPlaceholder = epTexts.placeholder;
+    if (epTexts.submit) t.exitSubmit = epTexts.submit;
+    if (epTexts.success) t.exitSuccess = epTexts.success;
+    if (epTexts.openBtn) t.exitOpenBtn = epTexts.openBtn;
+  }
+
   // Map localised option labels back to EN keys for scoring
   const enOptions = i18n.en.quizSteps.map(s => s.options);
 
@@ -1517,6 +1530,16 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
   }
 
   // --- Exit Intent Popup ---
+  var exitPopupEnabled = true;
+  var exitPopupDelay = 30000;
+  var exitCountdown = 7;
+  if (typeof SITE_DATA !== 'undefined' && SITE_DATA.exitPopup) {
+    exitPopupEnabled = SITE_DATA.exitPopup.enabled !== false;
+    exitPopupDelay = (SITE_DATA.exitPopup.delay || 30) * 1000;
+    exitCountdown = SITE_DATA.exitPopup.countdown || 7;
+  }
+
+  if (exitPopupEnabled) {
   const exitOverlay = document.createElement('div');
   exitOverlay.className = 'exit-overlay';
   exitOverlay.innerHTML = `
@@ -1583,7 +1606,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     exitForm.innerHTML = `<p style="text-align:center;font-weight:600;padding:12px 0;">${t.exitSuccess}</p>`;
     var guidePath = getGuidePath();
     if (guidePath) {
-      var cnt = 7;
+      var cnt = exitCountdown;
       var numEl = exitForm.querySelector('.countdown-num');
       exitOverlay._countdownIv = setInterval(function() {
         cnt--;
@@ -1606,13 +1629,14 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
   const pageLoadTime = Date.now();
   document.documentElement.addEventListener('mouseleave', (e) => {
     if (e.clientY > 0) return;
-    if (Date.now() - pageLoadTime < 30000) return;
+    if (Date.now() - pageLoadTime < exitPopupDelay) return;
     if (sessionStorage.getItem('exitShown')) return;
     if (sessionStorage.getItem('leadCaptured')) return;
     if (quizOverlay.classList.contains('active')) return;
     exitOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
   });
+  } // end exitPopupEnabled
 
   function refreshIdrDisplay() {
     document.querySelectorAll('[data-usd]').forEach(function(el) {
