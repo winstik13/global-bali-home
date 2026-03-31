@@ -20,17 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // --- Video: autoplay only on desktop, lazy-load non-hero videos ---
+  // --- Video: lazy-load non-hero videos via IntersectionObserver ---
   (function() {
-    var isDesktop = window.matchMedia('(min-width: 769px)').matches;
-    // Hero video: autoplay on desktop, poster-only on mobile
-    document.querySelectorAll('video[data-autoplay]').forEach(function(v) {
-      if (isDesktop) {
-        v.setAttribute('autoplay', '');
-        v.play().catch(function() {});
-      }
-    });
-    // Non-hero videos: lazy-load source via IntersectionObserver
     document.querySelectorAll('video[data-lazy-src]').forEach(function(v) {
       var observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
@@ -44,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
               v.appendChild(source);
             }
             v.load();
-            if (isDesktop) v.play().catch(function() {});
+            v.play().catch(function() {});
             observer.disconnect();
           }
         });
