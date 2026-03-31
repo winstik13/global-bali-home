@@ -1169,7 +1169,7 @@ input[type="number"] {
 }
 
 .fp-floor__preview {
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 1 / 1;
   background: var(--color-bg-card);
   border-radius: var(--radius-sm);
   overflow: hidden;
