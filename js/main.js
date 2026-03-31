@@ -2410,17 +2410,33 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       });
       html += '</div>';
 
-      // Content panels per type
+      // Content panels per type — side-by-side layout
       types.forEach(function(type, i) {
         var data = proj.floorPlans[type];
         var floors = data.floors;
         var specs = data.specs || [];
         var floorKeys = Object.keys(floors);
-        var hasMultiFloor = floorKeys.length > 1;
 
         html += '<div class="fp-panel' + (i === 0 ? ' fp-panel--active' : '') + '" data-fp-panel="' + type + '">';
 
-        // Specs grid
+        // Left: floor plans (all visible at once)
+        html += '<div class="fp-plans' + (floorKeys.length === 1 ? ' fp-plans--single' : '') + '">';
+        floorKeys.forEach(function(floor) {
+          var img = floors[floor];
+          html += '<div class="fp-floor">';
+          if (floorKeys.length > 1) {
+            html += '<div class="fp-floor__label">' + floor + '</div>';
+          }
+          if (img) {
+            html += '<div class="fp-floor__img" data-lightbox-src="' + img + '"><img src="' + img + '" alt="' + type + ' — ' + floor + '" loading="lazy"></div>';
+          } else {
+            html += '<div class="fp-floor__placeholder">' + placeholderSvg + '<span>' + comingSoon + '</span></div>';
+          }
+          html += '</div>';
+        });
+        html += '</div>';
+
+        // Right: specs list
         if (specs.length) {
           html += '<div class="fp-specs">';
           specs.forEach(function(s) {
@@ -2429,27 +2445,6 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
           });
           html += '</div>';
         }
-
-        // Floor tabs (only if multiple floors)
-        if (hasMultiFloor) {
-          html += '<div class="fp-floor-tabs">';
-          floorKeys.forEach(function(floor, fi) {
-            html += '<button class="fp-floor-tabs__btn' + (fi === 0 ? ' fp-floor-tabs__btn--active' : '') + '" data-fp-floor="' + floor + '">' + floor + '</button>';
-          });
-          html += '</div>';
-        }
-
-        // Floor images
-        floorKeys.forEach(function(floor, fi) {
-          var img = floors[floor];
-          html += '<div class="fp-view' + (fi === 0 ? ' fp-view--active' : '') + '" data-fp-view="' + floor + '">';
-          if (img) {
-            html += '<div class="fp-view__img" data-lightbox-src="' + img + '"><img src="' + img + '" alt="' + type + ' — ' + floor + '" loading="lazy"></div>';
-          } else {
-            html += '<div class="fp-view__placeholder">' + placeholderSvg + '<span>' + comingSoon + '</span></div>';
-          }
-          html += '</div>';
-        });
 
         html += '</div>';
       });
@@ -2467,20 +2462,8 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         });
       });
 
-      // Floor tab switching
-      el.querySelectorAll('.fp-floor-tabs__btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          var panel = btn.closest('.fp-panel');
-          panel.querySelectorAll('.fp-floor-tabs__btn').forEach(function(b) { b.classList.remove('fp-floor-tabs__btn--active'); });
-          panel.querySelectorAll('.fp-view').forEach(function(v) { v.classList.remove('fp-view--active'); });
-          btn.classList.add('fp-floor-tabs__btn--active');
-          var view = panel.querySelector('[data-fp-view="' + btn.dataset.fpFloor + '"]');
-          if (view) view.classList.add('fp-view--active');
-        });
-      });
-
       // Lightbox
-      el.querySelectorAll('.fp-view__img[data-lightbox-src]').forEach(function(card) {
+      el.querySelectorAll('.fp-floor__img[data-lightbox-src]').forEach(function(card) {
         card.addEventListener('click', function() {
           var src = this.dataset.lightboxSrc;
           if (!src) return;

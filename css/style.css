@@ -800,6 +800,7 @@ td .price-idr {
 /* --- Floor Plans --- */
 
 /* Type selector tabs */
+/* Type selector tabs */
 .fp-tabs {
   display: flex;
   gap: 8px;
@@ -831,123 +832,71 @@ td .price-idr {
   color: #fff;
 }
 
-/* Specs grid */
-.fp-specs {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-bottom: 32px;
-  padding: 32px;
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: 2px;
-}
-
-.fp-specs__item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 10px;
-}
-
-.fp-specs__icon {
-  width: 48px;
-  height: 48px;
-  color: var(--color-accent);
-}
-
-.fp-specs__icon svg {
-  width: 100%;
-  height: 100%;
-}
-
-.fp-specs__text {
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--color-text);
-}
-
-/* Panel (one per type) */
+/* Panel (one per type) — side-by-side layout */
 .fp-panel {
   display: none;
 }
 
 .fp-panel--active {
-  display: block;
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 40px;
+  align-items: start;
+  padding: 40px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
 }
 
-/* Floor sub-tabs */
-.fp-floor-tabs {
+/* Floor plans area (left side) */
+.fp-plans {
   display: flex;
-  gap: 4px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid var(--color-border);
+  gap: 24px;
 }
 
-.fp-floor-tabs__btn {
-  padding: 8px 16px;
-  background: transparent;
-  border: none;
-  border-bottom: 2px solid transparent;
-  color: var(--color-text-muted);
+.fp-plans--single {
+  justify-content: center;
+}
+
+/* Individual floor card */
+.fp-floor {
+  flex: 1;
+  min-width: 0;
+}
+
+.fp-floor__label {
   font-family: var(--font-body);
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
+  color: var(--color-text-dim);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.fp-floor__img {
   cursor: pointer;
-  transition: all 0.3s ease;
-  margin-bottom: -1px;
-}
-
-.fp-floor-tabs__btn:hover {
-  color: var(--color-text);
-}
-
-.fp-floor-tabs__btn--active {
-  color: var(--color-accent);
-  border-bottom-color: var(--color-accent);
-}
-
-/* Floor view */
-.fp-view {
-  display: none;
-}
-
-.fp-view--active {
-  display: block;
-}
-
-.fp-view__img {
-  max-width: 600px;
-  margin: 0 auto;
-  cursor: pointer;
-  background: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: 2px;
   overflow: hidden;
   transition: border-color 0.3s ease;
 }
 
-.fp-view__img:hover {
-  border-color: var(--color-border-hover);
+.fp-floor__img:hover {
+  border-color: var(--color-accent);
 }
 
-.fp-view__img img {
+.fp-floor__img img {
   width: 100%;
   height: auto;
   display: block;
-  padding: 16px;
+  padding: 12px;
   object-fit: contain;
 }
 
-.fp-view__placeholder {
-  max-width: 600px;
-  margin: 0 auto;
+.fp-floor__placeholder {
   aspect-ratio: 3 / 4;
-  background: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: 2px;
   display: flex;
@@ -958,19 +907,57 @@ td .price-idr {
   color: var(--color-text-dim);
 }
 
-.fp-view__placeholder svg {
-  width: 80px;
-  height: 80px;
+.fp-floor__placeholder svg {
+  width: 60px;
+  height: 60px;
   opacity: 0.3;
 }
 
-.fp-view__placeholder span {
+.fp-floor__placeholder span {
   font-family: var(--font-body);
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-text-muted);
+}
+
+/* Specs sidebar (right side) */
+.fp-specs {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.fp-specs__item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.fp-specs__item:last-child {
+  border-bottom: none;
+}
+
+.fp-specs__icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  color: var(--color-accent);
+}
+
+.fp-specs__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.fp-specs__text {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text);
 }
 
 .floor-plan-lightbox {
@@ -3879,10 +3866,31 @@ td .price-idr {
     grid-column: auto;
   }
 
+  .fp-panel--active {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px;
+  }
+
   .fp-specs {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    padding: 20px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0;
+    order: -1;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 16px;
+    margin-bottom: 0;
+  }
+
+  .fp-specs__item {
+    flex: 0 0 50%;
+    padding: 8px 0;
+    border-bottom: none;
+  }
+
+  .fp-plans {
+    flex-direction: column;
+    gap: 20px;
   }
 
   .fp-tabs {
@@ -3892,11 +3900,6 @@ td .price-idr {
   .fp-tabs__btn {
     padding: 8px 14px;
     font-size: 0.75rem;
-  }
-
-  .fp-view__img,
-  .fp-view__placeholder {
-    max-width: 100%;
   }
 
   .wanayu-section {
