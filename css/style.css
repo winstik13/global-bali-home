@@ -991,6 +991,8 @@ td .price-idr {
   max-height: 90vh;
   object-fit: contain;
   border-radius: 4px;
+  background: var(--color-bg-card);
+  padding: 16px;
 }
 
 .floor-plan-lightbox__close {
