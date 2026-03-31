@@ -1404,8 +1404,9 @@
       const floors = data.floors || {};
       const specs = data.specs || [];
       const floorKeys = Object.keys(floors);
-      html += `<div class="fp-type" data-plan-type="${type}">
+      html += `<div class="fp-type" data-plan-type="${type}" draggable="true">
         <div class="fp-type__header">
+          <span class="fp-type__drag" title="Drag to reorder">⠿</span>
           <span class="fp-type__name" data-rename="${type}" title="Click to rename">${type} <span class="fp-type__rename-icon">✎</span></span>
           <div class="fp-type__actions">
             <button class="btn btn--outline btn--sm fp-add-floor" data-type="${type}">+ Floor</button>
@@ -1786,6 +1787,46 @@
         renderProjectEditor();
       });
     }
+
+    // Drag & drop reorder plan types
+    let dragType = null;
+    editor.querySelectorAll('.fp-type[draggable]').forEach(card => {
+      card.addEventListener('dragstart', e => {
+        dragType = card.dataset.planType;
+        card.classList.add('fp-type--dragging');
+        e.dataTransfer.effectAllowed = 'move';
+      });
+      card.addEventListener('dragend', () => {
+        card.classList.remove('fp-type--dragging');
+        dragType = null;
+        editor.querySelectorAll('.fp-type--over').forEach(c => c.classList.remove('fp-type--over'));
+      });
+      card.addEventListener('dragover', e => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        if (card.dataset.planType !== dragType) card.classList.add('fp-type--over');
+      });
+      card.addEventListener('dragleave', () => {
+        card.classList.remove('fp-type--over');
+      });
+      card.addEventListener('drop', e => {
+        e.preventDefault();
+        card.classList.remove('fp-type--over');
+        const targetType = card.dataset.planType;
+        if (!dragType || dragType === targetType) return;
+        // Reorder: rebuild floorPlans with new key order
+        const keys = Object.keys(p.floorPlans);
+        const fromIdx = keys.indexOf(dragType);
+        const toIdx = keys.indexOf(targetType);
+        keys.splice(fromIdx, 1);
+        keys.splice(toIdx, 0, dragType);
+        const reordered = {};
+        keys.forEach(k => { reordered[k] = p.floorPlans[k]; });
+        p.floorPlans = reordered;
+        markChanged();
+        renderProjectEditor();
+      });
+    });
 
     // Add generate pages button
     addGeneratePagesButton();
