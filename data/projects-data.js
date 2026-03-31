@@ -346,7 +346,7 @@ const PROJECTS_DATA = {
           }
         ]
       },
-      "Type B — 3BR Two Story": {
+      "Type B (B1, B4)": {
         "floors": {
           "Ground Floor": "images/serenity-villas/plans/type-b-3br-two-story-ground-floor.webp",
           "Upper Floor": "images/serenity-villas/plans/type-b-3br-two-story-upper-floor.webp"
