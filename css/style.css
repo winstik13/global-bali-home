@@ -881,6 +881,10 @@ td .price-idr {
   border-radius: 2px;
   overflow: hidden;
   transition: border-color 0.3s ease;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .fp-floor__img:hover {
@@ -889,7 +893,7 @@ td .price-idr {
 
 .fp-floor__img img {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   padding: 12px;
   object-fit: contain;
