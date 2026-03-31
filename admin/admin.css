@@ -2019,7 +2019,7 @@ input[type="number"] {
 .faq-editor-lang textarea {
   resize: vertical;
   min-height: 60px;
-  background: rgba(225, 217, 201, 0.05);
+  background: rgba(0, 0, 0, 0.2);
   border-radius: var(--radius-sm);
   padding: var(--sp-sm) var(--sp-md);
   color: var(--color-text-muted);
