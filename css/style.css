@@ -931,6 +931,7 @@ td .price-idr {
   display: flex;
   flex-direction: column;
   gap: 0;
+  justify-content: center;
 }
 
 .fp-specs__item {
