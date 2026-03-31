@@ -2017,7 +2017,12 @@ input[type="number"] {
 }
 
 .faq-editor-lang {
-  margin-bottom: 12px;
+  margin-bottom: var(--sp-md);
+  padding: var(--sp-md);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .faq-editor-lang__label {
