@@ -1772,8 +1772,13 @@
         if (!newName || !newName.trim() || newName.trim() === oldName) return;
         const trimmed = newName.trim();
         if (p.floorPlans[trimmed] !== undefined) { alert('This type already exists'); return; }
-        p.floorPlans[trimmed] = p.floorPlans[oldName];
-        delete p.floorPlans[oldName];
+        // Rebuild object preserving key order
+        const reordered = {};
+        Object.keys(p.floorPlans).forEach(k => {
+          if (k === oldName) reordered[trimmed] = p.floorPlans[oldName];
+          else reordered[k] = p.floorPlans[k];
+        });
+        p.floorPlans = reordered;
         markChanged();
         renderProjectEditor();
       });
