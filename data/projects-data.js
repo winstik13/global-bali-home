@@ -343,34 +343,6 @@ const PROJECTS_DATA = {
           }
         ]
       },
-      "Type C — 2BR Two Story": {
-        "floors": {
-          "Ground Floor": "",
-          "Upper Floor": ""
-        },
-        "specs": [
-          {
-            "icon": "bedrooms",
-            "text": "2 Bedrooms"
-          },
-          {
-            "icon": "bathrooms",
-            "text": "2 Bathrooms"
-          },
-          {
-            "icon": "building",
-            "text": "Building size 168 sq m"
-          },
-          {
-            "icon": "plot",
-            "text": "Plot area 230 sq m"
-          },
-          {
-            "icon": "pool",
-            "text": "Swimming pool 18 sq m"
-          }
-        ]
-      },
       "Type A (A1, A2, A3, A4)": {
         "floors": {
           "Ground Floor": "images/serenity-villas/plans/type-a-—-2br-single-story.webp"
@@ -399,6 +371,34 @@ const PROJECTS_DATA = {
           {
             "icon": "terrace",
             "text": "Terrace 66 sq m"
+          }
+        ]
+      },
+      "Type C (C1, C2, C3, C4)": {
+        "floors": {
+          "Ground Floor": "",
+          "Upper Floor": ""
+        },
+        "specs": [
+          {
+            "icon": "bedrooms",
+            "text": "2 Bedrooms"
+          },
+          {
+            "icon": "bathrooms",
+            "text": "2 Bathrooms"
+          },
+          {
+            "icon": "building",
+            "text": "Building size 168 sq m"
+          },
+          {
+            "icon": "plot",
+            "text": "Plot area 230 sq m"
+          },
+          {
+            "icon": "pool",
+            "text": "Swimming pool 18 sq m"
           }
         ]
       }
