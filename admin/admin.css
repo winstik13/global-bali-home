@@ -1158,7 +1158,6 @@ input[type="number"] {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  position: relative;
 }
 
 .fp-floor__label {
@@ -1207,26 +1206,30 @@ input[type="number"] {
   color: #fff !important;
 }
 
-.fp-delete-floor-btn {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 22px;
-  height: 22px;
+.fp-floor__label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fp-floor__delete {
+  width: 18px;
+  height: 18px;
   border: none;
   border-radius: 50%;
-  background: var(--color-bg);
+  background: transparent;
   color: var(--color-text-dim);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-  opacity: 0.5;
+  opacity: 0.4;
+  padding: 0;
 }
 
-.fp-delete-floor-btn:hover {
+.fp-floor__delete:hover {
   background: var(--color-danger);
   color: #fff;
   opacity: 1;
