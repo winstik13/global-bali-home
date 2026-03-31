@@ -1435,9 +1435,9 @@
             <div class="fp-floor__preview">${path ? `<img src="../${path}" alt="${type} — ${floor}">` : `<span class="fp-floor__empty">No image</span>`}</div>
             <div class="fp-floor__actions">
               <label class="btn btn--outline btn--sm">Upload<input type="file" accept="image/*" class="fp-upload" data-type="${type}" data-floor="${floor}" hidden></label>
-              ${path ? `<button class="btn--icon btn--danger fp-delete-img" data-type="${type}" data-floor="${floor}" title="Remove image">&times;</button>` : ''}
-              <button class="btn--icon btn--danger fp-delete-floor" data-type="${type}" data-floor="${floor}" title="Delete floor">✕</button>
+              ${path ? `<button class="btn btn--outline btn--sm btn--danger-text fp-delete-img" data-type="${type}" data-floor="${floor}">Remove</button>` : ''}
             </div>
+            <button class="fp-delete-floor-btn fp-delete-floor" data-type="${type}" data-floor="${floor}" title="Delete floor">&times;</button>
           </div>`;
       });
       html += `</div></div>`;

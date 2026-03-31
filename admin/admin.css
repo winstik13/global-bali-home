@@ -1158,6 +1158,7 @@ input[type="number"] {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  position: relative;
 }
 
 .fp-floor__label {
@@ -1191,9 +1192,44 @@ input[type="number"] {
 
 .fp-floor__actions {
   display: flex;
-  gap: 4px;
+  gap: 6px;
   align-items: center;
   flex-wrap: wrap;
+}
+
+.btn--danger-text {
+  color: var(--color-danger) !important;
+  border-color: var(--color-danger) !important;
+}
+
+.btn--danger-text:hover {
+  background: var(--color-danger) !important;
+  color: #fff !important;
+}
+
+.fp-delete-floor-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-bg);
+  color: var(--color-text-dim);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  opacity: 0.5;
+}
+
+.fp-delete-floor-btn:hover {
+  background: var(--color-danger);
+  color: #fff;
+  opacity: 1;
 }
 
 .floor-plan-card__actions {
@@ -1322,6 +1358,17 @@ input[type="number"] {
   margin-top: var(--sp-md);
   padding-top: 0;
   border-top: none;
+}
+
+.editor-actions--sticky {
+  position: sticky;
+  bottom: 0;
+  background: var(--color-bg);
+  z-index: 10;
+  padding: var(--sp-md) 0;
+  margin-top: var(--sp-lg);
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* Paired inputs (e.g. min/max, yield/growth) */
