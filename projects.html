@@ -23,7 +23,8 @@
   <meta name="twitter:image" content="https://winstik13.github.io/global-bali-home/images/serenity-villas/aerial-view.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@400;500;600&display=swap">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@400;500;600&display=swap" onload="this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@400;500;600&display=swap"></noscript>
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -164,8 +165,8 @@
 
   <!-- Wanayu -->
   <section class="wanayu-section">
-    <video class="wanayu-section__video" autoplay muted loop playsinline preload="metadata" poster="images/home/hero-bg.jpg">
-      <source src="images/home/wanayu-drone.mp4" type="video/mp4">
+    <video class="wanayu-section__video" data-autoplay data-lazy-src="images/home/wanayu-drone.mp4" muted loop playsinline preload="metadata" poster="images/home/hero-bg.jpg">
+      <source src="" type="video/mp4">
     </video>
     <div class="wanayu-section__overlay"></div>
     <div class="wanayu-section__content reveal">

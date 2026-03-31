@@ -23,7 +23,8 @@
   <meta name="twitter:image" content="https://winstik13.github.io/global-bali-home/images/home/hero-bg.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@400;500;600&display=swap">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@400;500;600&display=swap" onload="this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@400;500;600&display=swap"></noscript>
   <link rel="preload" as="image" href="../images/home/hero-bg.jpg">
   <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="../css/style.css">
@@ -50,7 +51,7 @@
 
   <!-- Hero -->
   <section class="hero">
-    <video class="hero__video" autoplay muted loop playsinline preload="metadata" poster="../images/home/hero-bg.jpg">
+    <video class="hero__video" data-autoplay muted loop playsinline preload="metadata" poster="../images/home/hero-bg.jpg">
       <source src="../images/home/hero-video.mp4" type="video/mp4">
     </video>
     <div class="hero__overlay"></div>
@@ -115,8 +116,8 @@
 
   <!-- Why Bali -->
   <section class="why-bali">
-    <video class="why-bali__video" autoplay muted loop playsinline preload="metadata" poster="../images/common/rice-terraces.jpg">
-      <source src="../images/home/wanayu-drone.mp4" type="video/mp4">
+    <video class="why-bali__video" data-autoplay data-lazy-src="../images/home/wanayu-drone.mp4" muted loop playsinline preload="metadata" poster="../images/common/rice-terraces.jpg">
+      <source src="" type="video/mp4">
     </video>
     <div class="why-bali__overlay"></div>
     <div class="container why-bali__content reveal">
