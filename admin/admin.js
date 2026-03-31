@@ -1404,9 +1404,12 @@
       const floors = data.floors || {};
       const specs = data.specs || [];
       const floorKeys = Object.keys(floors);
-      html += `<div class="fp-type" data-plan-type="${type}" draggable="true">
+      html += `<div class="fp-type" data-plan-type="${type}">
         <div class="fp-type__header">
-          <span class="fp-type__drag" title="Drag to reorder">⠿</span>
+          <div class="fp-type__order">
+            <button class="btn--icon fp-move-up" data-type="${type}" title="Move up"${planTypes.indexOf(type) === 0 ? ' disabled' : ''}>&#9650;</button>
+            <button class="btn--icon fp-move-down" data-type="${type}" title="Move down"${planTypes.indexOf(type) === planTypes.length - 1 ? ' disabled' : ''}>&#9660;</button>
+          </div>
           <span class="fp-type__name" data-rename="${type}" title="Click to rename">${type} <span class="fp-type__rename-icon">✎</span></span>
           <div class="fp-type__actions">
             <button class="btn btn--outline btn--sm fp-add-floor" data-type="${type}">+ Floor</button>
@@ -1788,38 +1791,16 @@
       });
     }
 
-    // Drag & drop reorder plan types
-    let dragType = null;
-    editor.querySelectorAll('.fp-type[draggable]').forEach(card => {
-      card.addEventListener('dragstart', e => {
-        dragType = card.dataset.planType;
-        card.classList.add('fp-type--dragging');
-        e.dataTransfer.effectAllowed = 'move';
-      });
-      card.addEventListener('dragend', () => {
-        card.classList.remove('fp-type--dragging');
-        dragType = null;
-        editor.querySelectorAll('.fp-type--over').forEach(c => c.classList.remove('fp-type--over'));
-      });
-      card.addEventListener('dragover', e => {
-        e.preventDefault();
-        e.dataTransfer.dropEffect = 'move';
-        if (card.dataset.planType !== dragType) card.classList.add('fp-type--over');
-      });
-      card.addEventListener('dragleave', () => {
-        card.classList.remove('fp-type--over');
-      });
-      card.addEventListener('drop', e => {
-        e.preventDefault();
-        card.classList.remove('fp-type--over');
-        const targetType = card.dataset.planType;
-        if (!dragType || dragType === targetType) return;
-        // Reorder: rebuild floorPlans with new key order
+    // Arrow buttons to reorder plan types
+    editor.querySelectorAll('.fp-move-up, .fp-move-down').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const type = btn.dataset.type;
         const keys = Object.keys(p.floorPlans);
-        const fromIdx = keys.indexOf(dragType);
-        const toIdx = keys.indexOf(targetType);
-        keys.splice(fromIdx, 1);
-        keys.splice(toIdx, 0, dragType);
+        const idx = keys.indexOf(type);
+        const isUp = btn.classList.contains('fp-move-up');
+        const swapIdx = isUp ? idx - 1 : idx + 1;
+        if (swapIdx < 0 || swapIdx >= keys.length) return;
+        [keys[idx], keys[swapIdx]] = [keys[swapIdx], keys[idx]];
         const reordered = {};
         keys.forEach(k => { reordered[k] = p.floorPlans[k]; });
         p.floorPlans = reordered;

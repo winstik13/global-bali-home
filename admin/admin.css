@@ -1065,15 +1065,6 @@ input[type="number"] {
   transition: opacity 0.2s, border-color 0.2s;
 }
 
-.fp-type--dragging {
-  opacity: 0.4;
-}
-
-.fp-type--over {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 1px var(--color-accent);
-}
-
 .fp-type__header {
   display: flex;
   align-items: center;
@@ -1083,18 +1074,18 @@ input[type="number"] {
   gap: 8px;
 }
 
-.fp-type__drag {
-  cursor: grab;
-  color: var(--color-text-dim);
-  font-size: 1.1rem;
-  user-select: none;
-  opacity: 0.5;
-  transition: opacity 0.2s;
-  line-height: 1;
+.fp-type__order {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
-.fp-type__drag:hover {
-  opacity: 1;
+.fp-type__order .btn--icon {
+  min-width: 24px;
+  height: 18px;
+  font-size: 0.6rem;
+  padding: 0;
+  line-height: 1;
 }
 
 .fp-type__name {
