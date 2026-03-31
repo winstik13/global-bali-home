@@ -1270,8 +1270,8 @@ input[type="number"] {
 
 /* Delete button in table rows */
 .btn--icon {
-  width: 36px;
-  height: 36px;
+  min-width: 52px;
+  height: 32px;
   padding: 0;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
