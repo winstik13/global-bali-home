@@ -1436,7 +1436,7 @@
         const path = floors[floor] || '';
         html += `<div class="fp-floor" data-type="${type}" data-floor="${floor}">
             <div class="fp-floor__label">${floor} <button class="fp-floor__delete fp-delete-floor" data-type="${type}" data-floor="${floor}" title="Delete floor">&times;</button></div>
-            <div class="fp-floor__preview">${path ? `<img src="../${path}" alt="${type} — ${floor}">` : `<span class="fp-floor__empty">No image</span>`}</div>
+            <div class="fp-floor__preview">${path ? `<img src="https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/master/${path}" alt="${type} — ${floor}">` : `<span class="fp-floor__empty">No image</span>`}</div>
             <div class="fp-floor__actions">
               <label class="btn btn--outline btn--sm">Upload<input type="file" accept="image/*" class="fp-upload" data-type="${type}" data-floor="${floor}" hidden></label>
             </div>
@@ -1665,8 +1665,10 @@
             });
             if (res.ok) {
               p.floorPlans[type].floors[floor] = path;
+              // Show preview immediately from base64
+              inp.closest('.fp-floor').querySelector('.fp-floor__preview').innerHTML =
+                `<img src="${reader.result}" alt="${type} — ${floor}">`;
               markChanged();
-              renderProjectEditor();
             }
           } catch (err) {
             console.error('Floor plan upload error:', err);
