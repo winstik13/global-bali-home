@@ -287,37 +287,6 @@ const PROJECTS_DATA = {
       }
     ],
     "floorPlans": {
-      "Type A — 2BR Single Story": {
-        "floors": {
-          "Ground Floor": "images/serenity-villas/plans/type-a-—-2br-single-story.webp"
-        },
-        "specs": [
-          {
-            "icon": "bedrooms",
-            "text": "2 Bedrooms"
-          },
-          {
-            "icon": "bathrooms",
-            "text": "3 Bathrooms"
-          },
-          {
-            "icon": "building",
-            "text": "Building size 122 sq m"
-          },
-          {
-            "icon": "plot",
-            "text": "Plot area 280 sq m"
-          },
-          {
-            "icon": "pool",
-            "text": "Swimming pool 23 sq m"
-          },
-          {
-            "icon": "terrace",
-            "text": "Terrace 66 sq m"
-          }
-        ]
-      },
       "Type B — 2BR Two Story": {
         "floors": {
           "Ground Floor": "images/serenity-villas/plans/2-bedroom.webp",
@@ -399,6 +368,37 @@ const PROJECTS_DATA = {
           {
             "icon": "pool",
             "text": "Swimming pool 18 sq m"
+          }
+        ]
+      },
+      "Type A (A1, A2, A3, A4)": {
+        "floors": {
+          "Ground Floor": "images/serenity-villas/plans/type-a-—-2br-single-story.webp"
+        },
+        "specs": [
+          {
+            "icon": "bedrooms",
+            "text": "2 Bedrooms"
+          },
+          {
+            "icon": "bathrooms",
+            "text": "3 Bathrooms"
+          },
+          {
+            "icon": "building",
+            "text": "Building size 122 sq m"
+          },
+          {
+            "icon": "plot",
+            "text": "Plot area 280 sq m"
+          },
+          {
+            "icon": "pool",
+            "text": "Swimming pool 23 sq m"
+          },
+          {
+            "icon": "terrace",
+            "text": "Terrace 66 sq m"
           }
         ]
       }
