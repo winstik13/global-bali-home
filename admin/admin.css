@@ -1934,11 +1934,11 @@ input[type="number"] {
 
 /* ─── FAQ Editor ─── */
 .faq-editor-item {
-  background: var(--color-card);
+  background: var(--color-bg-card);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 16px;
+  border-radius: var(--radius-md);
+  padding: var(--sp-lg);
+  margin-bottom: var(--sp-lg);
 }
 
 .faq-editor-item__header {
