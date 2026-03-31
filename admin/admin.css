@@ -1045,6 +1045,7 @@ input[type="number"] {
   border-radius: var(--radius-md);
   padding: var(--sp-lg);
   margin-bottom: var(--sp-lg);
+  position: relative;
 }
 
 /* Safety net: auto vertical rhythm for any direct children without own margin */
