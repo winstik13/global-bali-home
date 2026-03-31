@@ -287,10 +287,69 @@ const PROJECTS_DATA = {
       }
     ],
     "floorPlans": {
+      "Type A — 2BR Single Story": {
+        "floors": {
+          "Ground Floor": "images/serenity-villas/plans/type-a-—-2br-single-story.webp"
+        },
+        "specs": [
+          {
+            "icon": "bedrooms",
+            "text": "2 Bedrooms"
+          },
+          {
+            "icon": "bathrooms",
+            "text": "3 Bathrooms"
+          },
+          {
+            "icon": "building",
+            "text": "Building size 122 sq m"
+          },
+          {
+            "icon": "plot",
+            "text": "Plot area 280 sq m"
+          },
+          {
+            "icon": "pool",
+            "text": "Swimming pool 23 sq m"
+          },
+          {
+            "icon": "terrace",
+            "text": "Terrace 66 sq m"
+          }
+        ]
+      },
+      "Type B — 2BR Two Story": {
+        "floors": {
+          "Ground Floor": "images/serenity-villas/plans/2-bedroom.webp",
+          "Upper Floor": ""
+        },
+        "specs": [
+          {
+            "icon": "bedrooms",
+            "text": "2 Bedrooms"
+          },
+          {
+            "icon": "bathrooms",
+            "text": "3 Bathrooms"
+          },
+          {
+            "icon": "building",
+            "text": "Building size 184 sq m"
+          },
+          {
+            "icon": "plot",
+            "text": "Plot area 240 sq m"
+          },
+          {
+            "icon": "pool",
+            "text": "Swimming pool 20 sq m"
+          }
+        ]
+      },
       "Type B — 3BR Two Story": {
         "floors": {
-          "Ground Floor": "",
-          "Upper Floor": ""
+          "Ground Floor": "images/serenity-villas/plans/type-b-3br-two-story-ground-floor.webp",
+          "Upper Floor": "images/serenity-villas/plans/type-b-3br-two-story-upper-floor.webp"
         },
         "specs": [
           {
@@ -340,65 +399,6 @@ const PROJECTS_DATA = {
           {
             "icon": "pool",
             "text": "Swimming pool 18 sq m"
-          }
-        ]
-      },
-      "Villa - Type A": {
-        "floors": {
-          "Ground Floor": "images/serenity-villas/plans/type-a-—-2br-single-story.webp"
-        },
-        "specs": [
-          {
-            "icon": "bedrooms",
-            "text": "2 Bedrooms"
-          },
-          {
-            "icon": "bathrooms",
-            "text": "3 Bathrooms"
-          },
-          {
-            "icon": "building",
-            "text": "Building size 122 sq m"
-          },
-          {
-            "icon": "plot",
-            "text": "Plot area 280 sq m"
-          },
-          {
-            "icon": "pool",
-            "text": "Swimming pool 23 sq m"
-          },
-          {
-            "icon": "terrace",
-            "text": "Terrace 66 sq m"
-          }
-        ]
-      },
-      "Villa - Type B [3BR]": {
-        "floors": {
-          "Ground Floor": "images/serenity-villas/plans/villa-type-b-3br-ground-floor.webp",
-          "Upper Floor": "images/serenity-villas/plans/villa-type-b-3br-upper-floor.webp"
-        },
-        "specs": [
-          {
-            "icon": "bedrooms",
-            "text": "2 Bedrooms"
-          },
-          {
-            "icon": "bathrooms",
-            "text": "3 Bathrooms"
-          },
-          {
-            "icon": "building",
-            "text": "Building size 184 sq m"
-          },
-          {
-            "icon": "plot",
-            "text": "Plot area 240 sq m"
-          },
-          {
-            "icon": "pool",
-            "text": "Swimming pool 20 sq m"
           }
         ]
       }
