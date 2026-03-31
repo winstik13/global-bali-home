@@ -1895,15 +1895,24 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     document.body.appendChild(stickyCTA);
 
     if (hero) {
+      let lastScrollY = window.scrollY;
+      let scrollDir = 'up';
       const showSticky = () => {
+        const currentY = window.scrollY;
+        scrollDir = currentY > lastScrollY ? 'down' : 'up';
+        lastScrollY = currentY;
+
         const heroBottom = hero.getBoundingClientRect().bottom;
         const isOverlayOpen = quizOverlay.classList.contains('active') || tourOverlay.classList.contains('active');
-        if (heroBottom < 0 && !isOverlayOpen) {
+        const pastHero = heroBottom < 0;
+
+        if (pastHero && !isOverlayOpen && scrollDir === 'up') {
           stickyCTA.classList.add('visible');
           if (waBtn) { waBtn.classList.add('visible'); waBtn.classList.add('lifted'); }
         } else {
           stickyCTA.classList.remove('visible');
-          if (waBtn) { waBtn.classList.remove('visible'); waBtn.classList.remove('lifted'); }
+          if (waBtn && !pastHero) { waBtn.classList.remove('visible'); }
+          if (waBtn) { waBtn.classList.remove('lifted'); }
         }
       };
       let stickyTicking = false;
