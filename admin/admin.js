@@ -928,6 +928,8 @@
 
   // ─── Auth State ───
   auth.onAuthStateChanged(user => {
+    const authLoading = $('#auth-loading');
+    if (authLoading) authLoading.hidden = true;
     if (user) {
       loginScreen.hidden = true;
       $('#admin-user').textContent = user.email;
