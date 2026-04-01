@@ -2910,9 +2910,9 @@ input[type="number"] {
   position: relative;
   width: 100%;
   max-width: 360px;
-  background: var(--color-bg-card, #2a2a20);
-  border: 1px solid var(--color-border, rgba(225, 217, 201, 0.1));
-  padding: 32px 24px;
+  background: transparent;
+  border: none;
+  padding: 0;
   margin: 0 auto;
 }
 
