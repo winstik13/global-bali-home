@@ -2754,23 +2754,44 @@ input[type="number"] {
   color: var(--color-text-muted);
 }
 
-.ep-preview__text--center {
+/* After-submit preview */
+.ep-preview--after {
   text-align: center;
-  font-weight: 600;
+  padding: 32px 28px;
 }
 
-.ep-preview__countdown {
-  display: inline-block;
+.ep-after__icon {
+  margin-bottom: 16px;
+}
+
+.ep-after__message {
+  font-size: 0.85rem;
+  color: var(--color-text-muted, #999);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.ep-after__countdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 6px;
+  border-radius: 50%;
   background: rgba(107, 143, 78, 0.15);
   color: var(--color-accent, #6B8F4E);
-  font-size: 1.1rem;
+  font-size: 1.6rem;
   font-weight: 700;
-  width: 28px;
-  height: 28px;
-  line-height: 28px;
-  text-align: center;
-  border-radius: 50%;
-  margin-left: 4px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.ep-after__seconds {
+  font-size: 0.65rem;
+  color: var(--color-text-muted, #999);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 20px;
 }
 
 /* Tour preview nav */

@@ -4202,13 +4202,11 @@
     if (placeholderEl) placeholderEl.placeholder = placeholderVal;
     if (submitEl) submitEl.textContent = submitVal;
     // After-submit preview
-    const tag2 = $('#ep-preview-tag2');
-    const title2 = $('#ep-preview-title2');
     const successEl = $('#ep-preview-success');
+    const countdownCircle = $('#ep-preview-countdown-circle');
     const openBtnEl = $('#ep-preview-openBtn');
-    if (tag2) tag2.textContent = tagVal;
-    if (title2) title2.textContent = titleVal;
-    if (successEl) successEl.innerHTML = successVal + ' <span class="ep-preview__countdown">' + countdown + '</span>';
+    if (successEl) successEl.textContent = successVal;
+    if (countdownCircle) countdownCircle.textContent = countdown;
     if (openBtnEl) openBtnEl.textContent = openBtnVal;
   }
 

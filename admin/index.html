@@ -711,11 +711,14 @@
             </div>
             <h3 class="ep-preview-wrap__label" data-i18n="exitpopup.afterSubmit">After Submit</h3>
             <div class="ep-preview-container">
-              <div class="ep-preview">
+              <div class="ep-preview ep-preview--after">
                 <button class="ep-preview__close" disabled>&times;</button>
-                <span class="ep-preview__tag" id="ep-preview-tag2">Exclusive Guide</span>
-                <h3 class="ep-preview__title" id="ep-preview-title2">Before You Go</h3>
-                <p class="ep-preview__text ep-preview__text--center" id="ep-preview-success">Your guide will be ready in <span class="ep-preview__countdown">7</span></p>
+                <div class="ep-after__icon">
+                  <svg viewBox="0 0 24 24" width="40" height="40"><circle cx="12" cy="12" r="10" stroke="var(--color-accent)" stroke-width="1.5" fill="none"/><path d="M8 12l3 3 5-5" stroke="var(--color-accent)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <p class="ep-after__message" id="ep-preview-success">Your guide will be ready in</p>
+                <div class="ep-after__countdown" id="ep-preview-countdown-circle">7</div>
+                <p class="ep-after__seconds" id="ep-preview-seconds">sec</p>
                 <div class="ep-preview__form">
                   <button class="ep-preview__btn" id="ep-preview-openBtn" disabled>Open the Guide</button>
                 </div>
