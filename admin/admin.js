@@ -929,7 +929,7 @@
   // ─── Auth State ───
   auth.onAuthStateChanged(user => {
     const authLoading = $('#auth-loading');
-    if (authLoading) authLoading.hidden = true;
+    if (authLoading) authLoading.remove();
     if (user) {
       loginScreen.hidden = true;
       $('#admin-user').textContent = user.email;
@@ -2655,14 +2655,12 @@
     btn.id = 'btn-generate-pages';
     btn.className = 'btn btn--outline';
     btn.textContent = t('projects.generatePages');
-    btn.style.marginLeft = '12px';
     actions.appendChild(btn);
 
     const btnSeo = document.createElement('button');
     btnSeo.id = 'btn-update-seo-only';
     btnSeo.className = 'btn btn--outline';
     btnSeo.textContent = t('projects.updateSeoOnly');
-    btnSeo.style.marginLeft = '8px';
     actions.appendChild(btnSeo);
 
     // Generate full pages

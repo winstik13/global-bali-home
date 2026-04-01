@@ -2328,6 +2328,25 @@ input[type="number"] {
   .color-picker-row > label { min-width: 120px; }
   .editor-help-popup { width: 260px; right: 8px; }
 
+  /* Sticky project actions: Publish full-width, secondary below */
+  .editor-actions--sticky {
+    flex-wrap: wrap;
+    padding: var(--sp-sm) 12px;
+  }
+  .editor-actions--sticky .btn--primary {
+    flex: 1 1 100%;
+    order: -1;
+  }
+  .editor-actions--sticky .btn--outline {
+    flex: 1 1 auto;
+    font-size: 0.75rem;
+    padding: 8px 12px;
+  }
+  .editor-actions--sticky .publish-status {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
   /* Touch-friendly floor plan controls */
   .fp-type__order .btn--icon { min-width: 36px; height: 28px; font-size: 0.75rem; }
   .fp-floor__delete { width: 28px; height: 28px; font-size: 1rem; }
