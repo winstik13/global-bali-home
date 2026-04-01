@@ -2393,7 +2393,8 @@ td .price-idr {
 }
 
 .tour__result-icon {
-  margin-bottom: 20px;
+  display: block;
+  margin: 0 auto 20px;
 }
 
 .tour__result-desc {

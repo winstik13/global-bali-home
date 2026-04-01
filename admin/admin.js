@@ -4198,20 +4198,66 @@
     const placeholderVal = ($(`#exitpopup-${lang}-placeholder`) || {}).value || '';
     const submitVal = ($(`#exitpopup-${lang}-submit`) || {}).value || '';
     const successVal = ($(`#exitpopup-${lang}-success`) || {}).value || '';
+
+    var cssHead = '<link rel="preconnect" href="https://fonts.googleapis.com">'
+      + '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
+      + '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@400;500;600&display=swap">'
+      + '<link rel="stylesheet" href="../css/reset.css">'
+      + '<link rel="stylesheet" href="../css/style.css">'
+      + '<style>body{margin:0;background:var(--color-bg-card);overflow:hidden;font-family:var(--font-body)}'
+      + '.exit-popup{border:none;padding:32px 28px;max-width:100%;box-sizing:border-box;position:relative;background:var(--color-bg-card)}'
+      + '.exit-popup__close{position:absolute;top:12px;right:16px}'
+      + '</style>';
+
     // Main preview
-    const tagEl = $('#ep-preview-tag');
-    const titleEl = $('#ep-preview-title');
-    const textEl = $('#ep-preview-text');
-    const placeholderEl = $('#ep-preview-placeholder');
-    const submitEl = $('#ep-preview-submit');
-    if (tagEl) tagEl.textContent = tagVal;
-    if (titleEl) titleEl.textContent = titleVal;
-    if (textEl) textEl.textContent = textVal;
-    if (placeholderEl) placeholderEl.placeholder = placeholderVal;
-    if (submitEl) submitEl.textContent = submitVal;
+    var mainHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8">' + cssHead + '</head><body>'
+      + '<div class="exit-popup">'
+      + '<button class="exit-popup__close" disabled>&times;</button>'
+      + '<span class="section-header__tag">' + escAttr(tagVal) + '</span>'
+      + '<h3 class="exit-popup__title">' + escAttr(titleVal) + '</h3>'
+      + '<p class="exit-popup__text">' + escAttr(textVal) + '</p>'
+      + '<div class="exit-popup__form">'
+      + '<input type="email" class="exit-popup__input" placeholder="' + escAttr(placeholderVal) + '" disabled>'
+      + '<div class="form-consent"><input type="checkbox" class="form-consent__checkbox" disabled checked><label class="form-consent__text">I agree to the Privacy Policy</label></div>'
+      + '<button class="btn btn--primary" style="width:100%" disabled>' + escAttr(submitVal) + '</button>'
+      + '</div></div></body></html>';
+
+    var mainContainer = document.getElementById('ep-preview-main');
+    if (mainContainer) {
+      var mainIframe = mainContainer.querySelector('iframe');
+      if (!mainIframe) {
+        mainContainer.innerHTML = '';
+        mainIframe = document.createElement('iframe');
+        mainIframe.style.cssText = 'width:100%;border:none;display:block;border-radius:8px;';
+        mainContainer.appendChild(mainIframe);
+      }
+      mainIframe.srcdoc = mainHtml;
+      mainIframe.onload = function() { try { mainIframe.style.height = (mainIframe.contentDocument.body.scrollHeight + 8) + 'px'; } catch(e) {} };
+    }
+
     // After-submit preview
-    const successEl = $('#ep-preview-success');
-    if (successEl) successEl.textContent = successVal;
+    var afterHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8">' + cssHead + '</head><body>'
+      + '<div class="exit-popup" style="text-align:center">'
+      + '<button class="exit-popup__close" disabled>&times;</button>'
+      + '<svg viewBox="0 0 48 48" width="56" height="56" style="display:block;margin:0 auto 16px"><circle cx="24" cy="24" r="22" stroke="var(--color-accent)" stroke-width="1.5" fill="none"/><path d="M15 24l7 7 11-11" stroke="var(--color-accent)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+      + '<p style="font-weight:600;margin-bottom:16px;color:var(--color-text)">' + escAttr(successVal) + '</p>'
+      + '<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">'
+      + '<span class="btn btn--primary" style="pointer-events:none">Read Online</span>'
+      + '<span class="btn btn--outline" style="pointer-events:none">Download PDF</span>'
+      + '</div></div></body></html>';
+
+    var afterContainer = document.getElementById('ep-preview-after');
+    if (afterContainer) {
+      var afterIframe = afterContainer.querySelector('iframe');
+      if (!afterIframe) {
+        afterContainer.innerHTML = '';
+        afterIframe = document.createElement('iframe');
+        afterIframe.style.cssText = 'width:100%;border:none;display:block;border-radius:8px;';
+        afterContainer.appendChild(afterIframe);
+      }
+      afterIframe.srcdoc = afterHtml;
+      afterIframe.onload = function() { try { afterIframe.style.height = (afterIframe.contentDocument.body.scrollHeight + 8) + 'px'; } catch(e) {} };
+    }
   }
 
   function populateExitPopup() {
@@ -4445,58 +4491,90 @@
       btn.classList.toggle('tp-preview-nav__btn--active', +btn.dataset.tpStep === tourPreviewStep);
     });
 
-    let html = '';
+    // Build body HTML using the same classes as the real popup (main.js)
+    let body = '';
+    const pctStep = ((Math.min(tourPreviewStep, totalSteps) + 1) / (totalSteps + 2)) * 100;
+    const pct = tourPreviewStep > totalSteps ? 100 : pctStep;
 
     if (tourPreviewStep < totalSteps) {
-      // Step preview (0, 1, 2)
       const s = steps[tourPreviewStep] || { question: '', options: [] };
-      const pct = ((tourPreviewStep + 1) / (totalSteps + 2)) * 100;
-      html += '<div class="tp-preview__progress"><div class="tp-preview__progress-bar" style="width:' + pct + '%"></div></div>';
-      html += '<p class="tp-preview__step-label">Step ' + (tourPreviewStep + 1) + ' of ' + totalSteps + '</p>';
-      html += '<h3 class="tp-preview__question">' + (s.question || '—') + '</h3>';
-      html += '<div class="tp-preview__options">';
-      (s.options || []).forEach(opt => {
+      body += '<p class="tour__step-label">Step ' + (tourPreviewStep + 1) + ' of ' + totalSteps + '</p>';
+      body += '<h3 class="tour__question">' + escAttr(s.question || '—') + '</h3>';
+      body += '<div class="tour__options">';
+      (s.options || []).forEach(function(opt) {
         if (s.multi) {
-          html += '<div class="tp-preview__option tp-preview__option--multi"><input type="checkbox" disabled><span>' + opt + '</span></div>';
+          body += '<label class="tour__checkbox"><input type="checkbox" disabled><span class="tour__checkbox-icon"><svg viewBox="0 0 24 24" width="24" height="24"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></span><span>' + escAttr(opt) + '</span></label>';
         } else {
-          html += '<div class="tp-preview__option">' + opt + '</div>';
+          body += '<button class="tour__option" disabled><span>' + escAttr(opt) + '</span></button>';
         }
       });
-      html += '</div>';
+      body += '</div>';
     } else if (tourPreviewStep === totalSteps) {
-      // Form preview
-      const pct = ((totalSteps + 1) / (totalSteps + 2)) * 100;
-      html += '<div class="tp-preview__progress"><div class="tp-preview__progress-bar" style="width:' + pct + '%"></div></div>';
-      html += '<p class="tp-preview__step-label">' + (form.title || 'How can we reach you?') + '</p>';
-      html += '<h3 class="tp-preview__question">' + (title || 'Schedule a Private Tour') + '</h3>';
-      html += '<p class="tp-preview__form-sub">' + (form.subtitle || '') + '</p>';
-      html += '<div class="tp-preview__input">' + (form.name || 'Your name') + '</div>';
-      html += '<div class="tp-preview__input">' + (form.whatsapp || 'WhatsApp') + '</div>';
-      html += '<div class="tp-preview__input">' + (form.email || 'Email') + '</div>';
+      body += '<p class="tour__step-label">' + escAttr(form.title || 'How can we reach you?') + '</p>';
+      body += '<h3 class="tour__question" style="font-size:1.2rem;margin-bottom:8px;">' + escAttr(title || 'Schedule a Private Tour') + '</h3>';
+      body += '<p class="tour__form-sub">' + escAttr(form.subtitle || '') + '</p>';
+      body += '<div class="tour__form">';
+      body += '<input type="text" class="tour__input" placeholder="' + escAttr(form.name || 'Your name') + '" disabled>';
+      body += '<input type="text" class="tour__input" placeholder="' + escAttr(form.whatsapp || 'WhatsApp') + '" disabled>';
+      body += '<input type="text" class="tour__input" placeholder="' + escAttr(form.email || 'Email') + '" disabled>';
       if (form.time) {
-        html += '<p class="tp-preview__time-label">' + form.time + '</p>';
-        html += '<div class="tp-preview__time-options">';
-        (form.timeOptions || []).forEach((opt, i) => {
-          html += '<div class="tp-preview__time-opt' + (i === 3 ? ' tp-preview__time-opt--active' : '') + '">' + opt + '</div>';
+        body += '<div class="tour__time-group"><label class="tour__time-label">' + escHtml(form.time) + '</label>';
+        body += '<div class="tour__time-options">';
+        (form.timeOptions || []).forEach(function(opt, i) {
+          body += '<label class="tour__time-option' + (i === 3 ? ' active' : '') + '"><input type="radio" disabled' + (i === 3 ? ' checked' : '') + '><span>' + escHtml(opt) + '</span></label>';
         });
-        html += '</div>';
+        body += '</div></div>';
       }
-      html += '<div class="tp-preview__input">' + (form.comment || 'Comments') + '</div>';
-      html += '<div class="ep-preview__consent"><input type="checkbox" disabled><span>' + (form.consent || '').substring(0, 80) + (form.consent && form.consent.length > 80 ? '…' : '') + '</span></div>';
-      html += '<div style="margin-top:10px"><div class="ep-preview__btn">' + (form.submit || 'Request a Tour') + '</div></div>';
+      body += '<textarea class="tour__input tour__textarea" placeholder="' + escAttr(form.comment || 'Comments') + '" rows="2" disabled></textarea>';
+      body += '<div class="form-consent"><input type="checkbox" class="form-consent__checkbox" disabled><label class="form-consent__text">' + escAttr((form.consent || '').substring(0, 120)) + (form.consent && form.consent.length > 120 ? '…' : '') + '</label></div>';
+      body += '<button class="btn btn--primary" style="width:100%;" disabled>' + escAttr(form.submit || 'Request a Tour') + '</button>';
+      body += '</div>';
     } else {
-      // Thank you preview
-      html += '<div class="tp-preview__progress"><div class="tp-preview__progress-bar" style="width:100%"></div></div>';
-      html += '<div class="tp-preview__result">';
-      html += '<div class="tp-preview__result-icon"><svg viewBox="0 0 24 24" width="40" height="40"><circle cx="12" cy="12" r="10" stroke="var(--color-accent)" stroke-width="1.5" fill="none"/><path d="M8 12l3 3 5-5" stroke="var(--color-accent)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
-      html += '<h3 class="tp-preview__question">' + (ty.title || 'Tour Request Sent!') + '</h3>';
-      html += '<p class="tp-preview__result-desc">' + (ty.text || '') + '</p>';
-      html += '<div class="tp-preview__wa-btn">💬 ' + (ty.whatsapp || 'Message us on WhatsApp') + '</div>';
-      if (ty.projectLink) html += '<span class="tp-preview__project-link">' + ty.projectLink + ' Serenity Villas →</span>';
-      html += '</div>';
+      body += '<div class="tour__result">';
+      body += '<svg class="tour__result-icon" viewBox="0 0 48 48" width="56" height="56"><circle cx="24" cy="24" r="22" stroke="var(--color-accent)" stroke-width="1.5" fill="none"/><path d="M15 24l7 7 11-11" stroke="var(--color-accent)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      body += '<h3 class="tour__question">' + escAttr(ty.title || 'Tour Request Sent!') + '</h3>';
+      body += '<p class="tour__result-desc">' + escAttr(ty.text || '') + '</p>';
+      body += '<span class="btn btn--primary" style="width:100%;display:inline-flex;align-items:center;justify-content:center;gap:8px;">';
+      body += '<svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>';
+      body += escAttr(ty.whatsapp || 'Message us on WhatsApp');
+      body += '</span>';
+      if (ty.projectLink) body += '<a class="tour__project-link">' + escAttr(ty.projectLink) + ' Serenity Villas &rarr;</a>';
+      body += '</div>';
     }
 
-    container.innerHTML = html;
+    // Build full HTML document for iframe with real site styles
+    var iframeHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8">'
+      + '<link rel="preconnect" href="https://fonts.googleapis.com">'
+      + '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
+      + '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@400;500;600&display=swap">'
+      + '<link rel="stylesheet" href="../css/reset.css">'
+      + '<link rel="stylesheet" href="../css/style.css">'
+      + '<style>body{margin:0;background:var(--color-bg);overflow-x:hidden;font-family:var(--font-body)}'
+      + '.tour{border:none;padding:32px 28px;max-width:100%;width:100%;box-sizing:border-box}'
+      + '.tour__result-icon{display:block;margin:0 auto 20px}'
+      + '</style></head><body>'
+      + '<div class="tour">'
+      + '<div class="tour__progress"><div class="tour__progress-bar" style="width:' + pct + '%"></div></div>'
+      + '<div class="tour__body">' + body + '</div>'
+      + '</div></body></html>';
+
+    // Render into iframe
+    var iframe = container.querySelector('iframe');
+    if (!iframe) {
+      container.innerHTML = '';
+      iframe = document.createElement('iframe');
+      iframe.style.cssText = 'width:100%;border:none;display:block;border-radius:8px;';
+      container.appendChild(iframe);
+    }
+    iframe.srcdoc = iframeHtml;
+
+    // Auto-resize iframe to content height
+    iframe.onload = function() {
+      try {
+        var h = iframe.contentDocument.body.scrollHeight;
+        iframe.style.height = (h + 8) + 'px';
+      } catch(e) {}
+    };
   }
 
   // Tour preview nav buttons

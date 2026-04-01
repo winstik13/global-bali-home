@@ -692,36 +692,9 @@
           <!-- Right: Live Preview -->
           <div class="ep-preview-wrap">
             <h3 data-i18n="exitpopup.preview">Preview</h3>
-            <div class="ep-preview-container">
-              <div class="ep-preview">
-                <button class="ep-preview__close" disabled>&times;</button>
-                <span class="ep-preview__tag" id="ep-preview-tag">Exclusive Guide</span>
-                <h3 class="ep-preview__title" id="ep-preview-title">Before You Go</h3>
-                <p class="ep-preview__text" id="ep-preview-text">Description text</p>
-                <div class="ep-preview__form">
-                  <input type="text" class="ep-preview__input" id="ep-preview-placeholder" disabled placeholder="Your email address">
-                  <div class="ep-preview__consent">
-                    <input type="checkbox" disabled checked>
-                    <span>I agree to the Privacy Policy</span>
-                  </div>
-                  <button class="ep-preview__btn" id="ep-preview-submit" disabled>Access the Guide</button>
-                </div>
-              </div>
-            </div>
+            <div class="ep-preview-container" id="ep-preview-main"></div>
             <h3 class="ep-preview-wrap__label" data-i18n="exitpopup.afterSubmit">After Submit</h3>
-            <div class="ep-preview-container">
-              <div class="ep-preview ep-preview--after">
-                <button class="ep-preview__close" disabled>&times;</button>
-                <div class="ep-after__icon">
-                  <svg viewBox="0 0 24 24" width="40" height="40"><circle cx="12" cy="12" r="10" stroke="var(--color-accent)" stroke-width="1.5" fill="none"/><path d="M8 12l3 3 5-5" stroke="var(--color-accent)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                <p class="ep-after__message" id="ep-preview-success">Thank you! Your guide is ready.</p>
-                <div class="ep-preview__form" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
-                  <button class="ep-preview__btn" disabled>Read Online</button>
-                  <button class="ep-preview__btn ep-preview__btn--outline" disabled>Download PDF</button>
-                </div>
-              </div>
-            </div>
+            <div class="ep-preview-container" id="ep-preview-after"></div>
           </div>
         </div>
 
