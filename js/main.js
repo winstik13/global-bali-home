@@ -1698,13 +1698,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape' && tourOverlay.classList.contains('active')) closeTour();
   });
 
-  // Attach tour to [data-tour] buttons
-  document.querySelectorAll('[data-tour]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const project = btn.dataset.tour || '';
-      openTour(project || null);
-    });
+  // Attach tour to [data-tour] buttons (delegated for dynamic elements)
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('[data-tour]');
+    if (!btn) return;
+    e.preventDefault();
+    var project = btn.dataset.tour || '';
+    openTour(project || null);
   });
 
   // --- Availability Bar animation ---
@@ -2350,7 +2350,16 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         { key: 'units', fn: function(k) { return PD[k].totalUnits; } },
         { key: 'pool', fn: function(k) { var p = PD[k].compPool || (comp[k] && comp[k].pool); if (!p) return '\u2014'; return (typeof p === 'object') ? (p[dataLang] || p.en) : p; } },
         { key: 'handover', fn: function(k) { return PD[k].handover || '\u2014'; } },
-        { key: 'status', fn: function(k) { return loc(PD[k].showcaseStatus) || '\u2014'; } }
+        { key: 'status', fn: function(k) {
+          var a = PD[k].availability;
+          var al = PD.availabilityLabels ? (PD.availabilityLabels[dataLang] || PD.availabilityLabels.en) : {};
+          if (a && a.total && a.sold > 0) {
+            var pct = Math.round(a.sold / a.total * 100);
+            var soldLabel = al.sold || 'Sold';
+            return '<span class="comparison-table__badge comparison-table__badge--hot">' + pct + '% ' + soldLabel.charAt(0).toUpperCase() + soldLabel.slice(1) + '</span>';
+          }
+          return '<span class="comparison-table__badge comparison-table__badge--presale">' + (al.preSale || loc(PD[k].showcaseStatus) || '\u2014') + '</span>';
+        } }
       ];
       rows.forEach(function(r) {
         html += '<tr><td>' + labels[r.key] + '</td>';
