@@ -1849,11 +1849,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Lead Magnet form ---
   function getGuidePath() {
-    if (typeof SITE_DATA !== 'undefined' && SITE_DATA.investmentGuide && SITE_DATA.investmentGuide.path) {
-      var prefix = (lang !== 'en') ? '../' : '';
-      return prefix + SITE_DATA.investmentGuide.path;
-    }
-    return '';
+    var langFile = lang === 'ru' ? 'ru' : lang === 'id' ? 'id' : 'en';
+    var prefix = (lang !== 'en') ? '../' : '';
+    return prefix + 'guide/pdf/' + langFile + '.pdf';
   }
 
   function getGuideWebPath() {
