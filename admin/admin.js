@@ -1758,38 +1758,21 @@
         const file = inp.files[0];
         if (!file) return;
         if (file.size > 10 * 1024 * 1024) { alert('File exceeds 10 MB limit'); return; }
-        const reader = new FileReader();
-        reader.onload = async () => {
-          const base64 = reader.result.split(',')[1];
-          const ext = file.name.split('.').pop().toLowerCase();
+        try {
+          inp.closest('.fp-floor').querySelector('.fp-floor__preview').innerHTML = `<span class="fp-floor__empty">Uploading...</span>`;
+          const resized = await resizeImage(file, 1200, 0.85);
+          const base64 = resized.split(',')[1];
           const safeName = (type + '-' + floor).toLowerCase().replace(/[^a-z0-9]+/g, '-');
-          const path = `images/${p.slug}/plans/${safeName}.${ext}`;
-          try {
-            inp.closest('.fp-floor').querySelector('.fp-floor__preview').innerHTML = `<span class="fp-floor__empty">Uploading...</span>`;
-            const existing = await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`, {
-              headers: { 'Authorization': `token ${githubPAT}` }
-            });
-            let sha;
-            if (existing.ok) { sha = (await existing.json()).sha; }
-            const body = { message: `Add floor plan: ${type} — ${floor} (${p.name})`, content: base64 };
-            if (sha) body.sha = sha;
-            const res = await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`, {
-              method: 'PUT',
-              headers: { 'Authorization': `token ${githubPAT}`, 'Content-Type': 'application/json' },
-              body: JSON.stringify(body)
-            });
-            if (res.ok) {
-              p.floorPlans[type].floors[floor] = path;
-              // Show preview immediately from base64
-              inp.closest('.fp-floor').querySelector('.fp-floor__preview').innerHTML =
-                `<img src="${reader.result}" alt="${type} — ${floor}">`;
-              markChanged();
-            }
-          } catch (err) {
-            console.error('Floor plan upload error:', err);
-          }
-        };
-        reader.readAsDataURL(file);
+          const path = `images/${p.slug}/plans/${safeName}.webp`;
+          await commitFile(path, null, `Add floor plan: ${type} — ${floor} (${p.name})`, null, base64);
+          p.floorPlans[type].floors[floor] = path;
+          inp.closest('.fp-floor').querySelector('.fp-floor__preview').innerHTML =
+            `<img src="${resized}" alt="${type} — ${floor}">`;
+          markChanged();
+        } catch (err) {
+          console.error('Floor plan upload error:', err);
+          inp.closest('.fp-floor').querySelector('.fp-floor__preview').innerHTML = `<span class="fp-floor__empty">Upload failed</span>`;
+        }
       });
     });
 
@@ -2447,7 +2430,8 @@
       try {
         const resized = await resizeImage(file, 1920, 0.8);
         const base64 = resized.split(',')[1];
-        const path = `${folder}/${file.name}`;
+        const webpName = file.name.replace(/\.[^.]+$/, '.webp');
+        const path = `${folder}/${webpName}`;
         await commitFile(path, null, `Add gallery image: ${file.name}`, null, base64);
 
         // Add to local data
@@ -2516,7 +2500,7 @@
           canvas.width = w;
           canvas.height = h;
           canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-          const result = canvas.toDataURL('image/jpeg', quality);
+          const result = canvas.toDataURL('image/webp', quality);
           canvas.width = 0;
           canvas.height = 0;
           resolve(result);
@@ -3005,7 +2989,7 @@
           <div style="display:flex;gap:16px;flex-wrap:wrap">
             <div class="form-group" style="flex:1;min-width:140px"><label>${t('newProject.bedrooms')}</label><input type="text" id="np-bedrooms" placeholder="2–3"></div>
             <div class="form-group" style="flex:1;min-width:140px"><label>${t('newProject.handover')}</label><input type="text" id="np-handover" placeholder="Q1 2028"></div>
-            <div class="form-group" style="flex:1;min-width:140px"><label>${t('newProject.showcaseImage')}</label><input type="text" id="np-image" placeholder="images/project/hero.jpg"></div>
+            <div class="form-group" style="flex:1;min-width:140px"><label>${t('newProject.showcaseImage')}</label><input type="text" id="np-image" placeholder="images/project/hero.webp"></div>
           </div>
           <h3 style="margin-top:16px">${t('newProject.showcaseText')}</h3>
           <div class="form-group"><label>${t('newProject.subtitle')}</label><input type="text" id="np-subtitle" placeholder="12 modern villas with jungle views"></div>
@@ -3916,9 +3900,8 @@
         try {
           const resized = await resizeImage(file, 200, 0.85);
           const base64 = resized.split(',')[1];
-          const ext = file.name.split('.').pop().toLowerCase();
           const safeName = (testimonialsData[i].name.en || 'avatar').replace(/[^a-z0-9]/gi, '-').toLowerCase();
-          const path = `images/testimonials/${safeName}.${ext}`;
+          const path = `images/testimonials/${safeName}.webp`;
           await commitFile(path, null, `Add testimonial avatar: ${safeName}`, null, base64);
           testimonialsData[i].avatar = path;
           dirtyTabs.testimonials = true;

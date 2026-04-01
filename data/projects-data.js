@@ -10,7 +10,7 @@ const PROJECTS_DATA = {
     "handover": "Q2 2026",
     "status": "in-progress",
     "startingPrice": 335000,
-    "showcaseImage": "images/serenity-villas/complex-overview.jpg",
+    "showcaseImage": "images/serenity-villas/complex-overview.webp",
     "showcaseSubtitle": {
       "en": "12 modern villas with jungle views and natural waterfalls in Ubud",
       "ru": "12 современных вилл с видом на джунгли и природными водопадами в Убуде",
@@ -414,7 +414,7 @@ const PROJECTS_DATA = {
     "handover": "Q1 2027",
     "status": "in-progress",
     "startingPrice": 310000,
-    "showcaseImage": "images/home/estates-birds-eye.jpg",
+    "showcaseImage": "images/home/estates-birds-eye.webp",
     "showcaseSubtitle": {
       "en": "4 exclusive villas with private pools and rice terrace views",
       "ru": "4 эксклюзивные виллы с бассейнами и видом на рисовые террасы",
@@ -733,7 +733,7 @@ const PROJECTS_DATA = {
     "handover": "Q3 2027",
     "status": "pre-sale",
     "startingPrice": 119000,
-    "showcaseImage": "images/serenity-village/6House_Max.0001.jpg",
+    "showcaseImage": "images/serenity-village/6House_Max.0001.webp",
     "showcaseSubtitle": {
       "en": "Complex of 26 villas with shared pool and cafe — from $119K",
       "ru": "Комплекс из 26 вилл с общим бассейном и кафе — от $119K",
