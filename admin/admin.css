@@ -202,6 +202,8 @@ input[type="number"] {
 }
 
 .field-hint {
+  display: block;
+  margin-top: 4px;
   font-size: 0.7rem;
   color: var(--color-text-dim);
   opacity: 0.5;
@@ -1386,6 +1388,7 @@ input[type="number"] {
   z-index: 10;
   padding: var(--sp-md) 0;
   margin-top: var(--sp-lg);
+  box-shadow: 0 -8px 16px rgba(0, 0, 0, 0.25);
 }
 
 .editor-actions--inline.editor-actions--sticky {
@@ -2574,13 +2577,6 @@ input[type="number"] {
 }
 
 /* ─── Exit Popup Tab ─── */
-
-.field-hint {
-  display: block;
-  margin-top: 4px;
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
-}
 
 /* Two-column layout: editor + preview */
 .ep-layout {
