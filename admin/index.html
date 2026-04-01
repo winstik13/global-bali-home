@@ -726,30 +726,47 @@
 
         <!-- Tour Popup Editor -->
         <h3 class="popups-section-title" data-i18n="tour.title" style="margin-top:48px">Tour Popup</h3>
-        <div class="tour-editor">
-          <div class="editor-section">
-            <h3 data-i18n="tour.steps">Steps</h3>
-            <div class="lang-tabs">
-              <button type="button" class="lang-tab tour-lang-tab active" data-lang="en">EN</button>
-              <button type="button" class="lang-tab tour-lang-tab" data-lang="ru">RU</button>
-              <button type="button" class="lang-tab tour-lang-tab" data-lang="id">ID</button>
+        <div class="ep-layout">
+          <div class="ep-editor">
+            <div class="editor-section">
+              <h3 data-i18n="tour.steps">Steps</h3>
+              <div class="lang-tabs">
+                <button type="button" class="lang-tab tour-lang-tab active" data-lang="en">EN</button>
+                <button type="button" class="lang-tab tour-lang-tab" data-lang="ru">RU</button>
+                <button type="button" class="lang-tab tour-lang-tab" data-lang="id">ID</button>
+              </div>
+              <div id="tour-steps-editor"></div>
             </div>
-            <div id="tour-steps-editor"></div>
+
+            <div class="editor-section">
+              <h3 data-i18n="tour.form">Contact Form</h3>
+              <div id="tour-form-editor"></div>
+            </div>
+
+            <div class="editor-section">
+              <h3 data-i18n="tour.thankYou">Thank You Screen</h3>
+              <div id="tour-thankyou-editor"></div>
+            </div>
+
+            <div class="editor-actions editor-actions--inline editor-actions--sticky">
+              <button id="btn-tour-save" class="btn btn--primary btn--sm" data-i18n="tour.save">Save Tour Popup</button>
+              <span id="tour-save-status" class="publish-status"></span>
+            </div>
           </div>
 
-          <div class="editor-section">
-            <h3 data-i18n="tour.form">Contact Form</h3>
-            <div id="tour-form-editor"></div>
-          </div>
-
-          <div class="editor-section">
-            <h3 data-i18n="tour.thankYou">Thank You Screen</h3>
-            <div id="tour-thankyou-editor"></div>
-          </div>
-
-          <div class="editor-actions editor-actions--inline editor-actions--sticky">
-            <button id="btn-tour-save" class="btn btn--primary btn--sm" data-i18n="tour.save">Save Tour Popup</button>
-            <span id="tour-save-status" class="publish-status"></span>
+          <!-- Right: Tour Preview -->
+          <div class="ep-preview-wrap">
+            <h3 data-i18n="exitpopup.preview">Preview</h3>
+            <div class="tp-preview-nav">
+              <button class="tp-preview-nav__btn tp-preview-nav__btn--active" data-tp-step="0">1</button>
+              <button class="tp-preview-nav__btn" data-tp-step="1">2</button>
+              <button class="tp-preview-nav__btn" data-tp-step="2">3</button>
+              <button class="tp-preview-nav__btn" data-tp-step="3">Form</button>
+              <button class="tp-preview-nav__btn" data-tp-step="4">Done</button>
+            </div>
+            <div class="ep-preview-container">
+              <div class="tp-preview" id="tp-preview"></div>
+            </div>
           </div>
         </div>
       </section>

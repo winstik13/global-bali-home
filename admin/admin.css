@@ -2771,6 +2771,198 @@ input[type="number"] {
   margin-left: 4px;
 }
 
+/* Tour preview nav */
+.tp-preview-nav {
+  display: flex;
+  gap: 6px;
+  margin-bottom: var(--sp-md);
+}
+
+.tp-preview-nav__btn {
+  flex: 1;
+  padding: 6px 4px;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.15s;
+}
+
+.tp-preview-nav__btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+.tp-preview-nav__btn--active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+/* Tour preview content — reuses ep-preview base */
+.tp-preview {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  background: var(--color-bg-card, #2a2a20);
+  border: 1px solid var(--color-border, rgba(225, 217, 201, 0.1));
+  padding: 32px 24px;
+  margin: 0 auto;
+}
+
+.tp-preview__progress {
+  height: 3px;
+  background: rgba(255,255,255,0.06);
+  margin-bottom: 20px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.tp-preview__progress-bar {
+  height: 100%;
+  background: var(--color-accent, #6B8F4E);
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+
+.tp-preview__step-label {
+  font-size: 0.65rem;
+  color: var(--color-text-muted, #999);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.tp-preview__question {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--color-text, #E1D9C9);
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+.tp-preview__options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tp-preview__option {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--color-bg, #1a1a14);
+  border: 1px solid var(--color-border, rgba(225, 217, 201, 0.1));
+  color: var(--color-text, #E1D9C9);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  text-align: left;
+  cursor: default;
+  border-radius: 2px;
+}
+
+.tp-preview__option--multi {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tp-preview__option--multi input[type="checkbox"] {
+  accent-color: var(--color-accent, #6B8F4E);
+  pointer-events: none;
+}
+
+.tp-preview__form-sub {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #999);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.tp-preview__input {
+  width: 100%;
+  padding: 9px 12px;
+  background: var(--color-bg, #1a1a14);
+  border: 1px solid var(--color-border, rgba(225, 217, 201, 0.1));
+  color: var(--color-text-muted, #999);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.75rem;
+  cursor: default;
+  margin-bottom: 8px;
+}
+
+.tp-preview__time-label {
+  font-size: 0.7rem;
+  color: var(--color-text-muted, #999);
+  margin-bottom: 6px;
+  margin-top: 4px;
+}
+
+.tp-preview__time-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.tp-preview__time-opt {
+  padding: 6px 8px;
+  background: var(--color-bg, #1a1a14);
+  border: 1px solid var(--color-border, rgba(225, 217, 201, 0.1));
+  color: var(--color-text-muted, #999);
+  font-size: 0.65rem;
+  text-align: center;
+  border-radius: 2px;
+  cursor: default;
+}
+
+.tp-preview__time-opt--active {
+  border-color: var(--color-accent, #6B8F4E);
+  color: var(--color-accent, #6B8F4E);
+}
+
+.tp-preview__result {
+  text-align: center;
+}
+
+.tp-preview__result-icon {
+  margin-bottom: 12px;
+}
+
+.tp-preview__result-desc {
+  font-size: 0.8rem;
+  color: var(--color-text-muted, #999);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.tp-preview__wa-btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background: var(--color-accent, #6B8F4E);
+  color: #fff;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: default;
+  border-radius: 2px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.tp-preview__project-link {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-accent, #6B8F4E);
+  text-align: center;
+  margin-top: 8px;
+}
+
 /* Responsive: stack on smaller screens */
 @media (max-width: 1024px) {
   .ep-layout {

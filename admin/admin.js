@@ -1055,6 +1055,14 @@
     loadFaqData();
     loadTestimonialsData();
     updateRateLimit();
+    // Restore last active tab
+    try {
+      const savedTab = localStorage.getItem('admin_active_tab');
+      if (savedTab) {
+        const tabBtn = document.querySelector('.admin-nav__btn[data-tab="' + savedTab + '"]');
+        if (tabBtn) tabBtn.click();
+      }
+    } catch(e) {}
     // Hide loading spinner
     const loader = document.getElementById('admin-loader');
     if (loader) loader.hidden = true;
@@ -1088,6 +1096,7 @@
       btn.classList.add('active');
       $$('.admin-tab').forEach(tab => tab.hidden = true);
       $(`#tab-${btn.dataset.tab}`).hidden = false;
+      try { localStorage.setItem('admin_active_tab', btn.dataset.tab); } catch(e) {}
     });
   });
 
@@ -4322,6 +4331,7 @@
         const si = +inp.dataset.step;
         td.steps[lang][si].question = inp.value;
         dirtyTabs.exitpopup = true;
+        updateTourPreview();
       });
     });
     container.querySelectorAll('.tour-step-opt').forEach(inp => {
@@ -4330,6 +4340,7 @@
         const oi = +inp.dataset.opt;
         td.steps[lang][si].options[oi] = inp.value;
         dirtyTabs.exitpopup = true;
+        updateTourPreview();
       });
     });
   }
@@ -4369,6 +4380,7 @@
         if (!td.form[lang]) td.form[lang] = {};
         td.form[lang][fld] = el.value;
         dirtyTabs.exitpopup = true;
+        updateTourPreview();
       });
     });
     const consentEl = document.getElementById('tf-consent');
@@ -4376,6 +4388,7 @@
       if (!td.form[lang]) td.form[lang] = {};
       td.form[lang].consent = consentEl.value;
       dirtyTabs.exitpopup = true;
+      updateTourPreview();
     });
     container.querySelectorAll('.tf-timeopt').forEach(inp => {
       inp.addEventListener('input', () => {
@@ -4383,6 +4396,7 @@
         if (!td.form[lang].timeOptions) td.form[lang].timeOptions = [];
         td.form[lang].timeOptions[+inp.dataset.idx] = inp.value;
         dirtyTabs.exitpopup = true;
+        updateTourPreview();
       });
     });
   }
@@ -4408,6 +4422,7 @@
         if (!td.thankYou[lang]) td.thankYou[lang] = {};
         td.thankYou[lang][key] = el.value;
         dirtyTabs.exitpopup = true;
+        updateTourPreview();
       });
     });
   }
@@ -4416,7 +4431,88 @@
     renderTourSteps();
     renderTourForm();
     renderTourThankYou();
+    updateTourPreview();
   }
+
+  var tourPreviewStep = 0;
+
+  function updateTourPreview(step) {
+    if (step !== undefined) tourPreviewStep = step;
+    const container = document.getElementById('tp-preview');
+    if (!container) return;
+    const td = getTourData();
+    const lang = tourActiveLang;
+    const steps = (td.steps && td.steps[lang]) || [];
+    const form = (td.form && td.form[lang]) || {};
+    const ty = (td.thankYou && td.thankYou[lang]) || {};
+    const title = (td.title && td.title[lang]) || '';
+    const totalSteps = steps.length || 3;
+
+    // Update nav active state
+    document.querySelectorAll('.tp-preview-nav__btn').forEach(btn => {
+      btn.classList.toggle('tp-preview-nav__btn--active', +btn.dataset.tpStep === tourPreviewStep);
+    });
+
+    let html = '';
+
+    if (tourPreviewStep < totalSteps) {
+      // Step preview (0, 1, 2)
+      const s = steps[tourPreviewStep] || { question: '', options: [] };
+      const pct = ((tourPreviewStep + 1) / (totalSteps + 2)) * 100;
+      html += '<div class="tp-preview__progress"><div class="tp-preview__progress-bar" style="width:' + pct + '%"></div></div>';
+      html += '<p class="tp-preview__step-label">Step ' + (tourPreviewStep + 1) + ' of ' + totalSteps + '</p>';
+      html += '<h3 class="tp-preview__question">' + (s.question || '—') + '</h3>';
+      html += '<div class="tp-preview__options">';
+      (s.options || []).forEach(opt => {
+        if (s.multi) {
+          html += '<div class="tp-preview__option tp-preview__option--multi"><input type="checkbox" disabled><span>' + opt + '</span></div>';
+        } else {
+          html += '<div class="tp-preview__option">' + opt + '</div>';
+        }
+      });
+      html += '</div>';
+    } else if (tourPreviewStep === totalSteps) {
+      // Form preview
+      const pct = ((totalSteps + 1) / (totalSteps + 2)) * 100;
+      html += '<div class="tp-preview__progress"><div class="tp-preview__progress-bar" style="width:' + pct + '%"></div></div>';
+      html += '<p class="tp-preview__step-label">' + (form.title || 'How can we reach you?') + '</p>';
+      html += '<h3 class="tp-preview__question">' + (title || 'Schedule a Private Tour') + '</h3>';
+      html += '<p class="tp-preview__form-sub">' + (form.subtitle || '') + '</p>';
+      html += '<div class="tp-preview__input">' + (form.name || 'Your name') + '</div>';
+      html += '<div class="tp-preview__input">' + (form.whatsapp || 'WhatsApp') + '</div>';
+      html += '<div class="tp-preview__input">' + (form.email || 'Email') + '</div>';
+      if (form.time) {
+        html += '<p class="tp-preview__time-label">' + form.time + '</p>';
+        html += '<div class="tp-preview__time-options">';
+        (form.timeOptions || []).forEach((opt, i) => {
+          html += '<div class="tp-preview__time-opt' + (i === 3 ? ' tp-preview__time-opt--active' : '') + '">' + opt + '</div>';
+        });
+        html += '</div>';
+      }
+      html += '<div class="tp-preview__input">' + (form.comment || 'Comments') + '</div>';
+      html += '<div class="ep-preview__consent"><input type="checkbox" disabled><span>' + (form.consent || '').substring(0, 80) + (form.consent && form.consent.length > 80 ? '…' : '') + '</span></div>';
+      html += '<div style="margin-top:10px"><div class="ep-preview__btn">' + (form.submit || 'Request a Tour') + '</div></div>';
+    } else {
+      // Thank you preview
+      html += '<div class="tp-preview__progress"><div class="tp-preview__progress-bar" style="width:100%"></div></div>';
+      html += '<div class="tp-preview__result">';
+      html += '<div class="tp-preview__result-icon"><svg viewBox="0 0 24 24" width="40" height="40"><circle cx="12" cy="12" r="10" stroke="var(--color-accent)" stroke-width="1.5" fill="none"/><path d="M8 12l3 3 5-5" stroke="var(--color-accent)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
+      html += '<h3 class="tp-preview__question">' + (ty.title || 'Tour Request Sent!') + '</h3>';
+      html += '<p class="tp-preview__result-desc">' + (ty.text || '') + '</p>';
+      html += '<div class="tp-preview__wa-btn">💬 ' + (ty.whatsapp || 'Message us on WhatsApp') + '</div>';
+      if (ty.projectLink) html += '<span class="tp-preview__project-link">' + ty.projectLink + ' Serenity Villas →</span>';
+      html += '</div>';
+    }
+
+    container.innerHTML = html;
+  }
+
+  // Tour preview nav buttons
+  document.querySelectorAll('.tp-preview-nav__btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      updateTourPreview(+btn.dataset.tpStep);
+    });
+  });
 
   // Tour language tabs
   document.querySelectorAll('.tour-lang-tab').forEach(tab => {
