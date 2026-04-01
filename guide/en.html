@@ -265,23 +265,51 @@
       margin: 0 auto 32px;
       opacity: 0.7;
     }
-    .guide-lang {
+    .guide-actions {
       display: flex;
       justify-content: center;
-      gap: 16px;
-      margin-top: 24px;
+      align-items: center;
+      gap: 12px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+    .guide-lang {
+      display: flex;
+      gap: 6px;
     }
     .guide-lang a, .guide-lang span {
-      font-size: 0.7rem;
+      display: inline-block;
+      font-size: 0.8rem;
       font-weight: 600;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       text-decoration: none;
+      padding: 8px 16px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
       color: var(--color-text-dim);
-      transition: color 0.2s;
+      transition: color 0.2s, border-color 0.2s;
     }
-    .guide-lang a:hover { color: var(--color-accent); }
-    .guide-lang span { color: var(--color-accent); }
+    .guide-lang a:hover { color: var(--color-accent); border-color: var(--color-accent); }
+    .guide-lang span { color: var(--color-accent); border-color: var(--color-accent); }
+    .guide-pdf-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      border: 1px solid var(--color-accent);
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: var(--color-accent);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .guide-pdf-btn:hover { background: var(--color-accent); color: #fff; }
+    .guide-pdf-btn svg { width: 16px; height: 16px; }
     .guide-footer {
       text-align: center;
       padding: 48px 0;
@@ -302,7 +330,7 @@
     }
 
     @media print {
-      .guide-lang, .guide-cta-bar { display: none !important; }
+      .guide-actions, .guide-cta-bar { display: none !important; }
       .guide-section { break-inside: avoid; }
       body { background: #fff; color: #1a1a1a; }
       .guide-section h2, .guide-section h3, .guide-hero h1 { color: #1a1a1a; }
@@ -329,10 +357,16 @@
           <span>Reading time: 15 min</span>
           <span>By Global Bali Home</span>
         </div>
-        <div class="guide-lang">
-          <span>EN</span>
-          <a href="ru.html">RU</a>
-          <a href="id.html">ID</a>
+        <div class="guide-actions">
+          <div class="guide-lang">
+            <span>EN</span>
+            <a href="ru.html">RU</a>
+            <a href="id.html">ID</a>
+          </div>
+          <button class="guide-pdf-btn" onclick="window.print()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 16V4m0 12l-4-4m4 4l4-4M4 20h16"/></svg>
+            Save as PDF
+          </button>
         </div>
       </div>
     </section>
@@ -373,7 +407,7 @@
             <div class="guide-stat__label">Annual property appreciation</div>
           </div>
           <div class="guide-stat">
-            <div class="guide-stat__value">12&ndash;18%</div>
+            <div class="guide-stat__value">14&ndash;22%</div>
             <div class="guide-stat__label">Gross rental yield</div>
           </div>
           <div class="guide-stat">
@@ -438,9 +472,9 @@
             <tr><th>Property Type</th><th>Gross Yield</th><th>Avg. Occupancy</th><th>Avg. Nightly Rate</th></tr>
           </thead>
           <tbody>
-            <tr><td>Villa 1&ndash;2 BR (Canggu)</td><td>10&ndash;14%</td><td>65&ndash;75%</td><td>$120&ndash;$180</td></tr>
-            <tr><td>Villa 3&ndash;4 BR (Seminyak)</td><td>8&ndash;12%</td><td>60&ndash;70%</td><td>$200&ndash;$350</td></tr>
-            <tr><td>Villa 2&ndash;3 BR (Ubud)</td><td>12&ndash;16%</td><td>70&ndash;80%</td><td>$150&ndash;$250</td></tr>
+            <tr><td>Villa 2&ndash;3 BR (Ubud)</td><td>14&ndash;22%</td><td>70&ndash;80%</td><td>$150&ndash;$280</td></tr>
+            <tr><td>Villa 1&ndash;2 BR (Canggu)</td><td>10&ndash;14%</td><td>60&ndash;70%</td><td>$120&ndash;$180</td></tr>
+            <tr><td>Villa 3&ndash;4 BR (Seminyak)</td><td>8&ndash;12%</td><td>55&ndash;65%</td><td>$200&ndash;$350</td></tr>
             <tr><td>Premium Villa (Uluwatu)</td><td>8&ndash;12%</td><td>55&ndash;65%</td><td>$250&ndash;$400</td></tr>
           </tbody>
         </table>
@@ -449,7 +483,7 @@
         <p>Ubud's rental market benefits from a unique combination of factors that create outsized returns relative to investment cost:</p>
         <ul>
           <li><strong>Lower acquisition cost</strong> &mdash; entry prices 40&ndash;60% below southern Bali translate directly into higher yield percentages</li>
-          <li><strong>Premium nightly rates</strong> &mdash; wellness-oriented travelers and retreat guests pay $150&ndash;$250/night, comparable to Canggu despite lower property costs</li>
+          <li><strong>Premium nightly rates</strong> &mdash; wellness-oriented travelers and retreat guests pay $150&ndash;$280/night, comparable to Canggu despite lower property costs</li>
           <li><strong>Year-round demand</strong> &mdash; unlike beach destinations, Ubud's cultural and wellness appeal is not seasonal, maintaining 70&ndash;80% occupancy even in low season</li>
           <li><strong>Lower competition</strong> &mdash; Airbnb supply in Ubud grew just 12% in 2024 vs. 40%+ in Canggu, preserving pricing power</li>
         </ul>
@@ -458,10 +492,10 @@
         <p>Long-term annual leases offer lower but more predictable returns: <strong>5&ndash;9% gross yield</strong>. This model eliminates management overhead and platform commissions, but sacrifices the upside of peak-season pricing.</p>
 
         <h3>Net Yield Calculation</h3>
-        <p>Operating expenses &mdash; property management (15&ndash;20%), maintenance, taxes, repairs, platform commissions &mdash; typically consume 30&ndash;40% of gross rental income. Realistic <strong>net yields range from 7&ndash;12%</strong> for short-term rentals and <strong>4&ndash;6%</strong> for long-term rentals.</p>
+        <p>Operating expenses &mdash; property management (15&ndash;20%), maintenance, taxes, repairs, platform commissions &mdash; typically consume 30&ndash;40% of gross rental income. Realistic <strong>net yields range from 5&ndash;9%</strong> for short-term rentals in southern Bali and <strong>8&ndash;15%</strong> in the Ubud/Gianyar corridor, where lower acquisition costs amplify returns. Long-term rentals yield <strong>4&ndash;6%</strong> net across all regions.</p>
 
         <div class="guide-highlight">
-          <p>Seasonality is a critical factor. High season (June&ndash;September, December&ndash;January) sees 85&ndash;95% occupancy across Bali. Low season (February&ndash;April) drops to 45&ndash;60% in beach areas but remains at 65&ndash;75% in Ubud, thanks to its year-round wellness and cultural tourism base.</p>
+          <p>Seasonality is a critical factor. High season (June&ndash;September, December&ndash;January) sees 85&ndash;95% occupancy across Bali. Low season (February&ndash;April) drops to 40&ndash;55% in beach areas but remains at 65&ndash;75% in Ubud, thanks to its year-round wellness and cultural tourism base.</p>
         </div>
       </div>
     </section>
@@ -645,7 +679,7 @@
           </thead>
           <tbody>
             <tr><td>Price / m&sup2; (villa)</td><td>$1,500&ndash;4,000</td><td>$2,500&ndash;5,000</td><td>$1,000&ndash;2,000</td><td>$1,200&ndash;2,500</td></tr>
-            <tr><td>Gross Rental Yield</td><td>10&ndash;18%</td><td>6&ndash;10%</td><td>5&ndash;8%</td><td>6&ndash;9%</td></tr>
+            <tr><td>Gross Rental Yield</td><td>10&ndash;22%</td><td>6&ndash;10%</td><td>5&ndash;8%</td><td>6&ndash;9%</td></tr>
             <tr><td>Capital Growth</td><td>8&ndash;15% / yr</td><td>5&ndash;8% / yr</td><td>8&ndash;12% / yr</td><td>5&ndash;7% / yr</td></tr>
             <tr><td>Foreign Ownership</td><td>Leasehold / Hak Pakai</td><td>Freehold (condo)</td><td>Very limited</td><td>Freehold (condo, 40%)</td></tr>
             <tr><td>Digital Nomad Visa</td><td>Yes (B211A)</td><td>Yes (DTV)</td><td>No</td><td>No</td></tr>

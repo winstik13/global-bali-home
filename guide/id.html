@@ -265,23 +265,51 @@
       margin: 0 auto 32px;
       opacity: 0.7;
     }
-    .guide-lang {
+    .guide-actions {
       display: flex;
       justify-content: center;
-      gap: 16px;
-      margin-top: 24px;
+      align-items: center;
+      gap: 12px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+    .guide-lang {
+      display: flex;
+      gap: 6px;
     }
     .guide-lang a, .guide-lang span {
-      font-size: 0.7rem;
+      display: inline-block;
+      font-size: 0.8rem;
       font-weight: 600;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       text-decoration: none;
+      padding: 8px 16px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
       color: var(--color-text-dim);
-      transition: color 0.2s;
+      transition: color 0.2s, border-color 0.2s;
     }
-    .guide-lang a:hover { color: var(--color-accent); }
-    .guide-lang span { color: var(--color-accent); }
+    .guide-lang a:hover { color: var(--color-accent); border-color: var(--color-accent); }
+    .guide-lang span { color: var(--color-accent); border-color: var(--color-accent); }
+    .guide-pdf-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      border: 1px solid var(--color-accent);
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: var(--color-accent);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .guide-pdf-btn:hover { background: var(--color-accent); color: #fff; }
+    .guide-pdf-btn svg { width: 16px; height: 16px; }
     .guide-footer {
       text-align: center;
       padding: 48px 0;
@@ -302,7 +330,7 @@
     }
 
     @media print {
-      .guide-lang, .guide-cta-bar { display: none !important; }
+      .guide-actions, .guide-cta-bar { display: none !important; }
       .guide-section { break-inside: avoid; }
       body { background: #fff; color: #1a1a1a; }
       .guide-section h2, .guide-section h3, .guide-hero h1 { color: #1a1a1a; }
@@ -329,10 +357,16 @@
           <span>Waktu baca: 15 menit</span>
           <span>Oleh Global Bali Home</span>
         </div>
-        <div class="guide-lang">
-          <a href="en.html">EN</a>
-          <a href="ru.html">RU</a>
-          <span>ID</span>
+        <div class="guide-actions">
+          <div class="guide-lang">
+            <a href="en.html">EN</a>
+            <a href="ru.html">RU</a>
+            <span>ID</span>
+          </div>
+          <button class="guide-pdf-btn" onclick="window.print()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 16V4m0 12l-4-4m4 4l4-4M4 20h16"/></svg>
+            Unduh PDF
+          </button>
         </div>
       </div>
     </section>
@@ -373,7 +407,7 @@
             <div class="guide-stat__label">Apresiasi properti tahunan</div>
           </div>
           <div class="guide-stat">
-            <div class="guide-stat__value">12&ndash;18%</div>
+            <div class="guide-stat__value">14&ndash;22%</div>
             <div class="guide-stat__label">Imbal hasil sewa bruto</div>
           </div>
           <div class="guide-stat">
@@ -438,9 +472,9 @@
             <tr><th>Tipe Properti</th><th>Imbal Hasil Bruto</th><th>Rata-rata Hunian</th><th>Rata-rata Tarif per Malam</th></tr>
           </thead>
           <tbody>
-            <tr><td>Vila 1&ndash;2 KT (Canggu)</td><td>10&ndash;14%</td><td>65&ndash;75%</td><td>$120&ndash;$180</td></tr>
-            <tr><td>Vila 3&ndash;4 KT (Seminyak)</td><td>8&ndash;12%</td><td>60&ndash;70%</td><td>$200&ndash;$350</td></tr>
-            <tr><td>Vila 2&ndash;3 KT (Ubud)</td><td>12&ndash;16%</td><td>70&ndash;80%</td><td>$150&ndash;$250</td></tr>
+            <tr><td>Vila 2&ndash;3 KT (Ubud)</td><td>14&ndash;22%</td><td>70&ndash;80%</td><td>$150&ndash;$280</td></tr>
+            <tr><td>Vila 1&ndash;2 KT (Canggu)</td><td>10&ndash;14%</td><td>60&ndash;70%</td><td>$120&ndash;$180</td></tr>
+            <tr><td>Vila 3&ndash;4 KT (Seminyak)</td><td>8&ndash;12%</td><td>55&ndash;65%</td><td>$200&ndash;$350</td></tr>
             <tr><td>Vila Premium (Uluwatu)</td><td>8&ndash;12%</td><td>55&ndash;65%</td><td>$250&ndash;$400</td></tr>
           </tbody>
         </table>
@@ -449,7 +483,7 @@
         <p>Pasar sewa Ubud diuntungkan oleh kombinasi unik faktor-faktor yang menghasilkan imbal hasil luar biasa relatif terhadap biaya investasi:</p>
         <ul>
           <li><strong>Biaya akuisisi lebih rendah</strong> &mdash; harga masuk 40&ndash;60% di bawah Bali selatan langsung menghasilkan persentase imbal hasil yang lebih tinggi</li>
-          <li><strong>Tarif malam premium</strong> &mdash; wisatawan berorientasi kesehatan dan tamu retreat membayar $150&ndash;$250/malam, sebanding dengan Canggu meskipun biaya properti lebih rendah</li>
+          <li><strong>Tarif malam premium</strong> &mdash; wisatawan berorientasi kesehatan dan tamu retreat membayar $150&ndash;$280/malam, sebanding dengan Canggu meskipun biaya properti lebih rendah</li>
           <li><strong>Permintaan sepanjang tahun</strong> &mdash; tidak seperti destinasi pantai, daya tarik budaya dan kesehatan Ubud tidak bersifat musiman, mempertahankan tingkat hunian 70&ndash;80% bahkan di musim sepi</li>
           <li><strong>Persaingan lebih rendah</strong> &mdash; pasokan Airbnb di Ubud hanya tumbuh 12% pada 2024 vs. 40%+ di Canggu, mempertahankan kekuatan penetapan harga</li>
         </ul>
@@ -458,10 +492,10 @@
         <p>Sewa tahunan jangka panjang menawarkan imbal hasil yang lebih rendah namun lebih dapat diprediksi: <strong>5&ndash;9% imbal hasil bruto</strong>. Model ini menghilangkan biaya manajemen dan komisi platform, tetapi mengorbankan keuntungan dari penetapan harga musim puncak.</p>
 
         <h3>Perhitungan Imbal Hasil Bersih</h3>
-        <p>Biaya operasional &mdash; manajemen properti (15&ndash;20%), pemeliharaan, pajak, perbaikan, komisi platform &mdash; biasanya menghabiskan 30&ndash;40% dari pendapatan sewa bruto. <strong>Imbal hasil bersih yang realistis berkisar antara 7&ndash;12%</strong> untuk sewa jangka pendek dan <strong>4&ndash;6%</strong> untuk sewa jangka panjang.</p>
+        <p>Biaya operasional &mdash; manajemen properti (15&ndash;20%), pemeliharaan, pajak, perbaikan, komisi platform &mdash; biasanya menghabiskan 30&ndash;40% dari pendapatan sewa bruto. <strong>Imbal hasil bersih yang realistis berkisar antara 5&ndash;9%</strong> untuk sewa jangka pendek di Bali selatan dan <strong>8&ndash;15%</strong> di koridor Ubud/Gianyar, di mana biaya akuisisi yang lebih rendah memperkuat imbal hasil. Sewa jangka panjang menghasilkan <strong>4&ndash;6%</strong> bersih di semua wilayah.</p>
 
         <div class="guide-highlight">
-          <p>Musim merupakan faktor krusial. Musim ramai (Juni&ndash;September, Desember&ndash;Januari) mencatat tingkat hunian 85&ndash;95% di seluruh Bali. Musim sepi (Februari&ndash;April) turun ke 45&ndash;60% di area pantai tetapi tetap di 65&ndash;75% di Ubud, berkat basis wisata kesehatan dan budaya sepanjang tahun.</p>
+          <p>Musim merupakan faktor krusial. Musim ramai (Juni&ndash;September, Desember&ndash;Januari) mencatat tingkat hunian 85&ndash;95% di seluruh Bali. Musim sepi (Februari&ndash;April) turun ke 40&ndash;55% di area pantai tetapi tetap di 65&ndash;75% di Ubud, berkat basis wisata kesehatan dan budaya sepanjang tahun.</p>
         </div>
       </div>
     </section>
@@ -645,7 +679,7 @@
           </thead>
           <tbody>
             <tr><td>Harga / m&sup2; (vila)</td><td>$1,500&ndash;4,000</td><td>$2,500&ndash;5,000</td><td>$1,000&ndash;2,000</td><td>$1,200&ndash;2,500</td></tr>
-            <tr><td>Imbal Hasil Sewa Bruto</td><td>10&ndash;18%</td><td>6&ndash;10%</td><td>5&ndash;8%</td><td>6&ndash;9%</td></tr>
+            <tr><td>Imbal Hasil Sewa Bruto</td><td>10&ndash;22%</td><td>6&ndash;10%</td><td>5&ndash;8%</td><td>6&ndash;9%</td></tr>
             <tr><td>Pertumbuhan Modal</td><td>8&ndash;15% / thn</td><td>5&ndash;8% / thn</td><td>8&ndash;12% / thn</td><td>5&ndash;7% / thn</td></tr>
             <tr><td>Kepemilikan Asing</td><td>Leasehold / Hak Pakai</td><td>Freehold (kondominium)</td><td>Sangat terbatas</td><td>Freehold (kondominium, 40%)</td></tr>
             <tr><td>Visa Nomad Digital</td><td>Ya (B211A)</td><td>Ya (DTV)</td><td>Tidak</td><td>Tidak</td></tr>
