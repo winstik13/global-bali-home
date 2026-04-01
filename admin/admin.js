@@ -251,8 +251,7 @@
       'help.exitpopup.what': '<strong>What it does:</strong> Shows a popup when a desktop visitor moves the cursor toward closing the tab. Offers a free investment guide in exchange for an email — a lead capture tool.',
       'help.exitpopup.enabled': '<strong>Enabled:</strong> Turn the popup on or off across the entire site.',
       'help.exitpopup.delay': '<strong>Trigger Delay:</strong> Minimum seconds a visitor must spend on the page before the popup can appear. Prevents annoying new visitors (recommended: 15–30 sec).',
-      'help.exitpopup.countdown': '<strong>Countdown:</strong> After submitting the form, a countdown shows before the "Open Guide" button appears. Creates urgency (recommended: 5–10 sec).',
-      'help.exitpopup.content': '<strong>Content:</strong> All texts are fully customizable per language. Badge, title, description, button labels, and success message.',
+      'help.exitpopup.content': '<strong>Content:</strong> All texts are fully customizable per language. Badge, title, description, button label, and success message. After submission, "Read Online" and "Download PDF" buttons appear automatically.',
       'nav.exitpopup': 'Popups',
       'popups.title': 'Popups',
       'exitpopup.title': 'Exit Intent Popup',
@@ -262,15 +261,12 @@
       'exitpopup.afterSubmit': 'After Submit',
       'exitpopup.enabled': 'Enabled',
       'exitpopup.delay': 'Trigger Delay (sec)',
-      'exitpopup.countdown': 'Countdown (sec)',
       'exitpopup.field.tag': 'Badge Text',
       'exitpopup.field.title': 'Popup Title',
       'exitpopup.field.text': 'Description',
       'exitpopup.field.placeholder': 'Email Placeholder',
       'exitpopup.field.submit': 'Submit Button',
       'exitpopup.field.success': 'Success Message',
-      'exitpopup.field.openBtn': 'Open Guide Button',
-      'exitpopup.hint.success': 'Countdown number is appended automatically',
       'exitpopup.save': 'Save Exit Popup',
       'tour.title': 'Tour Popup',
       'tour.steps': 'Steps',
@@ -627,7 +623,6 @@
       'help.exitpopup.what': '<strong>Что делает:</strong> Показывает попап, когда десктопный посетитель двигает курсор к закрытию вкладки. Предлагает бесплатный гид по инвестициям в обмен на email — инструмент сбора лидов.',
       'help.exitpopup.enabled': '<strong>Включён:</strong> Включает или выключает попап на всём сайте.',
       'help.exitpopup.delay': '<strong>Задержка:</strong> Минимальное время (секунды) на странице до срабатывания попапа. Не раздражает новых посетителей (рекомендуется: 15–30 сек).',
-      'help.exitpopup.countdown': '<strong>Обратный отсчёт:</strong> После отправки формы показывается отсчёт перед появлением кнопки «Открыть гид». Создаёт ощущение срочности (рекомендуется: 5–10 сек).',
       'help.exitpopup.content': '<strong>Контент:</strong> Все тексты настраиваются для каждого языка. Бейдж, заголовок, описание, тексты кнопок и сообщение об успехе.',
       'nav.exitpopup': 'Popups',
       'popups.title': 'Попапы',
@@ -638,15 +633,12 @@
       'exitpopup.afterSubmit': 'После отправки',
       'exitpopup.enabled': 'Включён',
       'exitpopup.delay': 'Задержка срабатывания (сек)',
-      'exitpopup.countdown': 'Обратный отсчёт (сек)',
       'exitpopup.field.tag': 'Бейдж',
       'exitpopup.field.title': 'Заголовок попапа',
       'exitpopup.field.text': 'Описание',
       'exitpopup.field.placeholder': 'Плейсхолдер email',
       'exitpopup.field.submit': 'Кнопка отправки',
       'exitpopup.field.success': 'Сообщение об успехе',
-      'exitpopup.field.openBtn': 'Кнопка открытия гида',
-      'exitpopup.hint.success': 'Число обратного отсчёта добавляется автоматически',
       'exitpopup.save': 'Сохранить Exit Popup',
       'tour.title': 'Попап тура',
       'tour.steps': 'Шаги',
@@ -3132,7 +3124,7 @@
     }
     if (!siteData.exchangeRate) siteData.exchangeRate = { usdToIdr: 16500, updatedAt: '' };
     if (!siteData.contacts) siteData.contacts = { phone: '', phoneRaw: '', whatsapp: '', email: '', location: { en: '', ru: '', id: '' } };
-    if (!siteData.exitPopup) siteData.exitPopup = { enabled: true, delay: 30, countdown: 7, texts: { en: {}, ru: {}, id: {} } };
+    if (!siteData.exitPopup) siteData.exitPopup = { enabled: true, delay: 30, texts: { en: {}, ru: {}, id: {} } };
   }
 
   function renderRateInfo() {
@@ -4195,7 +4187,7 @@
 
   // ─── Exit Intent Popup Settings ───
   const EP_LANGS = ['en', 'ru', 'id'];
-  const EP_FIELDS = ['tag', 'title', 'text', 'placeholder', 'submit', 'success', 'openBtn'];
+  const EP_FIELDS = ['tag', 'title', 'text', 'placeholder', 'submit', 'success'];
   let epActiveLang = 'en';
 
   function updateEpPreview() {
@@ -4206,8 +4198,6 @@
     const placeholderVal = ($(`#exitpopup-${lang}-placeholder`) || {}).value || '';
     const submitVal = ($(`#exitpopup-${lang}-submit`) || {}).value || '';
     const successVal = ($(`#exitpopup-${lang}-success`) || {}).value || '';
-    const openBtnVal = ($(`#exitpopup-${lang}-openBtn`) || {}).value || '';
-    const countdown = ($('#exitpopup-countdown') || {}).value || '7';
     // Main preview
     const tagEl = $('#ep-preview-tag');
     const titleEl = $('#ep-preview-title');
@@ -4221,11 +4211,7 @@
     if (submitEl) submitEl.textContent = submitVal;
     // After-submit preview
     const successEl = $('#ep-preview-success');
-    const countdownCircle = $('#ep-preview-countdown-circle');
-    const openBtnEl = $('#ep-preview-openBtn');
     if (successEl) successEl.textContent = successVal;
-    if (countdownCircle) countdownCircle.textContent = countdown;
-    if (openBtnEl) openBtnEl.textContent = openBtnVal;
   }
 
   function populateExitPopup() {
@@ -4235,18 +4221,12 @@
     if (enabledBox) enabledBox.checked = ep.enabled !== false;
     const delayInput = $('#exitpopup-delay');
     if (delayInput) delayInput.value = ep.delay || 30;
-    const countdownInput = $('#exitpopup-countdown');
-    if (countdownInput) countdownInput.value = ep.countdown || 7;
     EP_LANGS.forEach(lang => {
       const texts = (ep.texts && ep.texts[lang]) || {};
       EP_FIELDS.forEach(field => {
         const el = $(`#exitpopup-${lang}-${field}`);
         if (!el) return;
-        let val = texts[field] || '';
-        if (field === 'success') {
-          val = val.replace(/<span class="countdown-num">\d+<\/span>/, '').trim();
-        }
-        el.value = val;
+        el.value = texts[field] || '';
       });
     });
     updateEpPreview();
@@ -4276,24 +4256,20 @@
     exitPopupSaveBtn.addEventListener('click', async () => {
       if (!siteData) loadSiteData();
       const status = $('#exitpopup-save-status');
-      const countdown = parseInt($('#exitpopup-countdown')?.value, 10) || 7;
       siteData.exitPopup = {
         enabled: !!$('#exitpopup-enabled')?.checked,
         delay: parseInt($('#exitpopup-delay')?.value, 10) || 30,
-        countdown: countdown,
         texts: {}
       };
       EP_LANGS.forEach(lang => {
         const g = (field) => ($(`#exitpopup-${lang}-${field}`) || {}).value || '';
-        const successText = g('success');
         siteData.exitPopup.texts[lang] = {
           tag: g('tag'),
           title: g('title'),
           text: g('text'),
           placeholder: g('placeholder'),
           submit: g('submit'),
-          success: successText ? successText + ' <span class="countdown-num">' + countdown + '</span>' : '',
-          openBtn: g('openBtn')
+          success: g('success')
         };
       });
       btnLoading(exitPopupSaveBtn, true);

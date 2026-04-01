@@ -478,7 +478,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (epTexts.placeholder) t.exitPlaceholder = epTexts.placeholder;
     if (epTexts.submit) t.exitSubmit = epTexts.submit;
     if (epTexts.success) t.exitSuccess = epTexts.success;
-    if (epTexts.openBtn) t.exitOpenBtn = epTexts.openBtn;
   }
 
   // Override tour popup texts from SITE_DATA if available
