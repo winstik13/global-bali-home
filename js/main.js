@@ -2341,14 +2341,13 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       var html = '<thead><tr><th></th>';
       projects.forEach(function(k) { html += '<th>' + PD[k].name + '</th>'; });
       html += '</tr></thead><tbody>';
-      var comp = PD.comparisonData || {};
       var rows = [
-        { key: 'price', accent: true, fn: function(k) { var p = (comp[k] && comp[k].price) || ('$' + (PD[k].startingPrice / 1000 | 0) + 'K'); var idr = fmtIdr(PD[k].startingPrice); return p + (idr ? '<span class="price-idr">' + idr + '</span>' : ''); } },
-        { key: 'bedrooms', fn: function(k) { return PD[k].bedrooms; } },
-        { key: 'area', fn: function(k) { return PD[k].compArea || (comp[k] && comp[k].area) || '\u2014'; } },
-        { key: 'land', fn: function(k) { return PD[k].compLand || (comp[k] && comp[k].land) || '\u2014'; } },
+        { key: 'price', accent: true, fn: function(k) { var pr = '$' + (PD[k].startingPrice / 1000 | 0) + 'K'; var idr = fmtIdr(PD[k].startingPrice); return pr + (idr ? '<span class="price-idr">' + idr + '</span>' : ''); } },
+        { key: 'bedrooms', fn: function(k) { return PD[k].bedrooms || '\u2014'; } },
+        { key: 'area', fn: function(k) { return PD[k].compArea || '\u2014'; } },
+        { key: 'land', fn: function(k) { return PD[k].compLand || '\u2014'; } },
         { key: 'units', fn: function(k) { return PD[k].totalUnits; } },
-        { key: 'pool', fn: function(k) { var p = PD[k].compPool || (comp[k] && comp[k].pool); if (!p) return '\u2014'; return (typeof p === 'object') ? (p[dataLang] || p.en) : p; } },
+        { key: 'pool', fn: function(k) { var p = PD[k].compPool; if (!p) return '\u2014'; return (typeof p === 'object') ? (p[dataLang] || p.en) : p; } },
         { key: 'handover', fn: function(k) { return PD[k].handover || '\u2014'; } },
         { key: 'status', fn: function(k) {
           var a = PD[k].availability;
