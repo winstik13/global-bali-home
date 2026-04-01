@@ -164,18 +164,18 @@
           <form class="contact-form">
             <div class="form-group" data-required>
               <label for="name">Имя</label>
-              <input type="text" id="name" name="name" placeholder="Ваше полное имя">
+              <input type="text" id="name" name="name" placeholder="Ваше полное имя" maxlength="100">
             </div>
 
             <div class="form-group" data-required>
               <label for="email">Email</label>
-              <input type="email" id="email" name="email" placeholder="your@email.com">
+              <input type="email" id="email" name="email" placeholder="your@email.com" maxlength="254">
               <span class="error-msg">Пожалуйста, введите корректный email</span>
             </div>
 
             <div class="form-group">
               <label for="phone">WhatsApp / Телефон</label>
-              <input type="tel" id="phone" name="phone" placeholder="+62 ...">
+              <input type="tel" id="phone" name="phone" placeholder="+62 ..." maxlength="20">
             </div>
 
             <div class="form-consent" id="consent-group">

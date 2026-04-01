@@ -3,6 +3,28 @@
    Dark Premium Theme
    ============================================ */
 
+// --- EmailJS SDK loader ---
+(function() {
+  var s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+  s.onload = function() { emailjs.init('HaHwM2pDiyzzJ4DcW'); };
+  document.head.appendChild(s);
+})();
+
+var EMAILJS_SERVICE = 'service_j1mywgt';
+var EMAILJS_TPL_CONTACT = 'template_3cv2zek';
+var EMAILJS_TPL_LEAD = 'template_42kf2u5';
+
+function sendEmail(templateId, params) {
+  if (typeof emailjs === 'undefined') {
+    console.warn('EmailJS not loaded');
+    return;
+  }
+  emailjs.send(EMAILJS_SERVICE, templateId, params)
+    .then(function() { console.log('Email sent OK'); })
+    .catch(function(err) { console.error('Email error:', err); });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
   // --- Apply custom colors from SITE_DATA ---
@@ -208,6 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
       leadThankSub: 'Have a question? Chat with our advisor now',
       leadThankWa: 'WhatsApp Us',
       leadOpenBtn: 'Open the Guide',
+      contactThank: 'Our advisors will get back to you as soon as possible.',
       guideReadOnline: 'Read Online',
       guideDownloadPdf: 'Download PDF',
       valName: 'Please enter your name',
@@ -308,6 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
       leadThankSub: 'Есть вопросы? Напишите нашему консультанту',
       leadThankWa: 'Написать в WhatsApp',
       leadOpenBtn: 'Открыть гид',
+      contactThank: 'Наши консультанты свяжутся с вами в ближайшее время.',
       guideReadOnline: 'Читать онлайн',
       guideDownloadPdf: 'Скачать PDF',
       valName: 'Пожалуйста, введите имя',
@@ -408,6 +432,7 @@ document.addEventListener('DOMContentLoaded', () => {
       leadThankSub: 'Ada pertanyaan? Hubungi konsultan kami sekarang',
       leadThankWa: 'WhatsApp Kami',
       leadOpenBtn: 'Buka Panduan',
+      contactThank: 'Konsultan kami akan segera menghubungi Anda.',
       guideReadOnline: 'Baca Online',
       guideDownloadPdf: 'Unduh PDF',
       valName: 'Silakan masukkan nama Anda',
@@ -1220,12 +1245,21 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (valid) {
+        var cName = contactForm.querySelector('[name="name"]').value.trim();
+        var cEmail = contactForm.querySelector('[name="email"]').value.trim();
+        var cPhone = (contactForm.querySelector('[name="phone"]').value || '').trim();
+        sendEmail(EMAILJS_TPL_CONTACT, {
+          from_name: cName,
+          from_email: cEmail,
+          phone: cPhone || '—',
+          source: 'Contact Form (' + lang.toUpperCase() + ')'
+        });
         trackEvent('generate_lead', 'contact_form', 'contact_page');
         const formWrap = contactForm.parentElement;
         contactForm.style.display = 'none';
         const success = document.createElement('div');
         success.className = 'form-success';
-        success.innerHTML = '<h3>Thank you!</h3><p>Our advisors will get back to you as soon as possible.</p>';
+        success.innerHTML = '<h3>' + t.leadThankTitle + '</h3><p>' + t.contactThank + '</p>';
         formWrap.appendChild(success);
         contactForm.reset();
       }
@@ -1370,9 +1404,9 @@ document.addEventListener('DOMContentLoaded', () => {
       <h3 class="quiz__question">${rec.project} <span class="quiz__match">${rec.match}% ${t.quizMatch}</span></h3>
       <p class="quiz__result-desc">${rec.desc}</p>
       <form class="quiz__form" novalidate>
-        <input type="text" class="quiz__input" name="quiz-name" placeholder="${t.quizName}">
-        <input type="email" class="quiz__input" name="quiz-email" placeholder="${t.quizEmail}">
-        <input type="tel" class="quiz__input" name="quiz-phone" placeholder="${t.quizPhone}">
+        <input type="text" class="quiz__input" name="quiz-name" placeholder="${t.quizName}" maxlength="100">
+        <input type="email" class="quiz__input" name="quiz-email" placeholder="${t.quizEmail}" maxlength="254">
+        <input type="tel" class="quiz__input" name="quiz-phone" placeholder="${t.quizPhone}" maxlength="20">
         <div class="form-consent" id="quiz-consent-group">
           <input type="checkbox" class="form-consent__checkbox" id="quiz-consent" name="quiz-consent">
           <label class="form-consent__text" for="quiz-consent">${t.quizConsent}</label>
@@ -1417,9 +1451,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const name = nameInput.value.trim();
       const email = emailInput.value.trim();
 
-      // TODO: Connect to backend when ready for production
-      // Currently in test mode — no data is sent anywhere
-      console.log('Quiz lead (test mode):', { name, email, phone, answers: quizAnswers, recommended: rec.project });
+      sendEmail(EMAILJS_TPL_LEAD, {
+        from_name: name,
+        from_email: email,
+        phone: phone || '—',
+        source: 'Quiz (' + lang.toUpperCase() + ')',
+        details: 'Goal: ' + (quizAnswers[0] || '') + '\nBudget: ' + (quizAnswers[1] || '') + '\nTimeline: ' + (quizAnswers[2] || '') + '\nRecommended: ' + rec.project
+      });
       trackEvent('generate_lead', 'quiz', rec.project);
       sessionStorage.setItem('leadCaptured', 'true');
       quizBar.style.width = '100%';
@@ -1608,16 +1646,16 @@ document.addEventListener('DOMContentLoaded', () => {
       <h3 class="tour__question" style="font-size:1.2rem;margin-bottom:8px;">${t.tourTitle}</h3>
       <p class="tour__form-sub">${t.tourFormSub}</p>
       <form class="tour__form" novalidate>
-        <input type="text" class="tour__input" name="tour-name" placeholder="${t.tourName}" required>
-        <input type="tel" class="tour__input" name="tour-whatsapp" placeholder="${t.tourWhatsapp}" required>
-        <input type="email" class="tour__input" name="tour-email" placeholder="${t.tourEmail}">
+        <input type="text" class="tour__input" name="tour-name" placeholder="${t.tourName}" required maxlength="100">
+        <input type="tel" class="tour__input" name="tour-whatsapp" placeholder="${t.tourWhatsapp}" required maxlength="20">
+        <input type="email" class="tour__input" name="tour-email" placeholder="${t.tourEmail}" maxlength="254">
         <div class="tour__time-group">
           <label class="tour__time-label">${t.tourTime}</label>
           <div class="tour__time-options">
             ${t.tourTimeOptions.map((opt, i) => `<label class="tour__time-option${i === 3 ? ' active' : ''}"><input type="radio" name="tour-time" value="${opt}"${i === 3 ? ' checked' : ''}><span>${opt}</span></label>`).join('')}
           </div>
         </div>
-        <textarea class="tour__input tour__textarea" name="tour-comment" placeholder="${t.tourComment}" rows="2"></textarea>
+        <textarea class="tour__input tour__textarea" name="tour-comment" placeholder="${t.tourComment}" rows="2" maxlength="500"></textarea>
         <div class="form-consent" id="tour-consent-group">
           <input type="checkbox" class="form-consent__checkbox" id="tour-consent" name="tour-consent">
           <label class="form-consent__text" for="tour-consent">${t.tourConsent}</label>
@@ -1672,7 +1710,14 @@ document.addEventListener('DOMContentLoaded', () => {
         lang: lang
       };
 
-      console.log('Tour booking lead (test mode):', data);
+      var tourDetails = 'Project: ' + data.project + '\nWhen in Bali: ' + data.whenInBali + '\nInterests: ' + (Array.isArray(data.interests) ? data.interests.join(', ') : data.interests) + '\nPreferred time: ' + (data.time || '—') + '\nComment: ' + (data.comment || '—');
+      sendEmail(EMAILJS_TPL_LEAD, {
+        from_name: data.name,
+        from_email: data.email || '—',
+        phone: data.whatsapp,
+        source: 'Tour Booking (' + lang.toUpperCase() + ')',
+        details: tourDetails
+      });
       trackEvent('generate_lead', 'tour_booking', data.project);
       sessionStorage.setItem('leadCaptured', 'true');
 
@@ -1890,7 +1935,13 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       if (!ok) return;
       const name = nameInp ? nameInp.value.trim() : '';
       const email = emailInp ? emailInp.value.trim() : '';
-      console.log('Lead magnet:', { name, email });
+      sendEmail(EMAILJS_TPL_LEAD, {
+        from_name: name,
+        from_email: email,
+        phone: '—',
+        source: 'Lead Magnet (' + lang.toUpperCase() + ')',
+        details: 'Investment Guide download'
+      });
       trackEvent('generate_lead', 'lead_magnet', 'investment_guide');
       sessionStorage.setItem('leadCaptured', 'true');
       var wrap = form.closest('.lead-magnet__form-wrap');
@@ -1991,7 +2042,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       <h3 class="exit-popup__title" id="exit-popup-title">${t.exitTitle}</h3>
       <p class="exit-popup__text">${t.exitText}</p>
       <form class="exit-popup__form" novalidate>
-        <input type="email" class="exit-popup__input" placeholder="${t.exitPlaceholder}">
+        <input type="email" class="exit-popup__input" placeholder="${t.exitPlaceholder}" maxlength="254">
         <div class="form-consent" id="exit-consent-group">
           <input type="checkbox" class="form-consent__checkbox" id="exit-consent" name="exit-consent">
           <label class="form-consent__text" for="exit-consent">${t.quizConsent}</label>
@@ -2040,7 +2091,13 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     }
     if (!ok) return;
     const email = exitInput.value.trim();
-    console.log('Exit popup lead:', { email });
+    sendEmail(EMAILJS_TPL_LEAD, {
+      from_name: '—',
+      from_email: email,
+      phone: '—',
+      source: 'Exit Popup (' + lang.toUpperCase() + ')',
+      details: 'Investment Guide interest'
+    });
     trackEvent('generate_lead', 'exit_popup', 'investment_guide');
     sessionStorage.setItem('leadCaptured', 'true');
     var exitForm = exitOverlay.querySelector('.exit-popup__form');
