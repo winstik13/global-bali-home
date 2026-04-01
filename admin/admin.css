@@ -2373,9 +2373,30 @@ input[type="number"] {
   .admin-tab h2 { font-size: 1.2rem; margin-bottom: 20px; }
 
   /* Dashboard summary cards */
-  .dash-summary { flex-wrap: wrap; }
-  .dash-summary__item { flex: 1 1 45%; min-width: 0; padding: 14px 12px; }
-  .dash-summary__value { font-size: 1.2rem; }
+  .dash-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .dash-summary__item {
+    padding: 16px 12px;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+  /* Vertical divider between left and right columns */
+  .dash-summary__item:nth-child(odd):not(:last-child) {
+    border-right: 1px solid var(--color-border);
+  }
+  /* Last item (Potential) spans full width, no bottom border */
+  .dash-summary__item:last-child {
+    grid-column: 1 / -1;
+    border-bottom: none;
+  }
+  /* Row before last — no bottom border (merges with full-width item) */
+  .dash-summary__item:nth-child(3),
+  .dash-summary__item:nth-child(4) {
+    border-bottom: none;
+  }
+  .dash-summary__value { font-size: 1.3rem; }
 
   /* Unit table → card layout on mobile */
   .admin-unit-table thead { display: none; }
