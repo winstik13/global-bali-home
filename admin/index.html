@@ -627,7 +627,7 @@
                 </div>
                 <div class="form-group">
                   <label data-i18n="exitpopup.countdown">Countdown (sec)</label>
-                  <input type="number" id="exitpopup-countdown" min="1" max="30" step="1" placeholder="7">
+                  <input type="number" id="exitpopup-countdown" min="1" max="30" step="1" placeholder="7" class="ep-live">
                 </div>
               </div>
             </div>
@@ -649,8 +649,8 @@
                   <div class="form-group"><label data-i18n="exitpopup.field.submit">Submit Button</label><input type="text" id="exitpopup-en-submit" class="ep-live" data-target="ep-preview-submit"></div>
                 </div>
                 <div class="form-grid">
-                  <div class="form-group"><label data-i18n="exitpopup.field.success">Success Message</label><input type="text" id="exitpopup-en-success"><small class="field-hint" data-i18n="exitpopup.hint.success">Countdown number is appended automatically</small></div>
-                  <div class="form-group"><label data-i18n="exitpopup.field.openBtn">Open Guide Button</label><input type="text" id="exitpopup-en-openBtn"></div>
+                  <div class="form-group"><label data-i18n="exitpopup.field.success">Success Message</label><input type="text" id="exitpopup-en-success" class="ep-live"><small class="field-hint" data-i18n="exitpopup.hint.success">Countdown number is appended automatically</small></div>
+                  <div class="form-group"><label data-i18n="exitpopup.field.openBtn">Open Guide Button</label><input type="text" id="exitpopup-en-openBtn" class="ep-live"></div>
                 </div>
               </div>
 
@@ -663,8 +663,8 @@
                   <div class="form-group"><label data-i18n="exitpopup.field.submit">Submit Button</label><input type="text" id="exitpopup-ru-submit" class="ep-live" data-target="ep-preview-submit"></div>
                 </div>
                 <div class="form-grid">
-                  <div class="form-group"><label data-i18n="exitpopup.field.success">Success Message</label><input type="text" id="exitpopup-ru-success"><small class="field-hint" data-i18n="exitpopup.hint.success">Countdown number is appended automatically</small></div>
-                  <div class="form-group"><label data-i18n="exitpopup.field.openBtn">Open Guide Button</label><input type="text" id="exitpopup-ru-openBtn"></div>
+                  <div class="form-group"><label data-i18n="exitpopup.field.success">Success Message</label><input type="text" id="exitpopup-ru-success" class="ep-live"><small class="field-hint" data-i18n="exitpopup.hint.success">Countdown number is appended automatically</small></div>
+                  <div class="form-group"><label data-i18n="exitpopup.field.openBtn">Open Guide Button</label><input type="text" id="exitpopup-ru-openBtn" class="ep-live"></div>
                 </div>
               </div>
 
@@ -677,8 +677,8 @@
                   <div class="form-group"><label data-i18n="exitpopup.field.submit">Submit Button</label><input type="text" id="exitpopup-id-submit" class="ep-live" data-target="ep-preview-submit"></div>
                 </div>
                 <div class="form-grid">
-                  <div class="form-group"><label data-i18n="exitpopup.field.success">Success Message</label><input type="text" id="exitpopup-id-success"><small class="field-hint" data-i18n="exitpopup.hint.success">Countdown number is appended automatically</small></div>
-                  <div class="form-group"><label data-i18n="exitpopup.field.openBtn">Open Guide Button</label><input type="text" id="exitpopup-id-openBtn"></div>
+                  <div class="form-group"><label data-i18n="exitpopup.field.success">Success Message</label><input type="text" id="exitpopup-id-success" class="ep-live"><small class="field-hint" data-i18n="exitpopup.hint.success">Countdown number is appended automatically</small></div>
+                  <div class="form-group"><label data-i18n="exitpopup.field.openBtn">Open Guide Button</label><input type="text" id="exitpopup-id-openBtn" class="ep-live"></div>
                 </div>
               </div>
             </div>
@@ -705,6 +705,18 @@
                     <span>I agree to the Privacy Policy</span>
                   </div>
                   <button class="ep-preview__btn" id="ep-preview-submit" disabled>Access the Guide</button>
+                </div>
+              </div>
+            </div>
+            <h3 class="ep-preview-wrap__label" data-i18n="exitpopup.afterSubmit">After Submit</h3>
+            <div class="ep-preview-container">
+              <div class="ep-preview">
+                <button class="ep-preview__close" disabled>&times;</button>
+                <span class="ep-preview__tag" id="ep-preview-tag2">Exclusive Guide</span>
+                <h3 class="ep-preview__title" id="ep-preview-title2">Before You Go</h3>
+                <p class="ep-preview__text ep-preview__text--center" id="ep-preview-success">Your guide will be ready in <span class="ep-preview__countdown">7</span></p>
+                <div class="ep-preview__form">
+                  <button class="ep-preview__btn" id="ep-preview-openBtn" disabled>Open the Guide</button>
                 </div>
               </div>
             </div>

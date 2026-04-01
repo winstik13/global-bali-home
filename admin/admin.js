@@ -258,6 +258,7 @@
       'exitpopup.settings': 'Settings',
       'exitpopup.content': 'Content',
       'exitpopup.preview': 'Preview',
+      'exitpopup.afterSubmit': 'After Submit',
       'exitpopup.enabled': 'Enabled',
       'exitpopup.delay': 'Trigger Delay (sec)',
       'exitpopup.countdown': 'Countdown (sec)',
@@ -610,6 +611,7 @@
       'exitpopup.settings': 'Настройки',
       'exitpopup.content': 'Контент',
       'exitpopup.preview': 'Превью',
+      'exitpopup.afterSubmit': 'После отправки',
       'exitpopup.enabled': 'Включён',
       'exitpopup.delay': 'Задержка срабатывания (сек)',
       'exitpopup.countdown': 'Обратный отсчёт (сек)',
@@ -4125,21 +4127,34 @@
 
   function updateEpPreview() {
     const lang = epActiveLang;
-    const tagEl = $('#ep-preview-tag');
-    const titleEl = $('#ep-preview-title');
-    const textEl = $('#ep-preview-text');
-    const placeholderEl = $('#ep-preview-placeholder');
-    const submitEl = $('#ep-preview-submit');
     const tagVal = ($(`#exitpopup-${lang}-tag`) || {}).value || '';
     const titleVal = ($(`#exitpopup-${lang}-title`) || {}).value || '';
     const textVal = ($(`#exitpopup-${lang}-text`) || {}).value || '';
     const placeholderVal = ($(`#exitpopup-${lang}-placeholder`) || {}).value || '';
     const submitVal = ($(`#exitpopup-${lang}-submit`) || {}).value || '';
+    const successVal = ($(`#exitpopup-${lang}-success`) || {}).value || '';
+    const openBtnVal = ($(`#exitpopup-${lang}-openBtn`) || {}).value || '';
+    const countdown = ($('#exitpopup-countdown') || {}).value || '7';
+    // Main preview
+    const tagEl = $('#ep-preview-tag');
+    const titleEl = $('#ep-preview-title');
+    const textEl = $('#ep-preview-text');
+    const placeholderEl = $('#ep-preview-placeholder');
+    const submitEl = $('#ep-preview-submit');
     if (tagEl) tagEl.textContent = tagVal;
     if (titleEl) titleEl.textContent = titleVal;
     if (textEl) textEl.textContent = textVal;
     if (placeholderEl) placeholderEl.placeholder = placeholderVal;
     if (submitEl) submitEl.textContent = submitVal;
+    // After-submit preview
+    const tag2 = $('#ep-preview-tag2');
+    const title2 = $('#ep-preview-title2');
+    const successEl = $('#ep-preview-success');
+    const openBtnEl = $('#ep-preview-openBtn');
+    if (tag2) tag2.textContent = tagVal;
+    if (title2) title2.textContent = titleVal;
+    if (successEl) successEl.innerHTML = successVal + ' <span class="ep-preview__countdown">' + countdown + '</span>';
+    if (openBtnEl) openBtnEl.textContent = openBtnVal;
   }
 
   function populateExitPopup() {
