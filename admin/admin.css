@@ -2313,7 +2313,8 @@ input[type="number"] {
   .editor-actions--inline { flex-wrap: wrap; }
   .settings-row { flex-direction: column; align-items: flex-start; gap: var(--sp-md); }
 
-  .admin-nav { padding: 0 12px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .admin-nav { padding: 0 12px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none; }
+  .admin-nav::-webkit-scrollbar { display: none; }
   .admin-nav__btn { padding: 14px 18px; font-size: 0.75rem; white-space: nowrap; }
   .admin-content { padding: 16px 12px; }
 
