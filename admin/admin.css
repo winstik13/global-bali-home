@@ -1399,6 +1399,7 @@ input[type="number"] {
 
 .editor-actions--inline.editor-actions--sticky {
   border-top: none;
+  box-shadow: none;
 }
 
 /* Paired inputs (e.g. min/max, yield/growth) */
