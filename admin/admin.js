@@ -1548,7 +1548,7 @@
     // Hero Stats (4 languages)
     html += `<div class="editor-section"><h3>${t('projects.heroStats')}</h3>`;
     ['en', 'ru', 'id'].forEach(lng => {
-      const stats = p.heroStats[lng] || [];
+      const stats = (p.heroStats && p.heroStats[lng]) || [];
       html += `<div style="margin-bottom:16px"><div class="hero-stat-field__lang">${lng.toUpperCase()}</div>
         <div class="hero-stats-grid">`;
       stats.forEach((s, i) => {
@@ -1565,8 +1565,8 @@
     html += `<div class="editor-section"><h3>${t('projects.showcaseCard')}</h3>`;
     ['en', 'ru', 'id'].forEach(lng => {
       html += `<div style="margin-bottom:16px"><div class="hero-stat-field__lang">${lng.toUpperCase()}</div>
-        <div class="form-group"><label>${t('projects.priceLabel')}</label><input type="text" class="showcase-input" data-lang="${lng}" data-field="showcasePrice" value="${(p.showcasePrice[lng] || '')}"></div>
-        <div class="form-group" style="margin-top:8px"><label>${t('projects.description')}</label><textarea class="showcase-input" data-lang="${lng}" data-field="showcaseDesc" rows="2">${(p.showcaseDesc[lng] || '')}</textarea></div>
+        <div class="form-group"><label>${t('projects.priceLabel')}</label><input type="text" class="showcase-input" data-lang="${lng}" data-field="showcasePrice" value="${(p.showcasePrice && p.showcasePrice[lng]) || ''}"></div>
+        <div class="form-group" style="margin-top:8px"><label>${t('projects.description')}</label><textarea class="showcase-input" data-lang="${lng}" data-field="showcaseDesc" rows="2">${(p.showcaseDesc && p.showcaseDesc[lng]) || ''}</textarea></div>
       </div>`;
     });
     html += '</div>';
@@ -1757,6 +1757,7 @@
         const floor = inp.dataset.floor;
         const file = inp.files[0];
         if (!file) return;
+        if (file.size > 10 * 1024 * 1024) { alert('File exceeds 10 MB limit'); return; }
         const reader = new FileReader();
         reader.onload = async () => {
           const base64 = reader.result.split(',')[1];
@@ -2062,7 +2063,7 @@
       results.forEach(r => { seoCache[r.lng] = r; });
       renderSeoFields();
     } catch (err) {
-      editor.innerHTML = `<p style="color:var(--color-danger)">Error: ${err.message}</p>`;
+      editor.innerHTML = `<p style="color:var(--color-danger)">Error: ${escapeHtml(err.message)}</p>`;
     }
   }
 
@@ -2499,10 +2500,15 @@
   }
 
   function resizeImage(file, maxWidth, quality) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
+      if (file.size > 10 * 1024 * 1024) {
+        return reject(new Error('File exceeds 10 MB limit'));
+      }
       const reader = new FileReader();
+      reader.onerror = () => reject(new Error('Failed to read file'));
       reader.onload = (e) => {
         const img = new Image();
+        img.onerror = () => reject(new Error('Invalid image file'));
         img.onload = () => {
           const canvas = document.createElement('canvas');
           let w = img.width, h = img.height;
@@ -2510,12 +2516,31 @@
           canvas.width = w;
           canvas.height = h;
           canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-          resolve(canvas.toDataURL('image/jpeg', quality));
+          const result = canvas.toDataURL('image/jpeg', quality);
+          canvas.width = 0;
+          canvas.height = 0;
+          resolve(result);
         };
         img.src = e.target.result;
       };
       reader.readAsDataURL(file);
     });
+  }
+
+  // ─── File commit lock (prevents race conditions on same file) ───
+  const _commitLocks = {};
+  async function withCommitLock(path, fn) {
+    while (_commitLocks[path]) {
+      await _commitLocks[path];
+    }
+    let resolve;
+    _commitLocks[path] = new Promise(r => { resolve = r; });
+    try {
+      return await fn();
+    } finally {
+      delete _commitLocks[path];
+      resolve();
+    }
   }
 
   // ─── GitHub API Helpers ───
@@ -2535,34 +2560,44 @@
   }
 
   async function commitFile(path, content, message, sha, base64Content) {
-    // Get current SHA if not provided
-    if (!sha) {
-      try {
-        const existing = await fetchFile(path);
-        sha = existing.sha;
-      } catch { /* new file */ }
-    }
+    return withCommitLock(path, async () => {
+      const MAX_RETRIES = 2;
+      for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+        // Get current SHA if not provided (or refresh on retry)
+        if (!sha || attempt > 0) {
+          try {
+            const existing = await fetchFile(path);
+            sha = existing.sha;
+          } catch { sha = null; /* new file */ }
+        }
 
-    const body = {
-      message,
-      content: base64Content || btoa(unescape(encodeURIComponent(content))),
-    };
-    if (sha) body.sha = sha;
+        const body = {
+          message,
+          content: base64Content || btoa(unescape(encodeURIComponent(content))),
+        };
+        if (sha) body.sha = sha;
 
-    const res = await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`, {
-      method: 'PUT',
-      headers: {
-        'Authorization': `token ${githubPAT}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
+        const res = await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `token ${githubPAT}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        });
+
+        if (res.ok) return res.json();
+
+        // Retry on 409 Conflict (SHA mismatch)
+        if (res.status === 409 && attempt < MAX_RETRIES) {
+          sha = null;
+          continue;
+        }
+
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || `HTTP ${res.status}`);
+      }
     });
-
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.message || `HTTP ${res.status}`);
-    }
-    return res.json();
   }
 
   async function deleteFile(path, sha, message) {
