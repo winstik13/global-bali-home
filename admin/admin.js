@@ -4496,16 +4496,41 @@
     const pctStep = ((Math.min(tourPreviewStep, totalSteps) + 1) / (totalSteps + 2)) * 100;
     const pct = tourPreviewStep > totalSteps ? 100 : pctStep;
 
+    // Same SVG icons as main.js tourIcons
+    var previewIcons = [
+      [
+        '<svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><rect x="9" y="10" width="6" height="5" rx="0.5"/><path d="M12 15v6"/></svg>',
+        '<svg viewBox="0 0 24 24"><path d="M3 21h18M9 21V13h6v8"/><path d="M3 7l9-4 9 4"/><rect x="5" y="7" width="14" height="14" rx="0" fill="none"/></svg>',
+        '<svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V8l4-3v16"/><path d="M9 21V5l6-3v19"/><path d="M15 21V4l4 3v14"/></svg>',
+        '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>'
+      ],
+      [
+        '<svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+        '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h2v2H8z"/></svg>',
+        '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M14 14h2v2h-2z"/></svg>',
+        '<svg viewBox="0 0 24 24"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.4-.1.9.3 1.1L11 12l-2 3H6l-1 1 3 2 2 3 1-1v-3l3-2 3.7 7.3c.2.4.7.6 1.1.3l.5-.3c.4-.2.5-.6.5-1.1z"/></svg>'
+      ],
+      [
+        '<svg viewBox="0 0 24 24"><path d="M2 20h20"/><path d="M5 20V8l5-3 5 3v12"/><path d="M15 20V10l5-3v13"/><rect x="8" y="10" width="4" height="3" rx="0.5"/></svg>',
+        '<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>',
+        '<svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',
+        '<svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/><path d="M9 7h6"/></svg>',
+        '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>'
+      ]
+    ];
+
     if (tourPreviewStep < totalSteps) {
       const s = steps[tourPreviewStep] || { question: '', options: [] };
       body += '<p class="tour__step-label">Step ' + (tourPreviewStep + 1) + ' of ' + totalSteps + '</p>';
       body += '<h3 class="tour__question">' + escAttr(s.question || '—') + '</h3>';
       body += '<div class="tour__options">';
-      (s.options || []).forEach(function(opt) {
+      var stepIcons = previewIcons[tourPreviewStep] || [];
+      (s.options || []).forEach(function(opt, oi) {
+        var icon = stepIcons[oi] || '';
         if (s.multi) {
-          body += '<label class="tour__checkbox"><input type="checkbox" disabled><span class="tour__checkbox-icon"><svg viewBox="0 0 24 24" width="24" height="24"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></span><span>' + escAttr(opt) + '</span></label>';
+          body += '<label class="tour__checkbox"><input type="checkbox" disabled><span class="tour__checkbox-icon">' + icon + '</span><span>' + escAttr(opt) + '</span></label>';
         } else {
-          body += '<button class="tour__option" disabled><span>' + escAttr(opt) + '</span></button>';
+          body += '<button class="tour__option" disabled><span class="tour__option-icon">' + icon + '</span><span>' + escAttr(opt) + '</span></button>';
         }
       });
       body += '</div>';
@@ -4518,10 +4543,10 @@
       body += '<input type="text" class="tour__input" placeholder="' + escAttr(form.whatsapp || 'WhatsApp') + '" disabled>';
       body += '<input type="text" class="tour__input" placeholder="' + escAttr(form.email || 'Email') + '" disabled>';
       if (form.time) {
-        body += '<div class="tour__time-group"><label class="tour__time-label">' + escHtml(form.time) + '</label>';
+        body += '<div class="tour__time-group"><label class="tour__time-label">' + escAttr(form.time) + '</label>';
         body += '<div class="tour__time-options">';
         (form.timeOptions || []).forEach(function(opt, i) {
-          body += '<label class="tour__time-option' + (i === 3 ? ' active' : '') + '"><input type="radio" disabled' + (i === 3 ? ' checked' : '') + '><span>' + escHtml(opt) + '</span></label>';
+          body += '<label class="tour__time-option' + (i === 3 ? ' active' : '') + '"><input type="radio" disabled' + (i === 3 ? ' checked' : '') + '><span>' + escAttr(opt) + '</span></label>';
         });
         body += '</div></div>';
       }
