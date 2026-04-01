@@ -399,11 +399,28 @@
         break-inside: avoid;
         page-break-inside: avoid;
       }
+      .guide-section p {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
       .guide-disclaimer, .guide-footer {
         break-before: auto;
         page-break-before: auto;
         break-inside: avoid;
         page-break-inside: avoid;
+      }
+      .guide-footer {
+        text-align: center !important;
+      }
+      .guide-footer__logo {
+        display: block !important;
+        margin: 0 auto 16px !important;
+      }
+      .guide-footer p {
+        text-align: center !important;
+      }
+      .guide-disclaimer p {
+        text-align: center !important;
       }
       /* Reduce spacing to fit more per page */
       .guide-section { padding: 32px 0; border-bottom: none; }
