@@ -201,13 +201,15 @@ document.addEventListener('DOMContentLoaded', () => {
       exitText: 'Access our comprehensive Bali Real Estate Investment Guide with market analysis, ROI projections, and expert insights.',
       exitPlaceholder: 'Your email address',
       exitSubmit: 'Access the Investment Guide',
-      exitSuccess: 'Your guide will be ready in <span class="countdown-num">7</span>',
+      exitSuccess: 'Thank you! Your guide is ready.',
       exitOpenBtn: 'Open the Guide',
       leadThankTitle: 'Your Guide Is Ready!',
-      leadThankText: 'Your guide will be ready in <span class="countdown-num">7</span>',
+      leadThankText: 'Choose how you\'d like to access it:',
       leadThankSub: 'Have a question? Chat with our advisor now',
       leadThankWa: 'WhatsApp Us',
       leadOpenBtn: 'Open the Guide',
+      guideReadOnline: 'Read Online',
+      guideDownloadPdf: 'Download PDF',
       valName: 'Please enter your name',
       valEmail: 'Please enter a valid email',
       valConsent: 'Please accept the privacy policy',
@@ -299,13 +301,15 @@ document.addEventListener('DOMContentLoaded', () => {
       exitText: 'Получите наш подробный гид по инвестициям в недвижимость Бали с анализом рынка, прогнозами доходности и экспертными оценками.',
       exitPlaceholder: 'Ваш email',
       exitSubmit: 'Получить инвестиционный гид',
-      exitSuccess: 'Ваш гид будет готов через <span class="countdown-num">7</span>',
+      exitSuccess: 'Спасибо! Ваш гид готов.',
       exitOpenBtn: 'Открыть гид',
       leadThankTitle: 'Ваш гид готов!',
-      leadThankText: 'Ваш гид будет готов через <span class="countdown-num">7</span>',
+      leadThankText: 'Выберите удобный формат:',
       leadThankSub: 'Есть вопросы? Напишите нашему консультанту',
       leadThankWa: 'Написать в WhatsApp',
       leadOpenBtn: 'Открыть гид',
+      guideReadOnline: 'Читать онлайн',
+      guideDownloadPdf: 'Скачать PDF',
       valName: 'Пожалуйста, введите имя',
       valEmail: 'Введите корректный email',
       valConsent: 'Необходимо согласие с политикой',
@@ -397,13 +401,15 @@ document.addEventListener('DOMContentLoaded', () => {
       exitText: 'Akses panduan investasi properti Bali kami yang komprehensif dengan analisis pasar, proyeksi ROI, dan wawasan ahli.',
       exitPlaceholder: 'Alamat email Anda',
       exitSubmit: 'Akses Panduan Investasi',
-      exitSuccess: 'Panduan Anda akan siap dalam <span class="countdown-num">7</span>',
+      exitSuccess: 'Terima kasih! Panduan Anda siap.',
       exitOpenBtn: 'Buka Panduan',
       leadThankTitle: 'Panduan Anda Siap!',
-      leadThankText: 'Panduan Anda akan siap dalam <span class="countdown-num">7</span>',
+      leadThankText: 'Pilih format yang Anda inginkan:',
       leadThankSub: 'Ada pertanyaan? Hubungi konsultan kami sekarang',
       leadThankWa: 'WhatsApp Kami',
       leadOpenBtn: 'Buka Panduan',
+      guideReadOnline: 'Baca Online',
+      guideDownloadPdf: 'Unduh PDF',
       valName: 'Silakan masukkan nama Anda',
       valEmail: 'Masukkan email yang valid',
       valConsent: 'Harap setujui kebijakan privasi',
@@ -1851,6 +1857,12 @@ document.addEventListener('DOMContentLoaded', () => {
     return '';
   }
 
+  function getGuideWebPath() {
+    var langFile = lang === 'ru' ? 'ru' : lang === 'id' ? 'id' : 'en';
+    var prefix = (lang !== 'en') ? '../' : '';
+    return prefix + 'guide/' + langFile + '.html';
+  }
+
 document.querySelectorAll('.lead-magnet__form').forEach(form => {
     form.setAttribute('novalidate', '');
     form.querySelectorAll('input[type="text"], input[type="email"]').forEach(function(inp) {
@@ -1886,25 +1898,12 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       sessionStorage.setItem('leadCaptured', 'true');
       var wrap = form.closest('.lead-magnet__form-wrap');
       var waNum2 = (typeof SITE_DATA !== 'undefined' && SITE_DATA.contacts) ? SITE_DATA.contacts.whatsapp : '6281338741177';
-      wrap.innerHTML = `<div class="lead-magnet__success"><h3>${t.leadThankTitle}</h3><p>${t.leadThankText}</p><div class="lead-magnet__divider"></div><p class="lead-magnet__sub">${t.leadThankSub}</p><a href="https://wa.me/${waNum2}" target="_blank" rel="noopener noreferrer" class="btn lead-magnet__wa">${t.leadThankWa}</a></div>`;
       var guidePath = getGuidePath();
-      if (guidePath) {
-        var cnt = 7;
-        var numEl = wrap.querySelector('.countdown-num');
-        var iv = setInterval(function() {
-          cnt--;
-          if (numEl) {
-            numEl.textContent = cnt;
-            numEl.classList.add('tick');
-            setTimeout(function() { numEl.classList.remove('tick'); }, 300);
-          }
-          if (cnt <= 0) {
-            clearInterval(iv);
-            trackEvent('file_download', 'pdf', 'investment_guide');
-            if (numEl) numEl.parentElement.innerHTML = '<a href="' + guidePath + '" target="_blank" rel="noopener noreferrer" class="btn btn--primary guide-open-btn">' + t.leadOpenBtn + '</a>';
-          }
-        }, 1000);
-      }
+      var guideWebPath = getGuideWebPath();
+      var guideButtons = '';
+      if (guideWebPath) guideButtons += '<a href="' + guideWebPath + '" target="_blank" rel="noopener noreferrer" class="btn btn--primary guide-open-btn">' + t.guideReadOnline + '</a>';
+      if (guidePath) guideButtons += '<a href="' + guidePath + '" target="_blank" rel="noopener noreferrer" class="btn btn--outline guide-open-btn">' + t.guideDownloadPdf + '</a>';
+      wrap.innerHTML = '<div class="lead-magnet__success"><h3>' + t.leadThankTitle + '</h3><p>' + t.leadThankText + '</p><div class="lead-magnet__guide-actions">' + guideButtons + '</div><div class="lead-magnet__divider"></div><p class="lead-magnet__sub">' + t.leadThankSub + '</p><a href="https://wa.me/' + waNum2 + '" target="_blank" rel="noopener noreferrer" class="btn lead-magnet__wa">' + t.leadThankWa + '</a></div>';
     });
   });
 
@@ -1980,11 +1979,9 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
   // --- Exit Intent Popup ---
   var exitPopupEnabled = true;
   var exitPopupDelay = 30000;
-  var exitCountdown = 7;
   if (typeof SITE_DATA !== 'undefined' && SITE_DATA.exitPopup) {
     exitPopupEnabled = SITE_DATA.exitPopup.enabled !== false;
     exitPopupDelay = (SITE_DATA.exitPopup.delay || 30) * 1000;
-    exitCountdown = SITE_DATA.exitPopup.countdown || 7;
   }
 
   if (exitPopupEnabled) {
@@ -2012,7 +2009,6 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     exitOverlay.classList.remove('active');
     document.body.style.overflow = '';
     sessionStorage.setItem('exitShown', 'true');
-    if (exitOverlay._countdownIv) { clearInterval(exitOverlay._countdownIv); exitOverlay._countdownIv = null; }
   };
 
   exitOverlay.querySelector('.exit-popup__close').addEventListener('click', closeExit);
@@ -2051,25 +2047,15 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     trackEvent('generate_lead', 'exit_popup', 'investment_guide');
     sessionStorage.setItem('leadCaptured', 'true');
     var exitForm = exitOverlay.querySelector('.exit-popup__form');
-    exitForm.innerHTML = `<p style="text-align:center;font-weight:600;padding:12px 0;">${t.exitSuccess}</p>`;
     var guidePath = getGuidePath();
-    if (guidePath) {
-      var cnt = exitCountdown;
-      var numEl = exitForm.querySelector('.countdown-num');
-      exitOverlay._countdownIv = setInterval(function() {
-        cnt--;
-        if (numEl) {
-          numEl.textContent = cnt;
-          numEl.classList.add('tick');
-          setTimeout(function() { numEl.classList.remove('tick'); }, 300);
-        }
-        if (cnt <= 0) {
-          clearInterval(exitOverlay._countdownIv);
-          exitOverlay._countdownIv = null;
-          if (numEl) numEl.parentElement.innerHTML = '<a href="' + guidePath + '" target="_blank" rel="noopener noreferrer" class="btn btn--primary guide-open-btn">' + t.exitOpenBtn + '</a>';
-        }
-      }, 1000);
+    var guideWebPath = getGuideWebPath();
+    var exitGuideButtons = '';
+    if (guideWebPath) exitGuideButtons += '<a href="' + guideWebPath + '" target="_blank" rel="noopener noreferrer" class="btn btn--primary guide-open-btn">' + t.guideReadOnline + '</a>';
+    if (guidePath) exitGuideButtons += '<a href="' + guidePath + '" target="_blank" rel="noopener noreferrer" class="btn btn--outline guide-open-btn">' + t.guideDownloadPdf + '</a>';
+    if (exitGuideButtons) {
+      exitForm.innerHTML = '<p style="text-align:center;font-weight:600;padding:12px 0;">' + t.exitSuccess + '</p><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;padding:8px 0;">' + exitGuideButtons + '</div>';
     } else {
+      exitForm.innerHTML = '<p style="text-align:center;font-weight:600;padding:12px 0;">' + t.exitSuccess + '</p>';
       setTimeout(closeExit, 3000);
     }
   });

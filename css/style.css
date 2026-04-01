@@ -3453,6 +3453,18 @@ td .price-idr {
   margin-bottom: 0;
 }
 
+.lead-magnet__guide-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 24px 0;
+}
+
+.lead-magnet__guide-actions .btn {
+  min-width: 160px;
+}
+
 .lead-magnet__divider {
   width: 48px;
   height: 1px;

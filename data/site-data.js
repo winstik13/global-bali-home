@@ -77,7 +77,7 @@ const SITE_DATA = {
         "text": "Access our comprehensive Bali Real Estate Investment Guide with market analysis, ROI projections, and expert insights.",
         "placeholder": "Your email address",
         "submit": "Access the Investment Guide",
-        "success": "Your guide will be ready in",
+        "success": "Thank you! Your guide is ready.",
         "openBtn": "Open the Guide"
       },
       "ru": {
@@ -86,7 +86,7 @@ const SITE_DATA = {
         "text": "Получите наш подробный гид по инвестициям в недвижимость Бали с анализом рынка, прогнозами доходности и экспертными оценками.",
         "placeholder": "Ваш email",
         "submit": "Получить инвестиционный гид",
-        "success": "Ваш гид будет готов через",
+        "success": "Спасибо! Ваш гид готов.",
         "openBtn": "Открыть гид"
       },
       "id": {
@@ -95,7 +95,7 @@ const SITE_DATA = {
         "text": "Akses panduan investasi properti Bali kami yang komprehensif dengan analisis pasar, proyeksi ROI, dan wawasan ahli.",
         "placeholder": "Alamat email Anda",
         "submit": "Akses Panduan Investasi",
-        "success": "Panduan Anda akan siap dalam",
+        "success": "Terima kasih! Panduan Anda siap.",
         "openBtn": "Buka Panduan"
       }
     }
