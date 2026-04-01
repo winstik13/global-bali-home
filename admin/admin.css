@@ -2776,6 +2776,9 @@ input[type="number"] {
   display: flex;
   gap: 6px;
   margin-bottom: var(--sp-md);
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .tp-preview-nav__btn {
