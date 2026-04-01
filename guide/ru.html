@@ -251,6 +251,10 @@
       font-size: 0.75rem;
       color: var(--color-text-dim);
       line-height: 1.6;
+      text-align: center;
+    }
+    .guide-disclaimer p {
+      max-width: none;
     }
 
     @media (max-width: 768px) {
@@ -316,9 +320,10 @@
       border-top: 1px solid var(--color-border);
     }
     .guide-footer__logo {
+      display: block;
       width: 100px;
       opacity: 0.5;
-      margin-bottom: 16px;
+      margin: 0 auto 16px;
     }
     .guide-footer p {
       font-size: 0.75rem;
@@ -382,6 +387,12 @@
       .guide-hero, .guide-toc {
         break-before: auto;
         page-break-before: auto;
+      }
+      .guide-toc {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        break-after: always;
+        page-break-after: always;
       }
       .guide-section h2, .guide-section h3 {
         break-after: avoid;
