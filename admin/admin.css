@@ -1015,6 +1015,9 @@ input[type="number"] {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
+  position: sticky;
+  top: 112px;
+  z-index: 50;
 }
 .settings-nav a {
   padding: 6px 14px;
