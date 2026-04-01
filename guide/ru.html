@@ -330,6 +330,7 @@
     }
 
     @media print {
+      /* Color overrides for light theme */
       :root {
         --color-bg: #fff;
         --color-cream: #1a1a1a;
@@ -340,7 +341,6 @@
         --color-accent: #2d5016;
       }
       .guide-actions, .guide-cta-bar { display: none !important; }
-      .guide-section { break-inside: avoid; page-break-inside: avoid; }
       body { background: #fff !important; color: #333; -webkit-print-color-adjust: exact; }
       .guide-hero { padding-top: 60px; padding-bottom: 40px; }
       .guide-hero h1 { color: #1a1a1a; }
@@ -373,6 +373,41 @@
       .guide-logo { filter: invert(1); opacity: 1; }
       .guide-footer__logo { filter: invert(1); opacity: 0.7; }
       .bg-alt { background: transparent !important; }
+
+      /* Page break control */
+      .guide-section {
+        break-before: always;
+        page-break-before: always;
+      }
+      .guide-hero, .guide-toc {
+        break-before: auto;
+        page-break-before: auto;
+      }
+      .guide-section h2, .guide-section h3 {
+        break-after: avoid;
+        page-break-after: avoid;
+      }
+      .guide-table, .guide-stat-grid, .guide-highlight {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      .guide-section ul {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      .guide-table tr {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      .guide-disclaimer, .guide-footer {
+        break-before: auto;
+        page-break-before: auto;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      /* Reduce spacing to fit more per page */
+      .guide-section { padding: 32px 0; border-bottom: none; }
+      .guide-section h3 { margin-top: 24px; }
     }
   </style>
 </head>
