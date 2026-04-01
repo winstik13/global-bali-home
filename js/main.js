@@ -475,6 +475,33 @@ document.addEventListener('DOMContentLoaded', () => {
     if (epTexts.openBtn) t.exitOpenBtn = epTexts.openBtn;
   }
 
+  // Override tour popup texts from SITE_DATA if available
+  if (typeof SITE_DATA !== 'undefined' && SITE_DATA.tourPopup) {
+    var tp = SITE_DATA.tourPopup;
+    if (tp.title && tp.title[lang]) t.tourTitle = tp.title[lang];
+    if (tp.steps && tp.steps[lang]) t.tourSteps = tp.steps[lang];
+    if (tp.form) {
+      var tf = tp.form[lang] || tp.form.en || {};
+      if (tf.title) t.tourFormTitle = tf.title;
+      if (tf.subtitle) t.tourFormSub = tf.subtitle;
+      if (tf.name) t.tourName = tf.name;
+      if (tf.whatsapp) t.tourWhatsapp = tf.whatsapp;
+      if (tf.email) t.tourEmail = tf.email;
+      if (tf.time) t.tourTime = tf.time;
+      if (tf.timeOptions) t.tourTimeOptions = tf.timeOptions;
+      if (tf.comment) t.tourComment = tf.comment;
+      if (tf.consent) t.tourConsent = tf.consent;
+      if (tf.submit) t.tourSubmit = tf.submit;
+    }
+    if (tp.thankYou) {
+      var ty = tp.thankYou[lang] || tp.thankYou.en || {};
+      if (ty.title) t.tourThankTitle = ty.title;
+      if (ty.text) t.tourThankText = ty.text;
+      if (ty.whatsapp) t.tourThankWa = ty.whatsapp;
+      if (ty.projectLink) t.tourThankProject = ty.projectLink;
+    }
+  }
+
   // Map localised option labels back to EN keys for scoring
   const enOptions = i18n.en.quizSteps.map(s => s.options);
 

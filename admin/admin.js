@@ -272,6 +272,28 @@
       'exitpopup.field.openBtn': 'Open Guide Button',
       'exitpopup.hint.success': 'Countdown number is appended automatically',
       'exitpopup.save': 'Save Exit Popup',
+      'tour.title': 'Tour Popup',
+      'tour.steps': 'Steps',
+      'tour.step': 'Step',
+      'tour.question': 'Question',
+      'tour.option': 'Option',
+      'tour.form': 'Contact Form',
+      'tour.formTitle': 'Form Title',
+      'tour.formSubtitle': 'Form Subtitle',
+      'tour.name': 'Name Placeholder',
+      'tour.whatsapp': 'WhatsApp Placeholder',
+      'tour.email': 'Email Placeholder',
+      'tour.time': 'Time Label',
+      'tour.timeOption': 'Time Option',
+      'tour.comment': 'Comment Placeholder',
+      'tour.consent': 'Consent Text',
+      'tour.submit': 'Submit Button',
+      'tour.thankYou': 'Thank You Screen',
+      'tour.thankTitle': 'Title',
+      'tour.thankText': 'Text',
+      'tour.thankWa': 'WhatsApp Button',
+      'tour.thankProject': 'Project Link Text',
+      'tour.save': 'Save Tour Popup',
       'social.title': 'Social Media',
       'social.facebook': 'Facebook URL',
       'social.instagram': 'Instagram URL',
@@ -626,6 +648,28 @@
       'exitpopup.field.openBtn': 'Кнопка открытия гида',
       'exitpopup.hint.success': 'Число обратного отсчёта добавляется автоматически',
       'exitpopup.save': 'Сохранить Exit Popup',
+      'tour.title': 'Попап тура',
+      'tour.steps': 'Шаги',
+      'tour.step': 'Шаг',
+      'tour.question': 'Вопрос',
+      'tour.option': 'Вариант',
+      'tour.form': 'Форма контактов',
+      'tour.formTitle': 'Заголовок формы',
+      'tour.formSubtitle': 'Подзаголовок формы',
+      'tour.name': 'Плейсхолдер имени',
+      'tour.whatsapp': 'Плейсхолдер WhatsApp',
+      'tour.email': 'Плейсхолдер Email',
+      'tour.time': 'Метка времени',
+      'tour.timeOption': 'Вариант времени',
+      'tour.comment': 'Плейсхолдер комментария',
+      'tour.consent': 'Текст согласия',
+      'tour.submit': 'Кнопка отправки',
+      'tour.thankYou': 'Экран благодарности',
+      'tour.thankTitle': 'Заголовок',
+      'tour.thankText': 'Текст',
+      'tour.thankWa': 'Кнопка WhatsApp',
+      'tour.thankProject': 'Текст ссылки на проект',
+      'tour.save': 'Сохранить попап тура',
       'social.title': 'Социальные сети',
       'social.facebook': 'URL Facebook',
       'social.instagram': 'URL Instagram',
@@ -4241,6 +4285,178 @@
         status.className = 'publish-status error';
       }
       btnLoading(exitPopupSaveBtn, false);
+    });
+  }
+
+  // ─── Tour Popup Editor ───
+  var tourActiveLang = 'en';
+  const TOUR_LANGS = ['en', 'ru', 'id'];
+
+  function getTourData() {
+    if (!siteData) loadSiteData();
+    if (!siteData.tourPopup) siteData.tourPopup = { steps: {}, form: {}, thankYou: {}, title: {} };
+    return siteData.tourPopup;
+  }
+
+  function renderTourSteps() {
+    const td = getTourData();
+    const lang = tourActiveLang;
+    const steps = (td.steps && td.steps[lang]) || [];
+    const container = $('#tour-steps-editor');
+    if (!container) return;
+    let html = '';
+    steps.forEach((step, si) => {
+      html += '<div class="tour-step-block"><div class="tour-step-block__header">' + t('tour.step') + ' ' + (si + 1) + (step.multi ? ' (multi-select)' : '') + '</div>';
+      html += '<div class="form-group"><label>' + t('tour.question') + '</label><input type="text" class="tour-step-q" data-step="' + si + '" value="' + (step.question || '').replace(/"/g, '&quot;') + '"></div>';
+      html += '<div class="tour-options-list">';
+      (step.options || []).forEach((opt, oi) => {
+        html += '<div class="form-group tour-option-row"><label>' + t('tour.option') + ' ' + (oi + 1) + '</label><input type="text" class="tour-step-opt" data-step="' + si + '" data-opt="' + oi + '" value="' + (opt || '').replace(/"/g, '&quot;') + '"></div>';
+      });
+      html += '</div></div>';
+    });
+    container.innerHTML = html;
+
+    // Bind inputs
+    container.querySelectorAll('.tour-step-q').forEach(inp => {
+      inp.addEventListener('input', () => {
+        const si = +inp.dataset.step;
+        td.steps[lang][si].question = inp.value;
+        dirtyTabs.exitpopup = true;
+      });
+    });
+    container.querySelectorAll('.tour-step-opt').forEach(inp => {
+      inp.addEventListener('input', () => {
+        const si = +inp.dataset.step;
+        const oi = +inp.dataset.opt;
+        td.steps[lang][si].options[oi] = inp.value;
+        dirtyTabs.exitpopup = true;
+      });
+    });
+  }
+
+  function renderTourForm() {
+    const td = getTourData();
+    const lang = tourActiveLang;
+    const f = (td.form && td.form[lang]) || {};
+    const container = $('#tour-form-editor');
+    if (!container) return;
+    let html = '<div class="form-grid">';
+    html += '<div class="form-group"><label>' + t('tour.formTitle') + '</label><input type="text" id="tf-title" value="' + (f.title || '').replace(/"/g, '&quot;') + '"></div>';
+    html += '<div class="form-group"><label>' + t('tour.submit') + '</label><input type="text" id="tf-submit" value="' + (f.submit || '').replace(/"/g, '&quot;') + '"></div>';
+    html += '</div>';
+    html += '<div class="form-group"><label>' + t('tour.formSubtitle') + '</label><input type="text" id="tf-subtitle" value="' + (f.subtitle || '').replace(/"/g, '&quot;') + '"></div>';
+    html += '<div class="form-grid--3">';
+    html += '<div class="form-group"><label>' + t('tour.name') + '</label><input type="text" id="tf-name" value="' + (f.name || '').replace(/"/g, '&quot;') + '"></div>';
+    html += '<div class="form-group"><label>' + t('tour.whatsapp') + '</label><input type="text" id="tf-whatsapp" value="' + (f.whatsapp || '').replace(/"/g, '&quot;') + '"></div>';
+    html += '<div class="form-group"><label>' + t('tour.email') + '</label><input type="text" id="tf-email" value="' + (f.email || '').replace(/"/g, '&quot;') + '"></div>';
+    html += '</div>';
+    html += '<div class="form-group"><label>' + t('tour.comment') + '</label><input type="text" id="tf-comment" value="' + (f.comment || '').replace(/"/g, '&quot;') + '"></div>';
+    html += '<div class="form-group"><label>' + t('tour.consent') + '</label><textarea id="tf-consent" rows="2">' + (f.consent || '') + '</textarea></div>';
+    html += '<div class="form-group"><label>' + t('tour.time') + '</label><input type="text" id="tf-time" value="' + (f.time || '').replace(/"/g, '&quot;') + '"></div>';
+    var timeOpts = f.timeOptions || [];
+    html += '<div class="form-grid--4">';
+    for (var i = 0; i < 4; i++) {
+      html += '<div class="form-group"><label>' + t('tour.timeOption') + ' ' + (i + 1) + '</label><input type="text" class="tf-timeopt" data-idx="' + i + '" value="' + (timeOpts[i] || '').replace(/"/g, '&quot;') + '"></div>';
+    }
+    html += '</div>';
+    container.innerHTML = html;
+
+    // Bind
+    const fields = ['title', 'subtitle', 'name', 'whatsapp', 'email', 'comment', 'time', 'submit'];
+    fields.forEach(fld => {
+      const el = document.getElementById('tf-' + fld);
+      if (el) el.addEventListener('input', () => {
+        if (!td.form[lang]) td.form[lang] = {};
+        td.form[lang][fld] = el.value;
+        dirtyTabs.exitpopup = true;
+      });
+    });
+    const consentEl = document.getElementById('tf-consent');
+    if (consentEl) consentEl.addEventListener('input', () => {
+      if (!td.form[lang]) td.form[lang] = {};
+      td.form[lang].consent = consentEl.value;
+      dirtyTabs.exitpopup = true;
+    });
+    container.querySelectorAll('.tf-timeopt').forEach(inp => {
+      inp.addEventListener('input', () => {
+        if (!td.form[lang]) td.form[lang] = {};
+        if (!td.form[lang].timeOptions) td.form[lang].timeOptions = [];
+        td.form[lang].timeOptions[+inp.dataset.idx] = inp.value;
+        dirtyTabs.exitpopup = true;
+      });
+    });
+  }
+
+  function renderTourThankYou() {
+    const td = getTourData();
+    const lang = tourActiveLang;
+    const ty = (td.thankYou && td.thankYou[lang]) || {};
+    const container = $('#tour-thankyou-editor');
+    if (!container) return;
+    let html = '<div class="form-grid">';
+    html += '<div class="form-group"><label>' + t('tour.thankTitle') + '</label><input type="text" id="ty-title" value="' + (ty.title || '').replace(/"/g, '&quot;') + '"></div>';
+    html += '<div class="form-group"><label>' + t('tour.thankWa') + '</label><input type="text" id="ty-wa" value="' + (ty.whatsapp || '').replace(/"/g, '&quot;') + '"></div>';
+    html += '</div>';
+    html += '<div class="form-group"><label>' + t('tour.thankText') + '</label><input type="text" id="ty-text" value="' + (ty.text || '').replace(/"/g, '&quot;') + '"></div>';
+    html += '<div class="form-group"><label>' + t('tour.thankProject') + '</label><input type="text" id="ty-project" value="' + (ty.projectLink || '').replace(/"/g, '&quot;') + '"></div>';
+    container.innerHTML = html;
+
+    const map = { title: 'ty-title', text: 'ty-text', whatsapp: 'ty-wa', projectLink: 'ty-project' };
+    Object.keys(map).forEach(key => {
+      const el = document.getElementById(map[key]);
+      if (el) el.addEventListener('input', () => {
+        if (!td.thankYou[lang]) td.thankYou[lang] = {};
+        td.thankYou[lang][key] = el.value;
+        dirtyTabs.exitpopup = true;
+      });
+    });
+  }
+
+  function renderTourEditor() {
+    renderTourSteps();
+    renderTourForm();
+    renderTourThankYou();
+  }
+
+  // Tour language tabs
+  document.querySelectorAll('.tour-lang-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tour-lang-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      tourActiveLang = tab.dataset.lang;
+      renderTourEditor();
+    });
+  });
+
+  // Initialize tour editor when tab is shown
+  const tourEditorInit = () => { getTourData(); renderTourEditor(); };
+  const navBtns = document.querySelectorAll('.admin-nav__btn');
+  navBtns.forEach(btn => {
+    if (btn.dataset.tab === 'exitpopup') {
+      btn.addEventListener('click', () => setTimeout(tourEditorInit, 50));
+    }
+  });
+
+  // Tour save
+  const tourSaveBtn = $('#btn-tour-save');
+  if (tourSaveBtn) {
+    tourSaveBtn.addEventListener('click', async () => {
+      if (!siteData) loadSiteData();
+      const status = $('#tour-save-status');
+      btnLoading(tourSaveBtn, true);
+      status.textContent = t('common.saving');
+      status.className = 'publish-status';
+      try {
+        const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
+        await commitFile('data/site-data.js', content, 'Update tour popup settings via admin panel');
+        status.textContent = t('common.saved');
+        status.className = 'publish-status success';
+        updateRateLimit();
+      } catch (err) {
+        status.textContent = t('common.error') + err.message;
+        status.className = 'publish-status error';
+      }
+      btnLoading(tourSaveBtn, false);
     });
   }
 

@@ -100,6 +100,73 @@ const SITE_DATA = {
       }
     }
   },
+  "tourPopup": {
+    "steps": {
+      "en": [
+        { "question": "Which project interests you?", "options": ["Serenity Villas", "Serenity Estates", "Serenity Village", "Not sure yet"] },
+        { "question": "When are you in Bali?", "options": ["I'm already here", "Within 2 weeks", "Within a month", "Planning a trip"] },
+        { "question": "What would you like to see?", "multi": true, "options": ["Construction site visit", "Meet the architect", "Investment terms review", "View completed villas", "Explore the area"] }
+      ],
+      "ru": [
+        { "question": "Какой проект вас интересует?", "options": ["Serenity Villas", "Serenity Estates", "Serenity Village", "Ещё не определился"] },
+        { "question": "Когда вы на Бали?", "options": ["Я уже здесь", "В ближайшие 2 недели", "В ближайший месяц", "Планирую поездку"] },
+        { "question": "Что хотите увидеть?", "multi": true, "options": ["Осмотр стройплощадки", "Встреча с архитектором", "Обзор условий инвестиций", "Показ готовых вилл", "Знакомство с районом"] }
+      ],
+      "id": [
+        { "question": "Proyek mana yang menarik bagi Anda?", "options": ["Serenity Villas", "Serenity Estates", "Serenity Village", "Belum yakin"] },
+        { "question": "Kapan Anda di Bali?", "options": ["Saya sudah di sini", "Dalam 2 minggu", "Dalam sebulan", "Merencanakan perjalanan"] },
+        { "question": "Apa yang ingin Anda lihat?", "multi": true, "options": ["Kunjungan lokasi konstruksi", "Bertemu arsitek", "Tinjauan ketentuan investasi", "Lihat villa yang selesai", "Jelajahi area"] }
+      ]
+    },
+    "form": {
+      "en": {
+        "title": "How can we reach you?",
+        "subtitle": "Our manager will contact you within 2 hours to confirm the tour details.",
+        "name": "Your name",
+        "whatsapp": "WhatsApp or phone number",
+        "email": "Email (optional)",
+        "time": "Preferred time",
+        "timeOptions": ["Morning (9–12)", "Afternoon (12–17)", "Evening (17–20)", "Any time"],
+        "comment": "Any special requests? (optional)",
+        "consent": "I agree to the processing of my personal data in accordance with the Privacy Policy",
+        "submit": "Request a Tour"
+      },
+      "ru": {
+        "title": "Как с вами связаться?",
+        "subtitle": "Наш менеджер свяжется с вами в течение 2 часов для подтверждения деталей тура.",
+        "name": "Ваше имя",
+        "whatsapp": "WhatsApp или телефон",
+        "email": "Email (необязательно)",
+        "time": "Удобное время",
+        "timeOptions": ["Утро (9–12)", "День (12–17)", "Вечер (17–20)", "Любое время"],
+        "comment": "Особые пожелания? (необязательно)",
+        "consent": "Я согласен на обработку персональных данных в соответствии с Политикой конфиденциальности",
+        "submit": "Запросить тур"
+      },
+      "id": {
+        "title": "Bagaimana kami dapat menghubungi Anda?",
+        "subtitle": "Manajer kami akan menghubungi Anda dalam 2 jam untuk mengonfirmasi detail tur.",
+        "name": "Nama Anda",
+        "whatsapp": "WhatsApp atau nomor telepon",
+        "email": "Email (opsional)",
+        "time": "Waktu yang diinginkan",
+        "timeOptions": ["Pagi (9–12)", "Siang (12–17)", "Sore (17–20)", "Kapan saja"],
+        "comment": "Permintaan khusus? (opsional)",
+        "consent": "Saya menyetujui pemrosesan data pribadi saya sesuai dengan Kebijakan Privasi",
+        "submit": "Minta Tur"
+      }
+    },
+    "thankYou": {
+      "en": { "title": "Tour Request Sent!", "text": "Our manager will contact you within 2 hours to arrange the details.", "whatsapp": "Message us on WhatsApp", "projectLink": "Learn more about" },
+      "ru": { "title": "Заявка на тур отправлена!", "text": "Наш менеджер свяжется с вами в течение 2 часов для согласования деталей.", "whatsapp": "Написать в WhatsApp", "projectLink": "Подробнее о проекте" },
+      "id": { "title": "Permintaan Tur Terkirim!", "text": "Manajer kami akan menghubungi Anda dalam 2 jam untuk mengatur detailnya.", "whatsapp": "Hubungi kami di WhatsApp", "projectLink": "Pelajari lebih lanjut tentang" }
+    },
+    "title": {
+      "en": "Schedule a Private Tour",
+      "ru": "Запланировать частный тур",
+      "id": "Jadwalkan Tur Pribadi"
+    }
+  },
   "colors": {
     "bg": "#1a1a14",
     "bgAlt": "#111110",
