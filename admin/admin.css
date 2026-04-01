@@ -600,6 +600,9 @@ input[type="number"] {
   background: var(--color-bg-card);
   border-bottom: 1px solid var(--color-border);
   padding: 0 32px;
+  position: sticky;
+  top: 64px;
+  z-index: 99;
 }
 
 .admin-nav__btn {
@@ -2332,18 +2335,27 @@ input[type="number"] {
   .editor-actions--sticky {
     flex-wrap: wrap;
     padding: var(--sp-sm) 12px;
+    gap: 8px;
   }
-  .editor-actions--sticky .btn--primary {
-    flex: 1 1 100%;
+  .editor-actions--sticky > .btn--primary {
+    width: 100%;
+    flex: 0 0 100%;
     order: -1;
   }
-  .editor-actions--sticky .btn--outline {
-    flex: 1 1 auto;
-    font-size: 0.75rem;
-    padding: 8px 12px;
+  .editor-actions--sticky > .btn--outline,
+  .editor-actions--sticky > #btn-generate-pages,
+  .editor-actions--sticky > #btn-update-seo-only {
+    flex: 1 1 0;
+    min-width: 0;
+    font-size: 0.7rem;
+    padding: 8px 6px;
+    text-align: center;
+    white-space: normal;
+    line-height: 1.2;
   }
-  .editor-actions--sticky .publish-status {
-    flex: 1 1 100%;
+  .editor-actions--sticky > .publish-status {
+    width: 100%;
+    flex: 0 0 100%;
     text-align: center;
   }
 
