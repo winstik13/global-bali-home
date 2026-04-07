@@ -8,12 +8,13 @@ Base info.md
 CLAUDE.md
 FORMS-CHECKLIST.md
 SEO-ANALYTICS-CHECKLIST.md
-marketing-audit.md
 
-# Audit reports
-audits/
-site-audit.js
-site-check.js
+# Local screenshot tool (Playwright)
+node_modules/
+package.json
+package-lock.json
+screenshot.js
+screenshots/
 
 # Admin setup docs
 admin/SETUP.md
