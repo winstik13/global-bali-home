@@ -433,6 +433,20 @@
             <button id="btn-stats-save" class="btn btn--primary btn--sm" data-i18n="stats.save">Save Statistics</button>
             <span id="stats-save-status" class="publish-status"></span>
           </div>
+
+          <h3 style="margin-top:32px" data-i18n="stats.labelsTitle">Stat Labels (3 languages)</h3>
+          <p class="field-hint" data-i18n="stats.labelsHint">Use &lt;br&gt; to break the label onto two lines. Only the first 4 stats appear on the homepage.</p>
+          <div class="lang-tabs" id="stats-labels-tabs">
+            <button class="lang-tab active" data-lang="en">EN</button>
+            <button class="lang-tab" data-lang="ru">RU</button>
+            <button class="lang-tab" data-lang="id">ID</button>
+          </div>
+          <div id="stats-labels-pane"></div>
+          <div class="editor-actions editor-actions--inline">
+            <button id="btn-stats-labels-save" class="btn btn--primary btn--sm" data-i18n="stats.labelsSave">Save Labels</button>
+            <span id="stats-labels-status" class="publish-status"></span>
+          </div>
+
           <div>
             <h4 class="preview-label" data-i18n="preview.title">Preview</h4>
             <div class="stats-preview" id="stats-preview">

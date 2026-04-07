@@ -119,7 +119,27 @@ const SITE_DATA = {
     "touristArrivals": "16M+",
     "rentalYield": "12-15%",
     "propertyGrowth": "8-12%",
-    "paybackPeriod": "7-8 yr"
+    "paybackPeriod": "7-8 yr",
+    "labels": {
+      "en": {
+        "investorsWorldwide": "Investors<br>Worldwide",
+        "villasDesigned": "Villas<br>in Portfolio",
+        "occupancyRate": "Projected<br>Occupancy Rate",
+        "founderExperience": "Combined<br>Transaction Experience"
+      },
+      "ru": {
+        "investorsWorldwide": "Инвесторов<br>по всему миру",
+        "villasDesigned": "Виллы<br>в портфолио",
+        "occupancyRate": "Прогнозируемая<br>заполняемость",
+        "founderExperience": "Совокупный опыт<br>транзакций"
+      },
+      "id": {
+        "investorsWorldwide": "Investor<br>di Seluruh Dunia",
+        "villasDesigned": "Villa<br>dalam Portofolio",
+        "occupancyRate": "Proyeksi<br>Tingkat Hunian",
+        "founderExperience": "Pengalaman<br>Transaksi Gabungan"
+      }
+    }
   },
   "analytics": {
     "ga4": "",

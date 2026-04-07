@@ -307,6 +307,9 @@
       'stats.propertyGrowth': 'Property Growth',
       'stats.paybackPeriod': 'Payback Period',
       'stats.save': 'Save Statistics',
+      'stats.labelsTitle': 'Stat Labels (3 languages)',
+      'stats.labelsHint': 'Use &lt;br&gt; to break the label onto two lines. Only the first 4 stats appear on the homepage.',
+      'stats.labelsSave': 'Save Labels',
       'roi.title': 'ROI Calculator Parameters',
       'roi.navTitle': 'ROI',
       'roi.scenarios': 'Scenarios',
@@ -684,6 +687,9 @@
       'stats.propertyGrowth': 'Рост стоимости',
       'stats.paybackPeriod': 'Срок окупаемости',
       'stats.save': 'Сохранить статистику',
+      'stats.labelsTitle': 'Подписи под цифрами (3 языка)',
+      'stats.labelsHint': 'Используйте &lt;br&gt; чтобы перенести подпись на 2 строки. На главной показываются первые 4 цифры.',
+      'stats.labelsSave': 'Сохранить подписи',
       'roi.title': 'Параметры ROI-калькулятора',
       'roi.navTitle': 'ROI',
       'roi.scenarios': 'Сценарии',
@@ -3592,6 +3598,27 @@
 
   // ─── Company Statistics ───
   const STAT_KEYS = ['investorsWorldwide', 'villasDesigned', 'occupancyRate', 'founderExperience', 'touristArrivals', 'rentalYield', 'propertyGrowth', 'paybackPeriod'];
+  const HOMEPAGE_STAT_KEYS = ['investorsWorldwide', 'villasDesigned', 'occupancyRate', 'founderExperience'];
+  const STAT_LABEL_DEFAULTS = {
+    en: {
+      investorsWorldwide: 'Investors<br>Worldwide',
+      villasDesigned: 'Villas<br>in Portfolio',
+      occupancyRate: 'Projected<br>Occupancy Rate',
+      founderExperience: 'Combined<br>Transaction Experience',
+    },
+    ru: {
+      investorsWorldwide: 'Инвесторов<br>по всему миру',
+      villasDesigned: 'Виллы<br>в портфолио',
+      occupancyRate: 'Прогнозируемая<br>заполняемость',
+      founderExperience: 'Совокупный опыт<br>транзакций',
+    },
+    id: {
+      investorsWorldwide: 'Investor<br>di Seluruh Dunia',
+      villasDesigned: 'Villa<br>dalam Portofolio',
+      occupancyRate: 'Proyeksi<br>Tingkat Hunian',
+      founderExperience: 'Pengalaman<br>Transaksi Gabungan',
+    },
+  };
 
   function updateStatsPreview() {
     STAT_KEYS.forEach(key => {
@@ -3609,7 +3636,69 @@
       if (el) el.value = stats[key] || '';
     });
     updateStatsPreview();
+    renderStatsLabelsForm();
   }
+
+  function renderStatsLabelsPane(lang) {
+    const pane = $('#stats-labels-pane');
+    if (!pane) return;
+    const labels = (siteData.stats && siteData.stats.labels && siteData.stats.labels[lang]) || STAT_LABEL_DEFAULTS[lang] || {};
+    pane.innerHTML = '<div class="form-grid--4">' + HOMEPAGE_STAT_KEYS.map(key => {
+      const val = labels[key] || STAT_LABEL_DEFAULTS[lang][key] || '';
+      const statLabel = t('stats.' + key);
+      return `<div class="form-group">
+        <label>${statLabel}</label>
+        <input type="text" class="stats-label-input" data-stat-label="${key}" value="${escAttr(val)}" placeholder="Use &lt;br&gt; for line break">
+      </div>`;
+    }).join('') + '</div>';
+  }
+
+  function captureStatsLabelsPane(lang) {
+    if (!siteData.stats) siteData.stats = {};
+    if (!siteData.stats.labels) siteData.stats.labels = JSON.parse(JSON.stringify(STAT_LABEL_DEFAULTS));
+    if (!siteData.stats.labels[lang]) siteData.stats.labels[lang] = {};
+    document.querySelectorAll('#stats-labels-pane .stats-label-input').forEach(inp => {
+      siteData.stats.labels[lang][inp.dataset.statLabel] = inp.value;
+    });
+  }
+
+  let statsLabelsLang = 'en';
+  function renderStatsLabelsForm() {
+    if (!siteData) return;
+    if (!siteData.stats) siteData.stats = {};
+    if (!siteData.stats.labels) siteData.stats.labels = JSON.parse(JSON.stringify(STAT_LABEL_DEFAULTS));
+    renderStatsLabelsPane(statsLabelsLang);
+    const tabs = $('#stats-labels-tabs');
+    if (tabs && !tabs.dataset.bound) {
+      tabs.dataset.bound = '1';
+      tabs.querySelectorAll('.lang-tab').forEach(b => {
+        b.addEventListener('click', () => {
+          captureStatsLabelsPane(statsLabelsLang);
+          statsLabelsLang = b.dataset.lang;
+          tabs.querySelectorAll('.lang-tab').forEach(x => x.classList.toggle('active', x === b));
+          renderStatsLabelsPane(statsLabelsLang);
+        });
+      });
+    }
+  }
+
+  $('#btn-stats-labels-save')?.addEventListener('click', async () => {
+    const btn = $('#btn-stats-labels-save');
+    const status = $('#stats-labels-status');
+    btnLoading(btn, true);
+    try {
+      captureStatsLabelsPane(statsLabelsLang);
+      const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
+      await commitFile('data/site-data.js', content, 'Update stat labels via admin');
+      status.textContent = t('common.saved');
+      status.className = 'publish-status success';
+      updateRateLimit();
+    } catch (err) {
+      status.textContent = t('common.error') + err.message;
+      status.className = 'publish-status error';
+    }
+    btnLoading(btn, false);
+  });
 
   // Live stats preview
   STAT_KEYS.forEach(key => {

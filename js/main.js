@@ -182,6 +182,15 @@ document.addEventListener('DOMContentLoaded', () => {
       var key = el.dataset.stat;
       if (st[key]) el.textContent = st[key];
     });
+    // Localized stat labels
+    var statsLang = (document.documentElement.lang || 'en').slice(0, 2);
+    var labelMap = (st.labels && (st.labels[statsLang] || st.labels.en)) || null;
+    if (labelMap) {
+      document.querySelectorAll('[data-stat-label]').forEach(function(el) {
+        var key = el.dataset.statLabel;
+        if (labelMap[key]) el.innerHTML = labelMap[key];
+      });
+    }
   }
 
   // --- Localisation ---
