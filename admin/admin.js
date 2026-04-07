@@ -155,6 +155,8 @@
       'projects.label': 'Label',
       'projects.priceLabel': 'Price',
       'projects.description': 'Description',
+      'projects.positioning': 'Positioning Tagline',
+      'projects.positioningPh': 'e.g. Boutique Yield Play',
       'projects.projectDetails': 'Project Details',
       'projects.startingPrice': 'Starting Price (USD)',
       'projects.bedrooms': 'Bedrooms',
@@ -318,6 +320,9 @@
       'roi.normal': 'Normal — Yield / Growth (%)',
       'roi.optimistic': 'Optimistic — Yield / Growth (%)',
       'roi.save': 'Save ROI Settings',
+      'roi.textsTitle': 'Calculator Texts (3 languages)',
+      'roi.textsHint': 'Use {project} placeholder in titleProject — it will be replaced with the project name.',
+      'roi.textsSave': 'Save Calculator Texts',
       'help.roi.investment': '<strong>Investment range:</strong> Min/max/step for the slider on homepage.',
       'help.roi.scenarios': '<strong>Scenarios:</strong> Yield and growth rates for Conservative/Normal/Optimistic.',
       'help.roi.occupancy': '<strong>Occupancy:</strong> Default occupancy rate and its slider range.',
@@ -527,6 +532,8 @@
       'projects.label': 'Подпись',
       'projects.priceLabel': 'Цена',
       'projects.description': 'Описание',
+      'projects.positioning': 'Позиционирование (тэглайн)',
+      'projects.positioningPh': 'напр. Бутик-доходность',
       'projects.projectDetails': 'Детали проекта',
       'projects.startingPrice': 'Начальная цена (USD)',
       'projects.bedrooms': 'Спальни',
@@ -690,6 +697,9 @@
       'roi.normal': 'Обычный — Доход / Рост (%)',
       'roi.optimistic': 'Оптимистичный — Доход / Рост (%)',
       'roi.save': 'Сохранить настройки ROI',
+      'roi.textsTitle': 'Тексты калькулятора (3 языка)',
+      'roi.textsHint': 'Используйте плейсхолдер {project} в titleProject — он заменится на название проекта.',
+      'roi.textsSave': 'Сохранить тексты калькулятора',
       'help.roi.investment': '<strong>Диапазон инвестиций:</strong> Мин/макс/шаг для слайдера на главной.',
       'help.roi.scenarios': '<strong>Сценарии:</strong> Ставки доходности и роста для каждого сценария.',
       'help.roi.occupancy': '<strong>Заполняемость:</strong> Стандартное значение и диапазон слайдера.',
@@ -1558,6 +1568,7 @@
     html += `<div class="editor-section"><h3>${t('projects.showcaseCard')}</h3>`;
     ['en', 'ru', 'id'].forEach(lng => {
       html += `<div style="margin-bottom:16px"><div class="hero-stat-field__lang">${lng.toUpperCase()}</div>
+        <div class="form-group"><label>${t('projects.positioning')}</label><input type="text" class="showcase-input" data-lang="${lng}" data-field="positioning" value="${escAttr((p.positioning && p.positioning[lng]) || '')}" placeholder="${t('projects.positioningPh')}"></div>
         <div class="form-group"><label>${t('projects.description')}</label><textarea class="showcase-input" data-lang="${lng}" data-field="showcaseDesc" rows="2">${(p.showcaseDesc && p.showcaseDesc[lng]) || ''}</textarea></div>
       </div>`;
     });
@@ -1666,6 +1677,7 @@
       inp.addEventListener('input', () => {
         const lng = inp.dataset.lang;
         const field = inp.dataset.field;
+        if (!p[field] || typeof p[field] !== 'object') p[field] = { en: '', ru: '', id: '' };
         p[field][lng] = inp.value;
         markChanged();
       });
