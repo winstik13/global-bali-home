@@ -139,15 +139,15 @@ const PROJECTS_DATA = {
       "sold": 9,
       "total": 12
     },
-    "showcasePrice": {
-      "en": "From $335,000",
-      "ru": "От $335,000",
-      "id": "From $335,000"
-    },
     "showcaseStatus": {
-      "en": "In Progress",
-      "ru": "Строится",
-      "id": "Dalam Pembangunan"
+      "en": "Handover Q2 2026",
+      "ru": "Сдача Q2 2026",
+      "id": "Serah Terima Q2 2026"
+    },
+    "positioning": {
+      "en": "Boutique Yield Play",
+      "ru": "Бутик-доходность",
+      "id": "Properti Butik Hasil Tinggi"
     },
     "showcaseAvailability": {
       "en": "Only 4 of 12 units left",
@@ -543,15 +543,15 @@ const PROJECTS_DATA = {
       "sold": 1,
       "total": 4
     },
-    "showcasePrice": {
-      "en": "From $310,000",
-      "ru": "От $310,000",
-      "id": "From $310,000"
-    },
     "showcaseStatus": {
-      "en": "In Progress",
-      "ru": "Строится",
-      "id": "Dalam Pembangunan"
+      "en": "Handover Q1 2027",
+      "ru": "Сдача Q1 2027",
+      "id": "Serah Terima Q1 2027"
+    },
+    "positioning": {
+      "en": "Capital Appreciation",
+      "ru": "Рост капитала",
+      "id": "Apresiasi Modal"
     },
     "showcaseAvailability": {
       "en": "1 of 4 units sold",
@@ -867,15 +867,15 @@ const PROJECTS_DATA = {
       "ru": "Предпродажа открыта — Зарегистрируйте ваш интерес",
       "id": "Pra-Penjualan Dibuka — Daftarkan Minat Anda Hari Ini"
     },
-    "showcasePrice": {
-      "en": "From $119,000",
-      "ru": "От $119,000",
-      "id": "From $119,000"
-    },
     "showcaseStatus": {
       "en": "Pre-Sale",
       "ru": "Предпродажа",
       "id": "Pra-Penjualan"
+    },
+    "positioning": {
+      "en": "Entry-Level Cashflow",
+      "ru": "Стартовый доход",
+      "id": "Arus Kas Entry-Level"
     },
     "showcaseAvailability": {
       "en": "Pre-Sale Open",
@@ -962,7 +962,7 @@ const PROJECTS_DATA = {
   },
   "comparisonLabels": {
     "en": {
-      "price": "Price from",
+      "price": "Price range",
       "bedrooms": "Bedrooms",
       "area": "Area",
       "land": "Land",
@@ -975,7 +975,7 @@ const PROJECTS_DATA = {
       "tour": "Book a Tour"
     },
     "ru": {
-      "price": "Цена от",
+      "price": "Диапазон цен",
       "bedrooms": "Спальни",
       "area": "Площадь",
       "land": "Земля",
@@ -988,7 +988,7 @@ const PROJECTS_DATA = {
       "tour": "Записаться на тур"
     },
     "id": {
-      "price": "Harga mulai",
+      "price": "Rentang Harga",
       "bedrooms": "Kamar Tidur",
       "area": "Luas",
       "land": "Lahan",

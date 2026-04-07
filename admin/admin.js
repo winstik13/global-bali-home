@@ -110,7 +110,7 @@
       'projects.publish': 'Publish Changes',
       'projects.generatePages': 'Generate Detail Pages',
       'projects.updateSeoOnly': 'Update SEO Only',
-      'projects.overwriteWarn': 'Pages for "{name}" already exist.\n\n• "Update SEO Only" — updates only meta tags (title, description, OG) without touching the page content.\n• "Overwrite All" — replaces the entire page. All manual edits will be lost.\n\nChoose an action:',
+      'projects.overwriteWarn': '⚠️ DANGER: Pages for "{name}" already exist.\n\nClicking OK will OVERWRITE the entire HTML files (EN + RU + ID) with the auto-generated template.\n\nYOU WILL LOSE:\n• Curated gallery images and any custom photo selections\n• Any manual content edits made directly to the HTML\n• Any custom sections added outside the template\n\nThe template DOES include: Hero, Concept, Units table, Gallery, ROI Calculator, Tour CTA, Final CTA.\n\nIf you only need to update SEO meta tags — CANCEL and use "Update SEO Only" instead.\n\nAre you absolutely sure you want to overwrite?',
       'projects.overwriteAll': 'Overwrite All',
       'projects.cancel': 'Cancel',
       'projects.unsaved': 'Unsaved changes',
@@ -482,7 +482,7 @@
       'projects.publish': 'Опубликовать',
       'projects.generatePages': 'Сгенерировать страницы',
       'projects.updateSeoOnly': 'Обновить только SEO',
-      'projects.overwriteWarn': 'Страницы для "{name}" уже существуют.\n\n• «Обновить только SEO» — обновит только мета-теги (title, description, OG), контент страницы не изменится.\n• «Перезаписать всё» — заменит всю страницу. Все ручные правки будут потеряны.\n\nВыберите действие:',
+      'projects.overwriteWarn': '⚠️ ОПАСНО: Страницы для "{name}" уже существуют.\n\nНажав OK, вы ПОЛНОСТЬЮ ПЕРЕЗАПИШЕТЕ HTML-файлы (EN + RU + ID) автогенерируемым шаблоном.\n\nВЫ ПОТЕРЯЕТЕ:\n• Курированные изображения галереи и кастомные подборки фото\n• Любые ручные правки контента внесённые прямо в HTML\n• Любые кастомные секции добавленные вне шаблона\n\nШаблон ВКЛЮЧАЕТ: Hero, Концепцию, Таблицу юнитов, Галерею, ROI калькулятор, Tour CTA, Финальный CTA.\n\nЕсли нужно обновить только SEO мета-теги — НАЖМИТЕ ОТМЕНА и используйте кнопку "Обновить только SEO".\n\nВы абсолютно уверены, что хотите перезаписать?',
       'projects.overwriteAll': 'Перезаписать всё',
       'projects.cancel': 'Отмена',
       'projects.unsaved': 'Есть несохранённые изменения',
@@ -1041,6 +1041,7 @@
     renderGuideInfo();
     renderSocialForm();
     renderRoiForm();
+    renderRoiTextsForm();
     renderStatsForm();
     populateExitPopup();
     renderProjectEditor();
@@ -1557,8 +1558,7 @@
     html += `<div class="editor-section"><h3>${t('projects.showcaseCard')}</h3>`;
     ['en', 'ru', 'id'].forEach(lng => {
       html += `<div style="margin-bottom:16px"><div class="hero-stat-field__lang">${lng.toUpperCase()}</div>
-        <div class="form-group"><label>${t('projects.priceLabel')}</label><input type="text" class="showcase-input" data-lang="${lng}" data-field="showcasePrice" value="${(p.showcasePrice && p.showcasePrice[lng]) || ''}"></div>
-        <div class="form-group" style="margin-top:8px"><label>${t('projects.description')}</label><textarea class="showcase-input" data-lang="${lng}" data-field="showcaseDesc" rows="2">${(p.showcaseDesc && p.showcaseDesc[lng]) || ''}</textarea></div>
+        <div class="form-group"><label>${t('projects.description')}</label><textarea class="showcase-input" data-lang="${lng}" data-field="showcaseDesc" rows="2">${(p.showcaseDesc && p.showcaseDesc[lng]) || ''}</textarea></div>
       </div>`;
     });
     html += '</div>';
@@ -2761,9 +2761,9 @@
   }
 
   const PAGE_LABELS = {
-    en: { home: 'Home', projects: 'Projects', services: 'Services', about: 'About', gallery: 'Gallery', contact: 'Contact', findVilla: 'Find My Villa', nav: 'Navigation', concept: 'The Concept', conceptTitle: 'About This Project', availability: 'Availability', unitSelection: 'Unit Selection', galleryTitle: 'Project Images', viewPhotos: 'View Photos', interested: 'Interested in', getConsult: 'Get a Consultation', footer: 'Global Bali Home is an international real estate company focused on the development of high-quality properties in Bali.', copyright: '&copy; 2024–2026 Global Bali Home. All rights reserved.' },
-    ru: { home: 'Главная', projects: 'Проекты', services: 'Услуги', about: 'О нас', gallery: 'Галерея', contact: 'Контакты', findVilla: 'Найти виллу', nav: 'Навигация', concept: 'Концепция', conceptTitle: 'О проекте', availability: 'Доступность', unitSelection: 'Выбор юнитов', galleryTitle: 'Фотографии проекта', viewPhotos: 'Смотреть фото', interested: 'Интересует', getConsult: 'Получить консультацию', footer: 'Global Bali Home — международная компания по строительству премиальной недвижимости на Бали.', copyright: '&copy; 2024–2026 Global Bali Home. Все права защищены.' },
-    id: { home: 'Beranda', projects: 'Proyek', services: 'Layanan', about: 'Tentang', gallery: 'Galeri', contact: 'Kontak', findVilla: 'Temukan Villa', nav: 'Navigasi', concept: 'Konsep', conceptTitle: 'Tentang Proyek Ini', availability: 'Ketersediaan', unitSelection: 'Pilihan Unit', galleryTitle: 'Galeri Proyek', viewPhotos: 'Lihat Foto', interested: 'Tertarik dengan', getConsult: 'Hubungi Kami', footer: 'Global Bali Home adalah perusahaan real estate internasional yang fokus pada pengembangan properti berkualitas tinggi di Bali.', copyright: '&copy; 2024–2026 Global Bali Home. Hak cipta dilindungi.' },
+    en: { home: 'Home', projects: 'Projects', services: 'Services', about: 'About', gallery: 'Gallery', contact: 'Contact', findVilla: 'Find My Villa', nav: 'Navigation', concept: 'The Concept', conceptTitle: 'About This Project', availability: 'Availability', unitSelection: 'Unit Selection', galleryTitle: 'Project Images', viewPhotos: 'View Photos', interested: 'Interested in', getConsult: 'Get a Consultation', wantToSee: 'Want to see it in person?', scheduleTour: 'Schedule a Private Tour', investmentDetails: 'Investment Details', footer: 'Global Bali Home is an international real estate company focused on the development of high-quality properties in Bali.', copyright: '&copy; 2024–2026 Global Bali Home. All rights reserved.' },
+    ru: { home: 'Главная', projects: 'Проекты', services: 'Услуги', about: 'О нас', gallery: 'Галерея', contact: 'Контакты', findVilla: 'Найти виллу', nav: 'Навигация', concept: 'Концепция', conceptTitle: 'О проекте', availability: 'Доступность', unitSelection: 'Выбор юнитов', galleryTitle: 'Фотографии проекта', viewPhotos: 'Смотреть фото', interested: 'Интересует', getConsult: 'Получить консультацию', wantToSee: 'Хотите увидеть лично?', scheduleTour: 'Записаться на приватный тур', investmentDetails: 'Детали инвестиций', footer: 'Global Bali Home — международная компания по строительству премиальной недвижимости на Бали.', copyright: '&copy; 2024–2026 Global Bali Home. Все права защищены.' },
+    id: { home: 'Beranda', projects: 'Proyek', services: 'Layanan', about: 'Tentang', gallery: 'Galeri', contact: 'Kontak', findVilla: 'Temukan Villa', nav: 'Navigasi', concept: 'Konsep', conceptTitle: 'Tentang Proyek Ini', availability: 'Ketersediaan', unitSelection: 'Pilihan Unit', galleryTitle: 'Galeri Proyek', viewPhotos: 'Lihat Foto', interested: 'Tertarik dengan', getConsult: 'Hubungi Kami', wantToSee: 'Ingin melihat langsung?', scheduleTour: 'Jadwalkan Tur Pribadi', investmentDetails: 'Detail Investasi', footer: 'Global Bali Home adalah perusahaan real estate internasional yang fokus pada pengembangan properti berkualitas tinggi di Bali.', copyright: '&copy; 2024–2026 Global Bali Home. Hak cipta dilindungi.' },
   };
 
   function buildDetailPage(proj, slug, cfg) {
@@ -2883,14 +2883,22 @@
       <div class="photo-mosaic__more reveal">
         <a href="gallery.html#${slug.replace('serenity-', '')}" class="btn btn--outline">${L.viewPhotos}</a>
       </div>
+      <div class="tour-cta-inline reveal">
+        <p>${L.wantToSee}</p>
+        <button class="btn btn--primary" data-tour="${escAttr(proj.name)}">${L.scheduleTour}</button>
+      </div>
     </div>
   </section>
+
+  <!-- ROI Calculator (auto-rendered) -->
+  <section data-roi-calc data-project="${slug}"></section>
 
   <section class="cta-section logo-watermark logo-watermark--right">
     <div class="container reveal">
       <h2>${L.interested} ${proj.name}?</h2>
       <p>${escAttr(desc)}</p>
-      <button class="btn btn--primary" data-quiz>${L.getConsult}</button>
+      <button class="btn btn--primary" data-tour="${escAttr(proj.name)}">${L.scheduleTour}</button>
+      <button class="btn btn--outline" data-quiz style="margin-left:12px;">${L.investmentDetails}</button>
     </div>
   </section>
 
@@ -3064,11 +3072,15 @@
           id: [{ number: String(totalUnits), label: 'Vila' }, { number: bedrooms, label: 'Kamar Tidur' }, { number: priceLabel ? '$' + (price / 1000 | 0) + 'K' : '', label: 'Mulai Dari' }],
         },
         availability: { sold: 0, total: totalUnits },
-        showcasePrice: { en: priceLabel, ru: priceLabel.replace('From', 'От'), id: priceLabel },
         showcaseStatus: {
           en: status === 'pre-sale' ? 'Pre-Sale' : status === 'completed' ? 'Completed' : 'In Progress',
           ru: status === 'pre-sale' ? 'Предпродажа' : status === 'completed' ? 'Завершён' : 'Строится',
           id: status === 'pre-sale' ? 'Pra-Penjualan' : status === 'completed' ? 'Selesai' : 'Dalam Pembangunan',
+        },
+        positioning: {
+          en: 'Investment Opportunity',
+          ru: 'Инвестиционная возможность',
+          id: 'Peluang Investasi',
         },
         showcaseAvailability: {
           en: status === 'pre-sale' ? 'Pre-Sale Open' : '0 of ' + totalUnits + ' units sold',
@@ -3445,6 +3457,8 @@
     const status = $('#roi-save-status');
     btnLoading(btn, true);
     try {
+      // Preserve existing texts when saving numeric params
+      const existingTexts = (siteData.roi && siteData.roi.texts) || undefined;
       siteData.roi = {
         minInvestment: parseInt($('#roi-min').value) || 100000,
         maxInvestment: parseInt($('#roi-max').value) || 1000000,
@@ -3460,8 +3474,100 @@
           optimistic: { yield: parseFloat($('#roi-opt-yield').value) / 100 || 0.15, growth: parseFloat($('#roi-opt-growth').value) / 100 || 0.12 }
         }
       };
+      if (existingTexts) siteData.roi.texts = existingTexts;
       const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
       await commitFile('data/site-data.js', content, 'Update ROI calculator parameters via admin');
+      status.textContent = t('common.saved');
+      status.className = 'publish-status success';
+      updateRateLimit();
+    } catch (err) {
+      status.textContent = t('common.error') + err.message;
+      status.className = 'publish-status error';
+    }
+    btnLoading(btn, false);
+  });
+
+  // ─── ROI Calculator Texts (i18n) ───
+  const ROI_TEXT_KEYS = [
+    { key: 'tag', label: 'Tag (eyebrow)' },
+    { key: 'title', label: 'Title — Homepage' },
+    { key: 'titleProject', label: 'Title — Project page (use {project})' },
+    { key: 'subtitle', label: 'Subtitle — Homepage' },
+    { key: 'subtitleProject', label: 'Subtitle — Project page' },
+    { key: 'investmentLabel', label: 'Investment Amount label' },
+    { key: 'scenarioLabel', label: 'Scenario label' },
+    { key: 'conservative', label: 'Conservative scenario name' },
+    { key: 'normal', label: 'Normal scenario name' },
+    { key: 'optimistic', label: 'Optimistic scenario name' },
+    { key: 'yieldSuffix', label: 'Yield suffix (e.g. "yield")' },
+    { key: 'occupancyLabel', label: 'Occupancy Rate label' },
+    { key: 'annualIncome', label: 'Annual Rental Income label' },
+    { key: 'return5y', label: '5-Year Return label' },
+    { key: 'return10y', label: '10-Year Return label' },
+    { key: 'disclaimer', label: 'Disclaimer (small text under results)' },
+    { key: 'ctaHome', label: 'CTA button — Homepage' },
+    { key: 'ctaProject', label: 'CTA button — Project page' },
+  ];
+  const ROI_TEXT_DEFAULTS = {
+    en: { tag: 'Investment Calculator', title: 'Calculate Your Returns', titleProject: 'Calculate Returns for {project}', subtitle: 'See the potential of your Bali real estate investment', subtitleProject: 'See the potential income from your investment in this project', investmentLabel: 'Investment Amount', scenarioLabel: 'Scenario', conservative: 'Conservative', normal: 'Normal', optimistic: 'Optimistic', yieldSuffix: 'yield', occupancyLabel: 'Occupancy Rate', annualIncome: 'Annual Rental Income', return5y: '5-Year Total Return', return10y: '10-Year Total Return', disclaimer: '*Projections based on current market data. Actual returns may vary.', ctaHome: 'Discuss Your Investment', ctaProject: 'Schedule a Private Tour' },
+    ru: { tag: 'Инвестиционный калькулятор', title: 'Рассчитайте доходность', titleProject: 'Рассчитайте доходность {project}', subtitle: 'Оцените потенциал инвестиций в недвижимость на Бали', subtitleProject: 'Оцените потенциальный доход от инвестиций в этот проект', investmentLabel: 'Сумма инвестиций', scenarioLabel: 'Сценарий', conservative: 'Консервативный', normal: 'Обычный', optimistic: 'Оптимистичный', yieldSuffix: 'доходность', occupancyLabel: 'Заполняемость', annualIncome: 'Годовой доход от аренды', return5y: 'Общий доход за 5 лет', return10y: 'Общий доход за 10 лет', disclaimer: '*Прогнозы основаны на текущих рыночных данных.', ctaHome: 'Обсудить инвестиции', ctaProject: 'Записаться на приватный тур' },
+    id: { tag: 'Kalkulator Investasi', title: 'Hitung Keuntungan Anda', titleProject: 'Hitung Imbal Hasil {project}', subtitle: 'Lihat potensi investasi properti Bali Anda', subtitleProject: 'Lihat potensi pendapatan dari investasi Anda di proyek ini', investmentLabel: 'Jumlah Investasi', scenarioLabel: 'Skenario', conservative: 'Konservatif', normal: 'Normal', optimistic: 'Optimistis', yieldSuffix: 'imbal hasil', occupancyLabel: 'Tingkat Hunian', annualIncome: 'Pendapatan Sewa Tahunan', return5y: 'Total Imbal Hasil 5 Tahun', return10y: 'Total Imbal Hasil 10 Tahun', disclaimer: '*Proyeksi berdasarkan data pasar terkini.', ctaHome: 'Diskusikan Investasi Anda', ctaProject: 'Jadwalkan Tur Pribadi' },
+  };
+  let roiTextsActiveLang = 'en';
+
+  function renderRoiTextsPane() {
+    const pane = $('#roi-texts-pane');
+    if (!pane) return;
+    const lang = roiTextsActiveLang;
+    const texts = (siteData.roi && siteData.roi.texts && siteData.roi.texts[lang]) || ROI_TEXT_DEFAULTS[lang];
+    let html = '';
+    ROI_TEXT_KEYS.forEach(({ key, label }) => {
+      const val = (texts[key] || '').replace(/"/g, '&quot;');
+      const isLong = key === 'disclaimer' || key === 'subtitle' || key === 'subtitleProject';
+      html += `<div class="form-group"><label>${label}</label>` +
+        (isLong
+          ? `<textarea class="roi-text-input" data-roi-text="${key}" rows="2">${val}</textarea>`
+          : `<input type="text" class="roi-text-input" data-roi-text="${key}" value="${val}">`) +
+        `</div>`;
+    });
+    pane.innerHTML = html;
+  }
+
+  function renderRoiTextsForm() {
+    if (!siteData) return;
+    if (!siteData.roi) siteData.roi = {};
+    if (!siteData.roi.texts) siteData.roi.texts = JSON.parse(JSON.stringify(ROI_TEXT_DEFAULTS));
+    roiTextsActiveLang = 'en';
+    const tabs = document.querySelectorAll('#roi-texts-tabs .lang-tab');
+    tabs.forEach(t => {
+      t.classList.toggle('active', t.dataset.lang === 'en');
+      t.onclick = () => {
+        // Save current pane values into siteData first
+        captureRoiTextsPane();
+        roiTextsActiveLang = t.dataset.lang;
+        tabs.forEach(x => x.classList.toggle('active', x.dataset.lang === roiTextsActiveLang));
+        renderRoiTextsPane();
+      };
+    });
+    renderRoiTextsPane();
+  }
+
+  function captureRoiTextsPane() {
+    const lang = roiTextsActiveLang;
+    if (!siteData.roi.texts[lang]) siteData.roi.texts[lang] = {};
+    document.querySelectorAll('#roi-texts-pane .roi-text-input').forEach(inp => {
+      siteData.roi.texts[lang][inp.dataset.roiText] = inp.value;
+    });
+  }
+
+  $('#btn-roi-texts-save')?.addEventListener('click', async () => {
+    const btn = $('#btn-roi-texts-save');
+    const status = $('#roi-texts-status');
+    btnLoading(btn, true);
+    try {
+      captureRoiTextsPane();
+      const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
+      await commitFile('data/site-data.js', content, 'Update calculator texts via admin');
       status.textContent = t('common.saved');
       status.className = 'publish-status success';
       updateRateLimit();
@@ -4070,6 +4176,7 @@
       renderGuideInfo();
       renderSocialForm();
       renderRoiForm();
+      renderRoiTextsForm();
       renderStatsForm();
     });
   }

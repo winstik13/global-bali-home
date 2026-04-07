@@ -62,7 +62,7 @@
     <div class="hero__content">
       <p class="hero__tag">A Global Bali Home Development</p>
       <h1>Vila Anda di Bali.<br>Dibangun untuk <span class="text-accent">Menghasilkan</span>,<br>Dirancang untuk <span class="text-accent">Dihuni</span>.</h1>
-      <p class="hero__text">Vila premium dengan pemandangan hutan, kolam renang pribadi, dan manajemen bebas repot — dari pembelian hingga pendapatan sewa.</p>
+      <p class="hero__text">Vila butik dengan pemandangan hutan, kolam renang pribadi, dan manajemen bebas repot — dari pembelian hingga pendapatan sewa.</p>
       <a href="#projects" class="btn btn--primary">Lihat Proyek Kami</a>
     </div>
     <div class="hero__stats">
@@ -78,19 +78,6 @@
         <span class="hero__stat-number">12-15%</span>
         <span class="hero__stat-label">ROI Tahunan</span>
       </div>
-    </div>
-  </section>
-
-  <!-- Project Showcases -->
-  <section id="projects" class="section logo-watermark logo-watermark--right">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-header__tag">Portofolio Kami</span>
-        <h2>Proyek Unggulan</h2>
-        <p>Tiga pengembangan villa premium di jantung Ubud</p>
-      </div>
-
-      <div data-projects-container data-projects-short></div>
     </div>
   </section>
 
@@ -154,6 +141,31 @@
     </div>
   </section>
 
+  <!-- Project Showcases -->
+  <section id="projects" class="section logo-watermark logo-watermark--right">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-header__tag">Portofolio Kami</span>
+        <h2>Proyek Unggulan</h2>
+        <p>Tiga pengembangan villa premium di jantung Ubud</p>
+      </div>
+
+      <div data-projects-container data-projects-short></div>
+    </div>
+  </section>
+
+  <!-- Mid CTA -->
+  <section class="cta-section">
+    <div class="container reveal">
+      <h2>Siap Melihatnya Langsung?</h2>
+      <p>Jadwalkan tur pribadi atau biarkan kami mencocokkan villa yang tepat untuk tujuan Anda.</p>
+      <div class="hero-cta">
+        <button class="btn btn--primary" data-tour>Jadwalkan Tur Pribadi</button>
+        <button class="btn btn--outline" data-quiz>Temukan Villa Saya</button>
+      </div>
+    </div>
+  </section>
+
   <!-- Testimonials -->
   <section class="section bg-alt testimonials logo-watermark logo-watermark--left">
     <div class="container">
@@ -166,59 +178,8 @@
     </div>
   </section>
 
-  <!-- ROI Calculator -->
-  <section class="section roi-calculator" id="roi-calculator">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-header__tag">Kalkulator Investasi</span>
-        <h2>Hitung Keuntungan Anda</h2>
-        <p>Lihat potensi investasi properti Bali Anda</p>
-      </div>
-      <div class="roi-calculator__body reveal">
-        <div class="roi-calculator__input">
-          <div class="roi-calculator__group">
-            <label class="roi-calculator__label">Jumlah Investasi</label>
-            <div class="roi-calculator__amount">$335,000</div>
-            <input type="range" class="roi-calculator__range" min="100000" max="1000000" step="10000" value="335000">
-          </div>
-
-          <div class="roi-calculator__group">
-            <label class="roi-calculator__label">Skenario</label>
-            <div class="roi-calculator__scenarios">
-              <button class="roi-calculator__scenario" data-scenario="conservative" data-yield="0.08" data-growth="0.06">Konservatif<span>imbal hasil 8%</span></button>
-              <button class="roi-calculator__scenario active" data-scenario="normal" data-yield="0.12" data-growth="0.10">Normal<span>imbal hasil 12%</span></button>
-              <button class="roi-calculator__scenario" data-scenario="optimistic" data-yield="0.15" data-growth="0.12">Optimistis<span>imbal hasil 15%</span></button>
-            </div>
-          </div>
-
-          <div class="roi-calculator__group">
-            <label class="roi-calculator__label">Tingkat Hunian</label>
-            <div class="roi-calculator__occupancy-value" id="occupancy-value">80%</div>
-            <input type="range" class="roi-calculator__range" id="roi-occupancy" min="50" max="95" step="5" value="80">
-          </div>
-        </div>
-        <div class="roi-calculator__results">
-          <div class="roi-calculator__result">
-            <span class="roi-calculator__result-label">Pendapatan Sewa Tahunan</span>
-            <span class="roi-calculator__result-value" id="roi-annual">$36,180</span>
-          </div>
-          <div class="roi-calculator__result">
-            <span class="roi-calculator__result-label">Total Imbal Hasil 5 Tahun</span>
-            <span class="roi-calculator__result-value" id="roi-5yr">$0</span>
-          </div>
-          <div class="roi-calculator__result roi-calculator__result--highlight">
-            <span class="roi-calculator__result-label">Total Imbal Hasil 10 Tahun</span>
-            <span class="roi-calculator__result-value" id="roi-10yr">$0</span>
-          </div>
-          <p class="roi-calculator__disclaimer">*Proyeksi berdasarkan data pasar terkini. Hasil aktual dapat berbeda.</p>
-          <button class="btn btn--primary roi-calculator__cta" data-quiz>Diskusikan Investasi Anda</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- About Intro -->
-  <section class="section bg-alt">
+  <section class="section">
     <div class="container">
       <div class="split-section reveal">
         <div class="split-section__image">
@@ -234,6 +195,8 @@
       </div>
     </div>
   </section>
+  <!-- ROI Calculator (auto-rendered) -->
+  <section data-roi-calc id="roi-calculator"></section>
 
   <!-- Photo Mosaic -->
   <section class="section logo-watermark logo-watermark--right logo-watermark--large">

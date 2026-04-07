@@ -450,8 +450,8 @@ p {
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(26, 26, 20, 0.3) 0%,
-    rgba(26, 26, 20, 0.5) 50%,
+    rgba(26, 26, 20, 0.4) 0%,
+    rgba(26, 26, 20, 0.65) 50%,
     rgba(26, 26, 20, 0.95) 100%
   );
 }
@@ -479,6 +479,7 @@ p {
   font-size: clamp(1.6rem, 3.5vw, 4.5rem);
   color: var(--color-cream);
   margin-bottom: 20px;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
 }
 
 .hero h1 .text-accent {
@@ -500,6 +501,7 @@ p {
   color: var(--color-text);
   max-width: 600px;
   margin-bottom: clamp(24px, 3vw, 40px);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
   line-height: 1.7;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
 }
@@ -678,6 +680,37 @@ p {
 .project-showcase__content h3 {
   font-size: var(--font-xl);
   margin-bottom: 12px;
+}
+
+.project-showcase__tagline {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 14px;
+}
+
+.project-showcase__tagline .project-showcase__num {
+  margin-right: 14px;
+}
+
+.project-showcase__num {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.project-showcase__positioning {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  padding-left: 14px;
+  border-left: 1px solid rgba(198, 168, 106, 0.4);
 }
 
 .project-showcase__desc,
@@ -2794,6 +2827,17 @@ td .price-idr {
 .unit-table .status--available { color: var(--color-accent); font-weight: 600; }
 .unit-table .status--booked { color: var(--color-status-booked); font-weight: 600; }
 .unit-table .status--resale { color: var(--color-status-resale); font-weight: 600; }
+
+.unit-table tr.unit--clickable {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.unit-table tr.unit--clickable td:first-child {
+  box-shadow: inset 3px 0 0 var(--color-accent);
+}
+.unit-table tr.unit--clickable:hover td {
+  background: rgba(107, 143, 78, 0.12);
+}
 
 .unit-table tr.unit--premium td {
   background: rgba(107, 143, 78, 0.06);

@@ -47,6 +47,68 @@ const SITE_DATA = {
         "yield": 0.15,
         "growth": 0.12
       }
+    },
+    "texts": {
+      "en": {
+        "tag": "Investment Calculator",
+        "title": "Calculate Your Returns",
+        "titleProject": "Calculate Returns for {project}",
+        "subtitle": "See the potential of your Bali real estate investment",
+        "subtitleProject": "See the potential income from your investment in this project",
+        "investmentLabel": "Investment Amount",
+        "scenarioLabel": "Scenario",
+        "conservative": "Conservative",
+        "normal": "Normal",
+        "optimistic": "Optimistic",
+        "yieldSuffix": "yield",
+        "occupancyLabel": "Occupancy Rate",
+        "annualIncome": "Annual Rental Income",
+        "return5y": "5-Year Total Return",
+        "return10y": "10-Year Total Return",
+        "disclaimer": "*Projections based on current market data. Actual returns may vary.",
+        "ctaHome": "Discuss Your Investment",
+        "ctaProject": "Schedule a Private Tour"
+      },
+      "ru": {
+        "tag": "Инвестиционный калькулятор",
+        "title": "Рассчитайте доходность",
+        "titleProject": "Рассчитайте доходность {project}",
+        "subtitle": "Оцените потенциал инвестиций в недвижимость на Бали",
+        "subtitleProject": "Оцените потенциальный доход от инвестиций в этот проект",
+        "investmentLabel": "Сумма инвестиций",
+        "scenarioLabel": "Сценарий",
+        "conservative": "Консервативный",
+        "normal": "Обычный",
+        "optimistic": "Оптимистичный",
+        "yieldSuffix": "доходность",
+        "occupancyLabel": "Заполняемость",
+        "annualIncome": "Годовой доход от аренды",
+        "return5y": "Общий доход за 5 лет",
+        "return10y": "Общий доход за 10 лет",
+        "disclaimer": "*Прогнозы основаны на текущих рыночных данных. Фактическая доходность может отличаться.",
+        "ctaHome": "Обсудить инвестиции",
+        "ctaProject": "Записаться на приватный тур"
+      },
+      "id": {
+        "tag": "Kalkulator Investasi",
+        "title": "Hitung Keuntungan Anda",
+        "titleProject": "Hitung Imbal Hasil {project}",
+        "subtitle": "Lihat potensi investasi properti Bali Anda",
+        "subtitleProject": "Lihat potensi pendapatan dari investasi Anda di proyek ini",
+        "investmentLabel": "Jumlah Investasi",
+        "scenarioLabel": "Skenario",
+        "conservative": "Konservatif",
+        "normal": "Normal",
+        "optimistic": "Optimistis",
+        "yieldSuffix": "imbal hasil",
+        "occupancyLabel": "Tingkat Hunian",
+        "annualIncome": "Pendapatan Sewa Tahunan",
+        "return5y": "Total Imbal Hasil 5 Tahun",
+        "return10y": "Total Imbal Hasil 10 Tahun",
+        "disclaimer": "*Proyeksi berdasarkan data pasar terkini. Hasil aktual dapat berbeda.",
+        "ctaHome": "Diskusikan Investasi Anda",
+        "ctaProject": "Jadwalkan Tur Pribadi"
+      }
     }
   },
   "stats": {

@@ -1497,13 +1497,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape' && quizOverlay.classList.contains('active')) closeQuiz();
   });
 
-  // Attach quiz to CTA section buttons and header CTA
+  // Attach quiz via event delegation (works for dynamically rendered buttons)
   // Exclude [data-tour] buttons — they open tour popup, not quiz
-  document.querySelectorAll('.cta-section .btn--primary:not([data-tour]), [data-quiz]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      openQuiz();
-    });
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('[data-quiz]');
+    if (!btn) {
+      // Also catch .cta-section primary buttons that aren't tour-bound
+      btn = e.target.closest('.cta-section .btn--primary');
+      if (!btn || btn.hasAttribute('data-tour')) return;
+    }
+    e.preventDefault();
+    openQuiz();
   });
 
   // --- Tour Booking Popup ---
@@ -1814,72 +1818,175 @@ document.addEventListener('DOMContentLoaded', () => {
     return 'Rp ' + idr.toLocaleString('id-ID');
   }
 
-  // --- ROI Calculator ---
-  const roiRange = document.querySelector('.roi-calculator__range:not(#roi-occupancy)');
-  if (roiRange) {
-    let rentalYield = 0.12;
-    let growthRate = 0.10;
-    const amountEl = document.querySelector('.roi-calculator__amount');
-    const annualEl = document.getElementById('roi-annual');
-    const yr5El = document.getElementById('roi-5yr');
-    const yr10El = document.getElementById('roi-10yr');
-    const occRange = document.getElementById('roi-occupancy');
-    const occValue = document.getElementById('occupancy-value');
-    const scenarioBtns = document.querySelectorAll('.roi-calculator__scenario');
-    if (!amountEl || !annualEl || !yr5El || !yr10El || !occRange) return;
+  // --- Price range helpers (single source of truth: units / unitTypes) ---
+  function getPriceRange(proj) {
+    if (!proj) return null;
+    // Source 1: individual units (available + resale, with numeric price)
+    if (proj.units && proj.units.length) {
+      var prices = proj.units
+        .filter(function(u) { return (u.status === 'available' || u.status === 'resale') && typeof u.price === 'number' && u.price > 0; })
+        .map(function(u) { return u.price; });
+      if (prices.length) return { min: Math.min.apply(null, prices), max: Math.max.apply(null, prices) };
+    }
+    // Source 2: unit types (for pre-sale projects)
+    if (proj.unitTypes && proj.unitTypes.length) {
+      var tPrices = proj.unitTypes
+        .filter(function(t) { return typeof t.price === 'number' && t.price > 0; })
+        .map(function(t) { return t.price; });
+      if (tPrices.length) return { min: Math.min.apply(null, tPrices), max: Math.max.apply(null, tPrices) };
+    }
+    // Fallback: startingPrice
+    if (typeof proj.startingPrice === 'number' && proj.startingPrice > 0) {
+      return { min: proj.startingPrice, max: proj.startingPrice };
+    }
+    return null;
+  }
 
-    // Apply ROI params from SITE_DATA
-    if (typeof SITE_DATA !== 'undefined' && SITE_DATA.roi) {
-      var roi = SITE_DATA.roi;
-      if (roi.minInvestment) roiRange.min = roi.minInvestment;
-      if (roi.maxInvestment) roiRange.max = roi.maxInvestment;
-      if (roi.step) roiRange.step = roi.step;
-      if (roi.defaultInvestment) roiRange.value = roi.defaultInvestment;
-      if (roi.minOccupancy) occRange.min = roi.minOccupancy;
-      if (roi.maxOccupancy) occRange.max = roi.maxOccupancy;
-      if (roi.occupancyStep) occRange.step = roi.occupancyStep;
-      if (roi.defaultOccupancy) { occRange.value = roi.defaultOccupancy; occValue.textContent = roi.defaultOccupancy + '%'; }
-      if (roi.scenarios) {
-        scenarioBtns.forEach(function(btn) {
-          var sc = btn.dataset.scenario;
-          if (sc && roi.scenarios[sc]) {
-            btn.dataset.yield = roi.scenarios[sc].yield;
-            btn.dataset.growth = roi.scenarios[sc].growth;
-            if (btn.classList.contains('active')) {
-              rentalYield = roi.scenarios[sc].yield;
-              growthRate = roi.scenarios[sc].growth;
-            }
-          }
-        });
+  function fmtUsdShort(n) {
+    if (n >= 1e6) return '$' + (n / 1e6).toFixed(2).replace(/\.?0+$/, '') + 'M';
+    return '$' + Math.round(n / 1000) + 'K';
+  }
+  function fmtUsdFull(n) { return '$' + n.toLocaleString('en-US'); }
+
+  function fmtPriceRangeHtml(proj, opts) {
+    var r = getPriceRange(proj);
+    if (!r) return '';
+    opts = opts || {};
+    var short = !!opts.short;
+    var fmt = short ? fmtUsdShort : fmtUsdFull;
+    var usd = (r.min === r.max) ? fmt(r.min) : fmt(r.min) + ' – ' + fmt(r.max);
+    var idr = '';
+    if (xRate) {
+      idr = (r.min === r.max) ? fmtIdr(r.min) : fmtIdr(r.min) + ' – ' + fmtIdr(r.max);
+    }
+    return usd + (idr ? '<span class="price-idr">' + idr + '</span>' : '');
+  }
+
+  // --- ROI Calculator (auto-rendered into [data-roi-calc] placeholders) ---
+  function renderRoiCalculator(section) {
+    if (!section || section.dataset.roiRendered === '1') return;
+    var pageLang = document.documentElement.lang || 'en';
+    if (pageLang.indexOf('-') > -1) pageLang = pageLang.split('-')[0];
+    var roi = (typeof SITE_DATA !== 'undefined' && SITE_DATA.roi) ? SITE_DATA.roi : {};
+    var T = (roi.texts && (roi.texts[pageLang] || roi.texts.en)) || {};
+    var sc = roi.scenarios || { conservative: { yield: 0.08, growth: 0.06 }, normal: { yield: 0.12, growth: 0.10 }, optimistic: { yield: 0.15, growth: 0.12 } };
+
+    // Project-specific config
+    var projKey = section.dataset.project || '';
+    var proj = (projKey && typeof PROJECTS_DATA !== 'undefined' && PROJECTS_DATA[projKey]) ? PROJECTS_DATA[projKey] : null;
+    var minInv = roi.minInvestment || 100000;
+    var maxInv = roi.maxInvestment || 1000000;
+    var stepInv = roi.step || 10000;
+    var defInv = roi.defaultInvestment || 335000;
+    if (proj) {
+      var pr = getPriceRange(proj);
+      if (pr) {
+        minInv = Math.floor(pr.min / 10000) * 10000;
+        maxInv = Math.max(Math.ceil(pr.max / 10000) * 10000, minInv + 100000);
+        stepInv = 5000;
+        defInv = pr.min;
       }
     }
+    var minOcc = roi.minOccupancy || 50;
+    var maxOcc = roi.maxOccupancy || 95;
+    var stepOcc = roi.occupancyStep || 5;
+    var defOcc = roi.defaultOccupancy || 80;
 
-    const calculate = () => {
-      const inv = parseInt(roiRange.value);
-      const occupancy = parseInt(occRange.value) / 100;
-      const annualRental = inv * rentalYield * occupancy;
-      let rental5 = 0, rental10 = 0, pv = inv;
-      for (let y = 1; y <= 10; y++) {
+    var title = proj ? (T.titleProject || '').replace('{project}', proj.name) : (T.title || '');
+    var subtitle = proj ? T.subtitleProject : T.subtitle;
+    var ctaText = proj ? T.ctaProject : T.ctaHome;
+    var ctaAttr = proj ? ('data-tour="' + proj.name + '"') : 'data-quiz';
+
+    section.classList.add('section', 'bg-alt', 'roi-calculator');
+    section.innerHTML =
+      '<div class="container">' +
+        '<div class="section-header reveal">' +
+          '<span class="section-header__tag">' + (T.tag || '') + '</span>' +
+          '<h2>' + title + '</h2>' +
+          '<p>' + (subtitle || '') + '</p>' +
+        '</div>' +
+        '<div class="roi-calculator__body reveal">' +
+          '<div class="roi-calculator__input">' +
+            '<div class="roi-calculator__group">' +
+              '<label class="roi-calculator__label">' + (T.investmentLabel || '') + '</label>' +
+              '<div class="roi-calculator__amount">$' + defInv.toLocaleString() + '</div>' +
+              '<input type="range" class="roi-calculator__range" min="' + minInv + '" max="' + maxInv + '" step="' + stepInv + '" value="' + defInv + '">' +
+            '</div>' +
+            '<div class="roi-calculator__group">' +
+              '<label class="roi-calculator__label">' + (T.scenarioLabel || '') + '</label>' +
+              '<div class="roi-calculator__scenarios">' +
+                '<button class="roi-calculator__scenario" data-scenario="conservative" data-yield="' + sc.conservative.yield + '" data-growth="' + sc.conservative.growth + '">' + (T.conservative || '') + '<span>' + Math.round(sc.conservative.yield * 100) + '% ' + (T.yieldSuffix || '') + '</span></button>' +
+                '<button class="roi-calculator__scenario active" data-scenario="normal" data-yield="' + sc.normal.yield + '" data-growth="' + sc.normal.growth + '">' + (T.normal || '') + '<span>' + Math.round(sc.normal.yield * 100) + '% ' + (T.yieldSuffix || '') + '</span></button>' +
+                '<button class="roi-calculator__scenario" data-scenario="optimistic" data-yield="' + sc.optimistic.yield + '" data-growth="' + sc.optimistic.growth + '">' + (T.optimistic || '') + '<span>' + Math.round(sc.optimistic.yield * 100) + '% ' + (T.yieldSuffix || '') + '</span></button>' +
+              '</div>' +
+            '</div>' +
+            '<div class="roi-calculator__group">' +
+              '<label class="roi-calculator__label">' + (T.occupancyLabel || '') + '</label>' +
+              '<div class="roi-calculator__occupancy-value">' + defOcc + '%</div>' +
+              '<input type="range" class="roi-calculator__range roi-calculator__occupancy" min="' + minOcc + '" max="' + maxOcc + '" step="' + stepOcc + '" value="' + defOcc + '">' +
+            '</div>' +
+          '</div>' +
+          '<div class="roi-calculator__results">' +
+            '<div class="roi-calculator__result">' +
+              '<span class="roi-calculator__result-label">' + (T.annualIncome || '') + '</span>' +
+              '<span class="roi-calculator__result-value roi-calculator__annual">$0</span>' +
+            '</div>' +
+            '<div class="roi-calculator__result">' +
+              '<span class="roi-calculator__result-label">' + (T.return5y || '') + '</span>' +
+              '<span class="roi-calculator__result-value roi-calculator__r5">$0</span>' +
+            '</div>' +
+            '<div class="roi-calculator__result roi-calculator__result--highlight">' +
+              '<span class="roi-calculator__result-label">' + (T.return10y || '') + '</span>' +
+              '<span class="roi-calculator__result-value roi-calculator__r10">$0</span>' +
+            '</div>' +
+            '<p class="roi-calculator__disclaimer">' + (T.disclaimer || '') + '</p>' +
+            '<button class="btn btn--primary roi-calculator__cta" ' + ctaAttr + '>' + (ctaText || '') + '</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    section.dataset.roiRendered = '1';
+
+    // Bind logic
+    var invRange = section.querySelector('.roi-calculator__range:not(.roi-calculator__occupancy)');
+    var occRange = section.querySelector('.roi-calculator__occupancy');
+    var amountEl = section.querySelector('.roi-calculator__amount');
+    var occValue = section.querySelector('.roi-calculator__occupancy-value');
+    var annualEl = section.querySelector('.roi-calculator__annual');
+    var yr5El = section.querySelector('.roi-calculator__r5');
+    var yr10El = section.querySelector('.roi-calculator__r10');
+    var scenarioBtns = section.querySelectorAll('.roi-calculator__scenario');
+    var rentalYield = sc.normal.yield;
+    var growthRate = sc.normal.growth;
+
+    function calculate() {
+      var inv = parseInt(invRange.value);
+      var occupancy = parseInt(occRange.value) / 100;
+      var annualRental = inv * rentalYield * occupancy;
+      var rental5 = 0, rental10 = 0, pv = inv;
+      for (var y = 1; y <= 10; y++) {
         rental10 += pv * rentalYield * occupancy;
         pv *= (1 + growthRate);
         if (y === 5) rental5 = rental10 + (pv - inv);
       }
-      const total10 = rental10 + (pv - inv);
-      amountEl.innerHTML = '$' + inv.toLocaleString() + (fmtIdr(inv) ? '<span class="price-idr">' + fmtIdr(inv) + '</span>' : '');
-      annualEl.innerHTML = '$' + Math.round(annualRental).toLocaleString() + (fmtIdr(annualRental) ? '<span class="price-idr">' + fmtIdr(Math.round(annualRental)) + '</span>' : '');
-      yr5El.innerHTML = '$' + Math.round(rental5).toLocaleString() + (fmtIdr(rental5) ? '<span class="price-idr">' + fmtIdr(Math.round(rental5)) + '</span>' : '');
-      yr10El.innerHTML = '$' + Math.round(total10).toLocaleString() + (fmtIdr(total10) ? '<span class="price-idr">' + fmtIdr(Math.round(total10)) + '</span>' : '');
-    };
+      var total10 = rental10 + (pv - inv);
+      function fmtCell(n) {
+        var idr = fmtIdr(n);
+        return '$' + Math.round(n).toLocaleString() + (idr ? '<span class="price-idr">' + idr + '</span>' : '');
+      }
+      amountEl.innerHTML = fmtCell(inv);
+      annualEl.innerHTML = fmtCell(annualRental);
+      yr5El.innerHTML = fmtCell(rental5);
+      yr10El.innerHTML = fmtCell(total10);
+    }
 
-    roiRange.addEventListener('input', calculate);
-    occRange.addEventListener('input', () => {
+    invRange.addEventListener('input', calculate);
+    occRange.addEventListener('input', function() {
       occValue.textContent = occRange.value + '%';
       calculate();
     });
-
-    scenarioBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        scenarioBtns.forEach(b => b.classList.remove('active'));
+    scenarioBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        scenarioBtns.forEach(function(b) { b.classList.remove('active'); });
         btn.classList.add('active');
         rentalYield = parseFloat(btn.dataset.yield);
         growthRate = parseFloat(btn.dataset.growth);
@@ -1888,7 +1995,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     calculate();
+
+    // Re-observe reveals
+    section.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
   }
+
+  document.querySelectorAll('[data-roi-calc]').forEach(renderRoiCalculator);
 
   // --- Lead Magnet form ---
   function getGuidePath() {
@@ -2296,10 +2408,16 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       const sl = PD.statusLabels[lang] || PD.statusLabels.en;
 
       let html = '<thead><tr><th>' + h.unit + '</th><th>' + h.type + '</th><th>' + h.floors + '</th><th>' + h.area + '</th><th>' + h.land + '</th><th>' + h.status + '</th><th>' + h.price + '</th></tr></thead><tbody>';
+      const tourName = proj.name || '';
       proj.units.forEach(u => {
-        const cls = u.badge ? ' class="unit--premium"' : '';
+        const isClickable = u.status === 'available' || u.status === 'resale';
+        const classes = [];
+        if (u.badge) classes.push('unit--premium');
+        if (isClickable) classes.push('unit--clickable');
+        const cls = classes.length ? ' class="' + classes.join(' ') + '"' : '';
+        const tourAttr = isClickable ? ' data-tour="' + tourName + '"' : '';
         const badge = u.badge ? ' <span class="unit__badge">' + u.badge + '</span>' : '';
-        html += '<tr' + cls + '><td>' + u.id + badge + '</td><td>' + u.type + '</td><td>' + u.floors + '</td><td>' + u.area + '</td><td>' + u.land + '</td><td class="status--' + u.status + '">' + (sl[u.status] || u.status) + '</td><td>' + fmtDualPrice(u.price) + '</td></tr>';
+        html += '<tr' + cls + tourAttr + '><td>' + u.id + badge + '</td><td>' + u.type + '</td><td>' + u.floors + '</td><td>' + u.area + '</td><td>' + u.land + '</td><td class="status--' + u.status + '">' + (sl[u.status] || u.status) + '</td><td>' + fmtDualPrice(u.price) + '</td></tr>';
       });
       html += '</tbody>';
       el.innerHTML = html;
@@ -2347,6 +2465,21 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       return 'project-card__badge--construction';
     }
 
+    // --- Helper: showcase badge text (scarcity signal from availability) ---
+    function getShowcaseBadgeText(proj) {
+      if (proj.status === 'pre-sale') {
+        return loc(proj.showcaseStatus) || 'Pre-Sale';
+      }
+      var a = proj.availability;
+      if (a && a.total && a.sold > 0) {
+        var pct = Math.round(a.sold / a.total * 100);
+        var labels = PD.availabilityLabels ? (PD.availabilityLabels[dataLang] || PD.availabilityLabels.en) : {};
+        var soldLabel = labels.sold || 'sold';
+        return pct + '% ' + soldLabel.charAt(0).toUpperCase() + soldLabel.slice(1);
+      }
+      return loc(proj.showcaseStatus) || '';
+    }
+
     // --- Generate Showcase Cards from data-projects-container ---
     document.querySelectorAll('[data-projects-container]').forEach(function(container) {
       var useShort = container.hasAttribute('data-projects-short');
@@ -2358,17 +2491,20 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         var text = useShort ? loc(proj.showcaseSubtitle) : loc(proj.showcaseDesc);
         if (!text) text = loc(proj.showcaseSubtitle) || loc(proj.showcaseDesc);
         var metaHtml = meta.map(function(m) { return '<div><strong>' + m.strong + '</strong> ' + m.label + '</div>'; }).join('');
+        var posText = loc(proj.positioning);
+        var taglineHtml = '<div class="project-showcase__tagline"><span class="project-showcase__num">' + num + '</span>' +
+          (posText ? '<span class="project-showcase__positioning">' + posText + '</span>' : '') + '</div>';
         return '<div class="project-showcase reveal" data-project="' + key + '">' +
           '<a href="' + proj.page + '" class="project-showcase__image">' +
             '<img src="' + pathPrefix + (proj.showcaseImage || '') + '" alt="' + proj.name + '" loading="lazy" width="1920" height="1080">' +
-            '<span class="project-showcase__badge ' + badgeClass(proj.status) + '">' + loc(proj.showcaseStatus) + '</span>' +
+            '<span class="project-showcase__badge ' + badgeClass(proj.status) + '">' + getShowcaseBadgeText(proj) + '</span>' +
           '</a>' +
           '<div class="project-showcase__content">' +
-            '<span class="section-header__tag">' + num + '</span>' +
+            taglineHtml +
             '<h3>' + proj.name + '</h3>' +
             '<p>' + text + '</p>' +
             '<div class="project-showcase__meta">' + metaHtml + '</div>' +
-            '<p class="project-showcase__price">' + loc(proj.showcasePrice) + (proj.startingPrice ? '<span class="price-idr">' + fmtIdr(proj.startingPrice) + '</span>' : '') + '</p>' +
+            '<p class="project-showcase__price">' + fmtPriceRangeHtml(proj) + '</p>' +
             buildAvailBar(proj) +
             '<a href="' + proj.page + '" class="btn btn--outline">' + loc(proj.showcaseCta) + '</a>' +
           '</div>' +
@@ -2385,10 +2521,41 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       if (!proj) return;
 
       var price = el.querySelector('.project-showcase__price');
-      if (price && proj.showcasePrice) price.innerHTML = loc(proj.showcasePrice) + (proj.startingPrice ? '<span class="price-idr">' + fmtIdr(proj.startingPrice) + '</span>' : '');
+      if (price) price.innerHTML = fmtPriceRangeHtml(proj);
 
       var badge = el.querySelector('.project-showcase__badge');
-      if (badge && proj.showcaseStatus) badge.textContent = loc(proj.showcaseStatus);
+      if (badge) badge.textContent = getShowcaseBadgeText(proj);
+
+      var posText = loc(proj.positioning);
+      var content = el.querySelector('.project-showcase__content');
+      var oldPosOutside = el.querySelector('.project-showcase__content > .project-showcase__positioning');
+      if (oldPosOutside) oldPosOutside.remove();
+      var oldNum = el.querySelector('.project-showcase__content > .section-header__tag');
+      var tagline = el.querySelector('.project-showcase__tagline');
+      if (!tagline && content) {
+        tagline = document.createElement('div');
+        tagline.className = 'project-showcase__tagline';
+        var numText = oldNum ? oldNum.textContent : '';
+        var numSpan = document.createElement('span');
+        numSpan.className = 'project-showcase__num';
+        numSpan.textContent = numText;
+        tagline.appendChild(numSpan);
+        if (oldNum) oldNum.remove();
+        content.insertBefore(tagline, content.firstChild);
+      }
+      if (tagline) {
+        var posSpan = tagline.querySelector('.project-showcase__positioning');
+        if (posText) {
+          if (!posSpan) {
+            posSpan = document.createElement('span');
+            posSpan.className = 'project-showcase__positioning';
+            tagline.appendChild(posSpan);
+          }
+          posSpan.textContent = posText;
+        } else if (posSpan) {
+          posSpan.remove();
+        }
+      }
 
       var cta = el.querySelector('.btn');
       if (cta && proj.showcaseCta) cta.textContent = loc(proj.showcaseCta);
@@ -2407,7 +2574,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       projects.forEach(function(k) { html += '<th>' + PD[k].name + '</th>'; });
       html += '</tr></thead><tbody>';
       var rows = [
-        { key: 'price', accent: true, fn: function(k) { var pr = '$' + (PD[k].startingPrice / 1000 | 0) + 'K'; var idr = fmtIdr(PD[k].startingPrice); return pr + (idr ? '<span class="price-idr">' + idr + '</span>' : ''); } },
+        { key: 'price', accent: true, fn: function(k) { return fmtPriceRangeHtml(PD[k], { short: true }); } },
         { key: 'bedrooms', fn: function(k) { return PD[k].bedrooms || '\u2014'; } },
         { key: 'area', fn: function(k) { return PD[k].compArea || '\u2014'; } },
         { key: 'land', fn: function(k) { return PD[k].compLand || '\u2014'; } },
