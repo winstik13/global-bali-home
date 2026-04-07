@@ -3475,6 +3475,8 @@
     const status = $('#roi-save-status');
     btnLoading(btn, true);
     try {
+      // Preserve any pending text edits in the open lang pane
+      try { captureRoiTextsPane(); } catch (e) {}
       // Preserve existing texts when saving numeric params
       const existingTexts = (siteData.roi && siteData.roi.texts) || undefined;
       siteData.roi = {
@@ -3584,6 +3586,21 @@
     btnLoading(btn, true);
     try {
       captureRoiTextsPane();
+      // Preserve any pending numeric param edits
+      const roiNum = $('#roi-min');
+      if (roiNum && siteData.roi) {
+        siteData.roi.minInvestment = parseInt($('#roi-min').value) || siteData.roi.minInvestment;
+        siteData.roi.maxInvestment = parseInt($('#roi-max').value) || siteData.roi.maxInvestment;
+        siteData.roi.step = parseInt($('#roi-step').value) || siteData.roi.step;
+        siteData.roi.defaultInvestment = parseInt($('#roi-default').value) || siteData.roi.defaultInvestment;
+        siteData.roi.minOccupancy = parseInt($('#roi-occ-min').value) || siteData.roi.minOccupancy;
+        siteData.roi.maxOccupancy = parseInt($('#roi-occ-max').value) || siteData.roi.maxOccupancy;
+        siteData.roi.defaultOccupancy = parseInt($('#roi-occ-default').value) || siteData.roi.defaultOccupancy;
+        if (!siteData.roi.scenarios) siteData.roi.scenarios = {};
+        siteData.roi.scenarios.conservative = { yield: parseFloat($('#roi-cons-yield').value) / 100 || 0.08, growth: parseFloat($('#roi-cons-growth').value) / 100 || 0.06 };
+        siteData.roi.scenarios.normal = { yield: parseFloat($('#roi-norm-yield').value) / 100 || 0.12, growth: parseFloat($('#roi-norm-growth').value) / 100 || 0.10 };
+        siteData.roi.scenarios.optimistic = { yield: parseFloat($('#roi-opt-yield').value) / 100 || 0.15, growth: parseFloat($('#roi-opt-growth').value) / 100 || 0.12 };
+      }
       const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
       await commitFile('data/site-data.js', content, 'Update calculator texts via admin');
       status.textContent = t('common.saved');
@@ -3688,6 +3705,12 @@
     btnLoading(btn, true);
     try {
       captureStatsLabelsPane(statsLabelsLang);
+      // Preserve any pending number edits
+      if (!siteData.stats) siteData.stats = {};
+      STAT_KEYS.forEach(key => {
+        const el = $(`#stat-${key}`);
+        if (el) siteData.stats[key] = el.value.trim();
+      });
       const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
       await commitFile('data/site-data.js', content, 'Update stat labels via admin');
       status.textContent = t('common.saved');
@@ -3716,6 +3739,8 @@
         const el = $(`#stat-${key}`);
         if (el) siteData.stats[key] = el.value.trim();
       });
+      // Preserve any pending label edits in the open lang pane
+      try { captureStatsLabelsPane(statsLabelsLang); } catch (e) {}
       const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
       await commitFile('data/site-data.js', content, 'Update company statistics via admin');
       status.textContent = t('common.saved');
