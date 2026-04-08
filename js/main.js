@@ -1139,17 +1139,24 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --- Dynamic FAQ Rendering from FAQ_DATA ---
+  // Supports optional data-faq-ids="2,3,4,6,7" attribute on .faq-list to render a subset in that exact order.
   if (typeof FAQ_DATA !== 'undefined') {
-    const faqList = document.querySelector('.faq-list');
-    if (faqList) {
+    document.querySelectorAll('.faq-list').forEach(faqList => {
       const faqLang = lang;
-      const sorted = FAQ_DATA.slice().sort((a, b) => (a.order || 99) - (b.order || 99));
-      faqList.innerHTML = sorted.map(item => {
+      const idsAttr = faqList.getAttribute('data-faq-ids');
+      let items;
+      if (idsAttr) {
+        const ids = idsAttr.split(',').map(s => parseInt(s.trim(), 10)).filter(n => !isNaN(n));
+        items = ids.map(id => FAQ_DATA.find(f => f.order === id)).filter(Boolean);
+      } else {
+        items = FAQ_DATA.slice().sort((a, b) => (a.order || 99) - (b.order || 99));
+      }
+      faqList.innerHTML = items.map(item => {
         const q = (item.question[faqLang] || item.question.en || '');
         const a = (item.answer[faqLang] || item.answer.en || '');
         return '<div class="faq-item"><button class="faq-question">' + q + '</button><div class="faq-answer"><div class="faq-answer__inner">' + a + '</div></div></div>';
       }).join('');
-    }
+    });
   }
 
   // --- FAQ Accordion ---
@@ -2302,11 +2309,11 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
   }
 
   // ─── Dynamic Testimonials from TESTIMONIALS_DATA ───
+  // Supports optional data-testimonials-ids="1,3" attribute for filtering by order field.
   if (typeof TESTIMONIALS_DATA !== 'undefined') {
     var tContainers = document.querySelectorAll('[data-testimonials-container]');
     if (tContainers.length) {
-      var sorted = TESTIMONIALS_DATA.slice().sort(function(a, b) { return (a.order || 99) - (b.order || 99); });
-      var testimonialsHTML = sorted.map(function(t) {
+      function renderTestimonial(t) {
         var stars = '';
         for (var s = 0; s < (t.stars || 5); s++) stars += '★';
         var authorName = t.name[lang] || t.name.en;
@@ -2332,9 +2339,17 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
           '<span class="testimonials__role">' + (t.role[lang] || t.role.en) + '</span>' +
           verifiedHTML +
           '</div></div></div>';
-      }).join('');
+      }
       tContainers.forEach(function(tContainer) {
-        tContainer.innerHTML = testimonialsHTML;
+        var idsAttr = tContainer.getAttribute('data-testimonials-ids');
+        var items;
+        if (idsAttr) {
+          var ids = idsAttr.split(',').map(function(s) { return parseInt(s.trim(), 10); }).filter(function(n) { return !isNaN(n); });
+          items = ids.map(function(id) { return TESTIMONIALS_DATA.find(function(t) { return t.order === id; }); }).filter(Boolean);
+        } else {
+          items = TESTIMONIALS_DATA.slice().sort(function(a, b) { return (a.order || 99) - (b.order || 99); });
+        }
+        tContainer.innerHTML = items.map(renderTestimonial).join('');
         if (typeof revealObserver !== 'undefined') {
           tContainer.querySelectorAll('.reveal-stagger').forEach(function(el) { revealObserver.observe(el); });
         }
