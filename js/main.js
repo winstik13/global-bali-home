@@ -2640,11 +2640,46 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       }
     };
 
-    var MASTER_PLAN_HEADER_TEXT = {
-      en: { tag: 'Master Plan', title: 'Choose Your Villa', desc: 'Click on any villa to see its details. Sold villas are dimmed.' },
-      ru: { tag: 'Генплан', title: 'Выберите свою виллу', desc: 'Кликните на виллу, чтобы посмотреть детали. Проданные подсвечены серым.' },
-      id: { tag: 'Master Plan', title: 'Pilih Villa Anda', desc: 'Klik villa mana pun untuk melihat detail. Villa terjual ditampilkan redup.' }
+    // Master plan header — title is dynamic based on how many units are still available.
+    // Scarcity signal ("Only N remain") kicks in once at least one unit is sold/booked,
+    // otherwise neutral "N villas available" to avoid a misleading scarcity frame.
+    var MASTER_PLAN_HEADER_STATIC = {
+      en: { tag: 'Master Plan', desc: 'Click on any villa to see its details. Sold villas are dimmed.' },
+      ru: { tag: 'Генплан', desc: 'Кликните на виллу, чтобы посмотреть детали. Проданные подсвечены серым.' },
+      id: { tag: 'Master Plan', desc: 'Klik villa mana pun untuk melihat detail. Villa terjual ditampilkan redup.' }
     };
+    function buildMasterPlanTitle(lang, available, total) {
+      if (available === 0) {
+        if (lang === 'ru') return 'Полностью продано';
+        if (lang === 'id') return 'Habis terjual';
+        return 'Sold Out';
+      }
+      if (available === total) {
+        // Pre-sale / fresh launch: no scarcity frame yet.
+        if (lang === 'ru') {
+          // 1 вилла / 2-4 виллы / 5+ вилл — доступна/доступно
+          if (available === 1) return '1 вилла доступна';
+          if (available >= 2 && available <= 4) return available + ' виллы доступны';
+          return available + ' вилл доступно';
+        }
+        if (lang === 'id') return available + ' villa tersedia';
+        return available + (available === 1 ? ' villa available' : ' villas available');
+      }
+      // Soft scarcity frame: some units have been removed from the pool.
+      if (lang === 'ru') {
+        // Осталась 1 вилла / Осталось 2-4 виллы / Осталось 5+ вилл
+        // Handle -teen exceptions (11-14 always take the plural genitive form)
+        var lastTwo = available % 100;
+        var lastOne = available % 10;
+        if (lastTwo >= 11 && lastTwo <= 14) return 'Осталось всего ' + available + ' вилл';
+        if (lastOne === 1) return (available === 1 ? 'Осталась всего ' : 'Осталось всего ') + available + ' вилла';
+        if (lastOne >= 2 && lastOne <= 4) return 'Осталось всего ' + available + ' виллы';
+        return 'Осталось всего ' + available + ' вилл';
+      }
+      if (lang === 'id') return 'Hanya tersisa ' + available + ' villa';
+      // EN: "Only 1 villa remains" vs "Only N villas remain"
+      return 'Only ' + available + (available === 1 ? ' villa remains' : ' villas remain');
+    }
 
     var MASTER_PLAN_SHEET_TEXT = {
       en: { cta: 'Book a Tour', ctaSold: 'No Longer Available', close: 'Close' },
@@ -2826,11 +2861,18 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
           var k = item.dataset.mpStatus;
           if (sl[k]) item.textContent = sl[k];
         });
-        // Localize header (tag/title/desc)
-        var headerText = MASTER_PLAN_HEADER_TEXT[dataLang] || MASTER_PLAN_HEADER_TEXT.en;
+        // Localize header: tag/desc from static map, title is dynamic (scarcity signal)
+        var staticText = MASTER_PLAN_HEADER_STATIC[dataLang] || MASTER_PLAN_HEADER_STATIC.en;
+        var availableCount = proj.units.filter(function(u) { return u.status === 'available'; }).length;
+        var totalCount = proj.units.length;
+        var dynamicTitle = buildMasterPlanTitle(dataLang, availableCount, totalCount);
         section.querySelectorAll('[data-mp-i18n]').forEach(function(item) {
           var k = item.dataset.mpI18n;
-          if (headerText[k]) item.textContent = headerText[k];
+          if (k === 'title') {
+            item.textContent = dynamicTitle;
+          } else if (staticText[k]) {
+            item.textContent = staticText[k];
+          }
         });
       }
     });
