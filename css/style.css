@@ -3720,8 +3720,18 @@ td .price-idr {
 }
 
 .project-showcase__content .availability-bar {
-  max-width: 100%;
-  margin-bottom: 24px;
+  max-width: none;
+  width: 100%;
+  margin: 0 0 24px 0;
+  align-self: stretch;
+}
+
+.project-showcase__content .availability-bar__header {
+  justify-content: flex-start;
+}
+
+.project-showcase__content .availability-bar__percent {
+  display: none;
 }
 
 .availability-bar__header {

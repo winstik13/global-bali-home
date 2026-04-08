@@ -574,9 +574,9 @@ const PROJECTS_DATA = {
       "id": "Apresiasi Modal"
     },
     "showcaseAvailability": {
-      "en": "1 of 4 units sold",
-      "ru": "1 из 4 продано",
-      "id": "1 dari 4 unit terjual"
+      "en": "Only 3 of 4 units left",
+      "ru": "Осталось всего 3 из 4",
+      "id": "Hanya tersisa 3 dari 4 unit"
     },
     "showcaseDesc": {
       "en": "Where nature and design blend seamlessly. A boutique complex of only 4 exclusive villas with private pools, fish ponds, and stunning rice terrace views.",
@@ -918,9 +918,9 @@ const PROJECTS_DATA = {
       "id": "Arus Kas Entry-Level"
     },
     "showcaseAvailability": {
-      "en": "Pre-Sale Open",
-      "ru": "Предпродажа открыта",
-      "id": "Pra-Penjualan Dibuka"
+      "en": "Only 17 of 26 units left",
+      "ru": "Осталось всего 17 из 26",
+      "id": "Hanya tersisa 17 dari 26 unit"
     },
     "showcaseDesc": {
       "en": "Complex of 26 villas with 1 and 2 bedroom options. Shared amenities include a large swimming pool and cafe. Maximum investment potential.",
