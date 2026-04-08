@@ -287,7 +287,7 @@ const PROJECTS_DATA = {
       }
     ],
     "floorPlans": {
-      "Type A (A1, A2, A3, A4)": {
+      "A1, A2, A3, A4": {
         "tagline": {
           "en": "Single-level living for couples who value simplicity — every room opens onto the terrace.",
           "ru": "Одноэтажный уют для пар: каждая комната выходит на террасу.",
@@ -323,7 +323,7 @@ const PROJECTS_DATA = {
           }
         ]
       },
-      "Type B (B1, B4)": {
+      "B1, B4": {
         "tagline": {
           "en": "Room for the whole family — bedrooms upstairs, gatherings below.",
           "ru": "Места хватит всей семье — спальни наверху, общие зоны внизу.",
@@ -356,7 +356,7 @@ const PROJECTS_DATA = {
           }
         ]
       },
-      "Type B (B2, B3)": {
+      "B2, B3": {
         "tagline": {
           "en": "Two stories of privacy — a quiet retreat upstairs, space for work or guests below.",
           "ru": "Два этажа приватности — уединение наверху, кабинет или гостевая внизу.",
@@ -389,7 +389,7 @@ const PROJECTS_DATA = {
           }
         ]
       },
-      "Type C (C1, C2, C3, C4)": {
+      "C1, C2, C3, C4": {
         "tagline": {
           "en": "The smart starter — most villa, least commitment.",
           "ru": "Умный старт — максимум виллы за минимальные вложения.",
