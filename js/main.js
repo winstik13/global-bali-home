@@ -2637,6 +2637,10 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         'A3': { x: 37, y: 42 }, 'B3': { x: 55, y: 42 }, 'C3': { x: 70, y: 42 },
         'A2': { x: 37, y: 58 }, 'B2': { x: 55, y: 58 }, 'C2': { x: 70, y: 58 },
         'A1': { x: 37, y: 78 }, 'B1': { x: 55, y: 78 }, 'C1': { x: 70, y: 78 }
+      },
+      'serenity-estates': {
+        'A2': { x: 44, y: 44 }, 'B2': { x: 79, y: 60 },
+        'A1': { x: 55, y: 82 }, 'B1': { x: 79, y: 83 }
       }
     };
 

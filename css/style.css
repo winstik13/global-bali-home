@@ -4350,6 +4350,20 @@ a.testimonials__verified:hover {
   transform: rotate(-7deg);
 }
 
+/* Serenity Estates: image is already horizontal — no rotation.
+   Instead lift it slightly, then drop into place on reveal.
+   Also smaller max-width because this image has a taller aspect ratio
+   (2119×1726) than villas (2116×1536), so it overflows the viewport otherwise. */
+.master-plan[data-master-plan="serenity-estates"] {
+  max-width: 880px;
+}
+.master-plan[data-master-plan="serenity-estates"] .master-plan__image {
+  transform: translateY(-5%);
+}
+.master-plan[data-master-plan="serenity-estates"].is-leveled .master-plan__image {
+  transform: translateY(0);
+}
+
 .master-plan__hotspots {
   position: absolute;
   inset: 0;
