@@ -2629,6 +2629,210 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       garden: '<svg viewBox="0 0 48 48" fill="none"><path d="M24 38V22" stroke="currentColor" stroke-width="1.5"/><path d="M24 22c-8 0-12-6-10-12 4 2 10 4 10 12z" stroke="currentColor" stroke-width="1.5"/><path d="M24 22c8 0 12-6 10-12-4 2-10 4-10 12z" stroke="currentColor" stroke-width="1.5"/><path d="M16 38h16" stroke="currentColor" stroke-width="1.5"/></svg>'
     };
 
+    // --- Master Plan Hotspots ---
+    // Coordinates measured from master-plan.webp center-of-rooftop (no CSS rotation).
+    var MASTER_PLAN_POSITIONS = {
+      'serenity-villas': {
+        'A4': { x: 37, y: 23 }, 'B4': { x: 55, y: 23 }, 'C4': { x: 70, y: 23 },
+        'A3': { x: 37, y: 42 }, 'B3': { x: 55, y: 42 }, 'C3': { x: 70, y: 42 },
+        'A2': { x: 37, y: 58 }, 'B2': { x: 55, y: 58 }, 'C2': { x: 70, y: 58 },
+        'A1': { x: 37, y: 78 }, 'B1': { x: 55, y: 78 }, 'C1': { x: 70, y: 78 }
+      }
+    };
+
+    var MASTER_PLAN_HEADER_TEXT = {
+      en: { tag: 'Master Plan', title: 'Choose Your Villa', desc: 'Click on any villa to see its details. Sold villas are dimmed.' },
+      ru: { tag: 'Генплан', title: 'Выберите свою виллу', desc: 'Кликните на виллу, чтобы посмотреть детали. Проданные подсвечены серым.' },
+      id: { tag: 'Master Plan', title: 'Pilih Villa Anda', desc: 'Klik villa mana pun untuk melihat detail. Villa terjual ditampilkan redup.' }
+    };
+
+    var MASTER_PLAN_SHEET_TEXT = {
+      en: { cta: 'Book a Tour', ctaSold: 'No Longer Available', close: 'Close' },
+      ru: { cta: 'Записаться на показ', ctaSold: 'Продано', close: 'Закрыть' },
+      id: { cta: 'Jadwalkan Kunjungan', ctaSold: 'Sudah Terjual', close: 'Tutup' }
+    };
+
+    document.querySelectorAll('[data-master-plan]').forEach(function(el) {
+      var key = el.dataset.masterPlan;
+      var proj = PD[key];
+      if (!proj || !proj.units) return;
+      var positions = MASTER_PLAN_POSITIONS[key];
+      if (!positions) return;
+
+      var sl = (PD.statusLabels && (PD.statusLabels[dataLang] || PD.statusLabels.en)) || {};
+      var th = (PD.unitTableHeaders && (PD.unitTableHeaders[dataLang] || PD.unitTableHeaders.en)) || {};
+      var sheetText = MASTER_PLAN_SHEET_TEXT[dataLang] || MASTER_PLAN_SHEET_TEXT.en;
+      var layer = el.querySelector('.master-plan__hotspots');
+      if (!layer) return;
+      layer.innerHTML = '';
+
+      // --- Bottom-sheet: one per master plan, appended to body ---
+      var sheet = document.createElement('div');
+      sheet.className = 'master-plan__sheet';
+      sheet.setAttribute('role', 'dialog');
+      sheet.setAttribute('aria-modal', 'true');
+      sheet.setAttribute('aria-hidden', 'true');
+      sheet.innerHTML =
+        '<div class="master-plan__sheet-handle" aria-hidden="true"></div>' +
+        '<button type="button" class="master-plan__sheet-close" aria-label="' + sheetText.close + '">&times;</button>' +
+        '<div class="master-plan__sheet-head">' +
+          '<span class="master-plan__sheet-badge" data-sheet="badge"></span>' +
+          '<h3 class="master-plan__sheet-title" data-sheet="title"></h3>' +
+          '<p class="master-plan__sheet-subtitle" data-sheet="subtitle"></p>' +
+        '</div>' +
+        '<div class="master-plan__sheet-specs">' +
+          '<div class="master-plan__sheet-spec"><span class="master-plan__sheet-spec-label">' + (th.area || 'Area') + '</span><span class="master-plan__sheet-spec-value" data-sheet="area"></span></div>' +
+          '<div class="master-plan__sheet-spec"><span class="master-plan__sheet-spec-label">' + (th.land || 'Land') + '</span><span class="master-plan__sheet-spec-value" data-sheet="land"></span></div>' +
+          '<div class="master-plan__sheet-spec"><span class="master-plan__sheet-spec-label">' + (th.floors || 'Floors') + '</span><span class="master-plan__sheet-spec-value" data-sheet="floors"></span></div>' +
+          '<div class="master-plan__sheet-spec"><span class="master-plan__sheet-spec-label">' + (th.status || 'Status') + '</span><span class="master-plan__sheet-spec-value" data-sheet="status"></span></div>' +
+        '</div>' +
+        '<div class="master-plan__sheet-price" data-sheet="price"></div>' +
+        '<button type="button" class="master-plan__sheet-cta" data-sheet="cta"></button>';
+      document.body.appendChild(sheet);
+
+      var sheetRefs = {
+        badge:    sheet.querySelector('[data-sheet="badge"]'),
+        title:    sheet.querySelector('[data-sheet="title"]'),
+        subtitle: sheet.querySelector('[data-sheet="subtitle"]'),
+        area:     sheet.querySelector('[data-sheet="area"]'),
+        land:     sheet.querySelector('[data-sheet="land"]'),
+        floors:   sheet.querySelector('[data-sheet="floors"]'),
+        status:   sheet.querySelector('[data-sheet="status"]'),
+        price:    sheet.querySelector('[data-sheet="price"]'),
+        cta:      sheet.querySelector('[data-sheet="cta"]'),
+        close:    sheet.querySelector('.master-plan__sheet-close')
+      };
+
+      function openSheet(u) {
+        sheetRefs.badge.textContent = u.badge || '';
+        sheetRefs.title.textContent = u.id + ' · ' + u.type;
+        sheetRefs.subtitle.textContent = proj.name || '';
+        sheetRefs.area.textContent = u.area || '—';
+        sheetRefs.land.textContent = u.land || '—';
+        sheetRefs.floors.textContent = u.floors || '—';
+        sheetRefs.status.textContent = sl[u.status] || u.status;
+        sheetRefs.status.className = 'master-plan__sheet-spec-value status--' + u.status;
+        sheetRefs.price.innerHTML = u.price ? fmtDualPrice(u.price) : '—';
+
+        var isSold = u.status === 'sold';
+        sheetRefs.cta.textContent = isSold ? sheetText.ctaSold : sheetText.cta;
+        sheetRefs.cta.disabled = isSold;
+        if (isSold) {
+          sheetRefs.cta.removeAttribute('data-tour');
+        } else {
+          sheetRefs.cta.setAttribute('data-tour', proj.name || '');
+        }
+
+        sheet.classList.add('is-open');
+        sheet.setAttribute('aria-hidden', 'false');
+      }
+      function closeSheet() {
+        sheet.classList.remove('is-open');
+        sheet.setAttribute('aria-hidden', 'true');
+      }
+
+      sheetRefs.close.addEventListener('click', closeSheet);
+      // CTA opens tour popup via delegated [data-tour] handler above.
+      // After it fires, close the sheet so user returns to the tour form cleanly.
+      sheetRefs.cta.addEventListener('click', function() {
+        if (!sheetRefs.cta.disabled) setTimeout(closeSheet, 50);
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && sheet.classList.contains('is-open')) closeSheet();
+      });
+
+      proj.units.forEach(function(u) {
+        var pos = positions[u.id];
+        if (!pos) return;
+
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'master-plan__hotspot master-plan__hotspot--' + u.status;
+        btn.style.left = pos.x + '%';
+        btn.style.top = pos.y + '%';
+        btn.dataset.unitId = u.id;
+        btn.setAttribute('aria-label', u.id + ' — ' + (sl[u.status] || u.status));
+
+        var priceLine = '<span class="master-plan__tooltip-price">'
+          + (u.price ? fmtDualPrice(u.price) : '—')
+          + '</span>';
+
+        btn.innerHTML =
+          '<span class="master-plan__hotspot-label">' + u.id + '</span>' +
+          '<span class="master-plan__tooltip">' +
+            '<strong>' + u.id + ' · ' + u.type + '</strong>' +
+            '<span class="master-plan__tooltip-row">' + u.area + ' · ' + (sl[u.status] || u.status) + '</span>' +
+            priceLine +
+          '</span>';
+
+        btn.addEventListener('click', function(e) {
+          var isTouch = window.matchMedia('(hover: none)').matches;
+
+          // Mobile: open bottom-sheet with full unit details (incl. sold).
+          // Other hotspots stay tappable — openSheet just repopulates content.
+          if (isTouch) {
+            e.preventDefault();
+            openSheet(u);
+            return;
+          }
+
+          // Desktop: click scrolls to table row (sold is inert as before).
+          if (u.status === 'sold') return;
+
+          var table = document.querySelector('.unit-table[data-project="' + key + '"]');
+          if (!table) return;
+          var rows = table.querySelectorAll('tbody tr');
+          var targetRow = null;
+          rows.forEach(function(r) {
+            r.classList.remove('unit--highlight');
+            var cell = r.querySelector('td');
+            if (!cell) return;
+            var txt = (cell.textContent || '').trim();
+            if (txt === u.id || txt.indexOf(u.id) === 0) targetRow = r;
+          });
+          if (targetRow) {
+            var headerEl = document.querySelector('.header');
+            var headerH = (headerEl && headerEl.offsetHeight) || 80;
+            var y = targetRow.getBoundingClientRect().top + window.pageYOffset - headerH - 24;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+            setTimeout(function() { targetRow.classList.add('unit--highlight'); }, 450);
+          }
+        });
+
+        layer.appendChild(btn);
+      });
+
+      // Trigger leveling animation when scrolled into view
+      if ('IntersectionObserver' in window) {
+        var mpObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-leveled');
+              mpObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.25 });
+        mpObserver.observe(el);
+      } else {
+        el.classList.add('is-leveled');
+      }
+
+      // Localize legend (status labels)
+      var section = el.closest('.section');
+      if (section) {
+        section.querySelectorAll('[data-mp-status]').forEach(function(item) {
+          var k = item.dataset.mpStatus;
+          if (sl[k]) item.textContent = sl[k];
+        });
+        // Localize header (tag/title/desc)
+        var headerText = MASTER_PLAN_HEADER_TEXT[dataLang] || MASTER_PLAN_HEADER_TEXT.en;
+        section.querySelectorAll('[data-mp-i18n]').forEach(function(item) {
+          var k = item.dataset.mpI18n;
+          if (headerText[k]) item.textContent = headerText[k];
+        });
+      }
+    });
+
     document.querySelectorAll('.floor-plans-showcase[data-project]').forEach(function(el) {
       var key = el.dataset.project;
       var proj = PD[key];
