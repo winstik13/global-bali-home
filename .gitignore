@@ -18,3 +18,11 @@ screenshots/
 
 # Admin setup docs
 admin/SETUP.md
+
+# Sensitive client data (PII — never commit)
+*.xlsx
+*.xls
+Client*.xlsx
+
+# Playwright MCP cache
+.playwright-mcp/

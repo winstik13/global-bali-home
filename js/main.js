@@ -2678,6 +2678,16 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       'serenity-estates': {
         'A2': { x: 44, y: 44 }, 'B2': { x: 79, y: 60 },
         'A1': { x: 55, y: 82 }, 'B1': { x: 79, y: 83 }
+      },
+      // Village master plan: 2 building clusters with a gap in the middle (pool/entrance).
+      // Left cluster: villas 1-19 (x: 4-62%). Right cluster: villas 20-25 (x: 77-97%).
+      // y=45 (slightly above center) matches the rooftop strip on the image.
+      'serenity-village': {
+        '1':  { x: 2.4,  y: 30.4 }, '2':  { x: 5.6,  y: 33.8 }, '3':  { x: 8.8,  y: 35.6 }, '4':  { x: 12.4, y: 40.1 }, '5':  { x: 15.6, y: 41.5 },
+        '6':  { x: 18.8, y: 43.6 }, '7':  { x: 22.0, y: 45 }, '8':  { x: 25.3, y: 45 }, '9':  { x: 28.5, y: 45 }, '10': { x: 31.7, y: 45 },
+        '11': { x: 34.9, y: 45 }, '12': { x: 38.1, y: 45 }, '13': { x: 41.4, y: 45 }, '14': { x: 44.6, y: 45 }, '15': { x: 47.8, y: 45 },
+        '16': { x: 51.4, y: 45 }, '17': { x: 54.7, y: 45 }, '18': { x: 57.9, y: 45 }, '19': { x: 61.1, y: 45 },
+        '20': { x: 79.0, y: 43 }, '21': { x: 82.3, y: 45 }, '22': { x: 85.3, y: 45 }, '23': { x: 88.9, y: 45 }, '24': { x: 92.3, y: 45 }, '25': { x: 95.3, y: 45 }
       }
     };
 

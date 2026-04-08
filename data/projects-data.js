@@ -768,21 +768,21 @@ const PROJECTS_DATA = {
     "page": "project-serenity-village.html",
     "name": "Serenity Village",
     "order": 3,
-    "totalUnits": 26,
+    "totalUnits": 25,
     "bedrooms": "1–2",
-    "handover": "Q3 2027",
+    "handover": "Q1/Q2 2027",
     "status": "in-progress",
     "startingPrice": 119000,
     "showcaseImage": "images/serenity-village/6House_Max.0001.webp",
     "showcaseSubtitle": {
-      "en": "Complex of 26 villas with shared pool and cafe — from $119K",
-      "ru": "Комплекс из 26 вилл с общим бассейном и кафе — от $119K",
-      "id": "Kompleks 26 villa dengan kolam renang bersama dan kafe — mulai $119 ribu"
+      "en": "Complex of 25 villas with shared pool and cafe — from $119K",
+      "ru": "Комплекс из 25 вилл с общим бассейном и кафе — от $119K",
+      "id": "Kompleks 25 villa dengan kolam renang bersama dan kafe — mulai $119 ribu"
     },
     "showcaseMeta": {
       "en": [
         {
-          "strong": "26",
+          "strong": "25",
           "label": "Villas"
         },
         {
@@ -790,13 +790,13 @@ const PROJECTS_DATA = {
           "label": "Bedrooms"
         },
         {
-          "strong": "Pre-Sale",
-          "label": "Now"
+          "strong": "Q1/Q2 2027",
+          "label": "Handover"
         }
       ],
       "ru": [
         {
-          "strong": "26",
+          "strong": "25",
           "label": "Вилл"
         },
         {
@@ -804,13 +804,13 @@ const PROJECTS_DATA = {
           "label": "Спальни"
         },
         {
-          "strong": "Предпродажа",
-          "label": ""
+          "strong": "Q1/Q2 2027",
+          "label": "Сдача"
         }
       ],
       "id": [
         {
-          "strong": "26",
+          "strong": "25",
           "label": "Villa"
         },
         {
@@ -818,13 +818,13 @@ const PROJECTS_DATA = {
           "label": "Kamar Tidur"
         },
         {
-          "strong": "Pra-Penjualan",
-          "label": "Sekarang"
+          "strong": "Q1/Q2 2027",
+          "label": "Serah Terima"
         }
       ]
     },
-    "compArea": "51–86 m²",
-    "compLand": "1–1.5 are",
+    "compArea": "50–84 m²",
+    "compLand": "1.16–1.54 are",
     "compPool": {
       "en": "Private + Shared",
       "ru": "Приватный + Общий",
@@ -833,7 +833,7 @@ const PROJECTS_DATA = {
     "heroStats": {
       "en": [
         {
-          "number": "26",
+          "number": "25",
           "label": "Villas"
         },
         {
@@ -841,7 +841,7 @@ const PROJECTS_DATA = {
           "label": "Bedrooms"
         },
         {
-          "number": "Q3 2027",
+          "number": "Q1/Q2 2027",
           "label": "Handover"
         },
         {
@@ -855,7 +855,7 @@ const PROJECTS_DATA = {
       ],
       "ru": [
         {
-          "number": "26",
+          "number": "25",
           "label": "Вилл"
         },
         {
@@ -863,7 +863,7 @@ const PROJECTS_DATA = {
           "label": "Спальни"
         },
         {
-          "number": "Q3 2027",
+          "number": "Q1/Q2 2027",
           "label": "Сдача"
         },
         {
@@ -877,7 +877,7 @@ const PROJECTS_DATA = {
       ],
       "id": [
         {
-          "number": "26",
+          "number": "25",
           "label": "Vila"
         },
         {
@@ -885,7 +885,7 @@ const PROJECTS_DATA = {
           "label": "Kamar Tidur"
         },
         {
-          "number": "Q3 2027",
+          "number": "Q1/Q2 2027",
           "label": "Serah Terima"
         },
         {
@@ -900,17 +900,12 @@ const PROJECTS_DATA = {
     },
     "availability": {
       "sold": 9,
-      "total": 26
-    },
-    "preSaleBanner": {
-      "en": "Pre-Sale Now Open — Register Your Interest Today",
-      "ru": "Предпродажа открыта — Зарегистрируйте ваш интерес",
-      "id": "Pra-Penjualan Dibuka — Daftarkan Minat Anda Hari Ini"
+      "total": 25
     },
     "showcaseStatus": {
-      "en": "Pre-Sale",
-      "ru": "Предпродажа",
-      "id": "Pra-Penjualan"
+      "en": "In Progress",
+      "ru": "Строится",
+      "id": "Dalam Pembangunan"
     },
     "positioning": {
       "en": "Entry-Level Cashflow",
@@ -918,27 +913,54 @@ const PROJECTS_DATA = {
       "id": "Arus Kas Entry-Level"
     },
     "showcaseAvailability": {
-      "en": "Only 17 of 26 units left",
-      "ru": "Осталось всего 17 из 26",
-      "id": "Hanya tersisa 17 dari 26 unit"
+      "en": "Only 16 of 25 units left",
+      "ru": "Осталось всего 16 из 25",
+      "id": "Hanya tersisa 16 dari 25 unit"
     },
     "showcaseDesc": {
-      "en": "Complex of 26 villas with 1 and 2 bedroom options. Shared amenities include a large swimming pool and cafe. Maximum investment potential.",
-      "ru": "Комплекс из 26 вилл с вариантами на 1 и 2 спальни. Общая инфраструктура включает большой бассейн и кафе. Максимальный инвестиционный потенциал.",
-      "id": "Kompleks 26 villa dengan pilihan 1 dan 2 kamar tidur. Fasilitas bersama mencakup kolam renang besar dan kafe kompleks. Potensi investasi maksimal."
+      "en": "Complex of 25 villas with 1 and 2 bedroom options. Shared amenities include a large swimming pool and cafe. Maximum investment potential.",
+      "ru": "Комплекс из 25 вилл с вариантами на 1 и 2 спальни. Общая инфраструктура включает большой бассейн и кафе. Максимальный инвестиционный потенциал.",
+      "id": "Kompleks 25 villa dengan pilihan 1 dan 2 kamar tidur. Fasilitas bersama mencakup kolam renang besar dan kafe kompleks. Potensi investasi maksimal."
     },
     "showcaseCta": {
       "en": "View Details",
       "ru": "Подробнее",
       "id": "Lihat Detail"
     },
+    "units": [
+      { "id": "1",  "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "available", "price": 140000, "badge": "Q1 2027" },
+      { "id": "2",  "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "sold",      "price": null,   "badge": "Q1 2027" },
+      { "id": "3",  "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "available", "price": 119000, "badge": "Q1 2027" },
+      { "id": "4",  "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "sold",      "price": null,   "badge": "Q1 2027" },
+      { "id": "5",  "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "available", "price": 119000, "badge": "Q1 2027" },
+      { "id": "6",  "type": "1 Bedroom", "floors": 1, "area": "51 m²", "land": "1.24 are", "status": "sold",      "price": null,   "badge": "Q1 2027" },
+      { "id": "7",  "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "available", "price": 195000, "badge": "Q1 2027" },
+      { "id": "8",  "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "available", "price": 195000, "badge": "Q1 2027" },
+      { "id": "9",  "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "available", "price": 127000, "badge": "Q1 2027" },
+      { "id": "10", "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "sold",      "price": null,   "badge": "Q1 2027" },
+      { "id": "11", "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "available", "price": 127000, "badge": "Q1 2027" },
+      { "id": "12", "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "sold",      "price": null,   "badge": "Q1 2027" },
+      { "id": "13", "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "sold",      "price": null,   "badge": "Q1 2027" },
+      { "id": "14", "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "available", "price": 195000, "badge": "Q1 2027" },
+      { "id": "15", "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "sold",      "price": null,   "badge": "Q1 2027" },
+      { "id": "16", "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "available", "price": 195000, "badge": "Q1 2027" },
+      { "id": "17", "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "sold",      "price": null,   "badge": "Q1 2027" },
+      { "id": "18", "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "available", "price": 195000, "badge": "Q1 2027" },
+      { "id": "19", "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "sold",      "price": null,   "badge": "Q1 2027" },
+      { "id": "20", "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "available", "price": 140000, "badge": "Q2 2027" },
+      { "id": "21", "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "available", "price": 220000, "badge": "Q2 2027" },
+      { "id": "22", "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "available", "price": 195000, "badge": "Q2 2027" },
+      { "id": "23", "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "available", "price": 195000, "badge": "Q2 2027" },
+      { "id": "24", "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "available", "price": 220000, "badge": "Q2 2027" },
+      { "id": "25", "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "available", "price": 220000, "badge": "Q2 2027" }
+    ],
     "unitTypes": [
       {
         "type": "1 Bedroom",
         "floors": 1,
         "area": "50 m²",
         "land": "1.16 are",
-        "count": 12,
+        "count": 14,
         "price": 119000
       },
       {
@@ -946,8 +968,8 @@ const PROJECTS_DATA = {
         "floors": 2,
         "area": "84 m²",
         "land": "1.54 are",
-        "count": 14,
-        "price": 187000
+        "count": 11,
+        "price": 195000
       }
     ],
     "floorPlans": {

@@ -5029,6 +5029,18 @@ a.testimonials__verified:hover {
   width: 4.66%;
 }
 
+/* Serenity Village: image is already laid out horizontally — no rotation.
+   Wider aspect ratio (1920×514), so hotspots need to be smaller. */
+.master-plan[data-master-plan="serenity-village"] .master-plan__image {
+  transform: none;
+}
+.master-plan[data-master-plan="serenity-village"].is-leveled .master-plan__image {
+  transform: none;
+}
+.master-plan[data-master-plan="serenity-village"] .master-plan__hotspot {
+  width: 2.53%;
+}
+
 .master-plan__hotspots {
   position: absolute;
   inset: 0;
