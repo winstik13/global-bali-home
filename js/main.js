@@ -2633,10 +2633,10 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     // Coordinates measured from master-plan.webp center-of-rooftop (no CSS rotation).
     var MASTER_PLAN_POSITIONS = {
       'serenity-villas': {
-        'A4': { x: 37, y: 23 }, 'B4': { x: 55, y: 23 }, 'C4': { x: 70, y: 23 },
-        'A3': { x: 37, y: 42 }, 'B3': { x: 55, y: 42 }, 'C3': { x: 70, y: 42 },
-        'A2': { x: 37, y: 58 }, 'B2': { x: 55, y: 58 }, 'C2': { x: 70, y: 58 },
-        'A1': { x: 37, y: 78 }, 'B1': { x: 55, y: 78 }, 'C1': { x: 70, y: 78 }
+        'A4': { x: 38, y: 20 }, 'B4': { x: 57, y: 20 }, 'C4': { x: 72, y: 20 },
+        'A3': { x: 38, y: 39 }, 'B3': { x: 57, y: 39 }, 'C3': { x: 72, y: 39 },
+        'A2': { x: 38, y: 55 }, 'B2': { x: 57, y: 55 }, 'C2': { x: 72, y: 55 },
+        'A1': { x: 38, y: 75 }, 'B1': { x: 57, y: 75 }, 'C1': { x: 72, y: 75 }
       },
       'serenity-estates': {
         'A2': { x: 44, y: 44 }, 'B2': { x: 79, y: 60 },

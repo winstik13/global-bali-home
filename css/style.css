@@ -832,36 +832,42 @@ td .price-idr {
 
 /* --- Floor Plans --- */
 
-/* Type selector tabs */
-/* Type selector tabs */
+/* Type selector — segmented control */
 .fp-tabs {
-  display: flex;
-  gap: 8px;
+  display: inline-flex;
   flex-wrap: wrap;
-  margin-bottom: 32px;
+  gap: 4px;
+  padding: 6px;
+  margin-bottom: 40px;
+  background: color-mix(in srgb, var(--color-bg-card) 70%, transparent);
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  max-width: 100%;
 }
 
 .fp-tabs__btn {
-  padding: 10px 20px;
+  padding: 12px 26px;
   background: transparent;
-  border: 1px solid var(--color-border);
+  border: none;
   border-radius: 2px;
   color: var(--color-text-muted);
   font-family: var(--font-body);
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.25s ease, color 0.25s ease;
 }
 
 .fp-tabs__btn:hover {
-  border-color: var(--color-border-hover);
   color: var(--color-text);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
 }
 
-.fp-tabs__btn--active {
+.fp-tabs__btn--active,
+.fp-tabs__btn--active:hover {
   background: var(--color-accent);
-  border-color: var(--color-accent);
   color: #fff;
 }
 
@@ -872,19 +878,37 @@ td .price-idr {
 
 .fp-panel--active {
   display: grid;
-  grid-template-columns: 1fr 280px;
-  gap: 40px;
+  grid-template-columns: 1fr 300px;
+  gap: 56px;
   align-items: start;
-  padding: 40px;
-  background: var(--color-bg-card);
+  padding: 52px;
+  background: linear-gradient(180deg,
+    var(--color-bg-card) 0%,
+    color-mix(in srgb, var(--color-bg-card) 55%, transparent) 100%);
   border: 1px solid var(--color-border);
   border-radius: 2px;
+  position: relative;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.28);
+}
+
+/* Thin accent line at the top of the panel */
+.fp-panel--active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--color-accent) 60%, transparent) 50%,
+    transparent 100%);
 }
 
 /* Floor plans area (left side) */
 .fp-plans {
   display: flex;
-  gap: 24px;
+  gap: 28px;
 }
 
 .fp-plans--single {
@@ -902,33 +926,48 @@ td .price-idr {
   font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-text-dim);
-  margin-bottom: 12px;
-  text-align: center;
-}
-
-.fp-floor__img {
-  cursor: pointer;
-  border: 1px solid var(--color-border);
-  border-radius: 2px;
-  overflow: hidden;
-  transition: border-color 0.3s ease;
-  aspect-ratio: 1 / 1;
+  letter-spacing: 0.18em;
+  color: var(--color-accent);
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 14px;
+}
+
+.fp-floor__label::before,
+.fp-floor__label::after {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: color-mix(in srgb, var(--color-accent) 50%, transparent);
+}
+
+.fp-floor__img {
+  cursor: zoom-in;
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  aspect-ratio: 1 / 1;
+  background: rgba(0, 0, 0, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
 }
 
 .fp-floor__img:hover {
   border-color: var(--color-accent);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.38);
+  transform: translateY(-2px);
 }
 
 .fp-floor__img img {
   width: 100%;
   height: 100%;
   display: block;
-  padding: 12px;
+  padding: 16px;
   object-fit: contain;
 }
 
@@ -959,31 +998,39 @@ td .price-idr {
   color: var(--color-text-muted);
 }
 
-/* Specs sidebar (right side) */
+/* Specs sidebar (right side) — editorial metric list */
 .fp-specs {
   display: flex;
   flex-direction: column;
   gap: 0;
   justify-content: center;
+  padding-left: 36px;
+  border-left: 1px solid color-mix(in srgb, var(--color-border) 80%, transparent);
 }
 
 .fp-specs__item {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--color-border);
+  gap: 20px;
+  padding: 22px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-border) 55%, transparent);
+}
+
+.fp-specs__item:first-child {
+  padding-top: 0;
 }
 
 .fp-specs__item:last-child {
   border-bottom: none;
+  padding-bottom: 0;
 }
 
 .fp-specs__icon {
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  height: 26px;
   flex-shrink: 0;
   color: var(--color-accent);
+  opacity: 0.85;
 }
 
 .fp-specs__icon svg {
@@ -993,9 +1040,11 @@ td .price-idr {
 
 .fp-specs__text {
   font-family: var(--font-body);
-  font-size: 0.85rem;
+  font-size: 0.92rem;
   font-weight: 500;
   color: var(--color-text);
+  letter-spacing: 0.01em;
+  line-height: 1.4;
 }
 
 .floor-plan-lightbox {
@@ -3933,7 +3982,7 @@ td .price-idr {
   .fp-panel--active {
     grid-template-columns: 1fr;
     gap: 24px;
-    padding: 24px;
+    padding: 28px;
   }
 
   .fp-specs {
@@ -3941,15 +3990,22 @@ td .price-idr {
     flex-wrap: wrap;
     gap: 0;
     order: -1;
+    border-left: none;
     border-bottom: 1px solid var(--color-border);
+    padding-left: 0;
     padding-bottom: 16px;
     margin-bottom: 0;
   }
 
   .fp-specs__item {
     flex: 0 0 50%;
-    padding: 8px 0;
+    padding: 10px 0;
     border-bottom: none;
+  }
+
+  .fp-specs__item:first-child,
+  .fp-specs__item:last-child {
+    padding: 10px 0;
   }
 
   .fp-plans {
@@ -4362,6 +4418,11 @@ a.testimonials__verified:hover {
 }
 .master-plan[data-master-plan="serenity-estates"].is-leveled .master-plan__image {
   transform: translateY(0);
+}
+/* Compensate hotspot diameter: container is 880px vs villas 1080px,
+   so bump % to keep visual circle size equal to villas (~41px). */
+.master-plan[data-master-plan="serenity-estates"] .master-plan__hotspot {
+  width: 4.66%;
 }
 
 .master-plan__hotspots {
