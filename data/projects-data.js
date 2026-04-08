@@ -288,6 +288,11 @@ const PROJECTS_DATA = {
     ],
     "floorPlans": {
       "Type A (A1, A2, A3, A4)": {
+        "tagline": {
+          "en": "Single-level living for couples who value simplicity — every room opens onto the terrace.",
+          "ru": "Одноэтажный уют для пар: каждая комната выходит на террасу.",
+          "id": "Hunian satu lantai untuk pasangan yang menghargai kesederhanaan — setiap ruang terbuka ke teras."
+        },
         "floors": {
           "Ground Floor": "images/serenity-villas/plans/type-a-—-2br-single-story.webp"
         },
@@ -319,6 +324,11 @@ const PROJECTS_DATA = {
         ]
       },
       "Type B (B1, B4)": {
+        "tagline": {
+          "en": "Room for the whole family — bedrooms upstairs, gatherings below.",
+          "ru": "Места хватит всей семье — спальни наверху, общие зоны внизу.",
+          "id": "Ruang untuk seluruh keluarga — kamar tidur di atas, area bersama di bawah."
+        },
         "floors": {
           "Ground Floor": "images/serenity-villas/plans/type-b-3br-two-story-ground-floor.webp",
           "Upper Floor": "images/serenity-villas/plans/type-b-3br-two-story-upper-floor.webp"
@@ -347,6 +357,11 @@ const PROJECTS_DATA = {
         ]
       },
       "Type B (B2, B3)": {
+        "tagline": {
+          "en": "Two stories of privacy — a quiet retreat upstairs, space for work or guests below.",
+          "ru": "Два этажа приватности — уединение наверху, кабинет или гостевая внизу.",
+          "id": "Dua lantai privasi — tempat menyepi di atas, ruang kerja atau tamu di bawah."
+        },
         "floors": {
           "Ground Floor": "images/serenity-villas/plans/type-b-b2-b3-ground-floor.webp",
           "Upper Floor": "images/serenity-villas/plans/type-b-b2-b3-upper-floor.webp"
@@ -375,6 +390,11 @@ const PROJECTS_DATA = {
         ]
       },
       "Type C (C1, C2, C3, C4)": {
+        "tagline": {
+          "en": "The smart starter — most villa, least commitment.",
+          "ru": "Умный старт — максимум виллы за минимальные вложения.",
+          "id": "Awal yang cerdas — villa maksimal dengan komitmen minimum."
+        },
         "floors": {
           "Ground Floor": "images/serenity-villas/plans/type-c-c1-c2-c3-c4-ground-floor.webp",
           "Upper Floor": "images/serenity-villas/plans/type-c-c1-c2-c3-c4-upper-floor.webp"
@@ -612,6 +632,11 @@ const PROJECTS_DATA = {
     ],
     "floorPlans": {
       "Type A — 4.5BR Villa": {
+        "tagline": {
+          "en": "Single-story flagship — five suites under one roof with seamless indoor-outdoor living.",
+          "ru": "Одноэтажный флагман — пять спален под одной крышей и бесшовный переход в сад.",
+          "id": "Flagship satu lantai — lima suite di bawah satu atap dengan aliran indoor-outdoor."
+        },
         "floors": {
           "Ground Floor": ""
         },
@@ -639,6 +664,11 @@ const PROJECTS_DATA = {
         ]
       },
       "Type A — 4.5BR Villa Large": {
+        "tagline": {
+          "en": "Our largest estate — 14 are of private land built for total seclusion.",
+          "ru": "Наш самый просторный эстейт — 14 соток приватной земли для полного уединения.",
+          "id": "Estate terbesar kami — 14 are lahan pribadi untuk ketenangan total."
+        },
         "floors": {
           "Ground Floor": ""
         },
@@ -666,6 +696,11 @@ const PROJECTS_DATA = {
         ]
       },
       "Type B — 2BR Villa": {
+        "tagline": {
+          "en": "Two-story efficiency — a private retreat for couples or strong rental yield.",
+          "ru": "Компактный двухэтажный дом — приватное убежище для пары или источник дохода.",
+          "id": "Efisiensi dua lantai — tempat santai untuk pasangan atau hasil sewa yang kuat."
+        },
         "floors": {
           "Ground Floor": "",
           "Upper Floor": ""
@@ -694,6 +729,11 @@ const PROJECTS_DATA = {
         ]
       },
       "Type B — 2BR Villa Compact": {
+        "tagline": {
+          "en": "Smart compact footprint — maximum comfort on a modest plot, ideal for investors.",
+          "ru": "Умная компактная планировка — максимум комфорта на небольшом участке, выбор инвесторов.",
+          "id": "Tata letak kompak yang cerdas — kenyamanan maksimum di lahan sederhana, pilihan investor."
+        },
         "floors": {
           "Ground Floor": "",
           "Upper Floor": ""

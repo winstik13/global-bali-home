@@ -2917,8 +2917,14 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         var floors = data.floors;
         var specs = data.specs || [];
         var floorKeys = Object.keys(floors);
+        var tagline = data.tagline && (data.tagline[dataLang] || data.tagline.en) || '';
 
         html += '<div class="fp-panel' + (i === 0 ? ' fp-panel--active' : '') + '" data-fp-panel="' + type + '">';
+
+        // Tagline spans both columns at the top of the panel
+        if (tagline) {
+          html += '<div class="fp-panel__tagline">' + tagline + '</div>';
+        }
 
         // Left: floor plans (all visible at once)
         html += '<div class="fp-plans' + (floorKeys.length === 1 ? ' fp-plans--single' : '') + '">';

@@ -622,6 +622,23 @@ p {
   margin: 0 auto;
 }
 
+/* Master Plan variant — dynamic scarcity headline is the hero of the section */
+.section-header--master-plan {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.section-header--master-plan h2 {
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  line-height: 1.1;
+  margin-bottom: 18px;
+}
+.section-header--master-plan p {
+  margin: 0 auto;
+  max-width: 520px;
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+}
+
 /* --- Project Showcase (asymmetric) --- */
 .project-showcase {
   display: grid;
@@ -903,6 +920,21 @@ td .price-idr {
     transparent 0%,
     color-mix(in srgb, var(--color-accent) 60%, transparent) 50%,
     transparent 100%);
+}
+
+/* Editorial tagline — spans both columns above plans and specs */
+.fp-panel__tagline {
+  grid-column: 1 / -1;
+  font-family: var(--font-heading);
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  max-width: 720px;
+  padding-bottom: 28px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
 }
 
 /* Floor plans area (left side) */
@@ -3983,6 +4015,11 @@ td .price-idr {
     grid-template-columns: 1fr;
     gap: 24px;
     padding: 28px;
+  }
+
+  .fp-panel__tagline {
+    padding-bottom: 20px;
+    margin-bottom: 4px;
   }
 
   .fp-specs {
