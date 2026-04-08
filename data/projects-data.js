@@ -631,7 +631,7 @@ const PROJECTS_DATA = {
       }
     ],
     "floorPlans": {
-      "Type A — 4.5BR Villa": {
+      "A1": {
         "tagline": {
           "en": "Single-story flagship — five suites under one roof with seamless indoor-outdoor living.",
           "ru": "Одноэтажный флагман — пять спален под одной крышей и бесшовный переход в сад.",
@@ -663,7 +663,7 @@ const PROJECTS_DATA = {
           }
         ]
       },
-      "Type A — 4.5BR Villa Large": {
+      "A2": {
         "tagline": {
           "en": "Our largest estate — 14 are of private land built for total seclusion.",
           "ru": "Наш самый просторный эстейт — 14 соток приватной земли для полного уединения.",
@@ -695,7 +695,7 @@ const PROJECTS_DATA = {
           }
         ]
       },
-      "Type B — 2BR Villa": {
+      "B1": {
         "tagline": {
           "en": "Two-story efficiency — a private retreat for couples or strong rental yield.",
           "ru": "Компактный двухэтажный дом — приватное убежище для пары или источник дохода.",
@@ -728,7 +728,7 @@ const PROJECTS_DATA = {
           }
         ]
       },
-      "Type B — 2BR Villa Compact": {
+      "B2": {
         "tagline": {
           "en": "Smart compact footprint — maximum comfort on a modest plot, ideal for investors.",
           "ru": "Умная компактная планировка — максимум комфорта на небольшом участке, выбор инвесторов.",
