@@ -4785,3 +4785,12 @@ a.testimonials__verified:hover {
 @media (min-width: 769px) {
   .master-plan__sheet { display: none !important; }
 }
+
+/* When bottom-sheet is open, hide sticky CTA bar + WhatsApp float —
+   they fight for the same bottom area and cover the sheet's own CTA. */
+body.master-plan-sheet-open .sticky-cta,
+body.master-plan-sheet-open .whatsapp-float {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.22s ease;
+}

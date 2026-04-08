@@ -2725,10 +2725,12 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
 
         sheet.classList.add('is-open');
         sheet.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('master-plan-sheet-open');
       }
       function closeSheet() {
         sheet.classList.remove('is-open');
         sheet.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('master-plan-sheet-open');
       }
 
       sheetRefs.close.addEventListener('click', closeSheet);
