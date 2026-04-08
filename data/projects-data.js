@@ -348,8 +348,8 @@ const PROJECTS_DATA = {
       },
       "Type B (B2, B3)": {
         "floors": {
-          "Ground Floor": "images/serenity-villas/plans/2-bedroom.webp",
-          "Upper Floor": ""
+          "Ground Floor": "images/serenity-villas/plans/type-b-b2-b3-ground-floor.webp",
+          "Upper Floor": "images/serenity-villas/plans/type-b-b2-b3-upper-floor.webp"
         },
         "specs": [
           {
@@ -999,38 +999,6 @@ const PROJECTS_DATA = {
       "status": "Ketersediaan",
       "cta": "Lihat Detail",
       "tour": "Pesan Tur"
-    }
-  },
-  "comparisonData": {
-    "serenity-villas": {
-      "price": "$335K",
-      "area": "167–210 m²",
-      "land": "2–3 are",
-      "pool": {
-        "en": "Private",
-        "ru": "Приватный",
-        "id": "Pribadi"
-      }
-    },
-    "serenity-estates": {
-      "price": "$310K",
-      "area": "155–250 m²",
-      "land": "3–14 are",
-      "pool": {
-        "en": "Private",
-        "ru": "Приватный",
-        "id": "Pribadi"
-      }
-    },
-    "serenity-village": {
-      "price": "$119K",
-      "area": "51–86 m²",
-      "land": "1–1.5 are",
-      "pool": {
-        "en": "Private + Shared",
-        "ru": "Приватный + Общий",
-        "id": "Pribadi + Bersama"
-      }
     }
   },
   "unitTableHeaders": {
