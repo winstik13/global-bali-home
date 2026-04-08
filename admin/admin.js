@@ -1178,6 +1178,27 @@
     currentProject = keys[0];
   }
 
+  // Sync showcaseAvailability text with availability.sold/total
+  // Keeps card scarcity headline consistent across all projects.
+  function syncShowcaseAvailability(p) {
+    if (!p || !p.availability) return;
+    if (p.status === 'pre-sale') {
+      p.showcaseAvailability = {
+        en: 'Pre-Sale Open',
+        ru: 'Предпродажа открыта',
+        id: 'Pra-Penjualan Dibuka'
+      };
+      return;
+    }
+    const left = Math.max(0, (p.availability.total || 0) - (p.availability.sold || 0));
+    const total = p.availability.total || 0;
+    p.showcaseAvailability = {
+      en: 'Only ' + left + ' of ' + total + ' units left',
+      ru: 'Осталось всего ' + left + ' из ' + total,
+      id: 'Hanya tersisa ' + left + ' dari ' + total + ' unit'
+    };
+  }
+
   // ─── Dashboard ───
   function renderDashboard() {
     if (!projectsData) return;
@@ -1191,6 +1212,7 @@
         p.availability.sold = p.units.filter(u => u.status === 'sold' || u.status === 'booked' || u.status === 'resale').length;
         p.availability.total = p.units.length;
       }
+      syncShowcaseAvailability(p);
     });
 
     // Compute totals
@@ -1392,6 +1414,7 @@
     } else if (p.unitTypes) {
       p.availability.total = p.unitTypes.reduce((s, ut) => s + ut.count, 0);
     }
+    syncShowcaseAvailability(p);
     const availPct = p.availability.total ? Math.round(p.availability.sold / p.availability.total * 100) : 0;
     const isAllSold = p.units ? p.units.every(u => u.status === 'sold' || u.status === 'resale') : (p.availability.sold >= p.availability.total);
     const effectiveStatus = isAllSold ? 'sold-out' : (p.status || 'in-progress');
@@ -3101,9 +3124,9 @@
           id: 'Peluang Investasi',
         },
         showcaseAvailability: {
-          en: status === 'pre-sale' ? 'Pre-Sale Open' : '0 of ' + totalUnits + ' units sold',
-          ru: status === 'pre-sale' ? 'Предпродажа открыта' : '0 из ' + totalUnits + ' продано',
-          id: status === 'pre-sale' ? 'Pra-Penjualan Dibuka' : '0 dari ' + totalUnits + ' unit terjual',
+          en: status === 'pre-sale' ? 'Pre-Sale Open' : 'Only ' + totalUnits + ' of ' + totalUnits + ' units left',
+          ru: status === 'pre-sale' ? 'Предпродажа открыта' : 'Осталось всего ' + totalUnits + ' из ' + totalUnits,
+          id: status === 'pre-sale' ? 'Pra-Penjualan Dibuka' : 'Hanya tersisa ' + totalUnits + ' dari ' + totalUnits + ' unit',
         },
         showcaseDesc: { en: desc, ru: desc, id: desc },
         showcaseCta: { en: 'View Details', ru: 'Подробнее', id: 'Lihat Detail' },
