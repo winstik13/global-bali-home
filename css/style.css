@@ -1657,6 +1657,11 @@ td .price-idr {
   overflow: hidden;
 }
 
+/* Tighten gap between hero and first section below — prevents 180px+ empty band */
+.fullbleed-hero + .section {
+  padding-top: calc(var(--section-padding) * 0.4);
+}
+
 .fullbleed-hero__bg {
   position: absolute;
   inset: 0;
@@ -1757,6 +1762,18 @@ td .price-idr {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0;
+}
+
+/* Bordered variant — adds vertical dividers between cards (used in Project Overview block on villas) */
+.services-grid--bordered > .service-card + .service-card {
+  border-left: 1px solid var(--color-border);
+}
+
+/* Mobile/tablet: disable vertical dividers — cards stack in single column, only horizontal lines */
+@media (max-width: 1024px) {
+  .services-grid--bordered > .service-card + .service-card {
+    border-left: none;
+  }
 }
 
 .service-card {
@@ -2939,6 +2956,50 @@ td .price-idr {
   vertical-align: middle;
 }
 
+/* --- Unit Filter (Available / All toggle) --- */
+.unit-filter {
+  display: flex;
+  gap: 2px;
+  width: fit-content;
+  margin: 0 auto 24px;
+  border: 1px solid var(--color-border);
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.unit-filter__btn {
+  padding: 10px 24px;
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  font-size: var(--font-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+
+.unit-filter__btn:hover {
+  color: var(--color-cream);
+}
+
+.unit-filter__btn--active {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+.unit-filter__btn--active:hover {
+  color: var(--color-bg);
+}
+
+/* Hide sold/booked rows when filter is 'available' */
+.unit-table--available-only tr[data-status="sold"],
+.unit-table--available-only tr[data-status="booked"] {
+  display: none;
+}
+
 /* --- Features --- */
 .features-grid {
   display: grid;
@@ -3107,6 +3168,107 @@ td .price-idr {
 
   .location-split__map {
     min-height: 360px;
+  }
+}
+
+/* --- Place Compact (verification block, single column: wide map + distance ribbon) --- */
+.place-compact {
+  display: block;
+}
+
+.place-compact__map {
+  position: relative;
+  aspect-ratio: 21/9;
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.place-compact__map iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  filter: invert(0.9) hue-rotate(180deg) grayscale(0.3) brightness(0.9) contrast(1.1);
+}
+
+.place-ribbon {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+
+.place-ribbon li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 22px 10px;
+  border: 1px solid var(--color-border);
+  background: rgba(107, 143, 78, 0.03);
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.place-ribbon li:hover {
+  border-color: var(--color-accent);
+  background: rgba(107, 143, 78, 0.08);
+}
+
+.place-ribbon__icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.place-ribbon__icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: var(--color-accent);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.place-ribbon__place {
+  font-family: var(--font-body);
+  font-size: var(--font-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  min-height: 2.6em;
+  display: flex;
+  align-items: center;
+}
+
+.place-ribbon__time {
+  font-family: var(--font-heading);
+  font-size: var(--font-md);
+  color: var(--color-cream);
+  font-weight: 600;
+  line-height: 1;
+}
+
+@media (max-width: 1024px) {
+  .place-compact__map {
+    aspect-ratio: 16/10;
+  }
+  .place-ribbon {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .place-ribbon {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .place-ribbon li {
+    padding: 16px 8px;
   }
 }
 
@@ -3426,6 +3588,36 @@ td .price-idr {
   -webkit-overflow-scrolling: touch;
 }
 
+/* Swipe hint above table on mobile — not shown on desktop */
+.table-scroll-hint {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .table-scroll-hint {
+    display: block;
+    text-align: center;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-text-dim);
+    margin: 0;
+    padding: 8px 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+  /* Tighten gap between hint and table */
+  .table-scroll-hint + .table-wrap .unit-table {
+    margin-top: 0;
+  }
+  /* Right-edge fade indicating horizontal scroll */
+  .table-wrap {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 30px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 30px), transparent);
+  }
+}
+
 /* --- Comparison Table --- */
 .comparison-table {
   width: 100%;
@@ -3524,7 +3716,7 @@ td .price-idr {
 /* --- Availability Bar --- */
 .availability-bar {
   max-width: 500px;
-  margin: 0 0 40px;
+  margin: 0 auto 40px;
 }
 
 .project-showcase__content .availability-bar {
@@ -4686,6 +4878,13 @@ a.testimonials__verified:hover {
   max-width: 900px;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* Solo variant — single testimonial as an anchor (e.g. inside Trust block) */
+.testimonials__grid--solo {
+  grid-template-columns: 1fr;
+  max-width: 720px;
+  margin: 40px auto 0;
 }
 
 @media (max-width: 1024px) {

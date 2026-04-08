@@ -150,9 +150,9 @@ const PROJECTS_DATA = {
       "id": "Properti Butik Hasil Tinggi"
     },
     "showcaseAvailability": {
-      "en": "Only 4 of 12 units left",
-      "ru": "Осталось всего 4 из 12",
-      "id": "8 dari 12 unit terjual"
+      "en": "Only 3 of 12 units left",
+      "ru": "Осталось всего 3 из 12",
+      "id": "Hanya tersisa 3 dari 12 unit"
     },
     "showcaseDesc": {
       "en": "Unwinding in tropical surroundings. 12 modernly designed villa residences with jungle views, natural waterfalls, and full privacy. 2-3 bedroom configurations.",
@@ -771,7 +771,7 @@ const PROJECTS_DATA = {
     "totalUnits": 26,
     "bedrooms": "1–2",
     "handover": "Q3 2027",
-    "status": "pre-sale",
+    "status": "in-progress",
     "startingPrice": 119000,
     "showcaseImage": "images/serenity-village/6House_Max.0001.webp",
     "showcaseSubtitle": {
@@ -841,16 +841,16 @@ const PROJECTS_DATA = {
           "label": "Bedrooms"
         },
         {
-          "number": "$119K",
+          "number": "Q3 2027",
+          "label": "Handover"
+        },
+        {
+          "number": "$119K+",
           "label": "From"
         },
         {
           "number": "12–15%",
           "label": "Yield"
-        },
-        {
-          "number": "Pre-Sale",
-          "label": "Status"
         }
       ],
       "ru": [
@@ -863,16 +863,16 @@ const PROJECTS_DATA = {
           "label": "Спальни"
         },
         {
-          "number": "$119K",
+          "number": "Q3 2027",
+          "label": "Сдача"
+        },
+        {
+          "number": "$119K+",
           "label": "От"
         },
         {
           "number": "12–15%",
           "label": "Доходность"
-        },
-        {
-          "number": "Предпродажа",
-          "label": "Статус"
         }
       ],
       "id": [
@@ -885,16 +885,16 @@ const PROJECTS_DATA = {
           "label": "Kamar Tidur"
         },
         {
-          "number": "$119K",
+          "number": "Q3 2027",
+          "label": "Serah Terima"
+        },
+        {
+          "number": "$119K+",
           "label": "Mulai Dari"
         },
         {
           "number": "12–15%",
           "label": "Imbal Hasil"
-        },
-        {
-          "number": "Pre-Sale",
-          "label": "Status"
         }
       ]
     },

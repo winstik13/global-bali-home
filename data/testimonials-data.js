@@ -12,9 +12,9 @@ const TESTIMONIALS_DATA = [
       "id": "Investor dari Australia · Serenity Villas"
     },
     "text": {
-      "en": "\"From the first call to getting the keys, Global Bali Home made everything seamless. Our villa in Serenity Villas was completed on schedule, and within 3 months of handover we were already seeing 13% annualized rental yield. The management team handles everything.\"",
-      "ru": "«От первого звонка до получения ключей — Global Bali Home сделал всё безупречно. Наша вилла в Serenity Villas была сдана точно в срок, и уже через 3 месяца мы получали 13% годовой доходности от аренды. Управляющая команда берёт на себя всё.»",
-      "id": "\"Dari panggilan pertama hingga menerima kunci, Global Bali Home membuat segalanya sempurna. Villa kami di Serenity Villas selesai tepat waktu, dan dalam 3 bulan setelah serah terima kami sudah mendapatkan imbal hasil sewa tahunan 13%. Tim manajemen mengurus semuanya.\""
+      "en": "\"Buying a villa abroad can feel risky — the Global Bali Home team removed that feeling completely. They guided us through every stage of the deal and handled the documentation end-to-end. Questions get answered within hours, not days. Regular photo and video progress reports arrive without us ever having to chase. Even from Sydney, we feel fully in the loop on every step of the build.\"",
+      "ru": "«Покупка виллы за рубежом — это всегда немного страшно. Команда Global Bali Home сняла этот страх полностью. Нас провели за руку через каждый этап сделки и взяли на себя все документы. На любой вопрос отвечают в течение часов, а не дней. Фото- и видеоотчёты о готовности приходят регулярно — нам ни разу не пришлось их выпрашивать. Даже из Сиднея мы чувствуем полный контроль над каждым этапом стройки.»",
+      "id": "\"Membeli villa di luar negeri bisa terasa berisiko — tim Global Bali Home menghilangkan rasa itu sepenuhnya. Mereka memandu kami di setiap tahap transaksi dan menangani seluruh dokumentasi. Pertanyaan dijawab dalam hitungan jam, bukan hari. Laporan foto dan video progres datang secara teratur tanpa kami harus meminta. Bahkan dari Sydney, kami merasa sepenuhnya mengetahui setiap tahap pembangunan.\""
     },
     "stars": 5,
     "order": 1

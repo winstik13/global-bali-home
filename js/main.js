@@ -2441,10 +2441,32 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         const cls = classes.length ? ' class="' + classes.join(' ') + '"' : '';
         const tourAttr = isClickable ? ' data-tour="' + tourName + '"' : '';
         const badge = u.badge ? ' <span class="unit__badge">' + u.badge + '</span>' : '';
-        html += '<tr' + cls + tourAttr + '><td>' + u.id + badge + '</td><td>' + u.type + '</td><td>' + u.floors + '</td><td>' + u.area + '</td><td>' + u.land + '</td><td class="status--' + u.status + '">' + (sl[u.status] || u.status) + '</td><td>' + fmtDualPrice(u.price) + '</td></tr>';
+        html += '<tr' + cls + tourAttr + ' data-status="' + u.status + '"><td>' + u.id + badge + '</td><td>' + u.type + '</td><td>' + u.floors + '</td><td>' + u.area + '</td><td>' + u.land + '</td><td class="status--' + u.status + '">' + (sl[u.status] || u.status) + '</td><td>' + fmtDualPrice(u.price) + '</td></tr>';
       });
       html += '</tbody>';
       el.innerHTML = html;
+    });
+
+    // --- Unit Filter (Available / All toggle) ---
+    document.querySelectorAll('[data-unit-filter]').forEach(filter => {
+      const buttons = filter.querySelectorAll('.unit-filter__btn');
+      // Find the associated table in the same .reveal wrapper or nearest sibling
+      const wrap = filter.closest('.reveal') || filter.parentElement;
+      const table = wrap && wrap.querySelector('.unit-table');
+      if (!table) return;
+      // Default: available-only
+      table.classList.add('unit-table--available-only');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          buttons.forEach(b => b.classList.remove('unit-filter__btn--active'));
+          btn.classList.add('unit-filter__btn--active');
+          if (btn.dataset.filter === 'available') {
+            table.classList.add('unit-table--available-only');
+          } else {
+            table.classList.remove('unit-table--available-only');
+          }
+        });
+      });
     });
 
     // --- Village Unit Types Table ---
@@ -2882,6 +2904,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         });
         // Localize header: tag/desc from static map, title is dynamic (scarcity signal)
         var staticText = MASTER_PLAN_HEADER_STATIC[dataLang] || MASTER_PLAN_HEADER_STATIC.en;
+        // Count only 'available' — resale is a separate category (secondary market), not counted as developer-available
         var availableCount = proj.units.filter(function(u) { return u.status === 'available'; }).length;
         var totalCount = proj.units.length;
         var dynamicTitle = buildMasterPlanTitle(dataLang, availableCount, totalCount);
@@ -2932,14 +2955,8 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         var floors = data.floors;
         var specs = data.specs || [];
         var floorKeys = Object.keys(floors);
-        var tagline = data.tagline && (data.tagline[dataLang] || data.tagline.en) || '';
 
         html += '<div class="fp-panel' + (i === 0 ? ' fp-panel--active' : '') + '" data-fp-panel="' + type + '">';
-
-        // Tagline spans both columns at the top of the panel
-        if (tagline) {
-          html += '<div class="fp-panel__tagline">' + tagline + '</div>';
-        }
 
         // Left: floor plans (all visible at once)
         html += '<div class="fp-plans' + (floorKeys.length === 1 ? ' fp-plans--single' : '') + '">';
@@ -2950,7 +2967,8 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
             html += '<div class="fp-floor__label">' + floor + '</div>';
           }
           if (img) {
-            html += '<div class="fp-floor__img" data-lightbox-src="' + img + '"><img src="' + img + '" alt="' + type + ' — ' + floor + '" loading="lazy"></div>';
+            var imgSrc = pathPrefix + img;
+            html += '<div class="fp-floor__img" data-lightbox-src="' + imgSrc + '"><img src="' + imgSrc + '" alt="' + type + ' — ' + floor + '" loading="lazy"></div>';
           } else {
             html += '<div class="fp-floor__placeholder">' + placeholderSvg + '<span>' + comingSoon + '</span></div>';
           }
