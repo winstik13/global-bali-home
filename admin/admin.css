@@ -236,6 +236,33 @@ input[type="number"] {
   cursor: pointer;
 }
 
+/* ─── Global dropdown options (all <select> in admin) ───
+   Native <option> elements cannot be fully styled — browsers use
+   OS-level dropdowns. CSS that works cross-browser:
+     ✓ background-color, color (Chrome/Firefox/Edge)
+     ⚠️ Safari partially applies, hover still uses system style
+     ✗ padding, borders, fonts, custom hover — all ignored
+   This is the best we can achieve without replacing every <select>
+   with a custom JS dropdown component (~300 lines for all admin
+   selects). For 95% of users (Chrome/Edge/Firefox), the dropdown
+   now matches the dark theme when open. */
+select option {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  padding: 8px 12px;
+}
+
+select option:checked,
+select option:hover {
+  background-color: var(--color-bg-card);
+  color: var(--color-accent);
+}
+
+/* Disabled options — muted */
+select option:disabled {
+  color: var(--color-text-dim);
+}
+
 .form-group textarea {
   resize: vertical;
   min-height: 60px;
