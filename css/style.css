@@ -73,21 +73,30 @@ body {
   overflow-x: hidden;
 }
 
-/* ─── SSR placeholder (hide-until-ready) ───
+/* ─── SSR placeholder (hide-while-initializing) ───
    Prevents the "flicker of stale content" for data-driven elements
-   that have hardcoded fallback values in HTML. The element keeps
-   its layout space (visibility:hidden, not display:none → no CLS)
-   but is invisible until main.js rebuilds it from PROJECTS_DATA
-   and flips body.js-ready on DOMContentLoaded. Used on:
+   that have hardcoded fallback values in HTML. Element keeps layout
+   space (visibility:hidden, not display:none → no CLS) while main.js
+   is rebuilding from PROJECTS_DATA. Used on:
      - .hero-stats[data-project]
      - .availability-bar[data-project]
      - .unit-table[data-project]
-     - .comparison-table[data-dynamic] */
-[data-ssr-placeholder] {
+     - .comparison-table[data-dynamic]
+
+   Logic: JS adds html.js-initializing at the VERY top of main.js
+   (before DOMContentLoaded). After all rebuilds finish, the class
+   is removed → content becomes visible. If JS never runs at all
+   (disabled, bot, load error), the class is never added, so
+   content is visible by default — no blank page for no-JS users.
+
+   Print: always visible so Ctrl+P renders the full page. */
+html.js-initializing [data-ssr-placeholder] {
   visibility: hidden;
 }
-.js-ready [data-ssr-placeholder] {
-  visibility: visible;
+@media print {
+  [data-ssr-placeholder] {
+    visibility: visible !important;
+  }
 }
 
 h1, h2, h3 {

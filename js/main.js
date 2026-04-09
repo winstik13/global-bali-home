@@ -3,6 +3,13 @@
    Dark Premium Theme
    ============================================ */
 
+// --- SSR placeholder: mark as initializing ---
+// Hide [data-ssr-placeholder] elements while JS is rebuilding them
+// from PROJECTS_DATA. If this script never runs (JS disabled, bot,
+// load error), the class is never added → content is visible by
+// default. Removed inside DOMContentLoaded after all rebuilds.
+document.documentElement.classList.add('js-initializing');
+
 // --- EmailJS SDK loader ---
 (function() {
   var s = document.createElement('script');
@@ -3111,11 +3118,11 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
   }
 
   // --- SSR placeholder reveal ---
-  // All data-driven rebuilds above this line are complete. Flip
-  // body.js-ready so [data-ssr-placeholder] elements become visible.
-  // If PROJECTS_DATA is missing (e.g. script failed to load), still
-  // reveal after a short timeout so nothing stays invisible forever.
-  document.body.classList.add('js-ready');
+  // All data-driven rebuilds above this line are complete. Remove
+  // the initializing class → [data-ssr-placeholder] elements become
+  // visible. The safety net below fires 1s after script parse in
+  // case this handler threw somewhere above.
+  document.documentElement.classList.remove('js-initializing');
 
 });
 
@@ -3123,5 +3130,5 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
 // reveal above, still show the content after 1 second. Better stale
 // data than invisible forever.
 setTimeout(function() {
-  document.body.classList.add('js-ready');
+  document.documentElement.classList.remove('js-initializing');
 }, 1000);
