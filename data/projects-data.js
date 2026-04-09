@@ -67,6 +67,19 @@ const PROJECTS_DATA = {
       "ru": "Приватный",
       "id": "Pribadi"
     },
+    "decisionGuide": {
+      "icon": "yield",
+      "question": {
+        "en": "Want passive income?",
+        "ru": "Хотите пассивный доход?",
+        "id": "Mau pendapatan pasif?"
+      },
+      "benefit": {
+        "en": "12–15% yield",
+        "ru": "12–15% годовых",
+        "id": "hasil 12–15%"
+      }
+    },
     "heroStats": {
       "en": [
         {
@@ -467,6 +480,19 @@ const PROJECTS_DATA = {
       "ru": "Приватный",
       "id": "Pribadi"
     },
+    "decisionGuide": {
+      "icon": "land",
+      "question": {
+        "en": "Want capital appreciation?",
+        "ru": "Хотите рост капитала?",
+        "id": "Mau apresiasi modal?"
+      },
+      "benefit": {
+        "en": "prime Ubud land",
+        "ru": "премиум-земля Убуда",
+        "id": "lahan premium Ubud"
+      }
+    },
     "heroStats": {
       "en": [
         {
@@ -781,6 +807,19 @@ const PROJECTS_DATA = {
       "en": "Private + Shared",
       "ru": "Приватный + Общий",
       "id": "Pribadi + Bersama"
+    },
+    "decisionGuide": {
+      "icon": "cashflow",
+      "question": {
+        "en": "Want entry-level cashflow?",
+        "ru": "Хотите стартовый cashflow?",
+        "id": "Mau arus kas entry-level?"
+      },
+      "benefit": {
+        "en": "shared amenities",
+        "ru": "общие удобства",
+        "id": "fasilitas bersama"
+      }
     },
     "heroStats": {
       "en": [

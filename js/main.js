@@ -2571,6 +2571,43 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       return loc(proj.showcaseStatus) || '';
     }
 
+    // --- Generate Decision Guide from [data-decision-guide] ---
+    // Reads proj.decisionGuide from PROJECTS_DATA, renders one clickable
+    // cell per project. Links are anchors to the showcase card below
+    // (#project-{slug}) — not to project pages. Separates role:
+    // Decision Guide = fast jump-menu by intent, Showcase = rich content.
+    var DECISION_GUIDE_ICONS = {
+      yield:    '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 17l6-6 4 4 8-8M14 7h7v7"/></svg>',
+      land:     '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 20h18M5 20V9l7-5 7 5v11M9 20v-6h6v6"/></svg>',
+      cashflow: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',
+      building: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 38V14l14-6 14 6v24" stroke-linecap="round"/></svg>'
+    };
+    var DECISION_GUIDE_FROM = { en: 'from', ru: 'от', id: 'mulai' };
+
+    document.querySelectorAll('[data-decision-guide]').forEach(function(container) {
+      var keys = getProjectKeys();
+      var fromLabel = DECISION_GUIDE_FROM[dataLang] || DECISION_GUIDE_FROM.en;
+      container.innerHTML = keys.map(function(key) {
+        var proj = PD[key];
+        if (!proj || !proj.decisionGuide) return '';
+        var dg = proj.decisionGuide;
+        var question = (dg.question && (dg.question[dataLang] || dg.question.en)) || '';
+        var benefit  = (dg.benefit  && (dg.benefit[dataLang]  || dg.benefit.en))  || '';
+        var iconSvg  = DECISION_GUIDE_ICONS[dg.icon] || DECISION_GUIDE_ICONS.yield;
+        var priceK   = proj.startingPrice ? Math.round(proj.startingPrice / 1000) : null;
+        var priceStr = priceK ? (fromLabel + ' $' + priceK + 'K') : '';
+        var hookLine = [priceStr, benefit].filter(Boolean).join(' · ');
+        return '<li class="decision-guide__item">' +
+          '<a href="#project-' + key + '" class="decision-guide__link">' +
+            '<div class="decision-guide__icon">' + iconSvg + '</div>' +
+            '<span class="decision-guide__question">' + question + '</span>' +
+            '<span class="decision-guide__answer">' + proj.name + '</span>' +
+            '<span class="decision-guide__price">' + hookLine + '</span>' +
+          '</a>' +
+        '</li>';
+      }).join('');
+    });
+
     // --- Generate Showcase Cards from data-projects-container ---
     document.querySelectorAll('[data-projects-container]').forEach(function(container) {
       var useShort = container.hasAttribute('data-projects-short');
@@ -2585,7 +2622,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         var posText = loc(proj.positioning);
         var taglineHtml = '<div class="project-showcase__tagline"><span class="project-showcase__num">' + num + '</span>' +
           (posText ? '<span class="project-showcase__positioning">' + posText + '</span>' : '') + '</div>';
-        return '<div class="project-showcase reveal" data-project="' + key + '">' +
+        return '<div class="project-showcase reveal" data-project="' + key + '" id="project-' + key + '">' +
           '<a href="' + proj.page + '" class="project-showcase__image">' +
             '<img src="' + pathPrefix + (proj.showcaseImage || '') + '" alt="' + proj.name + '" loading="lazy" width="1920" height="1080">' +
             '<span class="project-showcase__badge ' + badgeClass(proj.status) + '">' + getShowcaseBadgeText(proj) + '</span>' +
