@@ -73,6 +73,23 @@ body {
   overflow-x: hidden;
 }
 
+/* ─── SSR placeholder (hide-until-ready) ───
+   Prevents the "flicker of stale content" for data-driven elements
+   that have hardcoded fallback values in HTML. The element keeps
+   its layout space (visibility:hidden, not display:none → no CLS)
+   but is invisible until main.js rebuilds it from PROJECTS_DATA
+   and flips body.js-ready on DOMContentLoaded. Used on:
+     - .hero-stats[data-project]
+     - .availability-bar[data-project]
+     - .unit-table[data-project]
+     - .comparison-table[data-dynamic] */
+[data-ssr-placeholder] {
+  visibility: hidden;
+}
+.js-ready [data-ssr-placeholder] {
+  visibility: visible;
+}
+
 h1, h2, h3 {
   font-family: var(--font-heading);
   font-weight: 400;

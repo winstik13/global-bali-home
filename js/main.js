@@ -3110,4 +3110,18 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     });
   }
 
+  // --- SSR placeholder reveal ---
+  // All data-driven rebuilds above this line are complete. Flip
+  // body.js-ready so [data-ssr-placeholder] elements become visible.
+  // If PROJECTS_DATA is missing (e.g. script failed to load), still
+  // reveal after a short timeout so nothing stays invisible forever.
+  document.body.classList.add('js-ready');
+
 });
+
+// Safety net: if DOMContentLoaded handler threw before reaching the
+// reveal above, still show the content after 1 second. Better stale
+// data than invisible forever.
+setTimeout(function() {
+  document.body.classList.add('js-ready');
+}, 1000);
