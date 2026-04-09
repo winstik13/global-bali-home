@@ -643,6 +643,39 @@ document.addEventListener('DOMContentLoaded', () => {
     nav.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', closeMenu);
     });
+
+    // Inject contact block at the bottom of the mobile menu
+    // (visible only on mobile via CSS — contact populator runs earlier than this
+    // init, so we fill values inline from SITE_DATA)
+    if (!nav.querySelector('.header__nav-contact') && typeof SITE_DATA !== 'undefined' && SITE_DATA.contacts) {
+      const ct = SITE_DATA.contacts;
+      const lang = document.documentElement.lang || 'en';
+      const locText = (typeof ct.location === 'object') ? (ct.location[lang] || ct.location.en || '') : (ct.location || '');
+      const navContact = document.createElement('div');
+      navContact.className = 'header__nav-contact';
+      navContact.innerHTML =
+        (ct.phone ? '<span>' + ct.phone + '</span>' : '') +
+        (ct.email ? '<span>' + ct.email + '</span>' : '') +
+        (locText ? '<span>' + locText + '</span>' : '');
+      nav.appendChild(navContact);
+    }
+
+    // Persist menu-open state across language switch — if user clicks a lang
+    // link while menu is open, the new page should reopen the menu automatically
+    document.addEventListener('click', (e) => {
+      const langLink = e.target.closest('.header__lang-dropdown a');
+      if (langLink && nav.classList.contains('active')) {
+        try { sessionStorage.setItem('menuOpenAfterLangSwitch', '1'); } catch (err) {}
+      }
+    });
+
+    // On load: if flag set from previous lang switch, reopen the menu
+    try {
+      if (sessionStorage.getItem('menuOpenAfterLangSwitch') === '1') {
+        sessionStorage.removeItem('menuOpenAfterLangSwitch');
+        openMenu();
+      }
+    } catch (err) {}
   }
 
   // --- Language dropdown ---
@@ -2320,6 +2353,12 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
   if (typeof TESTIMONIALS_DATA !== 'undefined') {
     var tContainers = document.querySelectorAll('[data-testimonials-container]');
     if (tContainers.length) {
+      var rmLabels = {
+        en: { more: 'Read more', less: 'Show less' },
+        ru: { more: 'Читать полностью', less: 'Свернуть' },
+        id: { more: 'Baca selengkapnya', less: 'Sembunyikan' }
+      };
+      var rm = rmLabels[lang] || rmLabels.en;
       function renderTestimonial(t) {
         var stars = '';
         for (var s = 0; s < (t.stars || 5); s++) stars += '★';
@@ -2341,6 +2380,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         return '<div class="testimonials__card reveal-stagger">' +
           '<div class="testimonials__stars">' + stars + '</div>' +
           '<blockquote class="testimonials__text">' + (t.text[lang] || t.text.en) + '</blockquote>' +
+          '<button class="testimonials__readmore" type="button" data-more="' + rm.more + '" data-less="' + rm.less + '">' + rm.more + '</button>' +
           '<div class="testimonials__author">' + avatarHTML + '<div class="testimonials__author-info">' +
           '<span class="testimonials__name">' + authorName + '</span>' +
           '<span class="testimonials__role">' + (t.role[lang] || t.role.en) + '</span>' +
@@ -2360,6 +2400,15 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         if (typeof revealObserver !== 'undefined') {
           tContainer.querySelectorAll('.reveal-stagger').forEach(function(el) { revealObserver.observe(el); });
         }
+        // Wire up Read more / Show less toggle
+        tContainer.querySelectorAll('.testimonials__card').forEach(function(card) {
+          var btn = card.querySelector('.testimonials__readmore');
+          if (!btn) return;
+          btn.addEventListener('click', function() {
+            var expanded = card.classList.toggle('expanded');
+            btn.textContent = expanded ? btn.dataset.less : btn.dataset.more;
+          });
+        });
       });
     }
   }
@@ -2563,43 +2612,6 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       }
       return loc(proj.showcaseStatus) || '';
     }
-
-    // --- Generate Decision Guide from [data-decision-guide] ---
-    // Reads proj.decisionGuide from PROJECTS_DATA, renders one clickable
-    // cell per project. Links are anchors to the showcase card below
-    // (#project-{slug}) — not to project pages. Separates role:
-    // Decision Guide = fast jump-menu by intent, Showcase = rich content.
-    var DECISION_GUIDE_ICONS = {
-      yield:    '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 17l6-6 4 4 8-8M14 7h7v7"/></svg>',
-      land:     '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 20h18M5 20V9l7-5 7 5v11M9 20v-6h6v6"/></svg>',
-      cashflow: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',
-      building: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 38V14l14-6 14 6v24" stroke-linecap="round"/></svg>'
-    };
-    var DECISION_GUIDE_FROM = { en: 'from', ru: 'от', id: 'mulai' };
-
-    document.querySelectorAll('[data-decision-guide]').forEach(function(container) {
-      var keys = getProjectKeys();
-      var fromLabel = DECISION_GUIDE_FROM[dataLang] || DECISION_GUIDE_FROM.en;
-      container.innerHTML = keys.map(function(key) {
-        var proj = PD[key];
-        if (!proj || !proj.decisionGuide) return '';
-        var dg = proj.decisionGuide;
-        var question = (dg.question && (dg.question[dataLang] || dg.question.en)) || '';
-        var benefit  = (dg.benefit  && (dg.benefit[dataLang]  || dg.benefit.en))  || '';
-        var iconSvg  = DECISION_GUIDE_ICONS[dg.icon] || DECISION_GUIDE_ICONS.yield;
-        var priceK   = proj.startingPrice ? Math.round(proj.startingPrice / 1000) : null;
-        var priceStr = priceK ? (fromLabel + ' $' + priceK + 'K') : '';
-        var hookLine = [priceStr, benefit].filter(Boolean).join(' · ');
-        return '<li class="decision-guide__item">' +
-          '<a href="#project-' + key + '" class="decision-guide__link">' +
-            '<div class="decision-guide__icon">' + iconSvg + '</div>' +
-            '<span class="decision-guide__question">' + question + '</span>' +
-            '<span class="decision-guide__answer">' + proj.name + '</span>' +
-            '<span class="decision-guide__price">' + hookLine + '</span>' +
-          '</a>' +
-        '</li>';
-      }).join('');
-    });
 
     // --- Generate Showcase Cards from data-projects-container ---
     document.querySelectorAll('[data-projects-container]').forEach(function(container) {
