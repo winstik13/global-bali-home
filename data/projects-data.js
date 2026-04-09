@@ -131,9 +131,9 @@ const PROJECTS_DATA = {
       "id": "Hanya tersisa 3 dari 12 unit"
     },
     "showcaseDesc": {
-      "en": "Unwinding in tropical surroundings. 12 modernly designed villa residences with jungle views, natural waterfalls, and full privacy. 2-3 bedroom configurations.",
-      "ru": "Отдых в тропическом окружении. 12 современных вилл-резиденций с видами на джунгли, природными водопадами и полной приватностью. Конфигурации с 2-3 спальнями.",
-      "id": "Bersantai di lingkungan tropis. 12 unit villa dengan desain modern, pemandangan hutan, air terjun alami, dan privasi penuh. Konfigurasi 2-3 kamar tidur."
+      "en": "12 boutique villas built for turnkey rental. 12–15% projected yield, 80%+ occupancy through our French management partner, 75% already sold. Handover Q2 2026.",
+      "ru": "12 бутик-вилл, построенных под готовую аренду. Прогнозная доходность 12–15%, заполняемость 80%+ через французскую управляющую компанию, 75% уже продано. Сдача Q2 2026.",
+      "id": "12 vila butik yang dibangun untuk sewa turnkey. Proyeksi hasil 12–15%, okupansi 80%+ melalui mitra manajemen Prancis kami, 75% sudah terjual. Serah terima Q2 2026."
     },
     "showcaseCta": {
       "en": "View Details",
@@ -531,9 +531,9 @@ const PROJECTS_DATA = {
       "id": "Hanya tersisa 3 dari 4 unit"
     },
     "showcaseDesc": {
-      "en": "Where nature and design blend seamlessly. A boutique complex of only 4 exclusive villas with private pools, fish ponds, and stunning rice terrace views.",
-      "ru": "Где природа и дизайн сливаются воедино. Бутик-комплекс из 4 эксклюзивных вилл с частными бассейнами, рыбными прудами и потрясающими видами на рисовые террасы.",
-      "id": "Di mana alam dan desain berpadu sempurna. Kompleks butik hanya 4 villa eksklusif dengan kolam renang pribadi, kolam ikan, dan pemandangan sawah bertingkat yang menakjubkan."
+      "en": "4 exclusive villas on 3.5–14 are of prime Ubud land — the scarcest resource in Bali real estate. Single-family privacy, projected 10–15% annual capital appreciation. Handover Q1 2027.",
+      "ru": "4 эксклюзивные виллы на 3,5–14 сотках премиум-земли Убуда — самом дефицитном ресурсе на рынке Бали. Приватность single-family, прогноз роста капитала 10–15% в год. Сдача Q1 2027.",
+      "id": "4 vila eksklusif di atas 3,5–14 are lahan premium Ubud — sumber daya paling langka di real estate Bali. Privasi keluarga tunggal, proyeksi apresiasi modal tahunan 10–15%. Serah terima Q1 2027."
     },
     "showcaseCta": {
       "en": "View Details",
@@ -846,9 +846,9 @@ const PROJECTS_DATA = {
       "id": "Hanya tersisa 16 dari 25 unit"
     },
     "showcaseDesc": {
-      "en": "Complex of 25 villas with 1 and 2 bedroom options. Shared amenities include a large swimming pool and cafe. Maximum investment potential.",
-      "ru": "Комплекс из 25 вилл с вариантами на 1 и 2 спальни. Общая инфраструктура включает большой бассейн и кафе. Максимальный инвестиционный потенциал.",
-      "id": "Kompleks 25 villa dengan pilihan 1 dan 2 kamar tidur. Fasilitas bersama mencakup kolam renang besar dan kafe kompleks. Potensi investasi maksimal."
+      "en": "25 villas from $119K — the lowest entry into Bali yield-generating real estate. Same CAR insurance and notarized 60-year leasehold as our $500K+ projects. Shared pool and onsite cafe included.",
+      "ru": "25 вилл от $119K — самая низкая точка входа в доходную недвижимость Бали. Та же CAR-страховка и нотариальный leasehold на 60 лет, что в проектах от $500K+. Общий бассейн и кафе на территории.",
+      "id": "25 vila mulai $119K — titik masuk terendah ke real estate Bali yang menghasilkan hasil. Asuransi CAR dan hak sewa 60 tahun yang sama seperti proyek $500K+ kami. Kolam renang bersama dan kafe di lokasi termasuk."
     },
     "showcaseCta": {
       "en": "View Details",

@@ -1681,6 +1681,19 @@ td .price-idr {
   );
 }
 
+/* Projects.html hero — lighter overlay so the aerial villa shot is
+   actually visible. Project pages keep the heavier overlay because
+   their content block is taller and needs more dark backdrop. */
+.fullbleed-hero--projects .fullbleed-hero__overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(26, 26, 20, 0.15) 0%,
+    rgba(26, 26, 20, 0.5) 45%,
+    rgba(26, 26, 20, 0.88) 80%,
+    var(--color-bg) 100%
+  );
+}
+
 .fullbleed-hero__top {
   position: relative;
   z-index: 1;
@@ -5500,8 +5513,15 @@ body.master-plan-sheet-open .whatsapp-float {
    Sits between hero and project showcase cards. Reduces decision time
    from ~2 minutes (read all 3 cards) to ~5 seconds (pick your angle). */
 .section.decision-guide {
-  padding-top: calc(var(--section-padding) * 0.5);
-  padding-bottom: calc(var(--section-padding) * 0.5);
+  padding-top: calc(var(--section-padding) * 0.35);
+  padding-bottom: calc(var(--section-padding) * 0.35);
+}
+
+/* Tighten the gap between Decision Guide and the project showcase that
+   follows. Default .section padding-top (120px) + DG bottom (42px) was
+   too much; cap the next section to match the rhythm. */
+.section.decision-guide + .section {
+  padding-top: calc(var(--section-padding) * 0.45);
 }
 
 .decision-guide__grid {
@@ -5534,6 +5554,19 @@ body.master-plan-sheet-open .whatsapp-float {
   text-decoration: none;
   color: inherit;
   transition: transform 0.3s ease;
+}
+
+.decision-guide__icon {
+  margin-bottom: 10px;
+  line-height: 0;
+}
+
+.decision-guide__icon svg {
+  width: 28px;
+  height: 28px;
+  stroke: var(--color-accent);
+  stroke-width: 1.5;
+  fill: none;
 }
 
 .decision-guide__link:hover {
