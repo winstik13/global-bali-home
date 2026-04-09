@@ -1694,6 +1694,19 @@ td .price-idr {
   );
 }
 
+/* Projects.html hero — subtitle goes BELOW H1, not above.
+   Reasons: (1) bottom of hero has heavier overlay (0.88 vs 0.15 at
+   top), so muted text is far more readable there; (2) semantic flow
+   improves — H1 "Three Ways to Invest" asks the question, subtitle
+   "Yield, capital growth, or entry cashflow" answers it. Tracking
+   is reduced from 0.1em (kicker) to 0.04em because it now reads as
+   a descriptor, not a label-above-title. */
+.fullbleed-hero--projects .page-hero__subtitle {
+  margin-top: 14px;
+  margin-bottom: 0;
+  letter-spacing: 0.04em;
+}
+
 .fullbleed-hero__top {
   position: relative;
   z-index: 1;
