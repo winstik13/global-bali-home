@@ -60,6 +60,11 @@
 
 /* --- Base --- */
 html {
+  /* 112.5% of browser default 16px = 18px → 1rem = 18px.
+     This aligns rem-scale with the body 18px premium baseline that
+     all --font-* tokens were designed against (see comments in :root).
+     Respects user browser-zoom for accessibility. */
+  font-size: 112.5%;
   scroll-behavior: smooth;
 }
 
@@ -69,7 +74,8 @@ body {
   line-height: 1.6;
   color: var(--color-text);
   background-color: var(--color-bg);
-  font-size: 18px;
+  /* font-size inherited from html (1rem = 18px) — was hardcoded 18px,
+     which broke rem-scale and didn't respect user zoom */
   overflow-x: hidden;
 }
 
