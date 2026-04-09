@@ -69,19 +69,46 @@ const PROJECTS_DATA = {
     },
     "heroStats": {
       "en": [
-        { "number": "12",      "label": "Villas" },
-        { "number": "Q2 2026", "label": "Handover" },
-        { "number": "12–15%",  "label": "Yield" }
+        {
+          "number": "12",
+          "label": "Villas"
+        },
+        {
+          "number": "Q2 2026",
+          "label": "Handover"
+        },
+        {
+          "number": "12–15%",
+          "label": "Yield"
+        }
       ],
       "ru": [
-        { "number": "12",      "label": "Вилл" },
-        { "number": "Q2 2026", "label": "Сдача" },
-        { "number": "12–15%",  "label": "Доходность" }
+        {
+          "number": "12",
+          "label": "Вилл"
+        },
+        {
+          "number": "Q2 2026",
+          "label": "Сдача"
+        },
+        {
+          "number": "12–15%",
+          "label": "Доходность"
+        }
       ],
       "id": [
-        { "number": "12",      "label": "Vila" },
-        { "number": "Q2 2026", "label": "Serah Terima" },
-        { "number": "12–15%",  "label": "Imbal Hasil" }
+        {
+          "number": "12",
+          "label": "Vila"
+        },
+        {
+          "number": "Q2 2026",
+          "label": "Serah Terima"
+        },
+        {
+          "number": "12–15%",
+          "label": "Imbal Hasil"
+        }
       ]
     },
     "availability": {
@@ -442,19 +469,46 @@ const PROJECTS_DATA = {
     },
     "heroStats": {
       "en": [
-        { "number": "4",       "label": "Villas" },
-        { "number": "Q1 2027", "label": "Handover" },
-        { "number": "12–15%",  "label": "Yield" }
+        {
+          "number": "4",
+          "label": "Villas"
+        },
+        {
+          "number": "Q1 2027",
+          "label": "Handover"
+        },
+        {
+          "number": "12–15%",
+          "label": "Yield"
+        }
       ],
       "ru": [
-        { "number": "4",       "label": "Вилл" },
-        { "number": "Q1 2027", "label": "Сдача" },
-        { "number": "12–15%",  "label": "Доходность" }
+        {
+          "number": "4",
+          "label": "Вилл"
+        },
+        {
+          "number": "Q1 2027",
+          "label": "Сдача"
+        },
+        {
+          "number": "12–15%",
+          "label": "Доходность"
+        }
       ],
       "id": [
-        { "number": "4",       "label": "Vila" },
-        { "number": "Q1 2027", "label": "Serah Terima" },
-        { "number": "12–15%",  "label": "Imbal Hasil" }
+        {
+          "number": "4",
+          "label": "Vila"
+        },
+        {
+          "number": "Q1 2027",
+          "label": "Serah Terima"
+        },
+        {
+          "number": "12–15%",
+          "label": "Imbal Hasil"
+        }
       ]
     },
     "availability": {
@@ -730,19 +784,46 @@ const PROJECTS_DATA = {
     },
     "heroStats": {
       "en": [
-        { "number": "25",         "label": "Villas" },
-        { "number": "Q1/Q2 2027", "label": "Handover" },
-        { "number": "$119K+",     "label": "From" }
+        {
+          "number": "25",
+          "label": "Villas"
+        },
+        {
+          "number": "Q1/Q2 2027",
+          "label": "Handover"
+        },
+        {
+          "number": "$119K+",
+          "label": "From"
+        }
       ],
       "ru": [
-        { "number": "25",         "label": "Вилл" },
-        { "number": "Q1/Q2 2027", "label": "Сдача" },
-        { "number": "$119K+",     "label": "От" }
+        {
+          "number": "25",
+          "label": "Вилл"
+        },
+        {
+          "number": "Q1/Q2 2027",
+          "label": "Сдача"
+        },
+        {
+          "number": "$119K+",
+          "label": "От"
+        }
       ],
       "id": [
-        { "number": "25",         "label": "Vila" },
-        { "number": "Q1/Q2 2027", "label": "Serah Terima" },
-        { "number": "$119K+",     "label": "Mulai Dari" }
+        {
+          "number": "25",
+          "label": "Vila"
+        },
+        {
+          "number": "Q1/Q2 2027",
+          "label": "Serah Terima"
+        },
+        {
+          "number": "$119K+",
+          "label": "Mulai Dari"
+        }
       ]
     },
     "availability": {
@@ -775,31 +856,256 @@ const PROJECTS_DATA = {
       "id": "Lihat Detail"
     },
     "units": [
-      { "id": "1",  "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "available", "price": 140000, "badge": "Q1 2027" },
-      { "id": "2",  "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "sold",      "price": null,   "badge": "Q1 2027" },
-      { "id": "3",  "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "available", "price": 119000, "badge": "Q1 2027" },
-      { "id": "4",  "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "sold",      "price": null,   "badge": "Q1 2027" },
-      { "id": "5",  "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "available", "price": 119000, "badge": "Q1 2027" },
-      { "id": "6",  "type": "1 Bedroom", "floors": 1, "area": "51 m²", "land": "1.24 are", "status": "sold",      "price": null,   "badge": "Q1 2027" },
-      { "id": "7",  "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "available", "price": 195000, "badge": "Q1 2027" },
-      { "id": "8",  "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "available", "price": 195000, "badge": "Q1 2027" },
-      { "id": "9",  "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "available", "price": 127000, "badge": "Q1 2027" },
-      { "id": "10", "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "sold",      "price": null,   "badge": "Q1 2027" },
-      { "id": "11", "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "available", "price": 127000, "badge": "Q1 2027" },
-      { "id": "12", "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "sold",      "price": null,   "badge": "Q1 2027" },
-      { "id": "13", "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "sold",      "price": null,   "badge": "Q1 2027" },
-      { "id": "14", "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "available", "price": 195000, "badge": "Q1 2027" },
-      { "id": "15", "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "sold",      "price": null,   "badge": "Q1 2027" },
-      { "id": "16", "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "available", "price": 195000, "badge": "Q1 2027" },
-      { "id": "17", "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "sold",      "price": null,   "badge": "Q1 2027" },
-      { "id": "18", "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "available", "price": 195000, "badge": "Q1 2027" },
-      { "id": "19", "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "sold",      "price": null,   "badge": "Q1 2027" },
-      { "id": "20", "type": "1 Bedroom", "floors": 1, "area": "50 m²", "land": "1.16 are", "status": "available", "price": 140000, "badge": "Q2 2027" },
-      { "id": "21", "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "available", "price": 220000, "badge": "Q2 2027" },
-      { "id": "22", "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "available", "price": 195000, "badge": "Q2 2027" },
-      { "id": "23", "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "available", "price": 195000, "badge": "Q2 2027" },
-      { "id": "24", "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "available", "price": 220000, "badge": "Q2 2027" },
-      { "id": "25", "type": "2 Bedroom", "floors": 2, "area": "84 m²", "land": "1.54 are", "status": "available", "price": 220000, "badge": "Q2 2027" }
+      {
+        "id": "1",
+        "type": "1 Bedroom",
+        "floors": 1,
+        "area": "50 m²",
+        "land": "1.16 are",
+        "status": "available",
+        "price": 140000,
+        "badge": "Q1 2027"
+      },
+      {
+        "id": "2",
+        "type": "1 Bedroom",
+        "floors": 1,
+        "area": "50 m²",
+        "land": "1.16 are",
+        "status": "sold",
+        "price": null,
+        "badge": "Q1 2027"
+      },
+      {
+        "id": "3",
+        "type": "1 Bedroom",
+        "floors": 1,
+        "area": "50 m²",
+        "land": "1.16 are",
+        "status": "available",
+        "price": 119000,
+        "badge": "Q1 2027"
+      },
+      {
+        "id": "4",
+        "type": "1 Bedroom",
+        "floors": 1,
+        "area": "50 m²",
+        "land": "1.16 are",
+        "status": "sold",
+        "price": null,
+        "badge": "Q1 2027"
+      },
+      {
+        "id": "5",
+        "type": "1 Bedroom",
+        "floors": 1,
+        "area": "50 m²",
+        "land": "1.16 are",
+        "status": "available",
+        "price": 119000,
+        "badge": "Q1 2027"
+      },
+      {
+        "id": "6",
+        "type": "1 Bedroom",
+        "floors": 1,
+        "area": "51 m²",
+        "land": "1.24 are",
+        "status": "sold",
+        "price": null,
+        "badge": "Q1 2027"
+      },
+      {
+        "id": "7",
+        "type": "2 Bedroom",
+        "floors": 2,
+        "area": "84 m²",
+        "land": "1.54 are",
+        "status": "available",
+        "price": 195000,
+        "badge": "Q1 2027"
+      },
+      {
+        "id": "8",
+        "type": "2 Bedroom",
+        "floors": 2,
+        "area": "84 m²",
+        "land": "1.54 are",
+        "status": "available",
+        "price": 195000,
+        "badge": "Q1 2027"
+      },
+      {
+        "id": "9",
+        "type": "1 Bedroom",
+        "floors": 1,
+        "area": "50 m²",
+        "land": "1.16 are",
+        "status": "available",
+        "price": 127000,
+        "badge": "Q1 2027"
+      },
+      {
+        "id": "10",
+        "type": "1 Bedroom",
+        "floors": 1,
+        "area": "50 m²",
+        "land": "1.16 are",
+        "status": "sold",
+        "price": null,
+        "badge": "Q1 2027"
+      },
+      {
+        "id": "11",
+        "type": "1 Bedroom",
+        "floors": 1,
+        "area": "50 m²",
+        "land": "1.16 are",
+        "status": "available",
+        "price": 127000,
+        "badge": "Q1 2027"
+      },
+      {
+        "id": "12",
+        "type": "1 Bedroom",
+        "floors": 1,
+        "area": "50 m²",
+        "land": "1.16 are",
+        "status": "sold",
+        "price": null,
+        "badge": "Q1 2027"
+      },
+      {
+        "id": "13",
+        "type": "1 Bedroom",
+        "floors": 1,
+        "area": "50 m²",
+        "land": "1.16 are",
+        "status": "sold",
+        "price": null,
+        "badge": "Q1 2027"
+      },
+      {
+        "id": "14",
+        "type": "2 Bedroom",
+        "floors": 2,
+        "area": "84 m²",
+        "land": "1.54 are",
+        "status": "available",
+        "price": 195000,
+        "badge": "Q1 2027"
+      },
+      {
+        "id": "15",
+        "type": "1 Bedroom",
+        "floors": 1,
+        "area": "50 m²",
+        "land": "1.16 are",
+        "status": "sold",
+        "price": null,
+        "badge": "Q1 2027"
+      },
+      {
+        "id": "16",
+        "type": "2 Bedroom",
+        "floors": 2,
+        "area": "84 m²",
+        "land": "1.54 are",
+        "status": "available",
+        "price": 195000,
+        "badge": "Q1 2027"
+      },
+      {
+        "id": "17",
+        "type": "2 Bedroom",
+        "floors": 2,
+        "area": "84 m²",
+        "land": "1.54 are",
+        "status": "sold",
+        "price": null,
+        "badge": "Q1 2027"
+      },
+      {
+        "id": "18",
+        "type": "2 Bedroom",
+        "floors": 2,
+        "area": "84 m²",
+        "land": "1.54 are",
+        "status": "available",
+        "price": 195000,
+        "badge": "Q1 2027"
+      },
+      {
+        "id": "19",
+        "type": "1 Bedroom",
+        "floors": 1,
+        "area": "50 m²",
+        "land": "1.16 are",
+        "status": "sold",
+        "price": null,
+        "badge": "Q1 2027"
+      },
+      {
+        "id": "20",
+        "type": "1 Bedroom",
+        "floors": 1,
+        "area": "50 m²",
+        "land": "1.16 are",
+        "status": "available",
+        "price": 140000,
+        "badge": "Q2 2027"
+      },
+      {
+        "id": "21",
+        "type": "2 Bedroom",
+        "floors": 2,
+        "area": "84 m²",
+        "land": "1.54 are",
+        "status": "available",
+        "price": 220000,
+        "badge": "Q2 2027"
+      },
+      {
+        "id": "22",
+        "type": "2 Bedroom",
+        "floors": 2,
+        "area": "84 m²",
+        "land": "1.54 are",
+        "status": "available",
+        "price": 195000,
+        "badge": "Q2 2027"
+      },
+      {
+        "id": "23",
+        "type": "2 Bedroom",
+        "floors": 2,
+        "area": "84 m²",
+        "land": "1.54 are",
+        "status": "available",
+        "price": 195000,
+        "badge": "Q2 2027"
+      },
+      {
+        "id": "24",
+        "type": "2 Bedroom",
+        "floors": 2,
+        "area": "84 m²",
+        "land": "1.54 are",
+        "status": "available",
+        "price": 220000,
+        "badge": "Q2 2027"
+      },
+      {
+        "id": "25",
+        "type": "2 Bedroom",
+        "floors": 2,
+        "area": "84 m²",
+        "land": "1.54 are",
+        "status": "available",
+        "price": 220000,
+        "badge": "Q2 2027"
+      }
     ],
     "unitTypes": [
       {
@@ -820,7 +1126,7 @@ const PROJECTS_DATA = {
       }
     ],
     "floorPlans": {
-      "Type A — 1BR Villa": {
+      "1BR Villa": {
         "floors": {
           "Ground Floor": ""
         },
@@ -843,7 +1149,7 @@ const PROJECTS_DATA = {
           }
         ]
       },
-      "Type B — 2BR Villa": {
+      "2BR Villa": {
         "floors": {
           "Ground Floor": "",
           "Upper Floor": ""
