@@ -60,7 +60,7 @@ const PROJECTS_DATA = {
         }
       ]
     },
-    "compArea": "167–210 m²",
+    "compArea": "122–210 m²",
     "compLand": "2–3 are",
     "compPool": {
       "en": "Private",
@@ -434,7 +434,7 @@ const PROJECTS_DATA = {
       ]
     },
     "compArea": "155–250 m²",
-    "compLand": "3–14 are",
+    "compLand": "3.5–14 are",
     "compPool": {
       "en": "Private",
       "ru": "Приватный",
