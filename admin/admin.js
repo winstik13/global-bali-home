@@ -2072,7 +2072,7 @@
     });
 
     // Copy global fields
-    const globalKeys = ['comparisonLabels', 'unitTableHeaders', 'statusLabels', 'availabilityLabels', 'villageTableHeaders'];
+    const globalKeys = ['comparisonLabels', 'unitTableHeaders', 'statusLabels', 'availabilityLabels'];
     globalKeys.forEach(gk => { if (projectsData[gk]) data[gk] = projectsData[gk]; });
 
     return '/* eslint-disable */\nconst PROJECTS_DATA = ' + JSON.stringify(data, null, 2) + ';\n';

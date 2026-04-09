@@ -1146,24 +1146,6 @@ const PROJECTS_DATA = {
         "badge": "Q2 2027"
       }
     ],
-    "unitTypes": [
-      {
-        "type": "1 Bedroom",
-        "floors": 1,
-        "area": "50 m²",
-        "land": "1.16 are",
-        "count": 14,
-        "price": 119000
-      },
-      {
-        "type": "2 Bedroom",
-        "floors": 2,
-        "area": "84 m²",
-        "land": "1.54 are",
-        "count": 11,
-        "price": 195000
-      }
-    ],
     "floorPlans": {
       "1BR Villa": {
         "floors": {
@@ -1325,32 +1307,6 @@ const PROJECTS_DATA = {
       "unitsSold": "unit terjual",
       "unitsLeft": "unit tersisa",
       "preSale": "Pra-Penjualan Dibuka"
-    }
-  },
-  "villageTableHeaders": {
-    "en": {
-      "type": "Type",
-      "floors": "Floors",
-      "area": "Area",
-      "land": "Land",
-      "units": "Units",
-      "price": "Price from"
-    },
-    "ru": {
-      "type": "Тип",
-      "floors": "Этажи",
-      "area": "Площадь",
-      "land": "Земля",
-      "units": "Юниты",
-      "price": "Цена от"
-    },
-    "id": {
-      "type": "Tipe",
-      "floors": "Lantai",
-      "area": "Luas",
-      "land": "Lahan",
-      "units": "Unit",
-      "price": "Harga mulai"
     }
   }
 };

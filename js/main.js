@@ -2514,20 +2514,6 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       }
     });
 
-    // --- Village Unit Types Table ---
-    document.querySelectorAll('.unit-table[data-village-types]').forEach(el => {
-      const proj = PD['serenity-village'];
-      if (!proj || !proj.unitTypes) return;
-      const h = PD.villageTableHeaders[lang] || PD.villageTableHeaders.en;
-
-      let html = '<thead><tr><th>' + h.type + '</th><th>' + h.floors + '</th><th>' + h.area + '</th><th>' + h.land + '</th><th>' + h.units + '</th><th>' + h.price + '</th></tr></thead><tbody>';
-      proj.unitTypes.forEach(u => {
-        html += '<tr><td>' + u.type + '</td><td>' + u.floors + '</td><td>' + u.area + '</td><td>' + u.land + '</td><td>' + u.count + '</td><td>' + fmtDualPrice(u.price) + '</td></tr>';
-      });
-      html += '</tbody>';
-      el.innerHTML = html;
-    });
-
     // --- Pre-sale Banner ---
     document.querySelectorAll('[data-presale-banner]').forEach(el => {
       const proj = PD['serenity-village'];
