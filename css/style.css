@@ -5494,3 +5494,102 @@ body.master-plan-sheet-open .whatsapp-float {
   pointer-events: none !important;
   transition: opacity 0.22s ease;
 }
+
+/* ─── Decision Guide (projects.html) ───
+   Compact 3-column strip that helps buyers match their goal to a project.
+   Sits between hero and project showcase cards. Reduces decision time
+   from ~2 minutes (read all 3 cards) to ~5 seconds (pick your angle). */
+.section.decision-guide {
+  padding-top: calc(var(--section-padding) * 0.5);
+  padding-bottom: calc(var(--section-padding) * 0.5);
+}
+
+.decision-guide__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.decision-guide__item {
+  border-left: 1px solid var(--color-border);
+  padding: 24px 40px;
+}
+
+.decision-guide__item:first-child {
+  border-left: none;
+  padding-left: 0;
+}
+
+.decision-guide__item:last-child {
+  padding-right: 0;
+}
+
+.decision-guide__link {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease;
+}
+
+.decision-guide__link:hover {
+  transform: translateX(4px);
+}
+
+.decision-guide__question {
+  font-family: var(--font-body);
+  font-size: var(--font-xs);
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+
+.decision-guide__answer {
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  color: var(--color-cream);
+  line-height: 1.2;
+  margin-top: 2px;
+}
+
+.decision-guide__answer::after {
+  content: ' →';
+  color: var(--color-accent);
+  margin-left: 6px;
+  transition: margin-left 0.3s ease;
+  display: inline-block;
+}
+
+.decision-guide__link:hover .decision-guide__answer::after {
+  margin-left: 14px;
+}
+
+.decision-guide__price {
+  font-size: var(--font-sm);
+  color: var(--color-text-muted);
+  font-weight: 400;
+  margin-top: 2px;
+}
+
+@media (max-width: 1024px) {
+  .decision-guide__grid {
+    grid-template-columns: 1fr;
+  }
+  .decision-guide__item {
+    border-left: none;
+    border-top: 1px solid var(--color-border);
+    padding: 24px 0;
+  }
+  .decision-guide__item:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+  .decision-guide__item:last-child {
+    padding-bottom: 0;
+  }
+}
