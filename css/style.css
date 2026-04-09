@@ -4536,18 +4536,27 @@ td .price-idr {
 
   .hero-stats {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px 0;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
   }
 
   .hero-stats__item {
-    padding: 0 16px;
-    text-align: left;
+    padding: 0 10px;
+    text-align: center;
   }
 
-  .hero-stats__item:nth-child(odd) {
+  .hero-stats__item:first-child {
     padding-left: 0;
     border-left: none;
+  }
+
+  /* Shrink number size on mobile so long values like "Q1/Q2 2027" fit in ~110px columns */
+  .hero-stats__number {
+    font-size: 1.15rem;
+  }
+  .hero-stats__label {
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
   }
 
   .gallery-grid--masonry {

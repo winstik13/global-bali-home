@@ -69,70 +69,19 @@ const PROJECTS_DATA = {
     },
     "heroStats": {
       "en": [
-        {
-          "number": "12",
-          "label": "Villas"
-        },
-        {
-          "number": "2–3",
-          "label": "Bedrooms"
-        },
-        {
-          "number": "Q2 2026",
-          "label": "Handover"
-        },
-        {
-          "number": "$335K+",
-          "label": "From"
-        },
-        {
-          "number": "12–15%",
-          "label": "Yield"
-        }
+        { "number": "12",      "label": "Villas" },
+        { "number": "Q2 2026", "label": "Handover" },
+        { "number": "12–15%",  "label": "Yield" }
       ],
       "ru": [
-        {
-          "number": "12",
-          "label": "Вилл"
-        },
-        {
-          "number": "2–3",
-          "label": "Спальни"
-        },
-        {
-          "number": "Q2 2026",
-          "label": "Сдача"
-        },
-        {
-          "number": "$335K+",
-          "label": "От"
-        },
-        {
-          "number": "12–15%",
-          "label": "Доходность"
-        }
+        { "number": "12",      "label": "Вилл" },
+        { "number": "Q2 2026", "label": "Сдача" },
+        { "number": "12–15%",  "label": "Доходность" }
       ],
       "id": [
-        {
-          "number": "12",
-          "label": "Vila"
-        },
-        {
-          "number": "2–3",
-          "label": "Kamar Tidur"
-        },
-        {
-          "number": "Q2 2026",
-          "label": "Serah Terima"
-        },
-        {
-          "number": "$335K+",
-          "label": "Mulai Dari"
-        },
-        {
-          "number": "12–15%",
-          "label": "Imbal Hasil"
-        }
+        { "number": "12",      "label": "Vila" },
+        { "number": "Q2 2026", "label": "Serah Terima" },
+        { "number": "12–15%",  "label": "Imbal Hasil" }
       ]
     },
     "availability": {
@@ -493,70 +442,19 @@ const PROJECTS_DATA = {
     },
     "heroStats": {
       "en": [
-        {
-          "number": "4",
-          "label": "Villas"
-        },
-        {
-          "number": "2–4.5",
-          "label": "Bedrooms"
-        },
-        {
-          "number": "Q1 2027",
-          "label": "Handover"
-        },
-        {
-          "number": "$310K",
-          "label": "From"
-        },
-        {
-          "number": "12–15%",
-          "label": "Yield"
-        }
+        { "number": "4",       "label": "Villas" },
+        { "number": "Q1 2027", "label": "Handover" },
+        { "number": "12–15%",  "label": "Yield" }
       ],
       "ru": [
-        {
-          "number": "4",
-          "label": "Виллы"
-        },
-        {
-          "number": "2–4.5",
-          "label": "Спальни"
-        },
-        {
-          "number": "Q1 2027",
-          "label": "Сдача"
-        },
-        {
-          "number": "$310K",
-          "label": "От"
-        },
-        {
-          "number": "12–15%",
-          "label": "Доходность"
-        }
+        { "number": "4",       "label": "Вилл" },
+        { "number": "Q1 2027", "label": "Сдача" },
+        { "number": "12–15%",  "label": "Доходность" }
       ],
       "id": [
-        {
-          "number": "4",
-          "label": "Vila"
-        },
-        {
-          "number": "2–4.5",
-          "label": "Kamar Tidur"
-        },
-        {
-          "number": "Q1 2027",
-          "label": "Serah Terima"
-        },
-        {
-          "number": "$310K",
-          "label": "Mulai Dari"
-        },
-        {
-          "number": "12–15%",
-          "label": "Imbal Hasil"
-        }
+        { "number": "4",       "label": "Vila" },
+        { "number": "Q1 2027", "label": "Serah Terima" },
+        { "number": "12–15%",  "label": "Imbal Hasil" }
       ]
     },
     "availability": {
@@ -832,70 +730,19 @@ const PROJECTS_DATA = {
     },
     "heroStats": {
       "en": [
-        {
-          "number": "25",
-          "label": "Villas"
-        },
-        {
-          "number": "1–2",
-          "label": "Bedrooms"
-        },
-        {
-          "number": "Q1/Q2 2027",
-          "label": "Handover"
-        },
-        {
-          "number": "$119K+",
-          "label": "From"
-        },
-        {
-          "number": "12–15%",
-          "label": "Yield"
-        }
+        { "number": "25",         "label": "Villas" },
+        { "number": "Q1/Q2 2027", "label": "Handover" },
+        { "number": "$119K+",     "label": "From" }
       ],
       "ru": [
-        {
-          "number": "25",
-          "label": "Вилл"
-        },
-        {
-          "number": "1–2",
-          "label": "Спальни"
-        },
-        {
-          "number": "Q1/Q2 2027",
-          "label": "Сдача"
-        },
-        {
-          "number": "$119K+",
-          "label": "От"
-        },
-        {
-          "number": "12–15%",
-          "label": "Доходность"
-        }
+        { "number": "25",         "label": "Вилл" },
+        { "number": "Q1/Q2 2027", "label": "Сдача" },
+        { "number": "$119K+",     "label": "От" }
       ],
       "id": [
-        {
-          "number": "25",
-          "label": "Vila"
-        },
-        {
-          "number": "1–2",
-          "label": "Kamar Tidur"
-        },
-        {
-          "number": "Q1/Q2 2027",
-          "label": "Serah Terima"
-        },
-        {
-          "number": "$119K+",
-          "label": "Mulai Dari"
-        },
-        {
-          "number": "12–15%",
-          "label": "Imbal Hasil"
-        }
+        { "number": "25",         "label": "Vila" },
+        { "number": "Q1/Q2 2027", "label": "Serah Terima" },
+        { "number": "$119K+",     "label": "Mulai Dari" }
       ]
     },
     "availability": {
