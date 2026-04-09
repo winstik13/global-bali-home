@@ -2952,7 +2952,6 @@
     <div class="fullbleed-hero__overlay"></div>
     <div class="fullbleed-hero__top">
       <div class="container">
-        <nav class="page-hero__breadcrumbs"><a href="index.html">${L.home}</a> <span>/</span> <a href="projects.html">${L.projects}</a> <span>/</span> <span>${proj.name}</span></nav>
         <p class="page-hero__subtitle">${escAttr(subtitle)}</p>
         <h1>${proj.name}</h1>
         <div class="hero-stats" data-project="${slug}"></div>
@@ -3024,7 +3023,7 @@
         </div>
         <div>
           <h4 class="footer__heading">${L.nav}</h4>
-          <div class="footer__links"><a href="about.html">${L.about}</a><a href="projects.html">${L.projects}</a><a href="services.html">${L.services}</a><a href="gallery.html">${L.gallery}</a><a href="contacts.html">${L.contact}</a></div>
+          <div class="footer__links"><a href="projects.html">${L.projects}</a><a href="services.html">${L.services}</a><a href="about.html">${L.about}</a><a href="gallery.html">${L.gallery}</a><a href="contacts.html">${L.contact}</a></div>
         </div>
         <div>
           <h4 class="footer__heading">${L.projects}</h4>

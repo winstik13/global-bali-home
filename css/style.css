@@ -2620,6 +2620,14 @@ td .price-idr {
   gap: 80px;
 }
 
+.contact-grid__title {
+  margin-bottom: 8px;
+}
+
+.contact-grid__subtitle {
+  margin-bottom: 32px;
+}
+
 .form-group {
   margin-bottom: 28px;
 }
