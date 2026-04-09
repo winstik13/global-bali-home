@@ -2469,6 +2469,47 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       });
     });
 
+    // --- Final CTA: dynamic scarcity title + description ---
+    // Reads available count from proj.units (status === 'available').
+    // Falls back to availability.total - availability.sold if no units[].
+    // HTML template provides fallback text; JS overrides with live numbers.
+    document.querySelectorAll('[data-final-cta][data-project]').forEach(function(el) {
+      var key = el.dataset.project;
+      var proj = PD[key];
+      if (!proj) return;
+
+      var available = 0;
+      if (proj.units) {
+        available = proj.units.filter(function(u) { return u.status === 'available'; }).length;
+      } else if (proj.availability) {
+        available = (proj.availability.total || 0) - (proj.availability.sold || 0);
+      }
+      if (!available) return;
+
+      var title = el.querySelector('[data-cta-title]');
+      var desc = el.querySelector('[data-cta-desc]');
+      if (!title && !desc) return;
+
+      if (dataLang === 'ru') {
+        // Plural forms: 1 вилла / 2-4 виллы / 5+ вилл (with 11-14 exception)
+        var lastTwo = available % 100;
+        var lastOne = available % 10;
+        var villaForm;
+        if (lastTwo >= 11 && lastTwo <= 14) villaForm = 'вилл';
+        else if (lastOne === 1) villaForm = 'вилла';
+        else if (lastOne >= 2 && lastOne <= 4) villaForm = 'виллы';
+        else villaForm = 'вилл';
+        if (title) title.textContent = 'Осталось всего ' + available + ' ' + villaForm;
+        if (desc) desc.textContent = 'Свяжитесь с нами до того, как последние юниты уйдут — расскажем о ценах, планировках и инвестиционных условиях.';
+      } else if (dataLang === 'id') {
+        if (title) title.textContent = 'Hanya tersisa ' + available + ' vila';
+        if (desc) desc.textContent = 'Hubungi tim kami sebelum unit terakhir terjual — kami akan menjelaskan harga, konfigurasi, dan peluang investasi.';
+      } else {
+        if (title) title.textContent = 'Only ' + available + (available === 1 ? ' Villa Left' : ' Villas Left');
+        if (desc) desc.textContent = 'Get in touch before the last units are gone — our team will walk you through pricing, layouts, and investment details.';
+      }
+    });
+
     // --- Village Unit Types Table ---
     document.querySelectorAll('.unit-table[data-village-types]').forEach(el => {
       const proj = PD['serenity-village'];
