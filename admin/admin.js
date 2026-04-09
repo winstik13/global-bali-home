@@ -1640,8 +1640,8 @@
       ['cashflow', t('projects.decisionGuideIconCashflow')]
     ];
     html += `<div class="editor-section"><h3>${t('projects.decisionGuide')}</h3>
-      <small class="field-hint" style="display:block;margin-bottom:${'--sp-md' in {} ? 'var(--sp-md)' : '16px'}">${t('projects.decisionGuideHint')}</small>
-      <div class="form-group" style="max-width:320px">
+      <small class="field-hint">${t('projects.decisionGuideHint')}</small>
+      <div class="form-group">
         <label>${t('projects.decisionGuideIcon')}</label>
         <select id="dg-icon">
           ${dgIconOptions.map(([v, l]) => `<option value="${v}"${p.decisionGuide.icon === v ? ' selected' : ''}>${l}</option>`).join('')}
