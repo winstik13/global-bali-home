@@ -166,6 +166,16 @@
       'projects.compPool': 'Pool',
       'projects.handover': 'Handover',
       'projects.newProject': '+ New Project',
+      'projects.decisionGuide': 'Decision Guide (catalog page)',
+      'projects.decisionGuideHint': 'Shown as a cell on projects.html — helps buyers match their goal to this project.',
+      'projects.decisionGuideIcon': 'Icon',
+      'projects.decisionGuideIconYield': 'Yield (trending chart)',
+      'projects.decisionGuideIconLand': 'Land (building)',
+      'projects.decisionGuideIconCashflow': 'Cashflow (dollar)',
+      'projects.decisionGuideQuestion': 'Question',
+      'projects.decisionGuideQuestionPh': 'e.g. Want passive income?',
+      'projects.decisionGuideBenefit': 'Benefit',
+      'projects.decisionGuideBenefitPh': 'e.g. 12–15% yield',
       'seo.title': 'SEO Editor',
       'seo.page': 'Page',
       'seo.selectPage': '— Select page —',
@@ -546,6 +556,16 @@
       'projects.compPool': 'Бассейн',
       'projects.handover': 'Сдача',
       'projects.newProject': '+ Новый проект',
+      'projects.decisionGuide': 'Decision Guide (страница каталога)',
+      'projects.decisionGuideHint': 'Показывается ячейкой на projects.html — помогает покупателю сопоставить цель с этим проектом.',
+      'projects.decisionGuideIcon': 'Иконка',
+      'projects.decisionGuideIconYield': 'Доходность (график)',
+      'projects.decisionGuideIconLand': 'Земля (здание)',
+      'projects.decisionGuideIconCashflow': 'Cashflow (доллар)',
+      'projects.decisionGuideQuestion': 'Вопрос',
+      'projects.decisionGuideQuestionPh': 'напр. Хотите пассивный доход?',
+      'projects.decisionGuideBenefit': 'Бенефит',
+      'projects.decisionGuideBenefitPh': 'напр. 12–15% годовых',
       'seo.title': 'SEO Редактор',
       'seo.page': 'Страница',
       'seo.selectPage': '— Выберите страницу —',
@@ -1603,6 +1623,38 @@
     });
     html += '</div>';
 
+    // Decision Guide — cell shown on projects.html catalog page
+    // Ensure structure exists so the editor has values to show
+    if (!p.decisionGuide) {
+      p.decisionGuide = {
+        icon: 'yield',
+        question: { en: '', ru: '', id: '' },
+        benefit: { en: '', ru: '', id: '' }
+      };
+    }
+    if (!p.decisionGuide.question) p.decisionGuide.question = { en: '', ru: '', id: '' };
+    if (!p.decisionGuide.benefit) p.decisionGuide.benefit = { en: '', ru: '', id: '' };
+    const dgIconOptions = [
+      ['yield',    t('projects.decisionGuideIconYield')],
+      ['land',     t('projects.decisionGuideIconLand')],
+      ['cashflow', t('projects.decisionGuideIconCashflow')]
+    ];
+    html += `<div class="editor-section"><h3>${t('projects.decisionGuide')}</h3>
+      <small class="field-hint" style="display:block;margin-bottom:${'--sp-md' in {} ? 'var(--sp-md)' : '16px'}">${t('projects.decisionGuideHint')}</small>
+      <div class="form-group" style="max-width:320px">
+        <label>${t('projects.decisionGuideIcon')}</label>
+        <select id="dg-icon">
+          ${dgIconOptions.map(([v, l]) => `<option value="${v}"${p.decisionGuide.icon === v ? ' selected' : ''}>${l}</option>`).join('')}
+        </select>
+      </div>`;
+    ['en', 'ru', 'id'].forEach(lng => {
+      html += `<div style="margin-bottom:16px"><div class="hero-stat-field__lang">${lng.toUpperCase()}</div>
+        <div class="form-group"><label>${t('projects.decisionGuideQuestion')}</label><input type="text" class="dg-input" data-lang="${lng}" data-field="question" value="${escAttr(p.decisionGuide.question[lng] || '')}" placeholder="${t('projects.decisionGuideQuestionPh')}"></div>
+        <div class="form-group"><label>${t('projects.decisionGuideBenefit')}</label><input type="text" class="dg-input" data-lang="${lng}" data-field="benefit" value="${escAttr(p.decisionGuide.benefit[lng] || '')}" placeholder="${t('projects.decisionGuideBenefitPh')}"></div>
+      </div>`;
+    });
+    html += '</div>';
+
     editor.innerHTML = html;
 
     // Bind project status
@@ -1708,6 +1760,26 @@
         const field = inp.dataset.field;
         if (!p[field] || typeof p[field] !== 'object') p[field] = { en: '', ru: '', id: '' };
         p[field][lng] = inp.value;
+        markChanged();
+      });
+    });
+
+    // Decision Guide bindings
+    const dgIconSel = $('#dg-icon');
+    if (dgIconSel) {
+      dgIconSel.addEventListener('change', () => {
+        if (!p.decisionGuide) p.decisionGuide = { icon: 'yield', question: { en: '', ru: '', id: '' }, benefit: { en: '', ru: '', id: '' } };
+        p.decisionGuide.icon = dgIconSel.value;
+        markChanged();
+      });
+    }
+    editor.querySelectorAll('.dg-input').forEach(inp => {
+      inp.addEventListener('input', () => {
+        if (!p.decisionGuide) p.decisionGuide = { icon: 'yield', question: { en: '', ru: '', id: '' }, benefit: { en: '', ru: '', id: '' } };
+        const field = inp.dataset.field;
+        const lng = inp.dataset.lang;
+        if (!p.decisionGuide[field]) p.decisionGuide[field] = { en: '', ru: '', id: '' };
+        p.decisionGuide[field][lng] = inp.value;
         markChanged();
       });
     });
@@ -3108,9 +3180,21 @@
         compLand: land,
         compPool: { en: pool, ru: pool, id: pool },
         heroStats: {
-          en: [{ number: String(totalUnits), label: 'Villas' }, { number: bedrooms, label: 'Bedrooms' }, { number: priceLabel ? '$' + (price / 1000 | 0) + 'K' : '', label: 'From' }],
-          ru: [{ number: String(totalUnits), label: 'Вилл' }, { number: bedrooms, label: 'Спальни' }, { number: priceLabel ? '$' + (price / 1000 | 0) + 'K' : '', label: 'От' }],
-          id: [{ number: String(totalUnits), label: 'Vila' }, { number: bedrooms, label: 'Kamar Tidur' }, { number: priceLabel ? '$' + (price / 1000 | 0) + 'K' : '', label: 'Mulai Dari' }],
+          en: [
+            { number: String(totalUnits), label: 'Villas' },
+            { number: handover || bedrooms, label: handover ? 'Handover' : 'Bedrooms' },
+            { number: price ? '$' + (price / 1000 | 0) + 'K+' : '', label: 'From' }
+          ],
+          ru: [
+            { number: String(totalUnits), label: 'Вилл' },
+            { number: handover || bedrooms, label: handover ? 'Сдача' : 'Спальни' },
+            { number: price ? '$' + (price / 1000 | 0) + 'K+' : '', label: 'От' }
+          ],
+          id: [
+            { number: String(totalUnits), label: 'Vila' },
+            { number: handover || bedrooms, label: handover ? 'Serah Terima' : 'Kamar Tidur' },
+            { number: price ? '$' + (price / 1000 | 0) + 'K+' : '', label: 'Mulai Dari' }
+          ],
         },
         availability: { sold: 0, total: totalUnits },
         showcaseStatus: {
@@ -3130,6 +3214,19 @@
         },
         showcaseDesc: { en: desc, ru: desc, id: desc },
         showcaseCta: { en: 'View Details', ru: 'Подробнее', id: 'Lihat Detail' },
+        decisionGuide: {
+          icon: 'yield',
+          question: {
+            en: 'Interested in ' + name + '?',
+            ru: 'Интересен ' + name + '?',
+            id: 'Tertarik dengan ' + name + '?'
+          },
+          benefit: {
+            en: bedrooms ? bedrooms + ' bedrooms' : 'premium villas',
+            ru: bedrooms ? bedrooms + ' спален' : 'премиум-виллы',
+            id: bedrooms ? bedrooms + ' kamar tidur' : 'villa premium'
+          }
+        },
         units: []
       };
 
