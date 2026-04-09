@@ -1695,7 +1695,7 @@ td .price-idr {
 .fullbleed-hero__bottom {
   position: relative;
   z-index: 1;
-  padding-bottom: var(--section-padding);
+  padding-bottom: calc(var(--section-padding) * 0.6);
 }
 
 .hero-cta {
