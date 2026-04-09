@@ -4407,6 +4407,7 @@ td .price-idr {
 
   .contact-grid {
     grid-template-columns: 1fr;
+    gap: 40px;
   }
 
   .features-grid {
@@ -4444,6 +4445,15 @@ td .price-idr {
     --side-padding: 20px;
     --section-padding: 60px;
     --header-height: 64px;
+  }
+
+  .project-showcase__content {
+    padding: 24px;
+  }
+
+  .project-showcase__meta {
+    flex-wrap: wrap;
+    gap: 16px;
   }
 
   .header__nav {
