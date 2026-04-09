@@ -23,7 +23,7 @@ const PROJECTS_DATA = {
           "label": "Villas"
         },
         {
-          "strong": "2-3",
+          "strong": "2–3",
           "label": "Bedrooms"
         },
         {
@@ -37,7 +37,7 @@ const PROJECTS_DATA = {
           "label": "Вилл"
         },
         {
-          "strong": "2-3",
+          "strong": "2–3",
           "label": "Спальни"
         },
         {
@@ -51,7 +51,7 @@ const PROJECTS_DATA = {
           "label": "Villa"
         },
         {
-          "strong": "2-3",
+          "strong": "2–3",
           "label": "Kamar Tidur"
         },
         {
@@ -786,7 +786,7 @@ const PROJECTS_DATA = {
           "label": "Villas"
         },
         {
-          "strong": "1-2",
+          "strong": "1–2",
           "label": "Bedrooms"
         },
         {
@@ -800,7 +800,7 @@ const PROJECTS_DATA = {
           "label": "Вилл"
         },
         {
-          "strong": "1-2",
+          "strong": "1–2",
           "label": "Спальни"
         },
         {
@@ -814,7 +814,7 @@ const PROJECTS_DATA = {
           "label": "Villa"
         },
         {
-          "strong": "1-2",
+          "strong": "1–2",
           "label": "Kamar Tidur"
         },
         {
@@ -859,7 +859,7 @@ const PROJECTS_DATA = {
           "label": "Вилл"
         },
         {
-          "number": "1-2",
+          "number": "1–2",
           "label": "Спальни"
         },
         {

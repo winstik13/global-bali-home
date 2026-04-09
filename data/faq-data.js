@@ -116,5 +116,44 @@ const FAQ_DATA = [
       "ru": "Вы можете перепродать свои арендные права в любое время. Оставшийся срок аренды переходит новому покупателю. Учитывая растущий рынок Бали, виллы в премиальных локациях, таких как Убуд, демонстрируют высокую стоимость при перепродаже — зачастую с премией к цене покупки. Наша команда также может помочь в поиске покупателей через нашу инвесторскую сеть, или вы можете разместить объявление самостоятельно. В вашем контракте нет ограничений на перепродажу.",
       "id": "Anda dapat menjual kembali hak sewa Anda kapan saja. Sisa masa sewa dialihkan ke pembeli baru. Mengingat pasar Bali yang terus berkembang, villa di lokasi premium seperti Ubud menunjukkan nilai jual kembali yang kuat — seringkali dengan premium di atas harga beli. Tim kami juga dapat membantu menemukan pembeli melalui jaringan investor kami, atau Anda dapat mendaftar secara independen. Tidak ada pembatasan penjualan kembali dalam kontrak Anda."
     }
+  },
+  {
+    "order": 10,
+    "question": {
+      "en": "How does the rental income work, and what occupancy can I expect?",
+      "ru": "Как работает арендный доход и какую заполняемость ожидать?",
+      "id": "Bagaimana pendapatan sewa bekerja, dan okupansi apa yang bisa saya harapkan?"
+    },
+    "answer": {
+      "en": "Your villa enters our turnkey rental program managed by our French partner with 10+ years of Bali experience. The partner lists your villa on Airbnb, Booking.com, and direct channels, handles guest communication, check-in/out, cleaning, and maintenance. You receive monthly financial reports with full transparency. Their managed portfolio in Ubud consistently achieves 80%+ annual occupancy across low and high seasons. Management fee is 25–30% of gross rental income — the rest goes to you. For a $399K villa at 80% occupancy, that typically means $40,000–$50,000 per year in your pocket after fees, before property expenses.",
+      "ru": "Ваша вилла входит в готовую программу аренды, которой управляет наш французский партнёр с 10+ годами опыта на Бали. Партнёр размещает виллу на Airbnb, Booking.com и прямых каналах, ведёт переписку с гостями, заезд/выезд, уборку и обслуживание. Вы получаете ежемесячные финансовые отчёты с полной прозрачностью. Их управляемый портфель в Убуде стабильно показывает 80%+ годовой заполняемости в низкий и высокий сезоны. Комиссия управления — 25–30% от валовой арендной выручки, остальное идёт вам. Для виллы за $399K при заполняемости 80% это обычно означает $40,000–$50,000 в год на руки после комиссии, до операционных расходов.",
+      "id": "Villa Anda mengikuti program sewa turnkey yang dikelola oleh mitra Prancis kami dengan 10+ tahun pengalaman di Bali. Mitra mencantumkan villa Anda di Airbnb, Booking.com, dan saluran langsung, menangani komunikasi tamu, check-in/out, pembersihan, dan pemeliharaan. Anda menerima laporan keuangan bulanan dengan transparansi penuh. Portofolio mereka di Ubud secara konsisten mencapai okupansi tahunan 80%+ di musim sepi dan ramai. Biaya manajemen adalah 25–30% dari pendapatan sewa bruto — sisanya untuk Anda. Untuk villa $399K pada okupansi 80%, biasanya berarti $40.000–$50.000 per tahun di saku Anda setelah biaya, sebelum pengeluaran properti."
+    }
+  },
+  {
+    "order": 11,
+    "question": {
+      "en": "What capital appreciation can I expect in the Ubud corridor?",
+      "ru": "Какой рост капитала ожидать в коридоре Убуда?",
+      "id": "Apresiasi modal apa yang bisa saya harapkan di koridor Ubud?"
+    },
+    "answer": {
+      "en": "Prime land in the Ubud corridor has appreciated 8–12% annually over the past five years, and land prices specifically in Bedulu — where Serenity Estates is located — have grown faster due to limited supply and Wanayu's master-planned development. Large plots of 3.5–14 are are the scarcest resource in the Bali market: only a handful of developments offer single-family villas on this scale. On top of rental income, our analysis projects 10–15% annual capital appreciation for Estates villas over the next 5–7 years. When you choose to exit, your leasehold rights transfer to the next buyer with the remaining term intact, and our team can help you list through our investor network.",
+      "ru": "Премиум-земля в коридоре Убуда росла на 8–12% в год за последние пять лет, а цены именно в Бедулу — где расположен Serenity Estates — растут быстрее из-за ограниченного предложения и генплана Wanayu. Крупные участки 3,5–14 соток — самый дефицитный ресурс на рынке Бали: единичные проекты предлагают виллы single-family на таком масштабе. Помимо арендного дохода, наш анализ прогнозирует 10–15% годового роста капитала для вилл Estates на ближайшие 5–7 лет. При выходе из инвестиции ваши арендные права переходят новому покупателю с нетронутым остатком срока, а наша команда поможет с размещением через инвесторскую сеть.",
+      "id": "Tanah premium di koridor Ubud telah terapresiasi 8–12% per tahun selama lima tahun terakhir, dan harga tanah khususnya di Bedulu — lokasi Serenity Estates — tumbuh lebih cepat karena pasokan terbatas dan pengembangan terencana Wanayu. Plot besar 3,5–14 are adalah sumber daya paling langka di pasar Bali: hanya sedikit pengembangan yang menawarkan vila single-family pada skala ini. Selain pendapatan sewa, analisis kami memproyeksikan apresiasi modal tahunan 10–15% untuk vila Estates selama 5–7 tahun ke depan. Saat Anda memilih keluar, hak sewa Anda dialihkan ke pembeli berikutnya dengan sisa jangka waktu utuh, dan tim kami dapat membantu mendaftarkan melalui jaringan investor kami."
+    }
+  },
+  {
+    "order": 12,
+    "question": {
+      "en": "How is my deposit protected, and what happens if construction is delayed?",
+      "ru": "Как защищён мой депозит и что будет при задержке строительства?",
+      "id": "Bagaimana deposit saya dilindungi, dan apa yang terjadi jika konstruksi tertunda?"
+    },
+    "answer": {
+      "en": "All payments follow a milestone-based schedule tied to real construction progress, verified by independent inspections. You don't pay for work that hasn't been delivered. The deposit and every subsequent installment are linked to verifiable stages (foundation, structure, finishing, handover). If construction is delayed beyond the contracted handover date without force majeure, our contract includes penalty clauses in your favor — compensation accrues monthly and is paid out at handover. Every project also carries Construction All-Risk insurance during the build, covering structural damage, natural disasters, and third-party liability. You receive photo and video progress updates throughout construction and are welcome to visit the site at any time.",
+      "ru": "Все платежи идут по графику, привязанному к реальному прогрессу строительства и проверяемому независимыми инспекциями. Вы не платите за работу, которая не сделана. Депозит и каждый последующий транш привязаны к проверяемым этапам (фундамент, каркас, отделка, сдача). Если строительство задерживается сверх контрактной даты сдачи без форс-мажора, в контракте предусмотрены штрафные санкции в вашу пользу — компенсация начисляется ежемесячно и выплачивается при сдаче. Каждый проект также застрахован по Construction All-Risk на период стройки — покрываются структурные повреждения, стихийные бедствия и ответственность перед третьими лицами. Вы получаете фото- и видеоотчёты о прогрессе и можете посещать стройплощадку в любое время.",
+      "id": "Semua pembayaran mengikuti jadwal berbasis tonggak yang terkait dengan kemajuan konstruksi nyata, diverifikasi oleh inspeksi independen. Anda tidak membayar pekerjaan yang belum diselesaikan. Deposit dan setiap cicilan berikutnya terkait dengan tahapan yang dapat diverifikasi (fondasi, struktur, finishing, serah terima). Jika konstruksi tertunda melebihi tanggal serah terima yang disepakati tanpa force majeure, kontrak kami mencakup klausul penalti yang menguntungkan Anda — kompensasi diakumulasi bulanan dan dibayarkan pada serah terima. Setiap proyek juga memiliki asuransi Construction All-Risk selama pembangunan, meliputi kerusakan struktural, bencana alam, dan tanggung jawab pihak ketiga. Anda menerima laporan foto dan video kemajuan sepanjang konstruksi dan dipersilakan mengunjungi lokasi kapan saja."
+    }
   }
 ];
