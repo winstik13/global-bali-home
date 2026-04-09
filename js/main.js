@@ -2404,6 +2404,9 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     });
 
     // --- Availability Bar ---
+    // Uses "left" framing (stronger scarcity) across all projects — pulls the
+    // label text directly from proj.showcaseAvailability so there's a single
+    // source of truth. Admin auto-syncs that field when units change.
     document.querySelectorAll('.availability-bar[data-project]').forEach(el => {
       const key = el.dataset.project;
       const proj = PD[key];
@@ -2416,9 +2419,10 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
           '<div class="availability-bar__header"><span class="availability-bar__label availability-bar__label--presale"><span class="presale-dot"></span> ' + labels.preSale + '</span></div>';
       } else {
         const pct = Math.round((av.sold / av.total) * 100);
-        const left = av.total - av.sold;
+        const labelText = (proj.showcaseAvailability && (proj.showcaseAvailability[lang] || proj.showcaseAvailability.en))
+          || ((av.total - av.sold) + ' ' + labels.of + ' ' + av.total + ' ' + labels.unitsLeft);
         el.innerHTML =
-          '<div class="availability-bar__header"><span class="availability-bar__label">' + av.sold + ' ' + labels.of + ' ' + av.total + ' ' + labels.unitsSold + '</span><span class="availability-bar__percent">' + pct + '%</span></div>' +
+          '<div class="availability-bar__header"><span class="availability-bar__label">' + labelText + '</span><span class="availability-bar__percent">' + pct + '% ' + labels.sold + '</span></div>' +
           '<div class="availability-bar__track"><div class="availability-bar__fill" style="width:' + pct + '%"></div></div>';
       }
     });
