@@ -1439,26 +1439,32 @@
   }
 
   async function loadRecentCommits() {
+    const list = $('#dash-commits-list');
+    if (!list) return;
     try {
-      const res = await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/commits?per_page=5&path=data/projects-data.js`, {
-        headers: { 'Authorization': `token ${githubPAT}` }
-      });
-      const commits = await res.json();
-      const list = $('#dash-commits-list');
-      if (!commits.length || !Array.isArray(commits)) {
+      // Читаем последние 5 записей из audit_log (Supabase RLS отфильтрует
+      // по роли: super_admin видит всё, остальные — свои).
+      const { data, error } = await SupabaseAdmin.client
+        .from('audit_log')
+        .select('action, target, user_email, created_at')
+        .order('created_at', { ascending: false })
+        .limit(5);
+      if (error) throw error;
+      if (!data || !data.length) {
         list.innerHTML = `<span style="color:var(--color-text-dim)">${t('dash.noChanges')}</span>`;
         return;
       }
-      list.innerHTML = commits.map(c => {
-        const date = new Date(c.commit.author.date);
-        const ago = timeAgo(date);
+      list.innerHTML = data.map(c => {
+        const ago = timeAgo(new Date(c.created_at));
+        const msg = `${c.action}${c.target ? ' · ' + c.target : ''}${c.user_email ? ' (' + c.user_email + ')' : ''}`;
         return `<div class="dash-commit">
-          <span class="dash-commit__msg">${escAttr(c.commit.message.split('\n')[0])}</span>
+          <span class="dash-commit__msg">${escAttr(msg)}</span>
           <span class="dash-commit__time">${ago}</span>
         </div>`;
       }).join('');
-    } catch {
-      $('#dash-commits-list').innerHTML = `<span style="color:var(--color-text-dim)">${t('dash.couldNotLoad')}</span>`;
+    } catch (err) {
+      console.warn('[admin] loadRecentCommits failed:', err);
+      list.innerHTML = `<span style="color:var(--color-text-dim)">${t('dash.couldNotLoad')}</span>`;
     }
   }
 
@@ -1638,7 +1644,7 @@
         const path = floors[floor] || '';
         html += `<div class="fp-floor" data-type="${type}" data-floor="${floor}">
             <div class="fp-floor__label">${floor} <button class="fp-floor__delete fp-delete-floor" data-type="${type}" data-floor="${floor}" title="Delete floor">&times;</button></div>
-            <div class="fp-floor__preview">${path ? `<img src="https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/master/${path}" alt="${type} — ${floor}">` : `<span class="fp-floor__empty">No image</span>`}</div>
+            <div class="fp-floor__preview">${path ? `<img src="${previewImageUrl(path)}" alt="${type} — ${floor}">` : `<span class="fp-floor__empty">No image</span>`}</div>
             <div class="fp-floor__actions">
               <label class="btn btn--outline btn--sm">Upload<input type="file" accept="image/*" class="fp-upload" data-type="${type}" data-floor="${floor}" hidden></label>
             </div>
@@ -1922,8 +1928,9 @@
           const base64 = resized.split(',')[1];
           const safeName = (type + '-' + floor).toLowerCase().replace(/[^a-z0-9]+/g, '-');
           const path = `images/${p.slug}/plans/${safeName}.webp`;
-          await commitFile(path, null, `Add floor plan: ${type} — ${floor} (${p.name})`, null, base64);
-          p.floorPlans[type].floors[floor] = path;
+          const result = await commitFile(path, null, `Add floor plan: ${type} — ${floor} (${p.name})`, null, base64);
+          // Сохраняем CDN-URL чтобы публичный сайт показывал картинку напрямую с Storage.
+          p.floorPlans[type].floors[floor] = (result && result.url) || path;
           inp.closest('.fp-floor').querySelector('.fp-floor__preview').innerHTML =
             `<img src="${resized}" alt="${type} — ${floor}">`;
           markChanged();
@@ -2535,7 +2542,7 @@
     galleryGrid.innerHTML = images.map((img, i) => {
       const name = img.split('/').pop();
       return `<div class="admin-gallery-item" data-index="${i}">
-        <img src="../${img}" alt="${escAttr(name)}" loading="lazy">
+        <img src="${previewImageUrl(img)}" alt="${escAttr(name)}" loading="lazy">
         <div class="admin-gallery-item__info">${escAttr(name)}</div>
         <div class="admin-gallery-item__actions">
           <button class="admin-gallery-item__btn admin-gallery-item__btn--up" data-move-up="${i}" title="${t('gallery.moveLeft')}">&#8592;</button>
@@ -2709,6 +2716,18 @@
     if (path === 'gallery-data.js') return 'gallery';
     const m = path.match(/^data\/(site|projects|faq|testimonials)-data\.js$/);
     return m ? m[1] : null;
+  }
+
+  // Любое значение картинки (legacy относительный путь или CDN URL) →
+  // абсолютный URL для <img src>. Используется во всех админ-превью.
+  function previewImageUrl(pathOrUrl) {
+    if (!pathOrUrl) return '';
+    if (/^https?:\/\//i.test(pathOrUrl) || pathOrUrl.startsWith('data:') || pathOrUrl.startsWith('blob:')) {
+      return pathOrUrl;
+    }
+    const sp = pathToStoragePath(pathOrUrl);
+    if (sp && window.SupabaseAdmin) return SupabaseAdmin.getImageUrl(sp);
+    return pathOrUrl;
   }
 
   function pathToStoragePath(path) {
@@ -3825,7 +3844,7 @@
     const stars = '★'.repeat(item.stars || 5);
     let avatarHTML;
     if (item.avatar) {
-      avatarHTML = '<img class="test-preview__avatar" src="../' + item.avatar + '" alt="">';
+      avatarHTML = '<img class="test-preview__avatar" src="' + previewImageUrl(item.avatar) + '" alt="">';
     } else {
       const inits = name.split(' ').map(w => w[0] || '').join('').slice(0, 2).toUpperCase() || '??';
       avatarHTML = '<span class="test-preview__avatar test-preview__avatar--initials">' + inits + '</span>';
@@ -3870,7 +3889,7 @@
       const i = testimonialsData.indexOf(item);
       const initials = (item.name.en || '??').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
       const avatarPreview = item.avatar
-        ? `<img src="../${item.avatar}" alt="" class="test-avatar__img">`
+        ? `<img src="${previewImageUrl(item.avatar)}" alt="" class="test-avatar__img">`
         : `<span class="test-avatar__initials">${initials}</span>`;
       return `<div class="faq-editor-item" data-test-idx="${i}">
         <div class="faq-editor-item__header">
@@ -3983,10 +4002,11 @@
           const base64 = resized.split(',')[1];
           const safeName = (testimonialsData[i].name.en || 'avatar').replace(/[^a-z0-9]/gi, '-').toLowerCase();
           const path = `images/testimonials/${safeName}.webp`;
-          await commitFile(path, null, `Add testimonial avatar: ${safeName}`, null, base64);
-          testimonialsData[i].avatar = path;
+          const result = await commitFile(path, null, `Add testimonial avatar: ${safeName}`, null, base64);
+          const finalUrl = (result && result.url) || path;
+          testimonialsData[i].avatar = finalUrl;
           dirtyTabs.testimonials = true;
-          preview.innerHTML = `<img src="../${path}" alt="" class="test-avatar__img">`;
+          preview.innerHTML = `<img src="${previewImageUrl(finalUrl)}" alt="" class="test-avatar__img">`;
           updateRateLimit();
         } catch (err) {
           preview.innerHTML = `<span class="test-avatar__initials" style="color:var(--color-danger)">!</span>`;
