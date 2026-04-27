@@ -2754,12 +2754,15 @@
 
   // Парсит content вида `const X = {...};` и возвращает объект.
   // Используется когда legacy-код собирает текст файла перед commit'ом.
+  // Контент всегда формируется через JSON.stringify, поэтому безопасно
+  // парсить через JSON.parse — Function/eval запрещены CSP админки.
   function parseDataFileContent(content) {
     const cleaned = String(content)
       .replace(/^\/\*[\s\S]*?\*\/\s*/g, '')
       .replace(/^\s*const\s+\w+\s*=\s*/, '')
-      .replace(/;\s*$/, '');
-    return Function('"use strict";return (' + cleaned + ')')();
+      .replace(/;\s*$/, '')
+      .trim();
+    return JSON.parse(cleaned);
   }
 
   async function fetchFile(path) {
