@@ -5775,7 +5775,7 @@ td .price-idr {
     border-left: none;
   }
 
-  /* Shrink number size on mobile so long values like "Q1/Q2 2027" fit in ~110px columns */
+  /* Shrink number size on mobile so long values fit in ~110px columns */
   .hero-stats__number {
     font-size: 1.15rem;
   }

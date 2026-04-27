@@ -356,9 +356,9 @@ const PROJECTS_DATA = {
       "total": 12
     },
     "showcaseDesc": {
-      "en": "12 boutique villas built for turnkey rental. 12–15% projected yield, 80%+ occupancy through our French management partner, 75% already sold. Handover Q2 2026.",
-      "id": "12 vila butik yang dibangun untuk sewa turnkey. Proyeksi hasil 12–15%, okupansi 80%+ melalui mitra manajemen Prancis kami, 75% sudah terjual. Serah terima Q2 2026.",
-      "ru": "12 бутик-вилл, построенных под готовую аренду. Прогнозная доходность 12–15%, заполняемость 80%+ через французскую управляющую компанию, 75% уже продано. Сдача Q2 2026."
+      "en": "12 boutique villas built for turnkey rental. 12–15% projected yield, 80%+ occupancy through our French management partner, 75% already sold.",
+      "id": "12 vila butik yang dibangun untuk sewa turnkey. Proyeksi hasil 12–15%, okupansi 80%+ melalui mitra manajemen Prancis kami, 75% sudah terjual.",
+      "ru": "12 бутик-вилл, построенных под готовую аренду. Прогнозная доходность 12–15%, заполняемость 80%+ через французскую управляющую компанию, 75% уже продано."
     },
     "showcaseMeta": {
       "en": [
@@ -725,9 +725,9 @@ const PROJECTS_DATA = {
       "total": 4
     },
     "showcaseDesc": {
-      "en": "4 exclusive villas on 3.5–14 are of prime Ubud land — the scarcest resource in Bali real estate. Single-family privacy, projected 10–15% annual capital appreciation. Handover Q1 2027.",
-      "id": "4 vila eksklusif di atas 3,5–14 are lahan premium Ubud — sumber daya paling langka di real estate Bali. Privasi keluarga tunggal, proyeksi apresiasi modal tahunan 10–15%. Serah terima Q1 2027.",
-      "ru": "4 эксклюзивные виллы на 3,5–14 сотках премиум-земли Убуда — самом дефицитном ресурсе на рынке Бали. Приватность single-family, прогноз роста капитала 10–15% в год. Сдача Q1 2027."
+      "en": "4 exclusive villas on 3.5–14 are of prime Ubud land — the scarcest resource in Bali real estate. Single-family privacy, projected 10–15% annual capital appreciation.",
+      "id": "4 vila eksklusif di atas 3,5–14 are lahan premium Ubud — sumber daya paling langka di real estate Bali. Privasi keluarga tunggal, proyeksi apresiasi modal tahunan 10–15%.",
+      "ru": "4 эксклюзивные виллы на 3,5–14 сотках премиум-земли Убуда — самом дефицитном ресурсе на рынке Бали. Приватность single-family, прогноз роста капитала 10–15% в год."
     },
     "showcaseMeta": {
       "en": [
@@ -1005,7 +1005,7 @@ const PROJECTS_DATA = {
         "area": "50 m²",
         "land": "1.16 are",
         "type": "1 Bedroom",
-        "badge": "Q2 2027",
+        "badge": "Q3 2027",
         "price": 140000,
         "floors": 1,
         "status": "available"
@@ -1015,7 +1015,7 @@ const PROJECTS_DATA = {
         "area": "84 m²",
         "land": "1.54 are",
         "type": "2 Bedroom",
-        "badge": "Q2 2027",
+        "badge": "Q3 2027",
         "price": 220000,
         "floors": 2,
         "status": "available"
@@ -1025,7 +1025,7 @@ const PROJECTS_DATA = {
         "area": "84 m²",
         "land": "1.54 are",
         "type": "2 Bedroom",
-        "badge": "Q2 2027",
+        "badge": "Q3 2027",
         "price": 195000,
         "floors": 2,
         "status": "available"
@@ -1035,7 +1035,7 @@ const PROJECTS_DATA = {
         "area": "84 m²",
         "land": "1.54 are",
         "type": "2 Bedroom",
-        "badge": "Q2 2027",
+        "badge": "Q3 2027",
         "price": 195000,
         "floors": 2,
         "status": "available"
@@ -1045,7 +1045,7 @@ const PROJECTS_DATA = {
         "area": "84 m²",
         "land": "1.54 are",
         "type": "2 Bedroom",
-        "badge": "Q2 2027",
+        "badge": "Q3 2027",
         "price": 220000,
         "floors": 2,
         "status": "available"
@@ -1055,7 +1055,7 @@ const PROJECTS_DATA = {
         "area": "84 m²",
         "land": "1.54 are",
         "type": "2 Bedroom",
-        "badge": "Q2 2027",
+        "badge": "Q3 2027",
         "price": 220000,
         "floors": 2,
         "status": "available"
@@ -1070,7 +1070,7 @@ const PROJECTS_DATA = {
       "id": "Pribadi + Bersama",
       "ru": "Приватный + Общий"
     },
-    "handover": "Q1/Q2 2027",
+    "handover": "Q3 2027",
     "heroStats": {
       "en": [
         {
@@ -1079,7 +1079,7 @@ const PROJECTS_DATA = {
         },
         {
           "label": "Handover",
-          "number": "Q1/Q2 2027"
+          "number": "Q3 2027"
         },
         {
           "label": "From",
@@ -1093,7 +1093,7 @@ const PROJECTS_DATA = {
         },
         {
           "label": "Serah Terima",
-          "number": "Q1/Q2 2027"
+          "number": "Q3 2027"
         },
         {
           "label": "Mulai Dari",
@@ -1107,7 +1107,7 @@ const PROJECTS_DATA = {
         },
         {
           "label": "Сдача",
-          "number": "Q1/Q2 2027"
+          "number": "Q3 2027"
         },
         {
           "label": "От",
@@ -1196,7 +1196,7 @@ const PROJECTS_DATA = {
         },
         {
           "label": "Handover",
-          "strong": "Q1/Q2 2027"
+          "strong": "Q3 2027"
         }
       ],
       "id": [
@@ -1210,7 +1210,7 @@ const PROJECTS_DATA = {
         },
         {
           "label": "Serah Terima",
-          "strong": "Q1/Q2 2027"
+          "strong": "Q3 2027"
         }
       ],
       "ru": [
@@ -1224,7 +1224,7 @@ const PROJECTS_DATA = {
         },
         {
           "label": "Сдача",
-          "strong": "Q1/Q2 2027"
+          "strong": "Q3 2027"
         }
       ]
     },
