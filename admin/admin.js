@@ -388,6 +388,36 @@
       'time.mAgo': 'm ago',
       'time.hAgo': 'h ago',
       'time.dAgo': 'd ago',
+      'nav.users': 'Users',
+      'users.title': 'Team Members',
+      'users.invite': 'Invite a new member',
+      'users.email': 'Email',
+      'users.fullName': 'Full name',
+      'users.role': 'Role',
+      'users.send': 'Send invitation',
+      'users.list': 'Active members',
+      'users.you': 'you',
+      'users.empty': 'No team members yet.',
+      'users.col.email': 'Email',
+      'users.col.name': 'Name',
+      'users.col.role': 'Role',
+      'users.col.status': 'Status',
+      'users.col.lastSignIn': 'Last sign-in',
+      'users.col.actions': 'Actions',
+      'users.role.editor': 'Editor — gallery / FAQ / testimonials only',
+      'users.role.admin': 'Admin — all content (no user management)',
+      'users.role.editor.short': 'editor',
+      'users.role.admin.short': 'admin',
+      'users.role.super_admin.short': 'super admin',
+      'users.status.active': 'Active',
+      'users.status.deactivated': 'Deactivated',
+      'users.status.pending': 'Invited (pending)',
+      'users.action.delete': 'Delete',
+      'users.action.confirmDelete': 'Delete user {email}? This is irreversible.',
+      'users.toast.sending': 'Sending invite…',
+      'users.toast.sent': 'Invitation sent to {email}.',
+      'users.toast.roleUpdated': 'Role updated.',
+      'users.toast.userDeleted': 'User deleted.',
     },
     ru: {
       'login.title': 'Панель управления',
@@ -767,6 +797,36 @@
       'time.mAgo': 'м назад',
       'time.hAgo': 'ч назад',
       'time.dAgo': 'д назад',
+      'nav.users': 'Пользователи',
+      'users.title': 'Команда',
+      'users.invite': 'Пригласить участника',
+      'users.email': 'Email',
+      'users.fullName': 'Имя',
+      'users.role': 'Роль',
+      'users.send': 'Отправить приглашение',
+      'users.list': 'Активные участники',
+      'users.you': 'вы',
+      'users.empty': 'Команда пуста.',
+      'users.col.email': 'Email',
+      'users.col.name': 'Имя',
+      'users.col.role': 'Роль',
+      'users.col.status': 'Статус',
+      'users.col.lastSignIn': 'Был(а) в системе',
+      'users.col.actions': 'Действия',
+      'users.role.editor': 'Editor — только галерея / FAQ / отзывы',
+      'users.role.admin': 'Admin — весь контент (без управления пользователями)',
+      'users.role.editor.short': 'editor',
+      'users.role.admin.short': 'admin',
+      'users.role.super_admin.short': 'super admin',
+      'users.status.active': 'Активен',
+      'users.status.deactivated': 'Отключён',
+      'users.status.pending': 'Приглашён',
+      'users.action.delete': 'Удалить',
+      'users.action.confirmDelete': 'Удалить пользователя {email}? Действие необратимо.',
+      'users.toast.sending': 'Отправка приглашения…',
+      'users.toast.sent': 'Приглашение отправлено на {email}.',
+      'users.toast.roleUpdated': 'Роль обновлена.',
+      'users.toast.userDeleted': 'Пользователь удалён.',
     }
   };
 
@@ -4877,35 +4937,46 @@
     }
 
     function renderUsersTable(users) {
-      if (!users.length) return '<p>No team members yet.</p>';
+      if (!users.length) return `<p class="users-empty">${t('users.empty')}</p>`;
+      const statusLabel = (u) => {
+        if (!u.is_active) return { text: t('users.status.deactivated'), cls: 'is-deactivated' };
+        if (!u.email_confirmed_at && u.invited_at) return { text: t('users.status.pending'), cls: 'is-pending' };
+        return { text: t('users.status.active'), cls: 'is-active' };
+      };
+      const roleLabel = (role) => t('users.role.' + role + '.short') || role;
       const rows = users.map(u => {
         const isSelf = currentUser && u.id === currentUser.id;
-        const status = !u.is_active ? 'deactivated'
-                     : !u.email_confirmed_at && u.invited_at ? 'invited (pending)'
-                     : 'active';
+        const st = statusLabel(u);
         const lastSeen = u.last_sign_in_at
           ? new Date(u.last_sign_in_at).toLocaleString()
           : '—';
-        const roleSelect = (u.role === 'super_admin' || isSelf)
-          ? `<span>${escapeHtml(u.role)}</span>`
-          : `<select data-change-role="${u.id}">
-               <option value="editor"${u.role === 'editor' ? ' selected' : ''}>editor</option>
-               <option value="admin"${u.role === 'admin' ? ' selected' : ''}>admin</option>
+        const roleCell = (u.role === 'super_admin' || isSelf)
+          ? `<span class="users-role-tag">${escapeHtml(roleLabel(u.role))}</span>`
+          : `<select class="users-role-select" data-change-role="${u.id}">
+               <option value="editor"${u.role === 'editor' ? ' selected' : ''}>${escapeHtml(t('users.role.editor.short'))}</option>
+               <option value="admin"${u.role === 'admin' ? ' selected' : ''}>${escapeHtml(t('users.role.admin.short'))}</option>
              </select>`;
         const deleteBtn = (u.role === 'super_admin' || isSelf)
           ? ''
-          : `<button class="btn btn--outline btn--sm" data-delete-user="${u.id}" data-email="${escAttr(u.email)}">Delete</button>`;
+          : `<button class="btn btn--outline btn--sm" data-delete-user="${u.id}" data-email="${escAttr(u.email)}">${t('users.action.delete')}</button>`;
         return `<tr>
-          <td>${escapeHtml(u.email)}${isSelf ? ' <span class="badge">you</span>' : ''}</td>
-          <td>${escapeHtml(u.full_name || '')}</td>
-          <td>${roleSelect}</td>
-          <td>${status}</td>
-          <td>${lastSeen}</td>
-          <td>${deleteBtn}</td>
+          <td data-label="${t('users.col.email')}">${escapeHtml(u.email)}${isSelf ? ` <span class="users-self-badge">${t('users.you')}</span>` : ''}</td>
+          <td data-label="${t('users.col.name')}">${escapeHtml(u.full_name || '—')}</td>
+          <td data-label="${t('users.col.role')}">${roleCell}</td>
+          <td data-label="${t('users.col.status')}"><span class="users-status ${st.cls}">${escapeHtml(st.text)}</span></td>
+          <td data-label="${t('users.col.lastSignIn')}">${escapeHtml(lastSeen)}</td>
+          <td data-label="${t('users.col.actions')}" class="users-actions-cell">${deleteBtn}</td>
         </tr>`;
       }).join('');
-      return `<table class="data-table">
-        <thead><tr><th>Email</th><th>Name</th><th>Role</th><th>Status</th><th>Last sign-in</th><th></th></tr></thead>
+      return `<table class="users-table">
+        <thead><tr>
+          <th>${t('users.col.email')}</th>
+          <th>${t('users.col.name')}</th>
+          <th>${t('users.col.role')}</th>
+          <th>${t('users.col.status')}</th>
+          <th>${t('users.col.lastSignIn')}</th>
+          <th></th>
+        </tr></thead>
         <tbody>${rows}</tbody>
       </table>`;
     }
@@ -4917,10 +4988,10 @@
           const role = sel.value;
           try {
             await SupabaseAdmin.changeUserRole(userId, role);
-            setStatus('Role updated.', 'success');
+            setStatus(t('users.toast.roleUpdated'), 'success');
             refresh();
           } catch (err) {
-            setStatus('Error: ' + err.message, 'error');
+            setStatus(t('common.error') + err.message, 'error');
           }
         });
       });
@@ -4928,13 +4999,13 @@
         btn.addEventListener('click', async () => {
           const userId = btn.dataset.deleteUser;
           const email = btn.dataset.email;
-          if (!confirm(`Удалить пользователя ${email}? Это необратимо.`)) return;
+          if (!confirm(t('users.action.confirmDelete').replace('{email}', email))) return;
           try {
             await SupabaseAdmin.deleteUser(userId);
-            setStatus('User deleted.', 'success');
+            setStatus(t('users.toast.userDeleted'), 'success');
             refresh();
           } catch (err) {
-            setStatus('Error: ' + err.message, 'error');
+            setStatus(t('common.error') + err.message, 'error');
           }
         });
       });
@@ -4947,14 +5018,14 @@
       const role = $('#invite-role').value;
       const btn = inviteForm.querySelector('button[type="submit"]');
       btnLoading(btn, true);
-      setStatus('Sending invite...', '');
+      setStatus(t('users.toast.sending'), '');
       try {
         await SupabaseAdmin.inviteUser(email, role, fullName);
-        setStatus(`Invitation sent to ${email}.`, 'success');
+        setStatus(t('users.toast.sent').replace('{email}', email), 'success');
         inviteForm.reset();
         refresh();
       } catch (err) {
-        setStatus('Error: ' + err.message, 'error');
+        setStatus(t('common.error') + err.message, 'error');
       } finally {
         btnLoading(btn, false);
       }
