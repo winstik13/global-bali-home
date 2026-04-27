@@ -914,9 +914,12 @@
   }
 
   const loginScreen = $('#login-screen');
+  const setpwScreen = $('#setpw-screen');
   const adminApp = $('#admin-app');
   const loginForm = $('#login-form');
   const loginError = $('#login-error');
+  const setpwForm = $('#setpw-form');
+  const setpwError = $('#setpw-error');
 
   // ─── Supabase client check ───
   if (typeof window.SupabaseAdmin === 'undefined') {
@@ -925,12 +928,80 @@
     return;
   }
 
+  // ─── Recovery / Invite link handler ───
+  // Supabase шлёт ссылки вида: /admin/?token_hash=...&type=recovery (или invite/email_change).
+  // Мы verifyOtp → ставим сессию → показываем форму "Set Password".
+  async function maybeHandleRecoveryToken() {
+    const params = new URLSearchParams(location.search);
+    const tokenHash = params.get('token_hash');
+    const type = params.get('type');
+    if (!tokenHash || !type) return false;
+
+    const { error } = await SupabaseAdmin.client.auth.verifyOtp({ type, token_hash: tokenHash });
+    if (error) {
+      console.error('verifyOtp failed:', error);
+      loginScreen.hidden = false;
+      loginError.textContent = `Ссылка устарела или недействительна: ${error.message}`;
+      loginError.hidden = false;
+      // Чистим URL чтобы повторный F5 не падал
+      history.replaceState({}, '', location.pathname);
+      return true;
+    }
+
+    // Чистим query-params чтобы при F5 не повторять верификацию
+    history.replaceState({}, '', location.pathname);
+    setpwScreen.hidden = false;
+    return true;
+  }
+
+  // Set Password form
+  setpwForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    setpwError.hidden = true;
+    const pw1 = $('#setpw-password').value;
+    const pw2 = $('#setpw-confirm').value;
+    if (pw1 !== pw2) {
+      setpwError.textContent = 'Пароли не совпадают.';
+      setpwError.hidden = false;
+      return;
+    }
+    if (pw1.length < 8) {
+      setpwError.textContent = 'Минимум 8 символов.';
+      setpwError.hidden = false;
+      return;
+    }
+    const btn = setpwForm.querySelector('button[type="submit"]');
+    btnLoading(btn, true);
+    try {
+      const { error } = await SupabaseAdmin.client.auth.updateUser({ password: pw1 });
+      if (error) throw error;
+      // Сессия уже стоит после verifyOtp + updateUser → грузим профиль и показываем админку
+      const ctx = await SupabaseAdmin.getCurrentUser();
+      if (!ctx) throw new Error('Не удалось загрузить профиль');
+      currentUser = ctx.profile;
+      $('#admin-user').textContent = currentUser.email;
+      setpwScreen.hidden = true;
+      startRateUpdates();
+      showAdmin();
+    } catch (err) {
+      setpwError.textContent = err.message;
+      setpwError.hidden = false;
+    } finally {
+      btnLoading(btn, false);
+    }
+  });
+
   // ─── Auth State ───
   // Bootstrap: проверяем сессию при загрузке. Дальше слушаем onAuthStateChange.
   (async () => {
     const authLoading = $('#auth-loading');
-    const ctx = await SupabaseAdmin.getCurrentUser();
+
+    // Если в URL есть token_hash (recovery / invite) — обрабатываем сначала
+    const handled = await maybeHandleRecoveryToken();
     if (authLoading) authLoading.remove();
+    if (handled) return;
+
+    const ctx = await SupabaseAdmin.getCurrentUser();
     if (ctx) {
       currentUser = ctx.profile;
       $('#admin-user').textContent = currentUser.email;
