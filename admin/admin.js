@@ -929,27 +929,31 @@
   }
 
   // ─── Recovery / Invite link handler ───
-  // Supabase шлёт ссылки вида: /admin/?token_hash=...&type=recovery (или invite/email_change).
-  // Мы verifyOtp → ставим сессию → показываем форму "Set Password".
-  async function maybeHandleRecoveryToken() {
+  // Современный Supabase шлёт implicit-flow ссылки:
+  //   /admin/#access_token=...&refresh_token=...&type=recovery
+  // SDK с detectSessionInUrl=true (default) сам ставит сессию и стреляет
+  // событием PASSWORD_RECOVERY — мы его слушаем ниже в onAuthStateChange.
+  //
+  // Также поддерживаем legacy PKCE-flow (?token_hash=...&type=...) на случай
+  // старых писем — verifyOtp вручную.
+  let inRecoveryMode = false;
+
+  async function maybeHandleLegacyToken() {
     const params = new URLSearchParams(location.search);
     const tokenHash = params.get('token_hash');
     const type = params.get('type');
     if (!tokenHash || !type) return false;
 
     const { error } = await SupabaseAdmin.client.auth.verifyOtp({ type, token_hash: tokenHash });
+    history.replaceState({}, '', location.pathname);
     if (error) {
       console.error('verifyOtp failed:', error);
       loginScreen.hidden = false;
       loginError.textContent = `Ссылка устарела или недействительна: ${error.message}`;
       loginError.hidden = false;
-      // Чистим URL чтобы повторный F5 не падал
-      history.replaceState({}, '', location.pathname);
       return true;
     }
-
-    // Чистим query-params чтобы при F5 не повторять верификацию
-    history.replaceState({}, '', location.pathname);
+    inRecoveryMode = true;
     setpwScreen.hidden = false;
     return true;
   }
@@ -992,16 +996,51 @@
   });
 
   // ─── Auth State ───
-  // Bootstrap: проверяем сессию при загрузке. Дальше слушаем onAuthStateChange.
+  // SDK сам обрабатывает hash-fragment (#access_token=...) благодаря
+  // detectSessionInUrl=true по умолчанию. Для recovery он стреляет событием
+  // PASSWORD_RECOVERY ДО того как мы успеваем проверить getSession().
+  // Поэтому слушатель ставим первым делом.
+
+  SupabaseAdmin.onAuthStateChange(async (event, session) => {
+    if (event === 'PASSWORD_RECOVERY') {
+      inRecoveryMode = true;
+      // Очистим hash чтобы при F5 не повторять
+      history.replaceState({}, '', location.pathname);
+      const authLoading = $('#auth-loading');
+      if (authLoading) authLoading.remove();
+      loginScreen.hidden = true;
+      adminApp.hidden = true;
+      setpwScreen.hidden = false;
+      return;
+    }
+    if (event === 'SIGNED_OUT' || !session) {
+      currentUser = null;
+      adminApp.hidden = true;
+      setpwScreen.hidden = true;
+      loginScreen.hidden = false;
+    }
+  });
+
   (async () => {
     const authLoading = $('#auth-loading');
 
-    // Если в URL есть token_hash (recovery / invite) — обрабатываем сначала
-    const handled = await maybeHandleRecoveryToken();
-    if (authLoading) authLoading.remove();
-    if (handled) return;
+    // Legacy PKCE flow (старые письма с ?token_hash=...) — обрабатываем сами
+    const legacy = await maybeHandleLegacyToken();
+    if (legacy) {
+      if (authLoading) authLoading.remove();
+      return;
+    }
+
+    // Маленькая задержка чтобы SDK успел обработать hash и стрельнуть PASSWORD_RECOVERY,
+    // если есть. Иначе можем showAdmin() до того как поймаем event.
+    await new Promise(r => setTimeout(r, 50));
+    if (inRecoveryMode) {
+      if (authLoading) authLoading.remove();
+      return; // setpwScreen уже показан listener'ом
+    }
 
     const ctx = await SupabaseAdmin.getCurrentUser();
+    if (authLoading) authLoading.remove();
     if (ctx) {
       currentUser = ctx.profile;
       $('#admin-user').textContent = currentUser.email;
@@ -1012,14 +1051,6 @@
       adminApp.hidden = true;
     }
   })();
-
-  SupabaseAdmin.onAuthStateChange(async (event, session) => {
-    if (event === 'SIGNED_OUT' || !session) {
-      currentUser = null;
-      loginScreen.hidden = false;
-      adminApp.hidden = true;
-    }
-  });
 
   // ─── Login Form ───
   loginForm.addEventListener('submit', async (e) => {
