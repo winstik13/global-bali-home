@@ -8,12 +8,15 @@ CLAUDE.md
 FORMS-CHECKLIST.md
 SEO-ANALYTICS-CHECKLIST.md
 
-# Local screenshot tool (Playwright)
+# Local screenshot tool (Playwright) — only the entry script + node_modules,
+# package.json теперь нужен для Vercel build (Supabase SDK, build-data script).
 node_modules/
-package.json
-package-lock.json
 screenshot.js
 screenshots/
+
+# Local env (Supabase service_role key, никогда не коммитить)
+.env
+.env.local
 
 # Admin setup docs
 admin/SETUP.md
