@@ -1455,7 +1455,7 @@
         <div class="seg-legend-row">${legend}</div>
         <div class="dash-card__actions">
           <button class="dash-card__edit btn btn--outline btn--sm btn--accent" data-goto="${key}">${t('dash.editProject')}</button>
-          <a href="https://winstik13.github.io/global-bali-home/${p.page || 'project-' + p.slug + '.html'}" target="_blank" rel="noopener" class="btn btn--outline btn--sm" style="text-decoration:none">${t('dash.viewOnSite')}</a>
+          <a href="https://globalbalihome.com/${p.page || 'project-' + p.slug + '.html'}" target="_blank" rel="noopener" class="btn btn--outline btn--sm" style="text-decoration:none">${t('dash.viewOnSite')}</a>
         </div>
       </div>`;
     });
@@ -1572,7 +1572,7 @@
 
       p.units.forEach((u, i) => {
         html += `<tr>
-          <td data-label="${t('projects.unit')}"><input type="text" data-unit="${i}" data-field="id" class="unit-text" value="${u.id}" style="width:48px"></td>
+          <td data-label="${t('projects.unit')}"><input type="text" data-unit="${i}" data-field="id" class="unit-text" value="${escAttr(u.id)}" style="width:48px"></td>
           <td data-label="${t('projects.type')}"><select data-unit="${i}" data-field="type" class="unit-text-sel">
             ${['1 Bedroom', '2 Bedroom', '3 Bedroom', '4 Bedroom', '4.5 Bedroom', '5 Bedroom'].map(v => `<option value="${v}"${u.type === v ? ' selected' : ''}>${v}</option>`).join('')}
           </select></td>
@@ -1601,7 +1601,7 @@
 
       p.unitTypes.forEach((ut, i) => {
         html += `<tr>
-          <td data-label="${t('projects.type')}"><input type="text" data-utype="${i}" data-field="type" class="utype-text" value="${ut.type}" style="width:100px"></td>
+          <td data-label="${t('projects.type')}"><input type="text" data-utype="${i}" data-field="type" class="utype-text" value="${escAttr(ut.type)}" style="width:100px"></td>
           <td data-label="${t('projects.floors')}"><input type="number" data-utype="${i}" data-field="floors" class="utype-text" value="${ut.floors}" style="width:48px" min="1" max="5"></td>
           <td data-label="${t('projects.area')}"><div class="unit-suffix"><input type="number" data-utype="${i}" data-field="area" class="utype-text" value="${parseFloat(ut.area) || ''}" style="width:56px" min="0" step="1"><span>m²</span></div></td>
           <td data-label="${t('projects.land')}"><div class="unit-suffix"><input type="number" data-utype="${i}" data-field="land" class="utype-text" value="${parseFloat(ut.land) || ''}" style="width:56px" min="0" step="0.01"><span>are</span></div></td>
@@ -1660,16 +1660,18 @@
       const floors = data.floors || {};
       const specs = data.specs || [];
       const floorKeys = Object.keys(floors);
-      html += `<div class="fp-type" data-plan-type="${type}">
+      const typeAttr = escAttr(type);
+      const typeText = escapeHtml(type);
+      html += `<div class="fp-type" data-plan-type="${typeAttr}">
         <div class="fp-type__header">
           <div class="fp-type__order">
-            <button class="btn--icon fp-move-up" data-type="${type}" title="Move up"${planTypes.indexOf(type) === 0 ? ' disabled' : ''}>&#9650;</button>
-            <button class="btn--icon fp-move-down" data-type="${type}" title="Move down"${planTypes.indexOf(type) === planTypes.length - 1 ? ' disabled' : ''}>&#9660;</button>
+            <button class="btn--icon fp-move-up" data-type="${typeAttr}" title="Move up"${planTypes.indexOf(type) === 0 ? ' disabled' : ''}>&#9650;</button>
+            <button class="btn--icon fp-move-down" data-type="${typeAttr}" title="Move down"${planTypes.indexOf(type) === planTypes.length - 1 ? ' disabled' : ''}>&#9660;</button>
           </div>
-          <span class="fp-type__name" data-rename="${type}" title="Click to rename">${type} <span class="fp-type__rename-icon">✎</span></span>
+          <span class="fp-type__name" data-rename="${typeAttr}" title="Click to rename">${typeText} <span class="fp-type__rename-icon">✎</span></span>
           <div class="fp-type__actions">
-            <button class="btn btn--outline btn--sm fp-add-floor" data-type="${type}">+ Floor</button>
-            <button class="btn--icon btn--danger fp-delete-type" data-type="${type}" title="Delete type">&times;</button>
+            <button class="btn btn--outline btn--sm fp-add-floor" data-type="${typeAttr}">+ Floor</button>
+            <button class="btn--icon btn--danger fp-delete-type" data-type="${typeAttr}" title="Delete type">&times;</button>
           </div>
         </div>
         <div class="fp-type__specs">
@@ -1677,24 +1679,26 @@
           <div class="fp-specs-list">`;
       specs.forEach((s, si) => {
         html += `<div class="fp-spec-row">
-          <select class="fp-spec-icon" data-type="${type}" data-si="${si}">
+          <select class="fp-spec-icon" data-type="${typeAttr}" data-si="${si}">
             ${specIconOptions.map(ico => `<option value="${ico}"${ico === s.icon ? ' selected' : ''}>${ico}</option>`).join('')}
           </select>
-          <input type="text" class="fp-spec-text" data-type="${type}" data-si="${si}" value="${s.text}" placeholder="e.g. 2 Bedrooms">
-          <button class="btn--icon btn--danger fp-spec-delete" data-type="${type}" data-si="${si}">&times;</button>
+          <input type="text" class="fp-spec-text" data-type="${typeAttr}" data-si="${si}" value="${escAttr(s.text)}" placeholder="e.g. 2 Bedrooms">
+          <button class="btn--icon btn--danger fp-spec-delete" data-type="${typeAttr}" data-si="${si}">&times;</button>
         </div>`;
       });
       html += `</div>
-          <button class="btn btn--outline btn--sm fp-add-spec" data-type="${type}" style="margin-top:6px">+ Spec</button>
+          <button class="btn btn--outline btn--sm fp-add-spec" data-type="${typeAttr}" style="margin-top:6px">+ Spec</button>
         </div>
         <div class="fp-type__floors">`;
       floorKeys.forEach(floor => {
         const path = floors[floor] || '';
-        html += `<div class="fp-floor" data-type="${type}" data-floor="${floor}">
-            <div class="fp-floor__label">${floor} <button class="fp-floor__delete fp-delete-floor" data-type="${type}" data-floor="${floor}" title="Delete floor">&times;</button></div>
-            <div class="fp-floor__preview">${path ? `<img src="${previewImageUrl(path)}" alt="${type} — ${floor}">` : `<span class="fp-floor__empty">No image</span>`}</div>
+        const floorAttr = escAttr(floor);
+        const floorText = escapeHtml(floor);
+        html += `<div class="fp-floor" data-type="${typeAttr}" data-floor="${floorAttr}">
+            <div class="fp-floor__label">${floorText} <button class="fp-floor__delete fp-delete-floor" data-type="${typeAttr}" data-floor="${floorAttr}" title="Delete floor">&times;</button></div>
+            <div class="fp-floor__preview">${path ? `<img src="${escAttr(previewImageUrl(path))}" alt="${escAttr(type + ' — ' + floor)}">` : `<span class="fp-floor__empty">No image</span>`}</div>
             <div class="fp-floor__actions">
-              <label class="btn btn--outline btn--sm">Upload<input type="file" accept="image/*" class="fp-upload" data-type="${type}" data-floor="${floor}" hidden></label>
+              <label class="btn btn--outline btn--sm">Upload<input type="file" accept="image/*" class="fp-upload" data-type="${typeAttr}" data-floor="${floorAttr}" hidden></label>
             </div>
           </div>`;
       });
@@ -1712,8 +1716,8 @@
         <div class="hero-stats-grid">`;
       stats.forEach((s, i) => {
         html += `<div class="hero-stat-field">
-          <div class="form-group"><label>${t('projects.number')}</label><input type="text" data-lang="${lng}" data-stat="${i}" data-field="number" class="stat-input" value="${s.number}"></div>
-          <div class="form-group"><label>${t('projects.label')}</label><input type="text" data-lang="${lng}" data-stat="${i}" data-field="label" class="stat-input" value="${s.label}"></div>
+          <div class="form-group"><label>${t('projects.number')}</label><input type="text" data-lang="${lng}" data-stat="${i}" data-field="number" class="stat-input" value="${escAttr(s.number)}"></div>
+          <div class="form-group"><label>${t('projects.label')}</label><input type="text" data-lang="${lng}" data-stat="${i}" data-field="label" class="stat-input" value="${escAttr(s.label)}"></div>
         </div>`;
       });
       html += '</div></div>';
@@ -1725,7 +1729,7 @@
     ['en', 'ru', 'id'].forEach(lng => {
       html += `<div style="margin-bottom:16px"><div class="hero-stat-field__lang">${lng.toUpperCase()}</div>
         <div class="form-group"><label>${t('projects.positioning')}</label><input type="text" class="showcase-input" data-lang="${lng}" data-field="positioning" value="${escAttr((p.positioning && p.positioning[lng]) || '')}" placeholder="${t('projects.positioningPh')}"></div>
-        <div class="form-group"><label>${t('projects.description')}</label><textarea class="showcase-input" data-lang="${lng}" data-field="showcaseDesc" rows="2">${(p.showcaseDesc && p.showcaseDesc[lng]) || ''}</textarea></div>
+        <div class="form-group"><label>${t('projects.description')}</label><textarea class="showcase-input" data-lang="${lng}" data-field="showcaseDesc" rows="2">${escapeHtml((p.showcaseDesc && p.showcaseDesc[lng]) || '')}</textarea></div>
       </div>`;
     });
     html += '</div>';
@@ -2188,7 +2192,7 @@
   // ─── SEO Editor ───
   const LANGS = ['en', 'ru', 'id'];
   const LANG_NAMES = { en: 'English', ru: 'Russian', id: 'Indonesian' };
-  const BASE_URL = 'https://winstik13.github.io/global-bali-home';
+  const BASE_URL = 'https://globalbalihome.com';
   let seoCache = {}; // { lang: { html, sha, fields } }
   let currentSeoLang = 'en';
 
@@ -2286,7 +2290,7 @@
       <div class="og-preview">
         <div class="og-preview__image">${f.ogImage ? `<img src="${escAttr(f.ogImage)}" alt="">` : `<span>${t('seo.noOgImage')}</span>`}</div>
         <div class="og-preview__text">
-          <div class="og-preview__site">winstik13.github.io</div>
+          <div class="og-preview__site">globalbalihome.com</div>
           <div class="og-preview__title" id="og-title">${escAttr(f.ogTitle || f.title)}</div>
           <div class="og-preview__desc" id="og-desc">${escAttr(f.ogDescription || f.description)}</div>
         </div>
@@ -3473,12 +3477,12 @@
     const texts = (siteData.roi && siteData.roi.texts && siteData.roi.texts[lang]) || ROI_TEXT_DEFAULTS[lang];
     let html = '';
     ROI_TEXT_KEYS.forEach(({ key, label }) => {
-      const val = (texts[key] || '').replace(/"/g, '&quot;');
+      const raw = texts[key] || '';
       const isLong = key === 'disclaimer' || key === 'subtitle' || key === 'subtitleProject';
       html += `<div class="form-group"><label>${label}</label>` +
         (isLong
-          ? `<textarea class="roi-text-input" data-roi-text="${key}" rows="2">${val}</textarea>`
-          : `<input type="text" class="roi-text-input" data-roi-text="${key}" value="${val}">`) +
+          ? `<textarea class="roi-text-input" data-roi-text="${key}" rows="2">${escapeHtml(raw)}</textarea>`
+          : `<input type="text" class="roi-text-input" data-roi-text="${key}" value="${escAttr(raw)}">`) +
         `</div>`;
     });
     pane.innerHTML = html;
@@ -4535,10 +4539,10 @@
     let html = '';
     steps.forEach((step, si) => {
       html += '<div class="tour-step-block"><div class="tour-step-block__header">' + t('tour.step') + ' ' + (si + 1) + (step.multi ? ' (multi-select)' : '') + '</div>';
-      html += '<div class="form-group"><label>' + t('tour.question') + '</label><input type="text" class="tour-step-q" data-step="' + si + '" value="' + (step.question || '').replace(/"/g, '&quot;') + '"></div>';
+      html += '<div class="form-group"><label>' + t('tour.question') + '</label><input type="text" class="tour-step-q" data-step="' + si + '" value="' + escAttr(step.question) + '"></div>';
       html += '<div class="tour-options-list">';
       (step.options || []).forEach((opt, oi) => {
-        html += '<div class="form-group tour-option-row"><label>' + t('tour.option') + ' ' + (oi + 1) + '</label><input type="text" class="tour-step-opt" data-step="' + si + '" data-opt="' + oi + '" value="' + (opt || '').replace(/"/g, '&quot;') + '"></div>';
+        html += '<div class="form-group tour-option-row"><label>' + t('tour.option') + ' ' + (oi + 1) + '</label><input type="text" class="tour-step-opt" data-step="' + si + '" data-opt="' + oi + '" value="' + escAttr(opt) + '"></div>';
       });
       html += '</div></div>';
     });
@@ -4571,22 +4575,22 @@
     const container = $('#tour-form-editor');
     if (!container) return;
     let html = '<div class="form-grid">';
-    html += '<div class="form-group"><label>' + t('tour.formTitle') + '</label><input type="text" id="tf-title" value="' + (f.title || '').replace(/"/g, '&quot;') + '"></div>';
-    html += '<div class="form-group"><label>' + t('tour.submit') + '</label><input type="text" id="tf-submit" value="' + (f.submit || '').replace(/"/g, '&quot;') + '"></div>';
+    html += '<div class="form-group"><label>' + t('tour.formTitle') + '</label><input type="text" id="tf-title" value="' + escAttr(f.title) + '"></div>';
+    html += '<div class="form-group"><label>' + t('tour.submit') + '</label><input type="text" id="tf-submit" value="' + escAttr(f.submit) + '"></div>';
     html += '</div>';
-    html += '<div class="form-group"><label>' + t('tour.formSubtitle') + '</label><input type="text" id="tf-subtitle" value="' + (f.subtitle || '').replace(/"/g, '&quot;') + '"></div>';
+    html += '<div class="form-group"><label>' + t('tour.formSubtitle') + '</label><input type="text" id="tf-subtitle" value="' + escAttr(f.subtitle) + '"></div>';
     html += '<div class="form-grid--3">';
-    html += '<div class="form-group"><label>' + t('tour.name') + '</label><input type="text" id="tf-name" value="' + (f.name || '').replace(/"/g, '&quot;') + '"></div>';
-    html += '<div class="form-group"><label>' + t('tour.whatsapp') + '</label><input type="text" id="tf-whatsapp" value="' + (f.whatsapp || '').replace(/"/g, '&quot;') + '"></div>';
-    html += '<div class="form-group"><label>' + t('tour.email') + '</label><input type="text" id="tf-email" value="' + (f.email || '').replace(/"/g, '&quot;') + '"></div>';
+    html += '<div class="form-group"><label>' + t('tour.name') + '</label><input type="text" id="tf-name" value="' + escAttr(f.name) + '"></div>';
+    html += '<div class="form-group"><label>' + t('tour.whatsapp') + '</label><input type="text" id="tf-whatsapp" value="' + escAttr(f.whatsapp) + '"></div>';
+    html += '<div class="form-group"><label>' + t('tour.email') + '</label><input type="text" id="tf-email" value="' + escAttr(f.email) + '"></div>';
     html += '</div>';
-    html += '<div class="form-group"><label>' + t('tour.comment') + '</label><input type="text" id="tf-comment" value="' + (f.comment || '').replace(/"/g, '&quot;') + '"></div>';
-    html += '<div class="form-group"><label>' + t('tour.consent') + '</label><textarea id="tf-consent" rows="2">' + (f.consent || '') + '</textarea></div>';
-    html += '<div class="form-group"><label>' + t('tour.time') + '</label><input type="text" id="tf-time" value="' + (f.time || '').replace(/"/g, '&quot;') + '"></div>';
+    html += '<div class="form-group"><label>' + t('tour.comment') + '</label><input type="text" id="tf-comment" value="' + escAttr(f.comment) + '"></div>';
+    html += '<div class="form-group"><label>' + t('tour.consent') + '</label><textarea id="tf-consent" rows="2">' + escapeHtml(f.consent) + '</textarea></div>';
+    html += '<div class="form-group"><label>' + t('tour.time') + '</label><input type="text" id="tf-time" value="' + escAttr(f.time) + '"></div>';
     var timeOpts = f.timeOptions || [];
     html += '<div class="form-grid--4">';
     for (var i = 0; i < 4; i++) {
-      html += '<div class="form-group"><label>' + t('tour.timeOption') + ' ' + (i + 1) + '</label><input type="text" class="tf-timeopt" data-idx="' + i + '" value="' + (timeOpts[i] || '').replace(/"/g, '&quot;') + '"></div>';
+      html += '<div class="form-group"><label>' + t('tour.timeOption') + ' ' + (i + 1) + '</label><input type="text" class="tf-timeopt" data-idx="' + i + '" value="' + escAttr(timeOpts[i]) + '"></div>';
     }
     html += '</div>';
     container.innerHTML = html;
@@ -4627,11 +4631,11 @@
     const container = $('#tour-thankyou-editor');
     if (!container) return;
     let html = '<div class="form-grid">';
-    html += '<div class="form-group"><label>' + t('tour.thankTitle') + '</label><input type="text" id="ty-title" value="' + (ty.title || '').replace(/"/g, '&quot;') + '"></div>';
-    html += '<div class="form-group"><label>' + t('tour.thankWa') + '</label><input type="text" id="ty-wa" value="' + (ty.whatsapp || '').replace(/"/g, '&quot;') + '"></div>';
+    html += '<div class="form-group"><label>' + t('tour.thankTitle') + '</label><input type="text" id="ty-title" value="' + escAttr(ty.title) + '"></div>';
+    html += '<div class="form-group"><label>' + t('tour.thankWa') + '</label><input type="text" id="ty-wa" value="' + escAttr(ty.whatsapp) + '"></div>';
     html += '</div>';
-    html += '<div class="form-group"><label>' + t('tour.thankText') + '</label><input type="text" id="ty-text" value="' + (ty.text || '').replace(/"/g, '&quot;') + '"></div>';
-    html += '<div class="form-group"><label>' + t('tour.thankProject') + '</label><input type="text" id="ty-project" value="' + (ty.projectLink || '').replace(/"/g, '&quot;') + '"></div>';
+    html += '<div class="form-group"><label>' + t('tour.thankText') + '</label><input type="text" id="ty-text" value="' + escAttr(ty.text) + '"></div>';
+    html += '<div class="form-group"><label>' + t('tour.thankProject') + '</label><input type="text" id="ty-project" value="' + escAttr(ty.projectLink) + '"></div>';
     container.innerHTML = html;
 
     const map = { title: 'ty-title', text: 'ty-text', whatsapp: 'ty-wa', projectLink: 'ty-project' };
@@ -4845,7 +4849,8 @@
 
   // ─── Helpers ───
   function escAttr(str) {
-    return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    if (str == null) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
   // ─── Users tab (super_admin only) ───
