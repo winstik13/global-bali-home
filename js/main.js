@@ -1779,10 +1779,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Price range helpers (single source of truth: units / unitTypes) ---
   function getPriceRange(proj) {
     if (!proj) return null;
-    // Source 1: individual units (available + resale, with numeric price)
+    // Source 1: individual units (only available — resale is owner's resale, not ours)
     if (proj.units && proj.units.length) {
       var prices = proj.units
-        .filter(function(u) { return (u.status === 'available' || u.status === 'resale') && typeof u.price === 'number' && u.price > 0; })
+        .filter(function(u) { return u.status === 'available' && typeof u.price === 'number' && u.price > 0; })
         .map(function(u) { return u.price; });
       if (prices.length) return { min: Math.min.apply(null, prices), max: Math.max.apply(null, prices) };
     }
@@ -2397,14 +2397,17 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       let html = '<thead><tr><th>' + h.unit + '</th><th>' + h.type + '</th><th>' + h.floors + '</th><th>' + h.area + '</th><th>' + h.land + '</th><th>' + h.status + '</th><th>' + h.price + '</th></tr></thead><tbody>';
       const tourName = proj.name || '';
       proj.units.forEach(u => {
-        const isClickable = u.status === 'available' || u.status === 'resale';
+        // Resale is the owner's secondary sale — we don't broker it. Render visually as sold.
+        const displayStatus = u.status === 'resale' ? 'sold' : u.status;
+        const isClickable = u.status === 'available';
         const classes = [];
         if (u.badge) classes.push('unit--premium');
         if (isClickable) classes.push('unit--clickable');
         const cls = classes.length ? ' class="' + classes.join(' ') + '"' : '';
         const tourAttr = isClickable ? ' data-tour="' + tourName + '"' : '';
         const badge = u.badge ? ' <span class="unit__badge">' + u.badge + '</span>' : '';
-        html += '<tr' + cls + tourAttr + ' data-status="' + u.status + '"><td>' + u.id + badge + '</td><td>' + u.type + '</td><td>' + u.floors + '</td><td>' + u.area + '</td><td>' + u.land + '</td><td class="status--' + u.status + '">' + (sl[u.status] || u.status) + '</td><td>' + fmtDualPrice(u.price) + '</td></tr>';
+        const priceCell = u.status === 'resale' ? '—' : fmtDualPrice(u.price);
+        html += '<tr' + cls + tourAttr + ' data-status="' + displayStatus + '"><td>' + u.id + badge + '</td><td>' + u.type + '</td><td>' + u.floors + '</td><td>' + u.area + '</td><td>' + u.land + '</td><td class="status--' + displayStatus + '">' + (sl[displayStatus] || displayStatus) + '</td><td>' + priceCell + '</td></tr>';
       });
       html += '</tbody>';
       el.innerHTML = html;
@@ -2778,11 +2781,13 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         sheetRefs.area.textContent = u.area || '—';
         sheetRefs.land.textContent = u.land || '—';
         sheetRefs.floors.textContent = u.floors || '—';
-        sheetRefs.status.textContent = sl[u.status] || u.status;
-        sheetRefs.status.className = 'master-plan__sheet-spec-value status--' + u.status;
-        sheetRefs.price.innerHTML = u.price ? fmtDualPrice(u.price) : '—';
+        // Resale is the owner's secondary sale — display as sold.
+        var displayStatus = u.status === 'resale' ? 'sold' : u.status;
+        sheetRefs.status.textContent = sl[displayStatus] || displayStatus;
+        sheetRefs.status.className = 'master-plan__sheet-spec-value status--' + displayStatus;
+        sheetRefs.price.innerHTML = (u.status === 'resale' || !u.price) ? '—' : fmtDualPrice(u.price);
 
-        var isSold = u.status === 'sold';
+        var isSold = u.status === 'sold' || u.status === 'resale';
         sheetRefs.cta.textContent = isSold ? sheetText.ctaSold : sheetText.cta;
         sheetRefs.cta.disabled = isSold;
         if (isSold) {
@@ -2815,23 +2820,25 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         var pos = positions[u.id];
         if (!pos) return;
 
+        // Resale is the owner's secondary sale — display as sold.
+        var hotspotStatus = u.status === 'resale' ? 'sold' : u.status;
         var btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = 'master-plan__hotspot master-plan__hotspot--' + u.status;
+        btn.className = 'master-plan__hotspot master-plan__hotspot--' + hotspotStatus;
         btn.style.left = pos.x + '%';
         btn.style.top = pos.y + '%';
         btn.dataset.unitId = u.id;
-        btn.setAttribute('aria-label', u.id + ' — ' + (sl[u.status] || u.status));
+        btn.setAttribute('aria-label', u.id + ' — ' + (sl[hotspotStatus] || hotspotStatus));
 
         var priceLine = '<span class="master-plan__tooltip-price">'
-          + (u.price ? fmtDualPrice(u.price) : '—')
+          + ((u.status === 'resale' || !u.price) ? '—' : fmtDualPrice(u.price))
           + '</span>';
 
         btn.innerHTML =
           '<span class="master-plan__hotspot-label">' + u.id + '</span>' +
           '<span class="master-plan__tooltip">' +
             '<strong>' + u.id + ' · ' + u.type + '</strong>' +
-            '<span class="master-plan__tooltip-row">' + u.area + ' · ' + (sl[u.status] || u.status) + '</span>' +
+            '<span class="master-plan__tooltip-row">' + u.area + ' · ' + (sl[hotspotStatus] || hotspotStatus) + '</span>' +
             priceLine +
           '</span>';
 
@@ -2846,8 +2853,8 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
             return;
           }
 
-          // Desktop: click scrolls to table row (sold is inert as before).
-          if (u.status === 'sold') return;
+          // Desktop: click scrolls to table row (sold/resale are inert).
+          if (u.status === 'sold' || u.status === 'resale') return;
 
           var table = document.querySelector('.unit-table[data-project="' + key + '"]');
           if (!table) return;
