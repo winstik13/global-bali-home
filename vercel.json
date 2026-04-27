@@ -3,5 +3,19 @@
   "buildCommand": "npm run build",
   "outputDirectory": ".",
   "installCommand": "npm install --omit=dev",
-  "framework": null
+  "framework": null,
+  "headers": [
+    {
+      "source": "/data/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate, s-maxage=60" }
+      ]
+    },
+    {
+      "source": "/(.*).html",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate, s-maxage=60" }
+      ]
+    }
+  ]
 }
