@@ -2791,8 +2791,13 @@
   // Контент всегда формируется через JSON.stringify, поэтому безопасно
   // парсить через JSON.parse — Function/eval запрещены CSP админки.
   function parseDataFileContent(content) {
-    const cleaned = String(content)
-      .replace(/^\/\*[\s\S]*?\*\/\s*/g, '')
+    // Стрипаем все ведущие comment-блоки (build-data.mjs пишет 2-3 подряд),
+    // потом обёртку `const X = ` и завершающий `;`.
+    let cleaned = String(content);
+    while (/^\s*\/\*[\s\S]*?\*\//.test(cleaned)) {
+      cleaned = cleaned.replace(/^\s*\/\*[\s\S]*?\*\/\s*/, '');
+    }
+    cleaned = cleaned
       .replace(/^\s*const\s+\w+\s*=\s*/, '')
       .replace(/;\s*$/, '')
       .trim();
