@@ -1129,6 +1129,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const mosaicGrid = document.getElementById('photo-mosaic');
   if (mosaicGrid && typeof GALLERY_DATA !== 'undefined') {
     const mosaicPathPrefix = !!document.querySelector('link[href^="../css/"]') ? '../' : '';
+    const isAbsoluteUrl = (u) => /^(https?:)?\/\//i.test(u);
     const all = [];
     for (const paths of Object.values(GALLERY_DATA)) {
       paths.forEach(p => all.push(p));
@@ -1142,7 +1143,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const div = document.createElement('div');
       div.className = 'photo-mosaic__item';
       const img = document.createElement('img');
-      img.src = mosaicPathPrefix + src;
+      img.src = isAbsoluteUrl(src) ? src : (mosaicPathPrefix + src);
       img.alt = src.split('/').pop().replace(/\.[^.]+$/, '').replace(/[_-]/g, ' ');
       img.loading = i > 1 ? 'lazy' : 'eager';
       div.appendChild(img);
@@ -1166,11 +1167,12 @@ document.addEventListener('DOMContentLoaded', () => {
     var images = GALLERY_DATA[key];
     if (!images || !images.length) return;
     var prefix = document.querySelector('link[href^="../css/"]') ? '../' : '';
+    var isAbs = function(u) { return /^(https?:)?\/\//i.test(u); };
     images.slice(0, 5).forEach(function(src) {
       var div = document.createElement('div');
-      div.className = 'photo-mosaic__item';
       var img = document.createElement('img');
-      img.src = prefix + src;
+      div.className = 'photo-mosaic__item';
+      img.src = isAbs(src) ? src : (prefix + src);
       img.alt = src.split('/').pop().replace(/\.[^.]+$/, '').replace(/[_-]/g, ' ');
       img.loading = 'lazy';
       div.appendChild(img);
