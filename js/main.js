@@ -1650,7 +1650,7 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
 
       const continueBtn = tourBody.querySelector('.tour__continue');
-      continueBtn.textContent = lang === 'ru' ? 'Продолжить' : lang === 'id' ? 'Lanjutkan' : 'Continue';
+      continueBtn.textContent = lang === 'ru' ? 'Продолжить' : 'Continue';
 
       tourBody.querySelectorAll('.tour__checkbox input').forEach(cb => {
         cb.addEventListener('change', () => {
@@ -2063,13 +2063,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Lead Magnet form ---
   function getGuidePath() {
-    var langFile = lang === 'ru' ? 'ru' : lang === 'id' ? 'id' : 'en';
+    var langFile = lang === 'ru' ? 'ru' : 'en';
     var prefix = (lang !== 'en') ? '../' : '';
     return prefix + 'guide/pdf/' + langFile + '.pdf';
   }
 
   function getGuideWebPath() {
-    var langFile = lang === 'ru' ? 'ru' : lang === 'id' ? 'id' : 'en';
+    var langFile = lang === 'ru' ? 'ru' : 'en';
     var prefix = (lang !== 'en') ? '../' : '';
     return prefix + 'guide/' + langFile + '.html';
   }
@@ -2146,7 +2146,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     }[heroStatsEl.dataset.project] || '' : '';
 
     if (stickyProjectName) {
-      const stickyTourLabel = lang === 'ru' ? 'Запланировать тур' : lang === 'id' ? 'Jadwalkan Tur' : 'Schedule a Tour';
+      const stickyTourLabel = lang === 'ru' ? 'Запланировать тур' : 'Schedule a Tour';
       stickyCTA.innerHTML = `<button class="sticky-cta__btn btn btn--primary">${stickyTourLabel}</button>`;
       stickyCTA.querySelector('button').addEventListener('click', (e) => {
         e.preventDefault();
@@ -2565,9 +2565,6 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         else villaForm = 'вилл';
         if (title) title.textContent = 'Осталось всего ' + available + ' ' + villaForm;
         if (desc) desc.textContent = 'Свяжитесь с нами до того, как последние юниты уйдут — расскажем о ценах, планировках и инвестиционных условиях.';
-      } else if (dataLang === 'id') {
-        if (title) title.textContent = 'Hanya tersisa ' + available + ' vila';
-        if (desc) desc.textContent = 'Hubungi tim kami sebelum unit terakhir terjual — kami akan menjelaskan harga, konfigurasi, dan peluang investasi.';
       } else {
         if (title) title.textContent = 'Only ' + available + (available === 1 ? ' Villa Left' : ' Villas Left');
         if (desc) desc.textContent = 'Get in touch before the last units are gone — our team will walk you through pricing, layouts, and investment details.';
@@ -2787,13 +2784,11 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     // otherwise neutral "N villas available" to avoid a misleading scarcity frame.
     var MASTER_PLAN_HEADER_STATIC = {
       en: { tag: 'Master Plan', desc: 'Click on any villa to see its details. Sold villas are dimmed.' },
-      ru: { tag: 'Генплан', desc: 'Кликните на виллу, чтобы посмотреть детали. Проданные подсвечены серым.' },
-      id: { tag: 'Master Plan', desc: 'Klik villa mana pun untuk melihat detail. Villa terjual ditampilkan redup.' }
+      ru: { tag: 'Генплан', desc: 'Кликните на виллу, чтобы посмотреть детали. Проданные подсвечены серым.' }
     };
     function buildMasterPlanTitle(lang, available, total) {
       if (available === 0) {
         if (lang === 'ru') return 'Полностью продано';
-        if (lang === 'id') return 'Habis terjual';
         return 'Sold Out';
       }
       if (available === total) {
@@ -2804,7 +2799,6 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
           if (available >= 2 && available <= 4) return available + ' виллы доступны';
           return available + ' вилл доступно';
         }
-        if (lang === 'id') return available + ' villa tersedia';
         return available + (available === 1 ? ' villa available' : ' villas available');
       }
       // Soft scarcity frame: some units have been removed from the pool.
@@ -2818,15 +2812,13 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         if (lastOne >= 2 && lastOne <= 4) return 'Осталось всего ' + available + ' виллы';
         return 'Осталось всего ' + available + ' вилл';
       }
-      if (lang === 'id') return 'Hanya tersisa ' + available + ' villa';
       // EN: "Only 1 villa remains" vs "Only N villas remain"
       return 'Only ' + available + (available === 1 ? ' villa remains' : ' villas remain');
     }
 
     var MASTER_PLAN_SHEET_TEXT = {
       en: { cta: 'Book a Tour', ctaSold: 'No Longer Available', close: 'Close' },
-      ru: { cta: 'Записаться на показ', ctaSold: 'Продано', close: 'Закрыть' },
-      id: { cta: 'Jadwalkan Kunjungan', ctaSold: 'Sudah Terjual', close: 'Tutup' }
+      ru: { cta: 'Записаться на показ', ctaSold: 'Продано', close: 'Закрыть' }
     };
 
     document.querySelectorAll('[data-master-plan]').forEach(function(el) {
@@ -3040,7 +3032,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         }
       });
 
-      var comingSoon = dataLang === 'ru' ? 'Скоро' : dataLang === 'id' ? 'Segera' : 'Coming Soon';
+      var comingSoon = dataLang === 'ru' ? 'Скоро' : 'Coming Soon';
       var placeholderSvg = '<svg viewBox="0 0 80 80" fill="none"><rect x="12" y="16" width="56" height="48" rx="3" stroke="currentColor" stroke-width="1.5"/><line x1="12" y1="40" x2="68" y2="40" stroke="currentColor" stroke-width="1.5"/><line x1="40" y1="16" x2="40" y2="64" stroke="currentColor" stroke-width="1.5"/><rect x="18" y="22" width="10" height="12" rx="1" stroke="currentColor" stroke-width="1"/><rect x="46" y="22" width="10" height="12" rx="1" stroke="currentColor" stroke-width="1"/></svg>';
 
       // Type selector tabs
