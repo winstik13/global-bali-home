@@ -1346,7 +1346,6 @@
       p.showcaseAvailability = {
         en: 'Pre-Sale Open',
         ru: 'Предпродажа открыта',
-        id: 'Pra-Penjualan Dibuka'
       };
       return;
     }
@@ -1355,7 +1354,6 @@
     p.showcaseAvailability = {
       en: 'Only ' + left + ' of ' + total + ' units left',
       ru: 'Осталось всего ' + left + ' из ' + total,
-      id: 'Hanya tersisa ' + left + ' dari ' + total + ' unit'
     };
   }
 
@@ -1655,7 +1653,7 @@
 
     // Project Details (comparison table fields)
     if (!p.compPool || typeof p.compPool === 'string') {
-      p.compPool = { en: p.compPool || '', ru: '', id: '' };
+      p.compPool = { en: p.compPool || '', ru: '' };
     }
     html += `<div class="editor-section"><h3>${t('projects.projectDetails')}</h3>
       <div class="form-grid--3">
@@ -1668,10 +1666,9 @@
         <div class="form-group"><label>${t('projects.compLand')}</label><input type="text" id="pd-compLand" value="${p.compLand || ''}" placeholder="2–3 are"></div>
         <div class="form-group"><label>${t('projects.totalUnits')}</label><input type="number" id="pd-totalUnits" value="${p.totalUnits || ''}" min="1"></div>
       </div>
-      <div class="form-grid--3">
+      <div class="form-grid">
         <div class="form-group"><label>${t('projects.compPool')} (EN)</label><input type="text" class="pd-compPool" data-lang="en" value="${p.compPool.en || ''}" placeholder="Private"></div>
         <div class="form-group"><label>${t('projects.compPool')} (RU)</label><input type="text" class="pd-compPool" data-lang="ru" value="${p.compPool.ru || ''}" placeholder="Приватный"></div>
-        <div class="form-group"><label>${t('projects.compPool')} (ID)</label><input type="text" class="pd-compPool" data-lang="id" value="${p.compPool.id || ''}" placeholder="Pribadi"></div>
       </div>
     </div>`;
 
@@ -1749,7 +1746,7 @@
 
     // Hero Stats (4 languages)
     html += `<div class="editor-section"><h3>${t('projects.heroStats')}</h3>`;
-    ['en', 'ru', 'id'].forEach(lng => {
+    ['en', 'ru'].forEach(lng => {
       const stats = (p.heroStats && p.heroStats[lng]) || [];
       html += `<div style="margin-bottom:16px"><div class="hero-stat-field__lang">${lng.toUpperCase()}</div>
         <div class="hero-stats-grid">`;
@@ -1765,7 +1762,7 @@
 
     // Showcase Text (4 languages)
     html += `<div class="editor-section"><h3>${t('projects.showcaseCard')}</h3>`;
-    ['en', 'ru', 'id'].forEach(lng => {
+    ['en', 'ru'].forEach(lng => {
       html += `<div style="margin-bottom:16px"><div class="hero-stat-field__lang">${lng.toUpperCase()}</div>
         <div class="form-group"><label>${t('projects.positioning')}</label><input type="text" class="showcase-input" data-lang="${lng}" data-field="positioning" value="${escAttr((p.positioning && p.positioning[lng]) || '')}" placeholder="${t('projects.positioningPh')}"></div>
         <div class="form-group"><label>${t('projects.description')}</label><textarea class="showcase-input" data-lang="${lng}" data-field="showcaseDesc" rows="2">${escapeHtml((p.showcaseDesc && p.showcaseDesc[lng]) || '')}</textarea></div>
@@ -1778,12 +1775,12 @@
     if (!p.decisionGuide) {
       p.decisionGuide = {
         icon: 'yield',
-        question: { en: '', ru: '', id: '' },
-        benefit: { en: '', ru: '', id: '' }
+        question: { en: '', ru: '' },
+        benefit: { en: '', ru: '' }
       };
     }
-    if (!p.decisionGuide.question) p.decisionGuide.question = { en: '', ru: '', id: '' };
-    if (!p.decisionGuide.benefit) p.decisionGuide.benefit = { en: '', ru: '', id: '' };
+    if (!p.decisionGuide.question) p.decisionGuide.question = { en: '', ru: '' };
+    if (!p.decisionGuide.benefit) p.decisionGuide.benefit = { en: '', ru: '' };
     const dgIconOptions = [
       ['yield',    t('projects.decisionGuideIconYield')],
       ['land',     t('projects.decisionGuideIconLand')],
@@ -1797,7 +1794,7 @@
           ${dgIconOptions.map(([v, l]) => `<option value="${v}"${p.decisionGuide.icon === v ? ' selected' : ''}>${l}</option>`).join('')}
         </select>
       </div>`;
-    ['en', 'ru', 'id'].forEach(lng => {
+    ['en', 'ru'].forEach(lng => {
       html += `<div style="margin-bottom:16px"><div class="hero-stat-field__lang">${lng.toUpperCase()}</div>
         <div class="form-group"><label>${t('projects.decisionGuideQuestion')}</label><input type="text" class="dg-input" data-lang="${lng}" data-field="question" value="${escAttr(p.decisionGuide.question[lng] || '')}" placeholder="${t('projects.decisionGuideQuestionPh')}"></div>
         <div class="form-group"><label>${t('projects.decisionGuideBenefit')}</label><input type="text" class="dg-input" data-lang="${lng}" data-field="benefit" value="${escAttr(p.decisionGuide.benefit[lng] || '')}" placeholder="${t('projects.decisionGuideBenefitPh')}"></div>
@@ -1908,7 +1905,7 @@
       inp.addEventListener('input', () => {
         const lng = inp.dataset.lang;
         const field = inp.dataset.field;
-        if (!p[field] || typeof p[field] !== 'object') p[field] = { en: '', ru: '', id: '' };
+        if (!p[field] || typeof p[field] !== 'object') p[field] = { en: '', ru: '' };
         p[field][lng] = inp.value;
         markChanged();
       });
@@ -1918,17 +1915,17 @@
     const dgIconSel = $('#dg-icon');
     if (dgIconSel) {
       dgIconSel.addEventListener('change', () => {
-        if (!p.decisionGuide) p.decisionGuide = { icon: 'yield', question: { en: '', ru: '', id: '' }, benefit: { en: '', ru: '', id: '' } };
+        if (!p.decisionGuide) p.decisionGuide = { icon: 'yield', question: { en: '', ru: '' }, benefit: { en: '', ru: '' } };
         p.decisionGuide.icon = dgIconSel.value;
         markChanged();
       });
     }
     editor.querySelectorAll('.dg-input').forEach(inp => {
       inp.addEventListener('input', () => {
-        if (!p.decisionGuide) p.decisionGuide = { icon: 'yield', question: { en: '', ru: '', id: '' }, benefit: { en: '', ru: '', id: '' } };
+        if (!p.decisionGuide) p.decisionGuide = { icon: 'yield', question: { en: '', ru: '' }, benefit: { en: '', ru: '' } };
         const field = inp.dataset.field;
         const lng = inp.dataset.lang;
-        if (!p.decisionGuide[field]) p.decisionGuide[field] = { en: '', ru: '', id: '' };
+        if (!p.decisionGuide[field]) p.decisionGuide[field] = { en: '', ru: '' };
         p.decisionGuide[field][lng] = inp.value;
         markChanged();
       });
@@ -1945,7 +1942,7 @@
     });
     editor.querySelectorAll('.pd-compPool').forEach(inp => {
       inp.addEventListener('input', () => {
-        if (!p.compPool || typeof p.compPool === 'string') p.compPool = { en: '', ru: '', id: '' };
+        if (!p.compPool || typeof p.compPool === 'string') p.compPool = { en: '', ru: '' };
         p.compPool[inp.dataset.lang] = inp.value;
         markChanged();
       });
@@ -2229,8 +2226,8 @@
   }
 
   // ─── SEO Editor ───
-  const LANGS = ['en', 'ru', 'id'];
-  const LANG_NAMES = { en: 'English', ru: 'Russian', id: 'Indonesian' };
+  const LANGS = ['en', 'ru'];
+  const LANG_NAMES = { en: 'English', ru: 'Russian' };
   const BASE_URL = 'https://globalbalihome.com';
   let seoCache = {}; // { lang: { html, sha, fields } }
   let currentSeoLang = 'en';
@@ -3033,15 +3030,14 @@
         status: status,
         startingPrice: price,
         showcaseImage: image,
-        showcaseSubtitle: { en: subtitle, ru: subtitle, id: subtitle },
+        showcaseSubtitle: { en: subtitle, ru: subtitle },
         showcaseMeta: {
           en: [{ strong: String(totalUnits), label: 'Villas' }, { strong: bedrooms, label: 'Bedrooms' }, { strong: handover || status, label: handover ? 'Handover' : 'Status' }],
           ru: [{ strong: String(totalUnits), label: 'Вилл' }, { strong: bedrooms, label: 'Спальни' }, { strong: handover || status, label: handover ? 'Сдача' : 'Статус' }],
-          id: [{ strong: String(totalUnits), label: 'Villa' }, { strong: bedrooms, label: 'Kamar Tidur' }, { strong: handover || status, label: handover ? 'Serah Terima' : 'Status' }],
         },
         compArea: area,
         compLand: land,
-        compPool: { en: pool, ru: pool, id: pool },
+        compPool: { en: pool, ru: pool },
         heroStats: {
           en: [
             { number: String(totalUnits), label: 'Villas' },
@@ -3053,41 +3049,31 @@
             { number: handover || bedrooms, label: handover ? 'Сдача' : 'Спальни' },
             { number: price ? '$' + (price / 1000 | 0) + 'K+' : '', label: 'От' }
           ],
-          id: [
-            { number: String(totalUnits), label: 'Vila' },
-            { number: handover || bedrooms, label: handover ? 'Serah Terima' : 'Kamar Tidur' },
-            { number: price ? '$' + (price / 1000 | 0) + 'K+' : '', label: 'Mulai Dari' }
-          ],
         },
         availability: { sold: 0, total: totalUnits },
         showcaseStatus: {
           en: status === 'pre-sale' ? 'Pre-Sale' : status === 'completed' ? 'Completed' : 'In Progress',
           ru: status === 'pre-sale' ? 'Предпродажа' : status === 'completed' ? 'Завершён' : 'Строится',
-          id: status === 'pre-sale' ? 'Pra-Penjualan' : status === 'completed' ? 'Selesai' : 'Dalam Pembangunan',
         },
         positioning: {
           en: 'Investment Opportunity',
           ru: 'Инвестиционная возможность',
-          id: 'Peluang Investasi',
         },
         showcaseAvailability: {
           en: status === 'pre-sale' ? 'Pre-Sale Open' : 'Only ' + totalUnits + ' of ' + totalUnits + ' units left',
           ru: status === 'pre-sale' ? 'Предпродажа открыта' : 'Осталось всего ' + totalUnits + ' из ' + totalUnits,
-          id: status === 'pre-sale' ? 'Pra-Penjualan Dibuka' : 'Hanya tersisa ' + totalUnits + ' dari ' + totalUnits + ' unit',
         },
-        showcaseDesc: { en: desc, ru: desc, id: desc },
-        showcaseCta: { en: 'View Details', ru: 'Подробнее', id: 'Lihat Detail' },
+        showcaseDesc: { en: desc, ru: desc },
+        showcaseCta: { en: 'View Details', ru: 'Подробнее' },
         decisionGuide: {
           icon: 'yield',
           question: {
             en: 'Interested in ' + name + '?',
             ru: 'Интересен ' + name + '?',
-            id: 'Tertarik dengan ' + name + '?'
           },
           benefit: {
             en: bedrooms ? bedrooms + ' bedrooms' : 'premium villas',
             ru: bedrooms ? bedrooms + ' спален' : 'премиум-виллы',
-            id: bedrooms ? bedrooms + ' kamar tidur' : 'villa premium'
           }
         },
         units: []
@@ -3103,7 +3089,6 @@
         proj.preSaleBanner = {
           en: 'Pre-Sale Now Open — Register Your Interest Today',
           ru: 'Предпродажа открыта — Зарегистрируйте ваш интерес',
-          id: 'Pra-Penjualan Dibuka — Daftarkan Minat Anda Hari Ini',
         };
       }
 
@@ -3132,8 +3117,8 @@
       siteData = { investmentGuide: { path: 'assets/bali-investment-guide-2026.pdf', version: '2026', updatedAt: '' }, exchangeRate: { usdToIdr: 16500, updatedAt: '' } };
     }
     if (!siteData.exchangeRate) siteData.exchangeRate = { usdToIdr: 16500, updatedAt: '' };
-    if (!siteData.contacts) siteData.contacts = { phone: '', phoneRaw: '', whatsapp: '', email: '', location: { en: '', ru: '', id: '' } };
-    if (!siteData.exitPopup) siteData.exitPopup = { enabled: true, delay: 30, texts: { en: {}, ru: {}, id: {} } };
+    if (!siteData.contacts) siteData.contacts = { phone: '', phoneRaw: '', whatsapp: '', email: '', location: { en: '', ru: '' } };
+    if (!siteData.exitPopup) siteData.exitPopup = { enabled: true, delay: 30, texts: { en: {}, ru: {} } };
   }
 
   function renderRateInfo() {
@@ -3279,7 +3264,6 @@
     if (c.location && typeof c.location === 'object') {
       v('contact-location-en', c.location.en);
       v('contact-location-ru', c.location.ru);
-      v('contact-location-id', c.location.id);
     }
     // Attach live validation. Guard от повторного навешивания —
     // renderContactsForm может вызываться при каждом возврате на Settings таб.
@@ -3292,7 +3276,7 @@
     updateWaPreview();
 
     // Track contacts changes (один раз на инпут)
-    ['contact-phone', 'contact-whatsapp', 'contact-email', 'contact-location-en', 'contact-location-ru', 'contact-location-id'].forEach(id => {
+    ['contact-phone', 'contact-whatsapp', 'contact-email', 'contact-location-en', 'contact-location-ru'].forEach(id => {
       const el = $('#' + id);
       if (el && !el.dataset.dirtyBound) {
         el.dataset.dirtyBound = '1';
@@ -3329,8 +3313,7 @@
         email: g('contact-email'),
         location: {
           en: g('contact-location-en'),
-          ru: g('contact-location-ru'),
-          id: g('contact-location-id')
+          ru: g('contact-location-ru')
         }
       };
 
@@ -3518,7 +3501,6 @@
   const ROI_TEXT_DEFAULTS = {
     en: { tag: 'Investment Calculator', title: 'Calculate Your Returns', titleProject: 'Calculate Returns for {project}', subtitle: 'See the potential of your Bali real estate investment', subtitleProject: 'See the potential income from your investment in this project', investmentLabel: 'Investment Amount', scenarioLabel: 'Scenario', conservative: 'Conservative', normal: 'Normal', optimistic: 'Optimistic', yieldSuffix: 'yield', occupancyLabel: 'Occupancy Rate', annualIncome: 'Annual Rental Income', return5y: '5-Year Total Return', return10y: '10-Year Total Return', disclaimer: '*Projections based on current market data. Actual returns may vary.', ctaHome: 'Discuss Your Investment', ctaProject: 'Schedule a Private Tour' },
     ru: { tag: 'Инвестиционный калькулятор', title: 'Рассчитайте доходность', titleProject: 'Рассчитайте доходность {project}', subtitle: 'Оцените потенциал инвестиций в недвижимость на Бали', subtitleProject: 'Оцените потенциальный доход от инвестиций в этот проект', investmentLabel: 'Сумма инвестиций', scenarioLabel: 'Сценарий', conservative: 'Консервативный', normal: 'Обычный', optimistic: 'Оптимистичный', yieldSuffix: 'доходность', occupancyLabel: 'Заполняемость', annualIncome: 'Годовой доход от аренды', return5y: 'Общий доход за 5 лет', return10y: 'Общий доход за 10 лет', disclaimer: '*Прогнозы основаны на текущих рыночных данных.', ctaHome: 'Обсудить инвестиции', ctaProject: 'Записаться на приватный тур' },
-    id: { tag: 'Kalkulator Investasi', title: 'Hitung Keuntungan Anda', titleProject: 'Hitung Imbal Hasil {project}', subtitle: 'Lihat potensi investasi properti Bali Anda', subtitleProject: 'Lihat potensi pendapatan dari investasi Anda di proyek ini', investmentLabel: 'Jumlah Investasi', scenarioLabel: 'Skenario', conservative: 'Konservatif', normal: 'Normal', optimistic: 'Optimistis', yieldSuffix: 'imbal hasil', occupancyLabel: 'Tingkat Hunian', annualIncome: 'Pendapatan Sewa Tahunan', return5y: 'Total Imbal Hasil 5 Tahun', return10y: 'Total Imbal Hasil 10 Tahun', disclaimer: '*Proyeksi berdasarkan data pasar terkini.', ctaHome: 'Diskusikan Investasi Anda', ctaProject: 'Jadwalkan Tur Pribadi' },
   };
   let roiTextsActiveLang = 'en';
 
@@ -3616,12 +3598,6 @@
       villasDesigned: 'Виллы<br>в портфолио',
       occupancyRate: 'Прогнозируемая<br>заполняемость',
       founderExperience: 'Совокупный опыт<br>транзакций',
-    },
-    id: {
-      investorsWorldwide: 'Investor<br>di Seluruh Dunia',
-      villasDesigned: 'Villa<br>dalam Portofolio',
-      occupancyRate: 'Proyeksi<br>Tingkat Hunian',
-      founderExperience: 'Pengalaman<br>Transaksi Gabungan',
     },
   };
 
@@ -3890,8 +3866,8 @@
       const maxOrder = faqData.reduce((m, it) => Math.max(m, it.order || 0), 0);
       faqData.push({
         order: maxOrder + 1,
-        question: { en: '', ru: '', id: '' },
-        answer: { en: '', ru: '', id: '' }
+        question: { en: '', ru: '' },
+        answer: { en: '', ru: '' }
       });
       dirtyTabs.faq = true;
       renderFaqEditor();
@@ -3937,7 +3913,7 @@
   }
 
   // ─── Testimonials Editor ───
-  const LANGS_FULL = { en: 'English', ru: 'Русский', id: 'Bahasa Indonesia' };
+  const LANGS_FULL = { en: 'English', ru: 'Русский' };
   let testimonialsData = null;
   let testPreviewIdx = 0;
   let testPreviewLang = 'en';
@@ -4140,9 +4116,9 @@
       if (!testimonialsData) loadTestimonialsData();
       const maxOrder = testimonialsData.reduce((m, t) => Math.max(m, t.order || 0), 0);
       testimonialsData.push({
-        name: { en: '', ru: '', id: '' },
-        role: { en: '', ru: '', id: '' },
-        text: { en: '', ru: '', id: '' },
+        name: { en: '', ru: '' },
+        role: { en: '', ru: '' },
+        text: { en: '', ru: '' },
         stars: 5,
         sourceUrl: '',
         sourceName: '',
@@ -4414,7 +4390,7 @@
   }
 
   // ─── Exit Intent Popup Settings ───
-  const EP_LANGS = ['en', 'ru', 'id'];
+  const EP_LANGS = ['en', 'ru'];
   const EP_FIELDS = ['tag', 'title', 'text', 'placeholder', 'submit', 'success'];
   let epActiveLang = 'en';
 
@@ -4577,7 +4553,7 @@
 
   // ─── Tour Popup Editor ───
   var tourActiveLang = 'en';
-  const TOUR_LANGS = ['en', 'ru', 'id'];
+  const TOUR_LANGS = ['en', 'ru'];
 
   function getTourData() {
     if (!siteData) loadSiteData();
