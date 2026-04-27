@@ -847,7 +847,12 @@
   let currentProject = 'serenity-villas';
   let projectsData = null;    // working copy of PROJECTS_DATA
   let pendingChanges = false;
-  const _dirtyState = { projects: false, faq: false, testimonials: false, seo: false, colors: false, contacts: false, rate: false, exitpopup: false };
+  const _dirtyState = {
+    projects: false, faq: false, testimonials: false, seo: false,
+    colors: false, contacts: false, rate: false, exitpopup: false,
+    social: false, roi: false, stats: false, guide: false,
+    analytics: false,
+  };
   const dirtyTabs = new Proxy(_dirtyState, {
     set(target, prop, value) {
       target[prop] = value;
@@ -856,14 +861,30 @@
     }
   });
 
+  // Map dirty keys to nav tab names. Settings tab agрeгate
+  // contacts/rate/colors/social/roi/stats/guide.
+  const _dirtyTabMap = {
+    rate: 'settings', contacts: 'settings', colors: 'settings',
+    social: 'settings', roi: 'settings', stats: 'settings', guide: 'settings',
+  };
+
   function updateDirtyIndicators() {
-    // Map dirty keys to nav tab names (rate/contacts/colors share "settings" tab)
-    const tabMap = { rate: 'settings', contacts: 'settings', colors: 'settings' };
     document.querySelectorAll('.admin-nav__btn[data-tab]').forEach(btn => {
       const tab = btn.dataset.tab;
-      const isDirty = Object.entries(_dirtyState).some(([key, val]) => val && (tabMap[key] || key) === tab);
+      const isDirty = Object.entries(_dirtyState).some(([key, val]) => val && (_dirtyTabMap[key] || key) === tab);
       btn.classList.toggle('dirty', isDirty);
     });
+  }
+
+  // Делегирование dirty-tracking. На контейнере любой формы ловим input/change
+  // и помечаем нужный ключ. Переживает ре-рендеры внутренностей.
+  function bindDirtyDelegate(containerSel, key) {
+    const el = document.querySelector(containerSel);
+    if (!el || el.dataset.dirtyBound) return;
+    el.dataset.dirtyBound = '1';
+    const mark = () => { dirtyTabs[key] = true; };
+    el.addEventListener('input', mark);
+    el.addEventListener('change', mark);
   }
 
   function getActiveTab() {
@@ -1139,6 +1160,14 @@
     renderColorsTab();
     loadFaqData();
     loadTestimonialsData();
+
+    // Dirty-tracking для секций без явных listener'ов.
+    // Контейнеры стабильные — внутренности могут ре-рендериться.
+    bindDirtyDelegate('#set-social', 'social');
+    bindDirtyDelegate('#set-stats', 'stats');
+    bindDirtyDelegate('#set-roi', 'roi');
+    bindDirtyDelegate('#set-guide', 'guide');
+    bindDirtyDelegate('#tab-analytics', 'analytics');
     // Restore last active tab
     try {
       const savedTab = localStorage.getItem('admin_active_tab');
@@ -1169,12 +1198,19 @@
   }
 
   // ─── Tab Navigation ───
+  function isTabDirty(tab) {
+    // Aggregate всех _dirtyState ключей, маппящихся на этот tab.
+    return Object.entries(_dirtyState).some(([key, val]) => val && (_dirtyTabMap[key] || key) === tab);
+  }
+
   $$('.admin-nav__btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const currentTab = getActiveTab();
+      // Dashboard сам по себе ничего не редактирует, но dirty rate/contacts
+      // лежат под settings — оставляем особый случай, чтобы предупредить.
       const isDirty = currentTab === 'dashboard'
         ? (dirtyTabs.rate || dirtyTabs.contacts)
-        : (pendingChanges || dirtyTabs[currentTab]);
+        : (pendingChanges || isTabDirty(currentTab));
       if (isDirty && !confirm(t('common.unsavedWarn'))) return;
       $$('.admin-nav__btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -1248,7 +1284,19 @@
       }).join('');
     }
 
-    currentProject = keys[0];
+    // Не сбрасывать currentProject, если он валиден — иначе после New Project
+    // или после удаления проекта рендерится не тот.
+    if (!currentProject || !keys.includes(currentProject)) {
+      currentProject = keys[0];
+    }
+
+    // Синхронизируем active-таб с currentProject (innerHTML выше всегда ставит
+    // active на первый таб по индексу, что неверно для не-первого проекта).
+    if (tabsContainer) {
+      tabsContainer.querySelectorAll('.project-tabs__btn').forEach(b => b.classList.remove('active'));
+      const activeTab = tabsContainer.querySelector(`.project-tabs__btn[data-proj="${currentProject}"]`);
+      if (activeTab) activeTab.classList.add('active');
+    }
   }
 
   // Sync showcaseAvailability text with availability.sold/total
@@ -2807,6 +2855,11 @@
   }
 
   async function deleteFile(path, sha, message) {
+    // Полный CDN URL Supabase — отдаём deleteImage напрямую, он выкусит path.
+    if (/\/storage\/v1\/object\/public\/images\//.test(path)) {
+      await SupabaseAdmin.deleteImage(path);
+      return { ok: true };
+    }
     const storagePath = pathToStoragePath(path);
     if (storagePath) {
       await SupabaseAdmin.deleteImage(storagePath);
@@ -3008,15 +3061,11 @@
       currentProject = slug;
       markChanged();
 
-      // Rebuild UI
+      // Rebuild UI — buildDynamicUI() сохраняет currentProject и ставит
+      // active-таб на нужный проект автоматически.
       buildDynamicUI();
       renderDashboard();
       renderProjectEditor();
-
-      // Activate the new project tab
-      $$('.project-tabs__btn').forEach(b => b.classList.remove('active'));
-      const newTab = document.querySelector(`.project-tabs__btn[data-proj="${slug}"]`);
-      if (newTab) newTab.classList.add('active');
 
       modal.remove();
     });
@@ -3288,6 +3337,7 @@
         const siteDataContent = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
         await commitFile('data/site-data.js', siteDataContent, 'Update site data: investment guide metadata');
 
+        dirtyTabs.guide = false;
         status.textContent = t('common.saved');
         status.className = 'publish-status success';
         renderGuideInfo();
@@ -3319,6 +3369,7 @@
       siteData.social.instagram = $('#social-instagram').value.trim();
       const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
       await commitFile('data/site-data.js', content, 'Update social media links via admin');
+      dirtyTabs.social = false;
       status.textContent = t('common.saved');
       status.className = 'publish-status success';
       updateRateLimit();
@@ -3376,6 +3427,7 @@
       if (existingTexts) siteData.roi.texts = existingTexts;
       const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
       await commitFile('data/site-data.js', content, 'Update ROI calculator parameters via admin');
+      dirtyTabs.roi = false;
       status.textContent = t('common.saved');
       status.className = 'publish-status success';
       updateRateLimit();
@@ -3482,6 +3534,7 @@
       }
       const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
       await commitFile('data/site-data.js', content, 'Update calculator texts via admin');
+      dirtyTabs.roi = false;
       status.textContent = t('common.saved');
       status.className = 'publish-status success';
       updateRateLimit();
@@ -3592,6 +3645,7 @@
       });
       const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
       await commitFile('data/site-data.js', content, 'Update stat labels via admin');
+      dirtyTabs.stats = false;
       status.textContent = t('common.saved');
       status.className = 'publish-status success';
       updateRateLimit();
@@ -3622,6 +3676,7 @@
       try { captureStatsLabelsPane(statsLabelsLang); } catch (e) {}
       const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
       await commitFile('data/site-data.js', content, 'Update company statistics via admin');
+      dirtyTabs.stats = false;
       status.textContent = t('common.saved');
       status.className = 'publish-status success';
       updateRateLimit();
@@ -4287,6 +4342,7 @@
       try {
         const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
         await commitFile('data/site-data.js', content, 'Update analytics settings via admin panel');
+        dirtyTabs.analytics = false;
         status.textContent = t('common.saved');
         status.className = 'publish-status success';
         updateRateLimit();
@@ -4391,9 +4447,20 @@
     updateEpPreview();
   }
 
-  // Live preview: update on every keystroke
+  // Live preview: update on every keystroke + dirty tracking
   document.querySelectorAll('.ep-live').forEach(input => {
-    input.addEventListener('input', () => { updateEpPreview(); });
+    input.addEventListener('input', () => {
+      updateEpPreview();
+      dirtyTabs.exitpopup = true;
+    });
+  });
+  // Enabled / delay тоже помечают dirty
+  ['#exitpopup-enabled', '#exitpopup-delay'].forEach(sel => {
+    const el = document.querySelector(sel);
+    if (el) {
+      const evt = el.type === 'checkbox' ? 'change' : 'input';
+      el.addEventListener(evt, () => { dirtyTabs.exitpopup = true; });
+    }
   });
 
   // Language tab switching
@@ -4437,6 +4504,7 @@
       try {
         const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
         await commitFile('data/site-data.js', content, 'Update exit popup settings via admin panel');
+        dirtyTabs.exitpopup = false;
         status.textContent = t('common.saved');
         status.className = 'publish-status success';
         updateRateLimit();
@@ -4753,6 +4821,7 @@
       try {
         const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
         await commitFile('data/site-data.js', content, 'Update tour popup settings via admin panel');
+        dirtyTabs.exitpopup = false;
         status.textContent = t('common.saved');
         status.className = 'publish-status success';
         updateRateLimit();
