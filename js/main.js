@@ -872,6 +872,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Detect subfolder pages (ru/, id/) — they use ../css/style.css
     const isSubfolder = !!document.querySelector('link[href^="../css/"]');
     const imgPathPrefix = isSubfolder ? '../' : '';
+    const isAbsoluteImgUrl = (u) => /^(https?:)?\/\//i.test(u);
     const INITIAL_COUNT = 20;
     let allCurrentItems = [];
     let visibleCount = 0;
@@ -922,7 +923,7 @@ document.addEventListener('DOMContentLoaded', () => {
       div.className = 'gallery-item';
       div.dataset.category = category;
       const img = document.createElement('img');
-      img.src = imgPathPrefix + src;
+      img.src = isAbsoluteImgUrl(src) ? src : (imgPathPrefix + src);
       img.alt = src.split('/').pop().replace(/\.[^.]+$/, '').replace(/[_-]/g, ' ');
       img.loading = 'lazy';
       const overlay = document.createElement('div');
@@ -2420,6 +2421,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     const PD = PROJECTS_DATA;
     const dataLang = lang;
     const pathPrefix = (lang !== 'en') ? '../' : '';
+    const resolveAsset = (p) => /^(https?:)?\/\//i.test(p || '') ? p : (pathPrefix + (p || ''));
 
     function fmtPrice(p) {
       if (!p) return '\u2014';
@@ -2631,7 +2633,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
           (posText ? '<span class="project-showcase__positioning">' + posText + '</span>' : '') + '</div>';
         return '<div class="project-showcase reveal" data-project="' + key + '" id="project-' + key + '">' +
           '<a href="' + proj.page + '" class="project-showcase__image">' +
-            '<img src="' + pathPrefix + (proj.showcaseImage || '') + '" alt="' + proj.name + '" loading="lazy" width="1920" height="1080">' +
+            '<img src="' + resolveAsset(proj.showcaseImage) + '" alt="' + proj.name + '" loading="lazy" width="1920" height="1080">' +
             '<span class="project-showcase__badge ' + badgeClass(proj.status) + '">' + getShowcaseBadgeText(proj) + '</span>' +
           '</a>' +
           '<div class="project-showcase__content">' +
@@ -3066,7 +3068,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
             html += '<div class="fp-floor__label">' + floor + '</div>';
           }
           if (img) {
-            var imgSrc = pathPrefix + img;
+            var imgSrc = resolveAsset(img);
             html += '<div class="fp-floor__img" data-lightbox-src="' + imgSrc + '"><img src="' + imgSrc + '" alt="' + type + ' — ' + floor + '" loading="lazy"></div>';
           } else {
             html += '<div class="fp-floor__placeholder">' + placeholderSvg + '<span>' + comingSoon + '</span></div>';
