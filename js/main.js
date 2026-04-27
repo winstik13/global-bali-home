@@ -300,7 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
           'Rental income': 'Exclusive estates from $310K with private pools and up to 250m² — premium nightly rates and high-end guests.',
           'Personal residence': 'Spacious estates from $310K with private pools, fish ponds, and panoramic rice terrace views — luxury living.',
           'Long-term investment': 'Only 4 exclusive estates from $310K — limited collection with strong value appreciation in Bali\'s top location.',
-          'default': 'Exclusive 2-4.5 bedroom estates from $310K with private pools and panoramic views.'
+          'default': 'Exclusive 2-5 bedroom estates from $310K with private pools and panoramic views.'
         }
       }
     },
@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
           'Rental income': 'Эксклюзивные эстейты от $310K с приватными бассейнами и площадью до 250 м² — премиальные ставки аренды.',
           'Personal residence': 'Просторные эстейты от $310K с приватными бассейнами, прудами и панорамным видом на рисовые террасы.',
           'Long-term investment': 'Всего 4 эксклюзивных эстейта от $310K — лимитированная коллекция с высоким потенциалом роста.',
-          'default': 'Эксклюзивные эстейты 2–4.5 спален от $310K с приватными бассейнами и панорамными видами.'
+          'default': 'Эксклюзивные эстейты 2–5 спален от $310K с приватными бассейнами и панорамными видами.'
         }
       }
     }

@@ -1609,7 +1609,7 @@
         html += `<tr>
           <td data-label="${t('projects.unit')}"><input type="text" data-unit="${i}" data-field="id" class="unit-text" value="${escAttr(u.id)}" style="width:48px"></td>
           <td data-label="${t('projects.type')}"><select data-unit="${i}" data-field="type" class="unit-text-sel">
-            ${['1 Bedroom', '2 Bedroom', '3 Bedroom', '4 Bedroom', '4.5 Bedroom', '5 Bedroom'].map(v => `<option value="${v}"${u.type === v ? ' selected' : ''}>${v}</option>`).join('')}
+            ${['1 Bedroom', '2 Bedroom', '3 Bedroom', '4 Bedroom', '5 Bedroom'].map(v => `<option value="${v}"${u.type === v ? ' selected' : ''}>${v}</option>`).join('')}
           </select></td>
           <td data-label="${t('projects.floors')}"><input type="number" data-unit="${i}" data-field="floors" class="unit-text" value="${u.floors}" style="width:48px" min="1" max="5"></td>
           <td data-label="${t('projects.area')}"><div class="unit-suffix"><input type="number" data-unit="${i}" data-field="area" class="unit-text" value="${parseFloat(u.area) || ''}" style="width:56px" min="0" step="1"><span>m²</span></div></td>
