@@ -838,21 +838,12 @@
     }
   }
 
-  // ─── Firebase Config ───
-  // Replace with your Firebase project config from console.firebase.google.com
-  const FIREBASE_CONFIG = {
-    apiKey: 'AIzaSyBuvItBRQT7mRdsIISEsWI_gJSVYzjlbwE',
-    authDomain: 'gbhproject-d8c12.firebaseapp.com',
-    projectId: 'gbhproject-d8c12'
-  };
-
-  // ─── GitHub Config ───
-  const GITHUB_OWNER = 'winstik13';
-  const GITHUB_REPO = 'global-bali-home';
-  const GITHUB_API = 'https://api.github.com';
+  // ─── Auth backend: Supabase (см. admin/supabase-client.js) ───
+  // GitHub PAT и Firebase больше не используются — данные и картинки в Supabase,
+  // публикация — через build pipeline на Vercel (push не нужен).
 
   // ─── State ───
-  let githubPAT = '';
+  let currentUser = null;       // { id, email, full_name, role, is_active }
   let currentProject = 'serenity-villas';
   let projectsData = null;    // working copy of PROJECTS_DATA
   let pendingChanges = false;
@@ -923,67 +914,38 @@
   }
 
   const loginScreen = $('#login-screen');
-  const patScreen = $('#pat-screen');
   const adminApp = $('#admin-app');
   const loginForm = $('#login-form');
   const loginError = $('#login-error');
-  const patForm = $('#pat-form');
-  const patError = $('#pat-error');
 
-  // ─── Init Firebase ───
-  if (typeof firebase === 'undefined') {
-    loginError.textContent = t('auth.failed');
-    loginError.hidden = false;
-    return;
-  }
-
-  // Warn if opened via file:// (Firebase requires http/https)
-  if (location.protocol === 'file:') {
-    loginError.innerHTML = 'Admin panel requires a web server.<br>Use <b>Live Server</b> in VS Code or open from GitHub Pages.';
-    loginError.hidden = false;
-  }
-
-  let auth;
-  try {
-    firebase.initializeApp(FIREBASE_CONFIG);
-    auth = firebase.auth();
-  } catch (err) {
-    console.error('Firebase init error:', err);
-    loginError.textContent = 'Firebase init error: ' + err.message;
+  // ─── Supabase client check ───
+  if (typeof window.SupabaseAdmin === 'undefined') {
+    loginError.textContent = 'Auth client (supabase-client.js) не загружен.';
     loginError.hidden = false;
     return;
   }
 
   // ─── Auth State ───
-  auth.onAuthStateChanged(user => {
+  // Bootstrap: проверяем сессию при загрузке. Дальше слушаем onAuthStateChange.
+  (async () => {
     const authLoading = $('#auth-loading');
+    const ctx = await SupabaseAdmin.getCurrentUser();
     if (authLoading) authLoading.remove();
-    if (user) {
-      loginScreen.hidden = true;
-      $('#admin-user').textContent = user.email;
+    if (ctx) {
+      currentUser = ctx.profile;
+      $('#admin-user').textContent = currentUser.email;
       startRateUpdates();
-      // Check for stored PAT
-      githubPAT = localStorage.getItem('gbh_pat') || sessionStorage.getItem('gbh_pat') || '';
-      if (githubPAT) {
-        validatePAT(githubPAT).then(valid => {
-          if (valid) {
-            showAdmin();
-          } else {
-            localStorage.removeItem('gbh_pat');
-            sessionStorage.removeItem('gbh_pat');
-            githubPAT = '';
-            showPATScreen();
-          }
-        }).catch(err => {
-          console.error('PAT validation error:', err);
-          showPATScreen();
-        });
-      } else {
-        showPATScreen();
-      }
+      showAdmin();
     } else {
       loginScreen.hidden = false;
-      patScreen.hidden = true;
+      adminApp.hidden = true;
+    }
+  })();
+
+  SupabaseAdmin.onAuthStateChange(async (event, session) => {
+    if (event === 'SIGNED_OUT' || !session) {
+      currentUser = null;
+      loginScreen.hidden = false;
       adminApp.hidden = true;
     }
   });
@@ -992,16 +954,30 @@
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     loginError.hidden = true;
-    const email = $('#login-email').value;
+    const email = $('#login-email').value.trim();
     const password = $('#login-password').value;
     const btn = loginForm.querySelector('button[type="submit"]');
     btn.disabled = true;
     btn.textContent = t('login.signingIn');
     try {
-      await auth.signInWithEmailAndPassword(email, password);
+      await SupabaseAdmin.login(email, password);
+      const ctx = await SupabaseAdmin.getCurrentUser();
+      if (!ctx) throw new Error('No profile linked to this account');
+      currentUser = ctx.profile;
+      $('#admin-user').textContent = currentUser.email;
+      loginScreen.hidden = true;
+      startRateUpdates();
+      showAdmin();
     } catch (err) {
       console.error('Login error:', err);
-      loginError.textContent = friendlyError(err.code);
+      const msg = (err.message || '').toLowerCase();
+      if (msg.includes('invalid') || msg.includes('credential')) {
+        loginError.textContent = t('auth.invalidCredential');
+      } else if (msg.includes('rate') || msg.includes('too many')) {
+        loginError.textContent = t('auth.tooManyRequests');
+      } else {
+        loginError.textContent = err.message || t('auth.failed');
+      }
       loginError.hidden = false;
     } finally {
       btn.disabled = false;
@@ -1009,64 +985,40 @@
     }
   });
 
-  function friendlyError(code) {
-    const map = {
-      'auth/wrong-password': t('auth.wrongPassword'),
-      'auth/user-not-found': t('auth.userNotFound'),
-      'auth/too-many-requests': t('auth.tooManyRequests'),
-      'auth/invalid-email': t('auth.invalidEmail'),
-      'auth/invalid-credential': t('auth.invalidCredential')
-    };
-    return map[code] || t('auth.failed');
-  }
-
-  // ─── PAT Screen ───
-  function showPATScreen() {
-    loginScreen.hidden = true;
-    patScreen.hidden = false;
-    adminApp.hidden = true;
-  }
-
-  patForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    patError.hidden = true;
-    const pat = $('#pat-input').value.trim();
-    const valid = await validatePAT(pat);
-    if (valid) {
-      githubPAT = pat;
-      if ($('#pat-remember').checked) {
-        localStorage.setItem('gbh_pat', pat);
-      } else {
-        sessionStorage.setItem('gbh_pat', pat);
-      }
-      showAdmin();
-    } else {
-      patError.textContent = t('pat.error');
-      patError.hidden = false;
-    }
-  });
-
-  async function validatePAT(pat) {
-    try {
-      const res = await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}`, {
-        headers: { 'Authorization': `token ${pat}` }
-      });
-      return res.ok;
-    } catch { return false; }
-  }
-
   // ─── Logout ───
-  $('#btn-logout').addEventListener('click', () => {
-    auth.signOut();
-    localStorage.removeItem('gbh_pat');
-    sessionStorage.removeItem('gbh_pat');
-    githubPAT = '';
+  $('#btn-logout').addEventListener('click', async () => {
+    await SupabaseAdmin.logout();
+    currentUser = null;
+    loginScreen.hidden = false;
+    adminApp.hidden = true;
   });
 
   // ─── Show Admin ───
-  function showAdmin() {
-    patScreen.hidden = true;
+  async function showAdmin() {
     adminApp.hidden = false;
+
+    // Загружаем все 5 JSON-блоков из Supabase одним запросом и кладём
+    // в глобалы (SITE_DATA, PROJECTS_DATA, FAQ_DATA, TESTIMONIALS_DATA, GALLERY_DATA),
+    // которые ожидает остальной legacy-код админки.
+    try {
+      const all = await SupabaseAdmin.getAllContent();
+      window.SITE_DATA         = all.site         || {};
+      window.PROJECTS_DATA     = all.projects     || {};
+      window.FAQ_DATA          = all.faq          || [];
+      window.TESTIMONIALS_DATA = all.testimonials || [];
+      window.GALLERY_DATA      = all.gallery      || { villas: [], estates: [], village: [] };
+    } catch (err) {
+      console.error('[admin] Failed to load content from Supabase:', err);
+      alert('Не удалось загрузить данные сайта: ' + err.message);
+      return;
+    }
+
+    // Покажем Users-tab только super_admin'у
+    if (currentUser && currentUser.role === 'super_admin') {
+      document.querySelectorAll('[data-super-admin-only]').forEach(el => el.hidden = false);
+      initUsersTab();
+    }
+
     loadProjectsData();
     loadSiteData();
     translateUI();
@@ -1085,7 +1037,6 @@
     renderColorsTab();
     loadFaqData();
     loadTestimonialsData();
-    updateRateLimit();
     // Restore last active tab
     try {
       const savedTab = localStorage.getItem('admin_active_tab');
@@ -2019,8 +1970,7 @@
       });
     });
 
-    // Add generate pages button
-    addGeneratePagesButton();
+    // Generate Pages button removed — landing pages поддерживаются вручную (см. ниже).
   }
 
   function recalcAvailability() {
@@ -2632,7 +2582,20 @@
     }
   }
 
-  // ─── GitHub API Helpers ───
+  // ─── Storage / Content Adapter (Supabase) ───
+  // Сохраняем legacy-сигнатуры fetchFile / commitFile / deleteFile, чтобы
+  // не править вызовы по всему файлу. Внутри маппим на SupabaseAdmin.
+  //
+  // Маппинг path → key (для site_content table):
+  //   data/site-data.js         → 'site'
+  //   data/projects-data.js     → 'projects'
+  //   data/faq-data.js          → 'faq'
+  //   data/testimonials-data.js → 'testimonials'
+  //   gallery-data.js           → 'gallery'
+  //   images/<project>/<file>   → Storage upload в gallery/<project>/<file>
+  //   *.html                    → SEO tab временно отключён (см. saveAllSEO)
+  //   assets/*.pdf              → Storage upload в assets/<file>
+
   function decodeBase64UTF8(base64) {
     const binary = atob(base64.replace(/\s/g, ''));
     const bytes = new Uint8Array(binary.length);
@@ -2640,438 +2603,111 @@
     return new TextDecoder('utf-8').decode(bytes);
   }
 
+  function pathToContentKey(path) {
+    if (path === 'gallery-data.js') return 'gallery';
+    const m = path.match(/^data\/(site|projects|faq|testimonials)-data\.js$/);
+    return m ? m[1] : null;
+  }
+
+  function pathToStoragePath(path) {
+    // images/<project>/plans/<name>      → plans/<project>/<name>
+    // images/testimonials/<name>         → testimonials/<name>
+    // images/<project>/<name>            → gallery/<project>/<name>
+    // assets/<file>                      → assets/<file>
+    const plan = path.match(/^images\/([^/]+)\/plans\/(.+)$/);
+    if (plan) return `plans/${plan[1]}/${plan[2]}`;
+    const test = path.match(/^images\/testimonials\/(.+)$/);
+    if (test) return `testimonials/${test[1]}`;
+    const img = path.match(/^images\/([^/]+)\/(.+)$/);
+    if (img) return `gallery/${img[1]}/${img[2]}`;
+    if (path.startsWith('assets/')) return path;
+    return null;
+  }
+
+  function base64ToBlob(b64, mime) {
+    const bin = atob(b64.replace(/\s/g, ''));
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new Blob([bytes], { type: mime || 'application/octet-stream' });
+  }
+
+  // Парсит content вида `const X = {...};` и возвращает объект.
+  // Используется когда legacy-код собирает текст файла перед commit'ом.
+  function parseDataFileContent(content) {
+    const cleaned = String(content)
+      .replace(/^\/\*[\s\S]*?\*\/\s*/g, '')
+      .replace(/^\s*const\s+\w+\s*=\s*/, '')
+      .replace(/;\s*$/, '');
+    return Function('"use strict";return (' + cleaned + ')')();
+  }
+
   async function fetchFile(path) {
-    const res = await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`, {
-      headers: { 'Authorization': `token ${githubPAT}` }
-    });
-    if (!res.ok) throw new Error(`Failed to fetch ${path}: ${res.status}`);
-    return res.json();
+    // Legacy GitHub API возвращал { content, sha }. Используется в основном
+    // для получения SHA перед PUT. С Supabase SHA не нужен — отдаём stub.
+    // Для HTML-файлов (SEO tab) добавим явный throw — saveAllSEO его поймает.
+    if (/\.html$/.test(path)) {
+      throw new Error('SEO editing temporarily disabled (HTML files no longer fetched via API)');
+    }
+    return { sha: null, content: '' };
   }
 
   async function commitFile(path, content, message, sha, base64Content) {
-    return withCommitLock(path, async () => {
-      const MAX_RETRIES = 2;
-      for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
-        // Get current SHA if not provided (or refresh on retry)
-        if (!sha || attempt > 0) {
-          try {
-            const existing = await fetchFile(path);
-            sha = existing.sha;
-          } catch { sha = null; /* new file */ }
-        }
+    // 1) Image / asset upload
+    const storagePath = pathToStoragePath(path);
+    if (storagePath && base64Content) {
+      const mime = path.endsWith('.webp') ? 'image/webp'
+                 : path.endsWith('.pdf') ? 'application/pdf'
+                 : path.match(/\.jpe?g$/i) ? 'image/jpeg'
+                 : 'application/octet-stream';
+      const blob = base64ToBlob(base64Content, mime);
+      const url = await SupabaseAdmin.uploadImage(storagePath, blob, mime);
+      return { url, path: storagePath };
+    }
 
-        const body = {
-          message,
-          content: base64Content || btoa(unescape(encodeURIComponent(content))),
-        };
-        if (sha) body.sha = sha;
+    // 2) JSON content blocks
+    const key = pathToContentKey(path);
+    if (key) {
+      const data = parseDataFileContent(content);
+      await SupabaseAdmin.setContent(key, data);
+      // Пишем audit log для крупных операций
+      SupabaseAdmin.logAudit('content.update', key, { message: message || null });
+      return { ok: true };
+    }
 
-        const res = await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`, {
-          method: 'PUT',
-          headers: {
-            'Authorization': `token ${githubPAT}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(body)
-        });
+    // 3) HTML files (SEO tab) — временно недоступно
+    if (/\.html$/.test(path)) {
+      throw new Error('SEO HTML editing is temporarily disabled. Coming back soon.');
+    }
 
-        if (res.ok) return res.json();
-
-        // Retry on 409 Conflict (SHA mismatch)
-        if (res.status === 409 && attempt < MAX_RETRIES) {
-          sha = null;
-          continue;
-        }
-
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.message || `HTTP ${res.status}`);
-      }
-    });
+    throw new Error(`commitFile: unsupported path "${path}"`);
   }
 
   async function deleteFile(path, sha, message) {
-    const res = await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `token ${githubPAT}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ message, sha })
-    });
-    if (!res.ok) throw new Error(`Failed to delete: ${res.status}`);
-    return res.json();
-  }
-
-  async function updateRateLimit() {
-    try {
-      const res = await fetch(`${GITHUB_API}/rate_limit`, {
-        headers: { 'Authorization': `token ${githubPAT}` }
-      });
-      const data = await res.json();
-      const remaining = data.resources.core.remaining;
-      const limit = data.resources.core.limit;
-      $('#rate-limit').textContent = `API: ${remaining}/${limit} requests remaining`;
-    } catch { /* ignore */ }
-    checkDeployStatus();
-  }
-
-  // ─── Deploy Status Indicator ───
-  let deployPollTimer = null;
-
-  async function checkDeployStatus() {
-    const el = $('#deploy-status');
-    if (!el) return;
-    try {
-      const res = await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/actions/runs?per_page=1&branch=master`, {
-        headers: { 'Authorization': `token ${githubPAT}` }
-      });
-      if (!res.ok) return;
-      const data = await res.json();
-      const run = data.workflow_runs && data.workflow_runs[0];
-      if (!run) return;
-
-      const dot = el.querySelector('.admin-header__deploy-dot');
-      const txt = el.querySelector('.admin-header__deploy-text');
-      el.hidden = false;
-
-      if (run.status === 'in_progress' || run.status === 'queued' || run.status === 'waiting') {
-        el.className = 'admin-header__deploy admin-header__deploy--pending';
-        txt.setAttribute('data-i18n', 'deploy.deploying');
-        txt.textContent = t('deploy.deploying');
-        // Poll every 15s
-        if (deployPollTimer) clearTimeout(deployPollTimer);
-        deployPollTimer = setTimeout(checkDeployStatus, 15000);
-      } else if (run.conclusion === 'success') {
-        el.className = 'admin-header__deploy admin-header__deploy--success';
-        txt.setAttribute('data-i18n', 'deploy.live');
-        txt.textContent = t('deploy.live');
-        if (deployPollTimer) { clearTimeout(deployPollTimer); deployPollTimer = null; }
-        // Hide after 30s
-        setTimeout(() => { el.hidden = true; }, 30000);
-      } else {
-        el.className = 'admin-header__deploy admin-header__deploy--failed';
-        txt.setAttribute('data-i18n', 'deploy.failed');
-        txt.textContent = t('deploy.failed');
-        if (deployPollTimer) { clearTimeout(deployPollTimer); deployPollTimer = null; }
-      }
-    } catch { /* ignore — no Actions access or network error */ }
-  }
-
-  // ─── Generate Detail Pages ───
-  function getLangConfigs(p) {
-    return [
-      { lang: 'en', langFull: 'English', prefix: '', htmlLang: 'en', path: p.page },
-      { lang: 'ru', langFull: 'Русский', prefix: '../', htmlLang: 'ru', path: `ru/${p.page}` },
-      { lang: 'id', langFull: 'Bahasa Indonesia', prefix: '../', htmlLang: 'id', path: `id/${p.page}` },
-    ];
-  }
-
-  function addGeneratePagesButton() {
-    const actions = $('.editor-actions');
-    if (!actions) return;
-    // Remove existing buttons
-    const existing = $('#btn-generate-pages');
-    if (existing) existing.remove();
-    const existingSeo = $('#btn-update-seo-only');
-    if (existingSeo) existingSeo.remove();
-
-    const btn = document.createElement('button');
-    btn.id = 'btn-generate-pages';
-    btn.className = 'btn btn--outline';
-    btn.textContent = t('projects.generatePages');
-    actions.appendChild(btn);
-
-    const btnSeo = document.createElement('button');
-    btnSeo.id = 'btn-update-seo-only';
-    btnSeo.className = 'btn btn--outline';
-    btnSeo.textContent = t('projects.updateSeoOnly');
-    actions.appendChild(btnSeo);
-
-    // Generate full pages
-    btn.addEventListener('click', async () => {
-      const p = projectsData[currentProject];
-      if (!p) return;
-
-      // Check if pages already exist
-      let pageExists = false;
-      try { await fetchFile(p.page); pageExists = true; } catch { /* new file */ }
-
-      if (pageExists) {
-        const msg = t('projects.overwriteWarn').replace('{name}', p.name);
-        if (!confirm(msg)) return;
-      }
-
-      btnLoading(btn, true);
-      const status = $('#publish-status');
-
-      try {
-        const langConfigs = getLangConfigs(p);
-        let generated = 0;
-        for (const cfg of langConfigs) {
-          const html = buildDetailPage(p, currentProject, cfg);
-          let sha;
-          try { sha = (await fetchFile(cfg.path)).sha; } catch { /* new */ }
-          await commitFile(cfg.path, html, `Generate detail page: ${p.name} (${cfg.lang})`, sha);
-          generated++;
-          status.textContent = `Generating... ${generated}/${langConfigs.length}`;
-        }
-        status.textContent = `${generated} pages generated!`;
-        status.className = 'publish-status success';
-      } catch (err) {
-        status.textContent = t('common.error') + err.message;
-        status.className = 'publish-status error';
-      }
-      btnLoading(btn, false);
-      updateRateLimit();
-    });
-
-    // Update SEO only — preserve page content, update only meta tags
-    btnSeo.addEventListener('click', async () => {
-      const p = projectsData[currentProject];
-      if (!p) return;
-
-      btnLoading(btnSeo, true);
-      const status = $('#publish-status');
-      status.textContent = '';
-      status.className = 'publish-status';
-
-      try {
-        const langConfigs = getLangConfigs(p);
-        let updated = 0;
-
-        for (const cfg of langConfigs) {
-          let file;
-          try { file = await fetchFile(cfg.path); } catch { continue; } // skip if page doesn't exist
-
-          let html = decodeBase64UTF8(file.content);
-          const desc = (p.showcaseDesc && (p.showcaseDesc[cfg.lang] || p.showcaseDesc.en)) || p.name;
-          const image = p.showcaseImage ? `https://winstik13.github.io/global-bali-home/${p.showcaseImage}` : '';
-
-          html = replaceMeta(html, 'title', `${p.name} — Global Bali Home`);
-          html = replaceMeta(html, 'description', desc);
-          html = replaceMeta(html, 'ogTitle', `${p.name} — Global Bali Home`);
-          html = replaceMeta(html, 'ogDescription', desc);
-          if (image) html = replaceMeta(html, 'ogImage', image);
-          // Update JSON-LD price
-          if (p.startingPrice) {
-            html = html.replace(/"lowPrice":\s*"[^"]*"/, `"lowPrice": "${p.startingPrice}"`);
-          }
-
-          await commitFile(cfg.path, html, `Update SEO: ${p.name} (${cfg.lang})`, file.sha);
-          updated++;
-          status.textContent = `Updating SEO... ${updated}/${langConfigs.length}`;
-        }
-
-        status.textContent = updated ? `SEO updated for ${updated} pages!` : 'No existing pages found';
-        status.className = 'publish-status success';
-      } catch (err) {
-        status.textContent = t('common.error') + err.message;
-        status.className = 'publish-status error';
-      }
-      btnLoading(btnSeo, false);
-      updateRateLimit();
-    });
-  }
-
-  const PAGE_LABELS = {
-    en: { home: 'Home', projects: 'Projects', services: 'Services', about: 'About', gallery: 'Gallery', contact: 'Contact', findVilla: 'Find My Villa', nav: 'Navigation', concept: 'The Concept', conceptTitle: 'About This Project', availability: 'Availability', unitSelection: 'Unit Selection', galleryTitle: 'Project Images', viewPhotos: 'View Photos', interested: 'Interested in', getConsult: 'Get a Consultation', wantToSee: 'Want to see it in person?', scheduleTour: 'Schedule a Private Tour', investmentDetails: 'Investment Details', footer: 'Global Bali Home is an international real estate company focused on the development of high-quality properties in Bali.', copyright: '&copy; 2024–2026 Global Bali Home. All rights reserved.' },
-    ru: { home: 'Главная', projects: 'Проекты', services: 'Услуги', about: 'О нас', gallery: 'Галерея', contact: 'Контакты', findVilla: 'Найти виллу', nav: 'Навигация', concept: 'Концепция', conceptTitle: 'О проекте', availability: 'Доступность', unitSelection: 'Выбор юнитов', galleryTitle: 'Фотографии проекта', viewPhotos: 'Смотреть фото', interested: 'Интересует', getConsult: 'Получить консультацию', wantToSee: 'Хотите увидеть лично?', scheduleTour: 'Записаться на приватный тур', investmentDetails: 'Детали инвестиций', footer: 'Global Bali Home — международная компания по строительству премиальной недвижимости на Бали.', copyright: '&copy; 2024–2026 Global Bali Home. Все права защищены.' },
-    id: { home: 'Beranda', projects: 'Proyek', services: 'Layanan', about: 'Tentang', gallery: 'Galeri', contact: 'Kontak', findVilla: 'Temukan Villa', nav: 'Navigasi', concept: 'Konsep', conceptTitle: 'Tentang Proyek Ini', availability: 'Ketersediaan', unitSelection: 'Pilihan Unit', galleryTitle: 'Galeri Proyek', viewPhotos: 'Lihat Foto', interested: 'Tertarik dengan', getConsult: 'Hubungi Kami', wantToSee: 'Ingin melihat langsung?', scheduleTour: 'Jadwalkan Tur Pribadi', investmentDetails: 'Detail Investasi', footer: 'Global Bali Home adalah perusahaan real estate internasional yang fokus pada pengembangan properti berkualitas tinggi di Bali.', copyright: '&copy; 2024–2026 Global Bali Home. Hak cipta dilindungi.' },
-  };
-
-  function buildDetailPage(proj, slug, cfg) {
-    const L = PAGE_LABELS[cfg.lang] || PAGE_LABELS.en;
-    const p = cfg.prefix;
-    const BASE_URL = 'https://winstik13.github.io/global-bali-home';
-    const pageUrl = `${BASE_URL}/${proj.page}`;
-    const desc = (proj.showcaseDesc && (proj.showcaseDesc[cfg.lang] || proj.showcaseDesc.en)) || proj.name;
-    const subtitle = (proj.showcaseSubtitle && (proj.showcaseSubtitle[cfg.lang] || proj.showcaseSubtitle.en)) || '';
-    const image = proj.showcaseImage ? `${BASE_URL}/${proj.showcaseImage}` : '';
-
-    // Lang switcher
-    const langLinks = [
-      { lang: 'en', label: 'English', href: `${p}${proj.page}` },
-      { lang: 'id', label: 'Bahasa Indonesia', href: `${cfg.lang === 'en' ? 'id/' : (cfg.lang === 'id' ? '' : '../id/')}${proj.page}` },
-      { lang: 'ru', label: 'Русский', href: `${cfg.lang === 'en' ? 'ru/' : (cfg.lang === 'ru' ? '' : '../ru/')}${proj.page}` },
-    ];
-    const langToggleLabel = cfg.lang === 'en' ? 'EN' : cfg.lang === 'ru' ? 'RU' : 'ID';
-    const langDropdown = langLinks.map(l =>
-      l.lang === cfg.lang ? `<span class="active">${l.label}</span>` : `<a href="${l.href}">${l.label}</a>`
-    ).join('');
-
-    return `<!DOCTYPE html>
-<html lang="${cfg.htmlLang}">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="${escAttr(desc)}">
-  <title>${escAttr(proj.name)} — Global Bali Home</title>
-  <link rel="icon" href="${p}images/common/favicon.ico">
-  <link rel="canonical" href="${pageUrl}">
-  <link rel="alternate" hreflang="en" href="${BASE_URL}/${proj.page}">
-  <link rel="alternate" hreflang="ru" href="${BASE_URL}/ru/${proj.page}">
-  <link rel="alternate" hreflang="id" href="${BASE_URL}/id/${proj.page}">
-  <link rel="alternate" hreflang="x-default" href="${BASE_URL}/${proj.page}">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="${escAttr(proj.name)} — Global Bali Home">
-  <meta property="og:description" content="${escAttr(desc)}">
-  ${image ? `<meta property="og:image" content="${escAttr(image)}">` : ''}
-  <meta property="og:url" content="${pageUrl}">
-  <meta property="og:site_name" content="Global Bali Home">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="${escAttr(proj.name)} — Global Bali Home">
-  <meta name="twitter:description" content="${escAttr(desc)}">
-  ${image ? `<meta name="twitter:image" content="${escAttr(image)}">` : ''}
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="${p}css/reset.css">
-  <link rel="stylesheet" href="${p}css/style.css">
-</head>
-<body>
-
-  <header class="header header--transparent">
-    <div class="container">
-      <a href="index.html" class="header__logo"><img src="${p}images/common/logo-transparent.png" alt="GlobalBaliHome" width="1000" height="740"></a>
-      <nav class="header__nav">
-        <a href="index.html">${L.home}</a>
-        <a href="projects.html">${L.projects}</a>
-        <a href="services.html">${L.services}</a>
-        <a href="about.html">${L.about}</a>
-        <a href="gallery.html">${L.gallery}</a>
-        <a href="contacts.html">${L.contact}</a>
-      </nav>
-      <div class="header__lang"><button class="header__lang-toggle">${langToggleLabel} <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></button><div class="header__lang-dropdown">${langDropdown}</div></div>
-      <button class="header__cta btn btn--outline" data-quiz>${L.findVilla}</button>
-      <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
-    </div>
-  </header>
-
-  <section class="fullbleed-hero">
-    <div class="fullbleed-hero__bg"${proj.showcaseImage ? ` style="background-image: url('${p}${proj.showcaseImage}');"` : ''}></div>
-    <div class="fullbleed-hero__overlay"></div>
-    <div class="fullbleed-hero__top">
-      <div class="container">
-        <p class="page-hero__subtitle">${escAttr(subtitle)}</p>
-        <h1>${proj.name}</h1>
-        <div class="hero-stats" data-project="${slug}"></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section bg-alt">
-    <div class="container">
-      <div class="split-section reveal">
-        <div class="split-section__content" style="max-width:100%">
-          <span class="section-header__tag">${L.concept}</span>
-          <h2>${L.conceptTitle}</h2>
-          <p>${escAttr(desc)}</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-header__tag">${L.availability}</span>
-        <h2>${L.unitSelection}</h2>
-      </div>
-      <div class="availability-bar reveal" data-project="${slug}"></div>
-      <div class="reveal">
-        <div class="table-wrap"><table class="unit-table" data-project="${slug}"></table></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Gallery -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-header__tag">${L.gallery}</span>
-        <h2>${L.galleryTitle}</h2>
-      </div>
-      <div class="photo-mosaic reveal-stagger" data-project-gallery="${slug}"></div>
-      <div class="photo-mosaic__more reveal">
-        <a href="gallery.html#${slug.replace('serenity-', '')}" class="btn btn--outline">${L.viewPhotos}</a>
-      </div>
-      <div class="tour-cta-inline reveal">
-        <p>${L.wantToSee}</p>
-        <button class="btn btn--primary" data-tour="${escAttr(proj.name)}">${L.scheduleTour}</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ROI Calculator (auto-rendered) -->
-  <section data-roi-calc data-project="${slug}"></section>
-
-  <section class="cta-section logo-watermark logo-watermark--right">
-    <div class="container reveal">
-      <h2>${L.interested} ${proj.name}?</h2>
-      <p>${escAttr(desc)}</p>
-      <button class="btn btn--primary" data-tour="${escAttr(proj.name)}">${L.scheduleTour}</button>
-      <button class="btn btn--outline" data-quiz style="margin-left:12px;">${L.investmentDetails}</button>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div class="container">
-      <div class="footer__grid">
-        <div class="footer__brand">
-          <img src="${p}images/common/logo-transparent.png" alt="GlobalBaliHome" loading="lazy" width="1000" height="740">
-          <p>${L.footer}</p>
-        </div>
-        <div>
-          <h4 class="footer__heading">${L.nav}</h4>
-          <div class="footer__links"><a href="projects.html">${L.projects}</a><a href="services.html">${L.services}</a><a href="about.html">${L.about}</a><a href="gallery.html">${L.gallery}</a><a href="contacts.html">${L.contact}</a></div>
-        </div>
-        <div>
-          <h4 class="footer__heading">${L.projects}</h4>
-          <div class="footer__links" data-footer-projects><a href="project-serenity-villas.html">Serenity Villas</a><a href="project-serenity-estates.html">Serenity Estates</a><a href="project-serenity-village.html">Serenity Village</a></div>
-        </div>
-        <div>
-          <h4 class="footer__heading">${L.contact}</h4>
-          <p class="footer__contact-item" data-contact="phone">+62 813 251 438 49</p>
-          <p class="footer__contact-item" data-contact="email">office@globalbalihome.com</p>
-          <p class="footer__contact-item" data-contact="location">Bali, Indonesia</p>
-          <div class="footer__social"><a href="https://www.facebook.com/serenityvillasbali" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a><a href="https://www.instagram.com/serenity_villas_bali" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5"/></svg></a></div>
-        </div>
-      </div>
-      <div class="footer__bottom">${L.copyright}</div>
-    </div>
-  </footer>
-
-  <a href="https://wa.me/6281338741177" class="whatsapp-float" data-contact="whatsapp-link" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-  </a>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "RealEstateListing",
-    "name": "${escAttr(proj.name)}",
-    "description": "${escAttr(desc)}",
-    "url": "${pageUrl}",
-    ${image ? `"image": "${escAttr(image)}",` : ''}
-    "offers": {
-      "@type": "AggregateOffer",
-      "lowPrice": "${proj.startingPrice || 0}",
-      "priceCurrency": "USD"
-    },
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Bali",
-      "addressRegion": "Bali",
-      "addressCountry": "ID"
+    const storagePath = pathToStoragePath(path);
+    if (storagePath) {
+      await SupabaseAdmin.deleteImage(storagePath);
+      return { ok: true };
     }
+    // HTML files etc. — больше не удаляем через админку
+    throw new Error(`deleteFile: unsupported path "${path}"`);
   }
-  </script>
-  <script src="${p}data/projects-data.js" defer></script>
-  <script src="${p}data/site-data.js" defer></script>
-  <script src="${p}gallery-data.js" defer></script>
-  <script src="${p}js/main.js" defer></script>
-</body>
-</html>`;
+
+  // GitHub rate limit / Actions deploy poller — больше не нужны.
+  // Vercel deploy запускается webhook'ом из Supabase автоматически после
+  // setContent. UI-стрелка прогресса деплоя пока скрыта.
+  function updateRateLimit() {
+    const el = $('#rate-limit');
+    if (el) el.textContent = '';
+    const ds = $('#deploy-status');
+    if (ds) ds.hidden = true;
   }
+
+  // ─── Removed: Generate Detail Pages (buildDetailPage / PAGE_LABELS / getLangConfigs / addGeneratePagesButton) ───
+  // Project landing pages (project-*.html × 3 languages) теперь поддерживаются
+  // вручную через Cursor/Claude — это лучше для SEO (custom titles, descriptions,
+  // service cards, Trust block, Place section и т.д. — все ручные оптимизации).
+  // Кнопка "Generate Pages" в редакторе проекта больше не добавляется.
+
 
   // ─── New Project Modal ───
   function showNewProjectModal() {
@@ -5016,6 +4652,121 @@
   // ─── Helpers ───
   function escAttr(str) {
     return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  // ─── Users tab (super_admin only) ───
+  // Инициализируется из showAdmin() если currentUser.role === 'super_admin'.
+  // Вкладка скрыта от editor/admin (data-super-admin-only в index.html).
+  let usersInited = false;
+  async function initUsersTab() {
+    if (usersInited) return;
+    usersInited = true;
+
+    const inviteForm = $('#invite-form');
+    const inviteStatus = $('#invite-status');
+    const usersTable = $('#users-table');
+
+    function setStatus(text, kind) {
+      inviteStatus.textContent = text || '';
+      inviteStatus.className = 'publish-status' + (kind ? ' ' + kind : '');
+    }
+
+    async function refresh() {
+      usersTable.innerHTML = '<div class="admin-loader"><div class="admin-loader__spinner"></div></div>';
+      try {
+        const users = await SupabaseAdmin.listUsers();
+        usersTable.innerHTML = renderUsersTable(users);
+        bindUsersTableEvents();
+      } catch (err) {
+        usersTable.innerHTML = '<div class="publish-status error">' + escapeHtml(err.message) + '</div>';
+      }
+    }
+
+    function renderUsersTable(users) {
+      if (!users.length) return '<p>No team members yet.</p>';
+      const rows = users.map(u => {
+        const isSelf = currentUser && u.id === currentUser.id;
+        const status = !u.is_active ? 'deactivated'
+                     : !u.email_confirmed_at && u.invited_at ? 'invited (pending)'
+                     : 'active';
+        const lastSeen = u.last_sign_in_at
+          ? new Date(u.last_sign_in_at).toLocaleString()
+          : '—';
+        const roleSelect = (u.role === 'super_admin' || isSelf)
+          ? `<span>${escapeHtml(u.role)}</span>`
+          : `<select data-change-role="${u.id}">
+               <option value="editor"${u.role === 'editor' ? ' selected' : ''}>editor</option>
+               <option value="admin"${u.role === 'admin' ? ' selected' : ''}>admin</option>
+             </select>`;
+        const deleteBtn = (u.role === 'super_admin' || isSelf)
+          ? ''
+          : `<button class="btn btn--outline btn--sm" data-delete-user="${u.id}" data-email="${escAttr(u.email)}">Delete</button>`;
+        return `<tr>
+          <td>${escapeHtml(u.email)}${isSelf ? ' <span class="badge">you</span>' : ''}</td>
+          <td>${escapeHtml(u.full_name || '')}</td>
+          <td>${roleSelect}</td>
+          <td>${status}</td>
+          <td>${lastSeen}</td>
+          <td>${deleteBtn}</td>
+        </tr>`;
+      }).join('');
+      return `<table class="data-table">
+        <thead><tr><th>Email</th><th>Name</th><th>Role</th><th>Status</th><th>Last sign-in</th><th></th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+    }
+
+    function bindUsersTableEvents() {
+      usersTable.querySelectorAll('[data-change-role]').forEach(sel => {
+        sel.addEventListener('change', async () => {
+          const userId = sel.dataset.changeRole;
+          const role = sel.value;
+          try {
+            await SupabaseAdmin.changeUserRole(userId, role);
+            setStatus('Role updated.', 'success');
+            refresh();
+          } catch (err) {
+            setStatus('Error: ' + err.message, 'error');
+          }
+        });
+      });
+      usersTable.querySelectorAll('[data-delete-user]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const userId = btn.dataset.deleteUser;
+          const email = btn.dataset.email;
+          if (!confirm(`Удалить пользователя ${email}? Это необратимо.`)) return;
+          try {
+            await SupabaseAdmin.deleteUser(userId);
+            setStatus('User deleted.', 'success');
+            refresh();
+          } catch (err) {
+            setStatus('Error: ' + err.message, 'error');
+          }
+        });
+      });
+    }
+
+    inviteForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = $('#invite-email').value.trim().toLowerCase();
+      const fullName = $('#invite-name').value.trim();
+      const role = $('#invite-role').value;
+      const btn = inviteForm.querySelector('button[type="submit"]');
+      btnLoading(btn, true);
+      setStatus('Sending invite...', '');
+      try {
+        await SupabaseAdmin.inviteUser(email, role, fullName);
+        setStatus(`Invitation sent to ${email}.`, 'success');
+        inviteForm.reset();
+        refresh();
+      } catch (err) {
+        setStatus('Error: ' + err.message, 'error');
+      } finally {
+        btnLoading(btn, false);
+      }
+    });
+
+    refresh();
   }
 
 })();

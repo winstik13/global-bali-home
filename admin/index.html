@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https://raw.githubusercontent.com data: blob:; connect-src https://api.github.com https://open.er-api.com https://*.firebaseapp.com https://*.googleapis.com">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https://ttmmremmgrsaazzyikph.supabase.co data: blob:; connect-src 'self' https://ttmmremmgrsaazzyikph.supabase.co https://open.er-api.com">
   <title>Admin Panel — Global Bali Home</title>
   <link rel="icon" type="image/svg+xml" href="../images/common/favicon.svg">
   <link rel="icon" type="image/x-icon" href="../images/common/favicon.ico">
@@ -51,35 +51,6 @@
     </div>
   </div>
 
-  <!-- PAT Screen -->
-  <div id="pat-screen" class="login-screen" hidden>
-    <div class="login-card">
-      <div class="login-card__logo">
-        <img src="../images/common/logo-transparent.png" alt="Global Bali Home" height="60">
-      </div>
-      <h1 class="login-card__title" data-i18n="pat.title">GBH Access</h1>
-      <p class="login-card__desc" data-i18n="pat.desc">Enter your access token to enable publishing.</p>
-      <div class="pat-steps">
-        <p class="pat-steps__why" data-i18n="pat.why">This token allows the admin panel to publish your changes to the live website.</p>
-        <ol class="pat-steps__list">
-          <li data-i18n="pat.step1">Open <a href="https://github.com/settings/tokens?type=beta" target="_blank" rel="noopener noreferrer">GitHub Token Settings</a></li>
-          <li data-i18n="pat.step2">Click <strong>Generate new token</strong>, select repo <strong>global-bali-home</strong></li>
-          <li data-i18n="pat.step3">Under Permissions → Contents → set <strong>Read and write</strong></li>
-          <li data-i18n="pat.step4">Copy the token and paste it below</li>
-        </ol>
-      </div>
-      <form id="pat-form" class="login-form">
-        <div class="form-group">
-          <label for="pat-input" data-i18n="pat.label">Personal Access Token</label>
-          <input type="password" id="pat-input" placeholder="github_pat_..." required>
-        </div>
-        <label class="remember-check"><input type="checkbox" id="pat-remember"> <span data-i18n="pat.remember">Remember on this device</span></label>
-        <div id="pat-error" class="login-error" hidden></div>
-        <button type="submit" class="btn btn--primary btn--full" data-i18n="pat.submit">Connect</button>
-      </form>
-    </div>
-  </div>
-
   <!-- Admin Panel -->
   <div id="admin-app" class="admin-app" hidden>
 
@@ -113,13 +84,14 @@
     <nav class="admin-nav">
       <button class="admin-nav__btn active" data-tab="dashboard" data-i18n="nav.dashboard">Dashboard</button>
       <button class="admin-nav__btn" data-tab="projects" data-i18n="nav.projects">Projects</button>
-      <button class="admin-nav__btn" data-tab="seo" data-i18n="nav.seo">SEO</button>
+      <button class="admin-nav__btn" data-tab="seo" data-i18n="nav.seo" hidden title="Временно недоступно — переезжает в Supabase">SEO</button>
       <button class="admin-nav__btn" data-tab="gallery" data-i18n="nav.gallery">Gallery</button>
       <button class="admin-nav__btn" data-tab="faq" data-i18n="nav.faq">FAQ</button>
       <button class="admin-nav__btn" data-tab="testimonials" data-i18n="nav.testimonials">Testimonials</button>
       <button class="admin-nav__btn" data-tab="analytics" data-i18n="nav.analytics">Analytics</button>
       <button class="admin-nav__btn" data-tab="exitpopup" data-i18n="nav.exitpopup">Exit Popup</button>
       <button class="admin-nav__btn" data-tab="settings" data-i18n="nav.settings">Settings</button>
+      <button class="admin-nav__btn" data-tab="users" data-i18n="nav.users" data-super-admin-only hidden>Users</button>
     </nav>
 
     <!-- Tab: Dashboard -->
@@ -790,17 +762,46 @@
           </div>
         </div>
       </section>
+
+      <!-- Tab: Users (super_admin only) -->
+      <section id="tab-users" class="admin-tab" hidden>
+        <h2 data-i18n="users.title">Team Members</h2>
+        <div class="editor-section">
+          <h3 data-i18n="users.invite">Invite a new member</h3>
+          <form id="invite-form" class="form-grid form-grid--3">
+            <div class="form-group">
+              <label for="invite-email" data-i18n="users.email">Email</label>
+              <input type="email" id="invite-email" placeholder="name@example.com" required>
+            </div>
+            <div class="form-group">
+              <label for="invite-name" data-i18n="users.fullName">Full name</label>
+              <input type="text" id="invite-name" placeholder="Jane Doe">
+            </div>
+            <div class="form-group">
+              <label for="invite-role" data-i18n="users.role">Role</label>
+              <select id="invite-role" required>
+                <option value="editor">Editor — gallery / FAQ / testimonials only</option>
+                <option value="admin">Admin — all content (no user management)</option>
+              </select>
+            </div>
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <button type="submit" class="btn btn--primary" data-i18n="users.send">Send invitation</button>
+              <span id="invite-status" class="publish-status"></span>
+            </div>
+          </form>
+        </div>
+
+        <div class="editor-section">
+          <h3 data-i18n="users.list">Active members</h3>
+          <div id="users-table"></div>
+        </div>
+      </section>
     </main>
   </div>
 
-  <!-- Firebase Auth SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-  <script src="../data/projects-data.js"></script>
-  <script src="../data/faq-data.js"></script>
-  <script src="../data/testimonials-data.js"></script>
-  <script src="../data/site-data.js"></script>
-  <script src="../gallery-data.js"></script>
+  <!-- Supabase JS SDK (UMD bundle exports window.supabase) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="supabase-client.js"></script>
   <script src="admin.js"></script>
 </body>
 </html>
