@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 
-Sitemap: https://winstik13.github.io/global-bali-home/sitemap.xml
+Sitemap: https://globalbalihome.com/sitemap.xml
