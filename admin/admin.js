@@ -1,6 +1,6 @@
 /* ============================================
    ADMIN PANEL — Global Bali Home
-   Firebase Auth + GitHub API
+   Supabase Auth + Supabase content storage
    ============================================ */
 
 (function () {
@@ -16,17 +16,6 @@
       'login.password': 'Password',
       'login.submit': 'Sign In',
       'login.signingIn': 'Signing in...',
-      'pat.title': 'GBH Access',
-      'pat.desc': 'Enter your access token to enable publishing.',
-      'pat.why': 'This token allows the admin panel to publish your changes to the live website.',
-      'pat.step1': 'Open <a href="https://github.com/settings/tokens?type=beta" target="_blank" rel="noopener noreferrer">GitHub Token Settings</a>',
-      'pat.step2': 'Click <strong>Generate new token</strong>, select repo <strong>global-bali-home</strong>',
-      'pat.step3': 'Under Permissions → Contents → set <strong>Read and write</strong>',
-      'pat.step4': 'Copy the token and paste it below',
-      'pat.label': 'Personal Access Token',
-      'pat.remember': 'Remember on this device',
-      'pat.submit': 'Connect',
-      'pat.error': 'Invalid token. Ensure it has "contents:write" scope for this repo.',
       'header.title': 'Admin Panel',
       'header.rateLabel': 'USD / IDR',
       'header.signOut': 'Sign Out',
@@ -406,17 +395,6 @@
       'login.password': 'Пароль',
       'login.submit': 'Войти',
       'login.signingIn': 'Вход...',
-      'pat.title': 'GBH Access',
-      'pat.desc': 'Введите токен доступа для публикации изменений.',
-      'pat.why': 'Этот токен позволяет админ-панели публиковать ваши изменения на сайт.',
-      'pat.step1': 'Откройте <a href="https://github.com/settings/tokens?type=beta" target="_blank" rel="noopener noreferrer">Настройки токенов GitHub</a>',
-      'pat.step2': 'Нажмите <strong>Generate new token</strong>, выберите репо <strong>global-bali-home</strong>',
-      'pat.step3': 'В Permissions → Contents → выберите <strong>Read and write</strong>',
-      'pat.step4': 'Скопируйте токен и вставьте ниже',
-      'pat.label': 'Personal Access Token',
-      'pat.remember': 'Запомнить на этом устройстве',
-      'pat.submit': 'Подключить',
-      'pat.error': 'Неверный токен. Убедитесь, что scope "contents:write" включён.',
       'header.title': 'Панель управления',
       'header.rateLabel': 'USD / IDR',
       'header.signOut': 'Выйти',
@@ -1111,6 +1089,7 @@
   // ─── Logout ───
   $('#btn-logout').addEventListener('click', async () => {
     await SupabaseAdmin.logout();
+    if (rateInterval) { clearInterval(rateInterval); rateInterval = null; }
     currentUser = null;
     loginScreen.hidden = false;
     adminApp.hidden = true;
@@ -2505,6 +2484,11 @@
   }
 
   function renderUploadPreview() {
+    // Освобождаем blob URL предыдущего рендера, иначе утечка.
+    galleryPreview.querySelectorAll('img').forEach(img => {
+      if (img.src.startsWith('blob:')) URL.revokeObjectURL(img.src);
+    });
+
     if (!pendingFiles.length) {
       galleryPreview.hidden = true;
       galleryPreview.innerHTML = '';
@@ -2541,6 +2525,11 @@
     html += '</div>';
     galleryPreview.innerHTML = html;
     galleryPreview.hidden = false;
+    // После того как браузер задекодит картинку — blob URL больше не нужен.
+    galleryPreview.querySelectorAll('img').forEach(img => {
+      img.addEventListener('load', () => URL.revokeObjectURL(img.src), { once: true });
+      img.addEventListener('error', () => URL.revokeObjectURL(img.src), { once: true });
+    });
 
     // Bind remove buttons
     galleryPreview.querySelectorAll('[data-remove]').forEach(btn => {
@@ -2550,10 +2539,18 @@
       });
     });
 
+    // Освобождает все blob URL внутри превью — на случай если onload не успел.
+    const revokeAllPreviewBlobs = () => {
+      galleryPreview.querySelectorAll('img').forEach(img => {
+        if (img.src.startsWith('blob:')) URL.revokeObjectURL(img.src);
+      });
+    };
+
     // Upload all
     $('#btn-preview-upload').addEventListener('click', () => {
       const filesToUpload = [...pendingFiles];
       pendingFiles = [];
+      revokeAllPreviewBlobs();
       galleryPreview.hidden = true;
       galleryPreview.innerHTML = '';
       handleGalleryUpload(filesToUpload);
@@ -2562,6 +2559,7 @@
     // Cancel
     $('#btn-preview-cancel').addEventListener('click', () => {
       pendingFiles = [];
+      revokeAllPreviewBlobs();
       galleryPreview.hidden = true;
       galleryPreview.innerHTML = '';
     });
@@ -2727,22 +2725,6 @@
     });
   }
 
-  // ─── File commit lock (prevents race conditions on same file) ───
-  const _commitLocks = {};
-  async function withCommitLock(path, fn) {
-    while (_commitLocks[path]) {
-      await _commitLocks[path];
-    }
-    let resolve;
-    _commitLocks[path] = new Promise(r => { resolve = r; });
-    try {
-      return await fn();
-    } finally {
-      delete _commitLocks[path];
-      resolve();
-    }
-  }
-
   // ─── Storage / Content Adapter (Supabase) ───
   // Сохраняем legacy-сигнатуры fetchFile / commitFile / deleteFile, чтобы
   // не править вызовы по всему файлу. Внутри маппим на SupabaseAdmin.
@@ -2822,7 +2804,7 @@
     // для получения SHA перед PUT. С Supabase SHA не нужен — отдаём stub.
     // Для HTML-файлов (SEO tab) добавим явный throw — saveAllSEO его поймает.
     if (/\.html$/.test(path)) {
-      throw new Error('SEO editing temporarily disabled (HTML files no longer fetched via API)');
+      throw new Error('SEO HTML editing is temporarily disabled. Coming back soon.');
     }
     return { sha: null, content: '' };
   }
@@ -3234,18 +3216,23 @@
       v('contact-location-ru', c.location.ru);
       v('contact-location-id', c.location.id);
     }
-    // Attach live validation
+    // Attach live validation. Guard от повторного навешивания —
+    // renderContactsForm может вызываться при каждом возврате на Settings таб.
     const waInput = $('#contact-whatsapp');
-    if (waInput) {
+    if (waInput && !waInput.dataset.bound) {
+      waInput.dataset.bound = '1';
       waInput.addEventListener('input', updateWaPreview);
       waInput.addEventListener('paste', () => setTimeout(updateWaPreview, 0));
-      updateWaPreview();
     }
+    updateWaPreview();
 
-    // Track contacts changes
+    // Track contacts changes (один раз на инпут)
     ['contact-phone', 'contact-whatsapp', 'contact-email', 'contact-location-en', 'contact-location-ru', 'contact-location-id'].forEach(id => {
       const el = $('#' + id);
-      if (el) el.addEventListener('input', () => { dirtyTabs.contacts = true; });
+      if (el && !el.dataset.dirtyBound) {
+        el.dataset.dirtyBound = '1';
+        el.addEventListener('input', () => { dirtyTabs.contacts = true; });
+      }
     });
   }
 
@@ -4062,7 +4049,10 @@
         try {
           const resized = await resizeImage(file, 200, 0.85);
           const base64 = resized.split(',')[1];
-          const safeName = (testimonialsData[i].name.en || 'avatar').replace(/[^a-z0-9]/gi, '-').toLowerCase();
+          // Префикс именем + timestamp защищает от коллизий имён (двух
+          // testimonials с одинаковым first-name или пустыми именами).
+          const baseName = (testimonialsData[i].name.en || 'avatar').replace(/[^a-z0-9]/gi, '-').toLowerCase();
+          const safeName = `${baseName}-${Date.now()}`;
           const path = `images/testimonials/${safeName}.webp`;
           const result = await commitFile(path, null, `Add testimonial avatar: ${safeName}`, null, base64);
           const finalUrl = (result && result.url) || path;
