@@ -2381,7 +2381,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         const labelText = (proj.showcaseAvailability && (proj.showcaseAvailability[lang] || proj.showcaseAvailability.en))
           || ((av.total - av.sold) + ' ' + labels.of + ' ' + av.total + ' ' + labels.unitsLeft);
         el.innerHTML =
-          '<div class="availability-bar__header"><span class="availability-bar__label">' + labelText + '</span><span class="availability-bar__percent">' + pct + '% ' + labels.sold + '</span></div>' +
+          '<div class="availability-bar__header"><span class="availability-bar__label">' + labelText + '</span></div>' +
           '<div class="availability-bar__track"><div class="availability-bar__fill" style="width:' + pct + '%"></div></div>';
       }
     });
