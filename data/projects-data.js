@@ -980,8 +980,8 @@ const PROJECTS_DATA = {
           "number": "Q3 2027"
         },
         {
-          "label": "From",
-          "number": "$119K+"
+          "label": "Yield",
+          "number": "12–15%"
         }
       ],
       "ru": [
@@ -994,8 +994,8 @@ const PROJECTS_DATA = {
           "number": "Q3 2027"
         },
         {
-          "label": "От",
-          "number": "$119K+"
+          "label": "Доходность",
+          "number": "12–15%"
         }
       ]
     },
