@@ -285,10 +285,10 @@ document.addEventListener('DOMContentLoaded', () => {
       tourThankProject: 'Learn more about',
       descs: {
         village: {
-          'Rental income': 'Compact villas from $119K — ideal for short-term rental with strong occupancy rates and low entry cost.',
-          'Personal residence': 'Cozy 1-2 bedroom villas from $119K in a vibrant complex with shared pool and café.',
-          'Long-term investment': 'Our most accessible entry point from $119K — high rental demand and strong capital growth potential.',
-          'default': 'Affordable 1-2 bedroom villas from $119K in a vibrant complex with shared amenities.'
+          'Rental income': 'Compact villas from $132K — ideal for short-term rental with strong occupancy rates and low entry cost.',
+          'Personal residence': 'Cozy 1-2 bedroom villas from $132K in a vibrant complex with shared pool and café.',
+          'Long-term investment': 'Our most accessible entry point from $132K — high rental demand and strong capital growth potential.',
+          'default': 'Affordable 1-2 bedroom villas from $132K in a vibrant complex with shared amenities.'
         },
         villas: {
           'Rental income': 'Premium 2-3 bedroom villas from $335K — jungle views, private pools, and proven 12-15% rental yields.',
@@ -386,10 +386,10 @@ document.addEventListener('DOMContentLoaded', () => {
       tourThankProject: 'Подробнее о проекте',
       descs: {
         village: {
-          'Rental income': 'Компактные виллы от $119K — идеально для краткосрочной аренды с высокой заполняемостью и низким порогом входа.',
-          'Personal residence': 'Уютные виллы 1–2 спальни от $119K в живом комплексе с общим бассейном и кафе.',
-          'Long-term investment': 'Самый доступный вход от $119K — высокий спрос на аренду и сильный потенциал роста капитала.',
-          'default': 'Доступные виллы 1–2 спальни от $119K в комплексе с общими удобствами.'
+          'Rental income': 'Компактные виллы от $132K — идеально для краткосрочной аренды с высокой заполняемостью и низким порогом входа.',
+          'Personal residence': 'Уютные виллы 1–2 спальни от $132K в живом комплексе с общим бассейном и кафе.',
+          'Long-term investment': 'Самый доступный вход от $132K — высокий спрос на аренду и сильный потенциал роста капитала.',
+          'default': 'Доступные виллы 1–2 спальни от $132K в комплексе с общими удобствами.'
         },
         villas: {
           'Rental income': 'Премиальные виллы 2–3 спальни от $335K — вид на джунгли, приватные бассейны и подтверждённая доходность 12–15%.',

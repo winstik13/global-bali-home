@@ -735,7 +735,7 @@ const PROJECTS_DATA = {
         "land": "1.16 are",
         "type": "1 Bedroom",
         "badge": "Q3 2027",
-        "price": 119000,
+        "price": 132000,
         "floors": 1,
         "status": "available"
       },
@@ -755,7 +755,7 @@ const PROJECTS_DATA = {
         "land": "1.16 are",
         "type": "1 Bedroom",
         "badge": "Q3 2027",
-        "price": 119000,
+        "price": 132000,
         "floors": 1,
         "status": "available"
       },
@@ -795,7 +795,7 @@ const PROJECTS_DATA = {
         "land": "1.16 are",
         "type": "1 Bedroom",
         "badge": "Q3 2027",
-        "price": 127000,
+        "price": 132000,
         "floors": 1,
         "status": "available"
       },
@@ -815,7 +815,7 @@ const PROJECTS_DATA = {
         "land": "1.16 are",
         "type": "1 Bedroom",
         "badge": "Q3 2027",
-        "price": 127000,
+        "price": 132000,
         "floors": 1,
         "status": "available"
       },
@@ -1062,8 +1062,8 @@ const PROJECTS_DATA = {
       "total": 25
     },
     "showcaseDesc": {
-      "en": "25 villas from $119K — the lowest entry into Bali yield-generating real estate. Same construction insurance and notarized 60-year leasehold as our $500K+ projects. Shared pool and onsite cafe included.",
-      "ru": "25 вилл от $119K — самая низкая точка входа в доходную недвижимость Бали. Та же страхование строительных рисков и нотариальный leasehold на 60 лет, что в проектах от $500K+. Общий бассейн и кафе на территории."
+      "en": "25 villas from $132K — the lowest entry into Bali yield-generating real estate. Same construction insurance and notarized 60-year leasehold as our $500K+ projects. Shared pool and onsite cafe included.",
+      "ru": "25 вилл от $132K — самая низкая точка входа в доходную недвижимость Бали. Та же страхование строительных рисков и нотариальный leasehold на 60 лет, что в проектах от $500K+. Общий бассейн и кафе на территории."
     },
     "showcaseMeta": {
       "en": [
@@ -1107,14 +1107,14 @@ const PROJECTS_DATA = {
       }
     },
     "showcaseImage": "images/serenity-village/6House_Max.0001.webp",
-    "startingPrice": 119000,
+    "startingPrice": 132000,
     "showcaseStatus": {
       "en": "In Progress",
       "ru": "Строится"
     },
     "showcaseSubtitle": {
-      "en": "Complex of 25 villas with shared pool and cafe — from $119K",
-      "ru": "Комплекс из 25 вилл с общим бассейном и кафе — от $119K"
+      "en": "Complex of 25 villas with shared pool and cafe — from $132K",
+      "ru": "Комплекс из 25 вилл с общим бассейном и кафе — от $132K"
     },
     "showcaseAvailability": {
       "en": "Only 16 of 25 units left",
