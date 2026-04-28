@@ -163,7 +163,7 @@ const PROJECTS_DATA = {
           "number": "Q2 2026"
         },
         {
-          "label": "Yield",
+          "label": "Annual Yield",
           "number": "12–15%"
         }
       ],
@@ -177,7 +177,7 @@ const PROJECTS_DATA = {
           "number": "Q2 2026"
         },
         {
-          "label": "Доходность",
+          "label": "Годовая доходность",
           "number": "12–15%"
         }
       ]
@@ -483,7 +483,7 @@ const PROJECTS_DATA = {
           "number": "Q1 2027"
         },
         {
-          "label": "Yield",
+          "label": "Annual Yield",
           "number": "12–15%"
         }
       ],
@@ -497,7 +497,7 @@ const PROJECTS_DATA = {
           "number": "Q1 2027"
         },
         {
-          "label": "Доходность",
+          "label": "Годовая доходность",
           "number": "12–15%"
         }
       ]
@@ -980,7 +980,7 @@ const PROJECTS_DATA = {
           "number": "Q3 2027"
         },
         {
-          "label": "Yield",
+          "label": "Annual Yield",
           "number": "12–15%"
         }
       ],
@@ -994,7 +994,7 @@ const PROJECTS_DATA = {
           "number": "Q3 2027"
         },
         {
-          "label": "Доходность",
+          "label": "Годовая доходность",
           "number": "12–15%"
         }
       ]
