@@ -53,9 +53,7 @@
       'dash.noChanges': 'No recent changes to project data.',
       'dash.couldNotLoad': 'Could not load commit history.',
       'dash.breakAvailable': 'available',
-      'dash.breakBooked': 'booked',
       'dash.breakSold': 'sold',
-      'dash.breakResale': 'resale',
       'rate.title': 'Exchange Rate (USD → IDR)',
       'rate.navTitle': 'Rate',
       'rate.auto': 'Auto (live rate from API)',
@@ -461,9 +459,7 @@
       'dash.noChanges': 'Нет недавних изменений.',
       'dash.couldNotLoad': 'Не удалось загрузить историю.',
       'dash.breakAvailable': 'доступно',
-      'dash.breakBooked': 'бронь',
       'dash.breakSold': 'продано',
-      'dash.breakResale': 'перепродажа',
       'rate.title': 'Курс валют (USD → IDR)',
       'rate.navTitle': 'Курс',
       'rate.auto': 'Авто (курс из API)',
@@ -1361,11 +1357,11 @@
     const container = $('#dashboard-cards');
     const projects = getProjectKeys();
 
-    // Recompute availability (resale counts as sold)
+    // Recompute availability
     projects.forEach(key => {
       const p = projectsData[key];
       if (p.units) {
-        p.availability.sold = p.units.filter(u => u.status === 'sold' || u.status === 'booked' || u.status === 'resale').length;
+        p.availability.sold = p.units.filter(u => u.status === 'sold').length;
         p.availability.total = p.units.length;
       }
       syncShowcaseAvailability(p);
@@ -1429,7 +1425,7 @@
     // Project cards
     html += '<div class="dashboard-grid">';
     projectStats.forEach(({ key, p, sold, total, pct, left, potential }) => {
-      const isAllSoldDash = p.units ? p.units.every(u => u.status === 'sold' || u.status === 'resale') : (p.availability.sold >= p.availability.total);
+      const isAllSoldDash = p.units ? p.units.every(u => u.status === 'sold') : (p.availability.sold >= p.availability.total);
       const dashStatus = isAllSoldDash ? 'sold-out' : (p.status || 'in-progress');
       const badgeClassMap = { 'pre-sale': 'presale', 'in-progress': 'progress', 'completed': 'completed', 'sold-out': 'soldout' };
       const badgeClass = badgeClassMap[dashStatus] || 'progress';
@@ -1448,8 +1444,8 @@
       const fmtPrice = v => v >= 1000000 ? '$' + (v / 1000000).toFixed(1) + 'M' : '$' + (v / 1000).toFixed(0) + 'K';
       const priceRange = minPrice === maxPrice ? fmtPrice(minPrice) : fmtPrice(minPrice) + ' – ' + fmtPrice(maxPrice);
 
-      // Segmented bar counts
-      const counts = { available: 0, booked: 0, sold: 0, resale: 0 };
+      // Segmented bar counts (binary: available / sold)
+      const counts = { available: 0, sold: 0 };
       if (p.units) {
         p.units.forEach(u => { counts[u.status] = (counts[u.status] || 0) + 1; });
       } else {
@@ -1457,14 +1453,9 @@
         counts.available = total - sold;
       }
       const segSold = Math.round((counts.sold / total) * 100);
-      const segBooked = Math.round((counts.booked / total) * 100);
-      const segResale = Math.round((counts.resale / total) * 100);
 
-      // Legend
       const legend = [
         counts.sold ? `<span class="seg-legend seg-legend--sold">${counts.sold} ${t('dash.breakSold')}</span>` : '',
-        counts.booked ? `<span class="seg-legend seg-legend--booked">${counts.booked} ${t('dash.breakBooked')}</span>` : '',
-        counts.resale ? `<span class="seg-legend seg-legend--resale">${counts.resale} ${t('dash.breakResale')}</span>` : '',
         counts.available ? `<span class="seg-legend seg-legend--available">${counts.available} ${t('dash.breakAvailable')}</span>` : ''
       ].filter(Boolean).join('');
 
@@ -1482,8 +1473,6 @@
         <div class="dash-card__bar">
           <div class="dash-card__bar-track dash-card__bar-track--seg">
             <div class="dash-card__seg dash-card__seg--sold" style="width:${segSold}%"></div>
-            <div class="dash-card__seg dash-card__seg--booked" style="width:${segBooked}%"></div>
-            <div class="dash-card__seg dash-card__seg--resale" style="width:${segResale}%"></div>
           </div>
           <span class="dash-card__bar-label">${pct}%</span>
         </div>
@@ -1578,7 +1567,7 @@
     }
     syncShowcaseAvailability(p);
     const availPct = p.availability.total ? Math.round(p.availability.sold / p.availability.total * 100) : 0;
-    const isAllSold = p.units ? p.units.every(u => u.status === 'sold' || u.status === 'resale') : (p.availability.sold >= p.availability.total);
+    const isAllSold = p.units ? p.units.every(u => u.status === 'sold') : (p.availability.sold >= p.availability.total);
     const effectiveStatus = isAllSold ? 'sold-out' : (p.status || 'in-progress');
     const statusOptions = ['pre-sale', 'in-progress', 'completed'];
     const badgeMap = { 'pre-sale': 'presale', 'in-progress': 'progress', 'completed': 'completed', 'sold-out': 'soldout' };
@@ -1618,7 +1607,8 @@
             ${[['', '—'], ['Premium', 'Premium'], ['Front Row', 'Front Row'], ['Large Plot', 'Large Plot'], ['Corner', 'Corner'], ['Last Unit', 'Last Unit'], ['Best Seller', 'Best Seller']].map(([v, l]) => `<option value="${v}"${(u.badge || '') === v ? ' selected' : ''}>${l}</option>`).join('')}
           </select></td>
           <td data-label="${t('projects.status')}"><select data-unit="${i}" data-field="status" class="unit-status">
-            ${['available', 'booked', 'sold', 'resale'].map(s => `<option value="${s}"${u.status === s ? ' selected' : ''}>${s.charAt(0).toUpperCase() + s.slice(1)}</option>`).join('')}
+            <option value="available"${u.status === 'available' ? ' selected' : ''}>${t('dash.available')}</option>
+            <option value="sold"${u.status === 'sold' ? ' selected' : ''}>${t('dash.sold')}</option>
           </select></td>
           <td data-label="${t('projects.price')}"><input type="number" data-unit="${i}" data-field="price" class="unit-price" value="${u.price || ''}" placeholder="—" min="0" step="1000"></td>
           <td><button class="btn--icon btn--danger" data-delete-unit="${i}" title="${t('projects.deleteUnit')}">&times;</button></td>

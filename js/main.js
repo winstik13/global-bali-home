@@ -1779,7 +1779,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Price range helpers (single source of truth: units / unitTypes) ---
   function getPriceRange(proj) {
     if (!proj) return null;
-    // Source 1: individual units (only available — resale is owner's resale, not ours)
+    // Source 1: individual units (only available)
     if (proj.units && proj.units.length) {
       var prices = proj.units
         .filter(function(u) { return u.status === 'available' && typeof u.price === 'number' && u.price > 0; })
@@ -2397,8 +2397,6 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       let html = '<thead><tr><th>' + h.unit + '</th><th>' + h.type + '</th><th>' + h.floors + '</th><th>' + h.area + '</th><th>' + h.land + '</th><th>' + h.status + '</th><th>' + h.price + '</th></tr></thead><tbody>';
       const tourName = proj.name || '';
       proj.units.forEach(u => {
-        // Resale is the owner's secondary sale — we don't broker it. Render visually as sold.
-        const displayStatus = u.status === 'resale' ? 'sold' : u.status;
         const isClickable = u.status === 'available';
         const classes = [];
         if (u.badge) classes.push('unit--premium');
@@ -2406,8 +2404,8 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         const cls = classes.length ? ' class="' + classes.join(' ') + '"' : '';
         const tourAttr = isClickable ? ' data-tour="' + tourName + '"' : '';
         const badge = u.badge ? ' <span class="unit__badge">' + u.badge + '</span>' : '';
-        const priceCell = u.status === 'resale' ? '—' : fmtDualPrice(u.price);
-        html += '<tr' + cls + tourAttr + ' data-status="' + displayStatus + '"><td>' + u.id + badge + '</td><td>' + u.type + '</td><td>' + u.floors + '</td><td>' + u.area + '</td><td>' + u.land + '</td><td class="status--' + displayStatus + '">' + (sl[displayStatus] || displayStatus) + '</td><td>' + priceCell + '</td></tr>';
+        const priceCell = fmtDualPrice(u.price);
+        html += '<tr' + cls + tourAttr + ' data-status="' + u.status + '"><td>' + u.id + badge + '</td><td>' + u.type + '</td><td>' + u.floors + '</td><td>' + u.area + '</td><td>' + u.land + '</td><td class="status--' + u.status + '">' + (sl[u.status] || u.status) + '</td><td>' + priceCell + '</td></tr>';
       });
       html += '</tbody>';
       el.innerHTML = html;
@@ -2682,7 +2680,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     };
 
     // Master plan header — title is dynamic based on how many units are still available.
-    // Scarcity signal ("Only N remain") kicks in once at least one unit is sold/booked,
+    // Scarcity signal ("Only N remain") kicks in once at least one unit is sold,
     // otherwise neutral "N villas available" to avoid a misleading scarcity frame.
     var MASTER_PLAN_HEADER_STATIC = {
       en: { tag: 'Master Plan', desc: 'Click on any villa to see its details. Sold villas are dimmed.' },
@@ -2781,13 +2779,11 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         sheetRefs.area.textContent = u.area || '—';
         sheetRefs.land.textContent = u.land || '—';
         sheetRefs.floors.textContent = u.floors || '—';
-        // Resale is the owner's secondary sale — display as sold.
-        var displayStatus = u.status === 'resale' ? 'sold' : u.status;
-        sheetRefs.status.textContent = sl[displayStatus] || displayStatus;
-        sheetRefs.status.className = 'master-plan__sheet-spec-value status--' + displayStatus;
-        sheetRefs.price.innerHTML = (u.status === 'resale' || !u.price) ? '—' : fmtDualPrice(u.price);
+        sheetRefs.status.textContent = sl[u.status] || u.status;
+        sheetRefs.status.className = 'master-plan__sheet-spec-value status--' + u.status;
+        sheetRefs.price.innerHTML = u.price ? fmtDualPrice(u.price) : '—';
 
-        var isSold = u.status === 'sold' || u.status === 'resale';
+        var isSold = u.status === 'sold';
         sheetRefs.cta.textContent = isSold ? sheetText.ctaSold : sheetText.cta;
         sheetRefs.cta.disabled = isSold;
         if (isSold) {
@@ -2820,25 +2816,23 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         var pos = positions[u.id];
         if (!pos) return;
 
-        // Resale is the owner's secondary sale — display as sold.
-        var hotspotStatus = u.status === 'resale' ? 'sold' : u.status;
         var btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = 'master-plan__hotspot master-plan__hotspot--' + hotspotStatus;
+        btn.className = 'master-plan__hotspot master-plan__hotspot--' + u.status;
         btn.style.left = pos.x + '%';
         btn.style.top = pos.y + '%';
         btn.dataset.unitId = u.id;
-        btn.setAttribute('aria-label', u.id + ' — ' + (sl[hotspotStatus] || hotspotStatus));
+        btn.setAttribute('aria-label', u.id + ' — ' + (sl[u.status] || u.status));
 
         var priceLine = '<span class="master-plan__tooltip-price">'
-          + ((u.status === 'resale' || !u.price) ? '—' : fmtDualPrice(u.price))
+          + (u.price ? fmtDualPrice(u.price) : '—')
           + '</span>';
 
         btn.innerHTML =
           '<span class="master-plan__hotspot-label">' + u.id + '</span>' +
           '<span class="master-plan__tooltip">' +
             '<strong>' + u.id + ' · ' + u.type + '</strong>' +
-            '<span class="master-plan__tooltip-row">' + u.area + ' · ' + (sl[hotspotStatus] || hotspotStatus) + '</span>' +
+            '<span class="master-plan__tooltip-row">' + u.area + ' · ' + (sl[u.status] || u.status) + '</span>' +
             priceLine +
           '</span>';
 
@@ -2853,8 +2847,8 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
             return;
           }
 
-          // Desktop: click scrolls to table row (sold/resale are inert).
-          if (u.status === 'sold' || u.status === 'resale') return;
+          // Desktop: click scrolls to table row (sold is inert).
+          if (u.status === 'sold') return;
 
           var table = document.querySelector('.unit-table[data-project="' + key + '"]');
           if (!table) return;
@@ -2903,7 +2897,6 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         });
         // Localize header: tag/desc from static map, title is dynamic (scarcity signal)
         var staticText = MASTER_PLAN_HEADER_STATIC[dataLang] || MASTER_PLAN_HEADER_STATIC.en;
-        // Count only 'available' — resale is a separate category (secondary market), not counted as developer-available
         var availableCount = proj.units.filter(function(u) { return u.status === 'available'; }).length;
         var totalCount = proj.units.length;
         var dynamicTitle = buildMasterPlanTitle(dataLang, availableCount, totalCount);

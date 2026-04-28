@@ -5,14 +5,10 @@ const PROJECTS_DATA = {
   "statusLabels": {
     "en": {
       "sold": "Sold",
-      "booked": "Booked",
-      "resale": "Resale",
       "available": "Available"
     },
     "ru": {
       "sold": "Продан",
-      "booked": "Забронирован",
-      "resale": "Перепродажа",
       "available": "Доступен"
     }
   },
@@ -30,7 +26,7 @@ const PROJECTS_DATA = {
         "badge": "Premium",
         "price": null,
         "floors": 1,
-        "status": "booked"
+        "status": "sold"
       },
       {
         "id": "A2",
@@ -130,7 +126,7 @@ const PROJECTS_DATA = {
         "badge": null,
         "price": 335000,
         "floors": 2,
-        "status": "resale"
+        "status": "sold"
       },
       {
         "id": "C4",
@@ -450,7 +446,7 @@ const PROJECTS_DATA = {
         "badge": null,
         "price": 335000,
         "floors": 2,
-        "status": "resale"
+        "status": "sold"
       },
       {
         "id": "B2",
