@@ -1343,10 +1343,18 @@
     }
     const left = Math.max(0, (p.availability.total || 0) - (p.availability.sold || 0));
     const total = p.availability.total || 0;
-    p.showcaseAvailability = {
-      en: 'Only ' + left + ' of ' + total + ' units left',
-      ru: 'Осталось всего ' + left + ' из ' + total,
-    };
+    const soldPct = total > 0 ? (p.availability.sold / total) : 0;
+    // Scarcity frame only when ≥70% taken — otherwise neutral availability text.
+    const useScarcity = soldPct >= 0.7;
+    p.showcaseAvailability = useScarcity
+      ? {
+          en: 'Only ' + left + ' of ' + total + ' units left',
+          ru: 'Осталось всего ' + left + ' из ' + total,
+        }
+      : {
+          en: left + ' of ' + total + ' units available',
+          ru: 'Доступно ' + left + ' из ' + total,
+        };
   }
 
   // ─── Dashboard ───
