@@ -2683,13 +2683,13 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     // Scarcity signal ("Only N remain") kicks in once at least one unit is sold,
     // otherwise neutral "N villas available" to avoid a misleading scarcity frame.
     var MASTER_PLAN_HEADER_STATIC = {
-      en: { tag: 'Master Plan', desc: 'Click on any villa to see its details. Sold villas are dimmed.' },
-      ru: { tag: 'Генплан', desc: 'Кликните на виллу, чтобы посмотреть детали. Проданные подсвечены серым.' }
+      en: { tag: 'Master Plan', desc: 'Click on any villa to see its details. Unavailable villas are dimmed.' },
+      ru: { tag: 'Генплан', desc: 'Кликните на виллу, чтобы посмотреть детали. Недоступные подсвечены серым.' }
     };
     function buildMasterPlanTitle(lang, available, total) {
       if (available === 0) {
-        if (lang === 'ru') return 'Полностью продано';
-        return 'Sold Out';
+        if (lang === 'ru') return 'Все недоступны';
+        return 'Not Available';
       }
       if (available === total) {
         // Pre-sale / fresh launch: no scarcity frame yet.
@@ -2717,8 +2717,8 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     }
 
     var MASTER_PLAN_SHEET_TEXT = {
-      en: { cta: 'Book a Tour', ctaSold: 'No Longer Available', close: 'Close' },
-      ru: { cta: 'Записаться на показ', ctaSold: 'Продано', close: 'Закрыть' }
+      en: { cta: 'Book a Tour', ctaSold: 'Not Available', close: 'Close' },
+      ru: { cta: 'Записаться на показ', ctaSold: 'Не доступно', close: 'Закрыть' }
     };
 
     document.querySelectorAll('[data-master-plan]').forEach(function(el) {

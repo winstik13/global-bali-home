@@ -4,11 +4,11 @@
 const PROJECTS_DATA = {
   "statusLabels": {
     "en": {
-      "sold": "Sold",
+      "sold": "Not Available",
       "available": "Available"
     },
     "ru": {
-      "sold": "Продан",
+      "sold": "Не доступен",
       "available": "Доступен"
     }
   },
@@ -1140,17 +1140,17 @@ const PROJECTS_DATA = {
   "availabilityLabels": {
     "en": {
       "of": "of",
-      "sold": "sold",
+      "sold": "not available",
       "preSale": "Pre-Sale Open",
       "unitsLeft": "units left",
-      "unitsSold": "units sold"
+      "unitsSold": "units not available"
     },
     "ru": {
       "of": "из",
-      "sold": "продано",
+      "sold": "не доступно",
       "preSale": "Предпродажа открыта",
       "unitsLeft": "осталось",
-      "unitsSold": "продано"
+      "unitsSold": "не доступно"
     }
   }
 };
