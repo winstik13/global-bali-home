@@ -710,7 +710,7 @@ const PROJECTS_DATA = {
         "area": "50 m²",
         "land": "1.16 are",
         "type": "1 Bedroom",
-        "badge": "Q3 2027",
+        "badge": null,
         "price": 140000,
         "floors": 1,
         "status": "available"
@@ -720,7 +720,7 @@ const PROJECTS_DATA = {
         "area": "50 m²",
         "land": "1.16 are",
         "type": "1 Bedroom",
-        "badge": "Q1 2027",
+        "badge": null,
         "price": null,
         "floors": 1,
         "status": "sold"
@@ -730,7 +730,7 @@ const PROJECTS_DATA = {
         "area": "50 m²",
         "land": "1.16 are",
         "type": "1 Bedroom",
-        "badge": "Q3 2027",
+        "badge": null,
         "price": 132000,
         "floors": 1,
         "status": "available"
@@ -740,7 +740,7 @@ const PROJECTS_DATA = {
         "area": "50 m²",
         "land": "1.16 are",
         "type": "1 Bedroom",
-        "badge": "Q1 2027",
+        "badge": null,
         "price": null,
         "floors": 1,
         "status": "sold"
@@ -750,7 +750,7 @@ const PROJECTS_DATA = {
         "area": "50 m²",
         "land": "1.16 are",
         "type": "1 Bedroom",
-        "badge": "Q3 2027",
+        "badge": null,
         "price": 132000,
         "floors": 1,
         "status": "available"
@@ -760,7 +760,7 @@ const PROJECTS_DATA = {
         "area": "51 m²",
         "land": "1.24 are",
         "type": "1 Bedroom",
-        "badge": "Q1 2027",
+        "badge": null,
         "price": null,
         "floors": 1,
         "status": "sold"
@@ -770,7 +770,7 @@ const PROJECTS_DATA = {
         "area": "84 m²",
         "land": "1.54 are",
         "type": "2 Bedroom",
-        "badge": "Q3 2027",
+        "badge": null,
         "price": 195000,
         "floors": 2,
         "status": "available"
@@ -780,7 +780,7 @@ const PROJECTS_DATA = {
         "area": "84 m²",
         "land": "1.54 are",
         "type": "2 Bedroom",
-        "badge": "Q3 2027",
+        "badge": null,
         "price": 195000,
         "floors": 2,
         "status": "available"
@@ -790,7 +790,7 @@ const PROJECTS_DATA = {
         "area": "50 m²",
         "land": "1.16 are",
         "type": "1 Bedroom",
-        "badge": "Q3 2027",
+        "badge": null,
         "price": 132000,
         "floors": 1,
         "status": "available"
@@ -800,7 +800,7 @@ const PROJECTS_DATA = {
         "area": "50 m²",
         "land": "1.16 are",
         "type": "1 Bedroom",
-        "badge": "Q1 2027",
+        "badge": null,
         "price": null,
         "floors": 1,
         "status": "sold"
@@ -810,7 +810,7 @@ const PROJECTS_DATA = {
         "area": "50 m²",
         "land": "1.16 are",
         "type": "1 Bedroom",
-        "badge": "Q3 2027",
+        "badge": null,
         "price": 132000,
         "floors": 1,
         "status": "available"
@@ -820,7 +820,7 @@ const PROJECTS_DATA = {
         "area": "50 m²",
         "land": "1.16 are",
         "type": "1 Bedroom",
-        "badge": "Q1 2027",
+        "badge": null,
         "price": null,
         "floors": 1,
         "status": "sold"
@@ -830,7 +830,7 @@ const PROJECTS_DATA = {
         "area": "50 m²",
         "land": "1.16 are",
         "type": "1 Bedroom",
-        "badge": "Q1 2027",
+        "badge": null,
         "price": null,
         "floors": 1,
         "status": "sold"
@@ -840,7 +840,7 @@ const PROJECTS_DATA = {
         "area": "84 m²",
         "land": "1.54 are",
         "type": "2 Bedroom",
-        "badge": "Q3 2027",
+        "badge": null,
         "price": 195000,
         "floors": 2,
         "status": "available"
@@ -850,7 +850,7 @@ const PROJECTS_DATA = {
         "area": "50 m²",
         "land": "1.16 are",
         "type": "1 Bedroom",
-        "badge": "Q1 2027",
+        "badge": null,
         "price": null,
         "floors": 1,
         "status": "sold"
@@ -860,7 +860,7 @@ const PROJECTS_DATA = {
         "area": "84 m²",
         "land": "1.54 are",
         "type": "2 Bedroom",
-        "badge": "Q3 2027",
+        "badge": null,
         "price": 195000,
         "floors": 2,
         "status": "available"
@@ -870,7 +870,7 @@ const PROJECTS_DATA = {
         "area": "84 m²",
         "land": "1.54 are",
         "type": "2 Bedroom",
-        "badge": "Q1 2027",
+        "badge": null,
         "price": null,
         "floors": 2,
         "status": "sold"
@@ -880,7 +880,7 @@ const PROJECTS_DATA = {
         "area": "84 m²",
         "land": "1.54 are",
         "type": "2 Bedroom",
-        "badge": "Q3 2027",
+        "badge": null,
         "price": 195000,
         "floors": 2,
         "status": "available"
@@ -890,7 +890,7 @@ const PROJECTS_DATA = {
         "area": "50 m²",
         "land": "1.16 are",
         "type": "1 Bedroom",
-        "badge": "Q1 2027",
+        "badge": null,
         "price": null,
         "floors": 1,
         "status": "sold"
@@ -900,7 +900,7 @@ const PROJECTS_DATA = {
         "area": "50 m²",
         "land": "1.16 are",
         "type": "1 Bedroom",
-        "badge": "Q3 2027",
+        "badge": null,
         "price": 140000,
         "floors": 1,
         "status": "available"
@@ -910,7 +910,7 @@ const PROJECTS_DATA = {
         "area": "84 m²",
         "land": "1.54 are",
         "type": "2 Bedroom",
-        "badge": "Q3 2027",
+        "badge": null,
         "price": 220000,
         "floors": 2,
         "status": "available"
@@ -920,7 +920,7 @@ const PROJECTS_DATA = {
         "area": "84 m²",
         "land": "1.54 are",
         "type": "2 Bedroom",
-        "badge": "Q3 2027",
+        "badge": null,
         "price": 195000,
         "floors": 2,
         "status": "available"
@@ -930,7 +930,7 @@ const PROJECTS_DATA = {
         "area": "84 m²",
         "land": "1.54 are",
         "type": "2 Bedroom",
-        "badge": "Q3 2027",
+        "badge": null,
         "price": 195000,
         "floors": 2,
         "status": "available"
@@ -940,7 +940,7 @@ const PROJECTS_DATA = {
         "area": "84 m²",
         "land": "1.54 are",
         "type": "2 Bedroom",
-        "badge": "Q3 2027",
+        "badge": null,
         "price": 220000,
         "floors": 2,
         "status": "available"
@@ -950,7 +950,7 @@ const PROJECTS_DATA = {
         "area": "84 m²",
         "land": "1.54 are",
         "type": "2 Bedroom",
-        "badge": "Q3 2027",
+        "badge": null,
         "price": 220000,
         "floors": 2,
         "status": "available"
