@@ -4387,12 +4387,6 @@ td .price-idr {
   padding: 22px 10px;
   border: 1px solid var(--color-border);
   background: rgba(107, 143, 78, 0.03);
-  transition: border-color var(--transition), background var(--transition);
-}
-
-.place-ribbon li:hover {
-  border-color: var(--color-accent);
-  background: rgba(107, 143, 78, 0.08);
 }
 
 .place-ribbon__icon {
