@@ -4170,9 +4170,8 @@ td .price-idr {
   color: var(--color-bg);
 }
 
-/* Hide sold/booked rows when filter is 'available' */
-.unit-table--available-only tr[data-status="sold"],
-.unit-table--available-only tr[data-status="booked"] {
+/* Hide sold rows when filter is 'available' */
+.unit-table--available-only tr[data-status="sold"] {
   display: none;
 }
 
@@ -6552,14 +6551,6 @@ a.testimonials__verified:hover {
 .master-plan__legend-item--available::before {
   background: color-mix(in srgb, var(--color-accent) 70%, transparent);
   border-color: var(--color-accent);
-}
-.master-plan__legend-item--booked::before {
-  background: color-mix(in srgb, var(--color-status-booked) 70%, transparent);
-  border-color: var(--color-status-booked);
-}
-.master-plan__legend-item--resale::before {
-  background: color-mix(in srgb, var(--color-status-resale) 70%, transparent);
-  border-color: var(--color-status-resale);
 }
 .master-plan__legend-item--sold::before {
   background: rgba(60, 60, 60, 0.5);
