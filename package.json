@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "node scripts/build-data.mjs",
+    "build": "echo 'Build disabled — data lives in git, Supabase no longer source of truth'",
+    "build:from-supabase": "node scripts/build-data.mjs",
     "migrate-content": "node scripts/migrate-content.mjs",
     "screenshot": "node screenshot.js",
     "screenshot:index": "node screenshot.js index",
