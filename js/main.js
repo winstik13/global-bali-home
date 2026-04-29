@@ -293,13 +293,13 @@ document.addEventListener('DOMContentLoaded', () => {
         villas: {
           'Rental income': 'Premium 2-3 bedroom villas from $335K — jungle views, private pools, and proven 12-15% rental yields.',
           'Personal residence': 'Spacious 2-3 bedroom villas from $335K surrounded by jungle and natural waterfalls — your Bali home.',
-          'Long-term investment': '2-3 bedroom villas from $335K in a high-demand location — 67% already sold, strong appreciation expected.',
+          'Long-term investment': '2-3 bedroom villas from $335K in the Ubud corridor — proven demand and projected 8–12% annual capital appreciation.',
           'default': 'Premium 2-3 bedroom villas from $335K with jungle views, private pools, and full management.'
         },
         estates: {
           'Rental income': 'Exclusive estates from $310K with private pools and up to 250m² — premium nightly rates and high-end guests.',
           'Personal residence': 'Spacious estates from $310K with private pools, fish ponds, and panoramic rice terrace views — luxury living.',
-          'Long-term investment': 'Only 4 exclusive estates from $310K — limited collection with strong value appreciation in Bali\'s top location.',
+          'Long-term investment': '4 exclusive estates from $310K on spacious plots up to 14 are — projected 10–15% annual capital appreciation.',
           'default': 'Exclusive 2-5 bedroom estates from $310K with private pools and panoramic views.'
         }
       }
@@ -394,13 +394,13 @@ document.addEventListener('DOMContentLoaded', () => {
         villas: {
           'Rental income': 'Премиальные виллы 2–3 спальни от $335K — вид на джунгли, приватные бассейны и подтверждённая доходность 12–15%.',
           'Personal residence': 'Просторные виллы 2–3 спальни от $335K в окружении джунглей и водопадов — ваш дом на Бали.',
-          'Long-term investment': 'Виллы 2–3 спальни от $335K в востребованной локации — 67% уже продано, ожидается рост стоимости.',
+          'Long-term investment': 'Виллы 2–3 спальни от $335K в коридоре Убуда — стабильный спрос и прогнозируемый рост стоимости 8–12% в год.',
           'default': 'Премиальные виллы 2–3 спальни от $335K с видом на джунгли, приватными бассейнами и полным управлением.'
         },
         estates: {
           'Rental income': 'Эксклюзивные эстейты от $310K с приватными бассейнами и площадью до 250 м² — премиальные ставки аренды.',
           'Personal residence': 'Просторные эстейты от $310K с приватными бассейнами, прудами и панорамным видом на рисовые террасы.',
-          'Long-term investment': 'Всего 4 эксклюзивных эстейта от $310K — лимитированная коллекция с высоким потенциалом роста.',
+          'Long-term investment': '4 эксклюзивных эстейта от $310K на просторных участках до 14 соток — прогноз роста капитала 10–15% в год.',
           'default': 'Эксклюзивные эстейты 2–5 спален от $310K с приватными бассейнами и панорамными видами.'
         }
       }
