@@ -6531,72 +6531,62 @@ a.testimonials__verified:hover {
   border-color: rgba(140, 140, 140, 0.4);
 }
 
-/* --- Sunrise / Sunset direction labels on master plan --- */
-.master-plan__direction {
+/* --- Compass rose: orientation indicator on master plan --- */
+.master-plan__compass {
   position: absolute;
-  top: 50%;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  pointer-events: none;
-  z-index: 2;
-  white-space: nowrap;
+  top: 16px;
+  right: 16px;
+  width: 80px;
+  z-index: 3;
   opacity: 0;
-  transition: opacity 0.6s ease 0.6s;
+  transform: translateY(-6px);
+  transition: opacity 0.6s ease 0.6s, transform 0.6s ease 0.6s;
+  pointer-events: none;
+  line-height: 1;
 }
-.master-plan.is-leveled .master-plan__direction {
+.master-plan.is-leveled .master-plan__compass {
   opacity: 1;
+  transform: translateY(0);
 }
-.master-plan__direction--sunset {
-  left: 0;
-  transform: translateY(-50%) rotate(-90deg);
-  transform-origin: left center;
-  margin-left: 28px;
+.master-plan__compass-svg {
+  display: block;
+  width: 100%;
+  height: 80px;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+}
+.master-plan__compass-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding: 0 4px;
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.master-plan__compass-label--sunset {
   color: #f07a1e;
-  text-shadow: 0 0 12px rgba(240, 122, 30, 0.4);
+  text-shadow: 0 0 8px rgba(240, 122, 30, 0.4);
 }
-.master-plan__direction--sunset .master-plan__direction-icon {
-  stroke: #f07a1e;
-  filter: drop-shadow(0 0 8px rgba(240, 122, 30, 0.5));
-}
-.master-plan__direction--sunrise {
-  right: 0;
-  transform: translateY(-50%) rotate(90deg);
-  transform-origin: right center;
-  margin-right: 28px;
+.master-plan__compass-label--sunrise {
   color: #f5c842;
-  text-shadow: 0 0 12px rgba(245, 200, 66, 0.4);
-}
-.master-plan__direction--sunrise .master-plan__direction-icon {
-  stroke: #f5c842;
-  filter: drop-shadow(0 0 8px rgba(245, 200, 66, 0.5));
-}
-.master-plan__direction-icon {
-  width: 26px;
-  height: 26px;
-  fill: none;
-  stroke-width: 1.7;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  flex-shrink: 0;
+  text-shadow: 0 0 8px rgba(245, 200, 66, 0.4);
 }
 @media (max-width: 768px) {
-  .master-plan__direction {
-    font-size: 11px;
-    gap: 8px;
-    letter-spacing: 0.16em;
+  .master-plan__compass {
+    top: 8px;
+    right: 8px;
+    width: 60px;
   }
-  .master-plan__direction-icon {
-    width: 18px;
-    height: 18px;
+  .master-plan__compass-svg {
+    height: 60px;
   }
-  .master-plan__direction--sunset { margin-left: 14px; }
-  .master-plan__direction--sunrise { margin-right: 14px; }
+  .master-plan__compass-labels {
+    font-size: 7px;
+    margin-top: 5px;
+    letter-spacing: 0.1em;
+  }
 }
 
 /* Highlight target row when scrolled to from master plan */
