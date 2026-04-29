@@ -1,8 +1,7 @@
 /**
- * One-time patch · Resync showcaseAvailability with new scarcity-aware logic.
- *   • If ≥70% sold → "Only X of Y units left" / "Осталось всего X из Y" (scarcity)
- *   • Else        → "X of Y units available" / "Доступно X из Y"
- *   • pre-sale    → "Pre-Sale Open" / "Предпродажа открыта"
+ * One-time patch · Resync showcaseAvailability with neutral "Available" framing.
+ *   • non-pre-sale → "X of Y units available" / "Доступно X из Y"
+ *   • pre-sale     → "Pre-Sale Open" / "Предпродажа открыта"
  *
  *   node scripts/patch-availability-text.mjs --apply
  */
@@ -46,27 +45,18 @@ for (const projKey of Object.keys(data)) {
   const total = p.availability.total;
   const sold = p.availability.sold || 0;
   const left = Math.max(0, total - sold);
-  const soldPct = total > 0 ? sold / total : 0;
 
-  let next;
-  if (p.status === 'pre-sale') {
-    next = { en: 'Pre-Sale Open', ru: 'Предпродажа открыта' };
-  } else if (soldPct >= 0.7) {
-    next = {
-      en: 'Only ' + left + ' of ' + total + ' units left',
-      ru: 'Осталось всего ' + left + ' из ' + total,
-    };
-  } else {
-    next = {
-      en: left + ' of ' + total + ' units available',
-      ru: 'Доступно ' + left + ' из ' + total,
-    };
-  }
+  const next = p.status === 'pre-sale'
+    ? { en: 'Pre-Sale Open', ru: 'Предпродажа открыта' }
+    : {
+        en: left + ' of ' + total + ' units available',
+        ru: 'Доступно ' + left + ' из ' + total,
+      };
 
   const before = JSON.stringify(p.showcaseAvailability || {});
   const after = JSON.stringify(next);
   if (before !== after) {
-    console.log(`📄 ${projKey} (${sold}/${total}, ${Math.round(soldPct * 100)}% sold)`);
+    console.log(`📄 ${projKey} (${sold}/${total})`);
     console.log(`   before: ${before}`);
     console.log(`   after:  ${after}`);
     p.showcaseAvailability = next;

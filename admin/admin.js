@@ -44,7 +44,7 @@
       'dash.status_completed': 'Completed',
       'dash.status_sold-out': 'All Not Available',
       'dash.sold': 'Not Available',
-      'dash.left': 'Left',
+      'dash.left': 'Available',
       'dash.priceRange': 'Price Range',
       'dash.editProject': 'Edit Project',
       'dash.viewOnSite': 'View on Site',
@@ -449,7 +449,7 @@
       'dash.status_completed': 'Завершён',
       'dash.status_sold-out': 'Все недоступны',
       'dash.sold': 'Не доступно',
-      'dash.left': 'Осталось',
+      'dash.left': 'Доступно',
       'dash.priceRange': 'Диапазон цен',
       'dash.editProject': 'Редактировать',
       'dash.viewOnSite': 'На сайте',
@@ -1343,18 +1343,10 @@
     }
     const left = Math.max(0, (p.availability.total || 0) - (p.availability.sold || 0));
     const total = p.availability.total || 0;
-    const soldPct = total > 0 ? (p.availability.sold / total) : 0;
-    // Scarcity frame only when ≥70% taken — otherwise neutral availability text.
-    const useScarcity = soldPct >= 0.7;
-    p.showcaseAvailability = useScarcity
-      ? {
-          en: 'Only ' + left + ' of ' + total + ' units left',
-          ru: 'Осталось всего ' + left + ' из ' + total,
-        }
-      : {
-          en: left + ' of ' + total + ' units available',
-          ru: 'Доступно ' + left + ' из ' + total,
-        };
+    p.showcaseAvailability = {
+      en: left + ' of ' + total + ' units available',
+      ru: 'Доступно ' + left + ' из ' + total,
+    };
   }
 
   // ─── Dashboard ───
@@ -3054,8 +3046,8 @@
           ru: 'Инвестиционная возможность',
         },
         showcaseAvailability: {
-          en: status === 'pre-sale' ? 'Pre-Sale Open' : 'Only ' + totalUnits + ' of ' + totalUnits + ' units left',
-          ru: status === 'pre-sale' ? 'Предпродажа открыта' : 'Осталось всего ' + totalUnits + ' из ' + totalUnits,
+          en: status === 'pre-sale' ? 'Pre-Sale Open' : totalUnits + ' of ' + totalUnits + ' units available',
+          ru: status === 'pre-sale' ? 'Предпродажа открыта' : 'Доступно ' + totalUnits + ' из ' + totalUnits,
         },
         showcaseDesc: { en: desc, ru: desc },
         showcaseCta: { en: 'View Details', ru: 'Подробнее' },

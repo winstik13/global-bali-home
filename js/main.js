@@ -2459,14 +2459,15 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         var lastTwo = available % 100;
         var lastOne = available % 10;
         var villaForm;
-        if (lastTwo >= 11 && lastTwo <= 14) villaForm = 'вилл';
-        else if (lastOne === 1) villaForm = 'вилла';
-        else if (lastOne >= 2 && lastOne <= 4) villaForm = 'виллы';
-        else villaForm = 'вилл';
-        if (title) title.textContent = 'Осталось всего ' + available + ' ' + villaForm;
+        var availForm;
+        if (lastTwo >= 11 && lastTwo <= 14) { villaForm = 'вилл'; availForm = 'Доступно'; }
+        else if (lastOne === 1) { villaForm = 'вилла'; availForm = 'Доступна'; }
+        else if (lastOne >= 2 && lastOne <= 4) { villaForm = 'виллы'; availForm = 'Доступно'; }
+        else { villaForm = 'вилл'; availForm = 'Доступно'; }
+        if (title) title.textContent = availForm + ' ' + available + ' ' + villaForm;
         if (desc) desc.textContent = 'Свяжитесь с нами до того, как последние юниты уйдут — расскажем о ценах, планировках и инвестиционных условиях.';
       } else {
-        if (title) title.textContent = 'Only ' + available + (available === 1 ? ' Villa Left' : ' Villas Left');
+        if (title) title.textContent = available + (available === 1 ? ' Villa Available' : ' Villas Available');
         if (desc) desc.textContent = 'Get in touch before the last units are gone — our team will walk you through pricing, layouts, and investment details.';
       }
     });
@@ -2679,9 +2680,8 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       }
     };
 
-    // Master plan header — title is dynamic based on how many units are still available.
-    // Scarcity signal ("Only N remain") kicks in once at least one unit is sold,
-    // otherwise neutral "N villas available" to avoid a misleading scarcity frame.
+    // Master plan header — title shows how many units are still available.
+    // Premium tone: neutral "available" framing regardless of % sold (no scarcity pressure).
     var MASTER_PLAN_HEADER_STATIC = {
       en: { tag: 'Master Plan', desc: 'Click on any villa to see its details. Unavailable villas are dimmed.' },
       ru: { tag: 'Генплан', desc: 'Кликните на виллу, чтобы посмотреть детали. Недоступные подсвечены серым.' }
@@ -2691,29 +2691,16 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         if (lang === 'ru') return 'Все недоступны';
         return 'Not Available';
       }
-      if (available === total) {
-        // Pre-sale / fresh launch: no scarcity frame yet.
-        if (lang === 'ru') {
-          // 1 вилла / 2-4 виллы / 5+ вилл — доступна/доступно
-          if (available === 1) return '1 вилла доступна';
-          if (available >= 2 && available <= 4) return available + ' виллы доступны';
-          return available + ' вилл доступно';
-        }
-        return available + (available === 1 ? ' villa available' : ' villas available');
-      }
-      // Soft scarcity frame: some units have been removed from the pool.
       if (lang === 'ru') {
-        // Осталась 1 вилла / Осталось 2-4 виллы / Осталось 5+ вилл
-        // Handle -teen exceptions (11-14 always take the plural genitive form)
+        // 1 вилла / 2-4 виллы / 5+ вилл — with -teen exception (11-14 always plural genitive)
         var lastTwo = available % 100;
         var lastOne = available % 10;
-        if (lastTwo >= 11 && lastTwo <= 14) return 'Осталось всего ' + available + ' вилл';
-        if (lastOne === 1) return (available === 1 ? 'Осталась всего ' : 'Осталось всего ') + available + ' вилла';
-        if (lastOne >= 2 && lastOne <= 4) return 'Осталось всего ' + available + ' виллы';
-        return 'Осталось всего ' + available + ' вилл';
+        if (lastTwo >= 11 && lastTwo <= 14) return 'Доступно ' + available + ' вилл';
+        if (lastOne === 1) return 'Доступна ' + available + ' вилла';
+        if (lastOne >= 2 && lastOne <= 4) return 'Доступно ' + available + ' виллы';
+        return 'Доступно ' + available + ' вилл';
       }
-      // EN: "Only 1 villa remains" vs "Only N villas remain"
-      return 'Only ' + available + (available === 1 ? ' villa remains' : ' villas remain');
+      return available + (available === 1 ? ' villa available' : ' villas available');
     }
 
     var MASTER_PLAN_SHEET_TEXT = {

@@ -380,8 +380,8 @@ const PROJECTS_DATA = {
       "ru": "12 современных вилл с видом на джунгли и природными водопадами в Убуде"
     },
     "showcaseAvailability": {
-      "en": "Only 3 of 12 units left",
-      "ru": "Осталось всего 3 из 12"
+      "en": "3 of 12 units available",
+      "ru": "Доступно 3 из 12"
     }
   },
   "comparisonLabels": {
@@ -695,8 +695,8 @@ const PROJECTS_DATA = {
       "ru": "4 эксклюзивные виллы с бассейнами и видом на рисовые террасы"
     },
     "showcaseAvailability": {
-      "en": "Only 3 of 4 units left",
-      "ru": "Осталось всего 3 из 4"
+      "en": "3 of 4 units available",
+      "ru": "Доступно 3 из 4"
     }
   },
   "serenity-village": {
@@ -1113,8 +1113,8 @@ const PROJECTS_DATA = {
       "ru": "Комплекс из 25 вилл с общим бассейном и кафе — от $132K"
     },
     "showcaseAvailability": {
-      "en": "Only 16 of 25 units left",
-      "ru": "Осталось всего 16 из 25"
+      "en": "16 of 25 units available",
+      "ru": "Доступно 16 из 25"
     }
   },
   "unitTableHeaders": {
@@ -1142,14 +1142,14 @@ const PROJECTS_DATA = {
       "of": "of",
       "sold": "not available",
       "preSale": "Pre-Sale Open",
-      "unitsLeft": "units left",
+      "unitsLeft": "units available",
       "unitsSold": "units not available"
     },
     "ru": {
       "of": "из",
       "sold": "не доступно",
       "preSale": "Предпродажа открыта",
-      "unitsLeft": "осталось",
+      "unitsLeft": "доступно",
       "unitsSold": "не доступно"
     }
   }
