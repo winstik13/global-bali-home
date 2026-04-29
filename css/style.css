@@ -4099,8 +4099,6 @@ td .price-idr {
 }
 
 .unit-table .status--available { color: var(--color-accent); font-weight: 600; }
-.unit-table .status--booked { color: var(--color-status-booked); font-weight: 600; }
-.unit-table .status--resale { color: var(--color-status-resale); font-weight: 600; }
 
 .unit-table tr.unit--clickable {
   cursor: pointer;
@@ -6371,14 +6369,6 @@ a.testimonials__verified:hover {
   border-color: var(--color-accent);
   background: color-mix(in srgb, var(--color-accent) 70%, transparent);
 }
-.master-plan__hotspot--booked {
-  border-color: var(--color-status-booked);
-  background: color-mix(in srgb, var(--color-status-booked) 70%, transparent);
-}
-.master-plan__hotspot--resale {
-  border-color: var(--color-status-resale);
-  background: color-mix(in srgb, var(--color-status-resale) 70%, transparent);
-}
 .master-plan__hotspot--sold {
   border-color: rgba(140, 140, 140, 0.4);
   background: rgba(60, 60, 60, 0.5);
@@ -6397,22 +6387,6 @@ a.testimonials__verified:hover {
   box-shadow:
     0 0 0 5px color-mix(in srgb, var(--color-accent) 25%, transparent),
     0 0 0 7px color-mix(in srgb, var(--color-accent) 12%, transparent),
-    0 4px 16px rgba(0, 0, 0, 0.4);
-}
-.master-plan__hotspot--booked:hover,
-.master-plan__hotspot--booked:focus-visible {
-  background: color-mix(in srgb, var(--color-status-booked) 95%, transparent);
-  box-shadow:
-    0 0 0 5px color-mix(in srgb, var(--color-status-booked) 25%, transparent),
-    0 0 0 7px color-mix(in srgb, var(--color-status-booked) 12%, transparent),
-    0 4px 16px rgba(0, 0, 0, 0.4);
-}
-.master-plan__hotspot--resale:hover,
-.master-plan__hotspot--resale:focus-visible {
-  background: color-mix(in srgb, var(--color-status-resale) 95%, transparent);
-  box-shadow:
-    0 0 0 5px color-mix(in srgb, var(--color-status-resale) 25%, transparent),
-    0 0 0 7px color-mix(in srgb, var(--color-status-resale) 12%, transparent),
     0 4px 16px rgba(0, 0, 0, 0.4);
 }
 /* sold: no hover fill change, but focus-visible shows outline (see above) */
@@ -6698,8 +6672,6 @@ a.testimonials__verified:hover {
   color: var(--color-text);
 }
 .master-plan__sheet-spec-value.status--available { color: var(--color-accent); }
-.master-plan__sheet-spec-value.status--booked { color: var(--color-status-booked); }
-.master-plan__sheet-spec-value.status--resale { color: var(--color-status-resale); }
 .master-plan__sheet-spec-value.status--sold { color: var(--color-text-dim); }
 .master-plan__sheet-price {
   font-family: var(--font-heading);

@@ -1558,7 +1558,7 @@
     // Project Status + Availability (merged)
     const canEditSold = !p.units && p.unitTypes;
     if (p.units) {
-      p.availability.sold = p.units.filter(u => u.status === 'sold' || u.status === 'booked' || u.status === 'resale').length;
+      p.availability.sold = p.units.filter(u => u.status === 'sold').length;
       p.availability.total = p.units.length;
     } else if (p.unitTypes) {
       p.availability.total = p.unitTypes.reduce((s, ut) => s + ut.count, 0);
@@ -2159,7 +2159,7 @@
   function recalcAvailability() {
     const p = projectsData[currentProject];
     if (!p.units) return;
-    const sold = p.units.filter(u => u.status === 'sold' || u.status === 'booked' || u.status === 'resale').length;
+    const sold = p.units.filter(u => u.status === 'sold').length;
     p.availability.sold = sold;
     const soldInput = $('#avail-sold');
     if (soldInput) soldInput.value = sold;
