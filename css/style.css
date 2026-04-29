@@ -6554,12 +6554,12 @@ a.testimonials__verified:hover {
   opacity: 1;
 }
 .master-plan__edge-label--sunset {
-  left: 14px;
+  left: 8%;
   color: #f07a1e;
   text-shadow: 0 0 14px rgba(240, 122, 30, 0.5), 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 .master-plan__edge-label--sunrise {
-  right: 14px;
+  right: 3%;
   color: #f5c842;
   text-shadow: 0 0 14px rgba(245, 200, 66, 0.5), 0 1px 3px rgba(0, 0, 0, 0.7);
 }
@@ -6590,8 +6590,8 @@ a.testimonials__verified:hover {
     width: 16px;
     height: 16px;
   }
-  .master-plan__edge-label--sunset { left: 8px; }
-  .master-plan__edge-label--sunrise { right: 8px; }
+  .master-plan__edge-label--sunset { left: 4%; }
+  .master-plan__edge-label--sunrise { right: 2%; }
 }
 
 /* Highlight target row when scrolled to from master plan */
