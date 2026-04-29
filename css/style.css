@@ -6587,6 +6587,20 @@ a.testimonials__verified:hover {
 .master-plan[data-master-plan="serenity-estates"] .master-plan__edge-label--sunrise {
   right: calc(3% - 145px);
 }
+/* Village: wide-horizontal layout — sunset on top, sunrise on bottom (centered) */
+.master-plan[data-master-plan="serenity-village"] .master-plan__edge-label {
+  top: auto;
+  bottom: auto;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+}
+.master-plan[data-master-plan="serenity-village"] .master-plan__edge-label--sunset {
+  top: -20px;
+}
+.master-plan[data-master-plan="serenity-village"] .master-plan__edge-label--sunrise {
+  bottom: 20px;
+}
 @media (max-width: 768px) {
   .master-plan__edge-label {
     font-size: 11px;
@@ -6599,6 +6613,18 @@ a.testimonials__verified:hover {
   }
   .master-plan__edge-label--sunset { left: 4%; }
   .master-plan__edge-label--sunrise { display: none; }
+  /* Village: keep both labels visible on mobile (top/bottom positioning fits) */
+  .master-plan[data-master-plan="serenity-village"] .master-plan__edge-label--sunrise {
+    display: flex;
+  }
+  .master-plan[data-master-plan="serenity-village"] .master-plan__edge-label--sunset {
+    top: -32px;
+    left: 50%;
+  }
+  .master-plan[data-master-plan="serenity-village"] .master-plan__edge-label--sunrise {
+    bottom: -32px;
+    left: 50%;
+  }
 }
 
 /* Highlight target row when scrolled to from master plan */
