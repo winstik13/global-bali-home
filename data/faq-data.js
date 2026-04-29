@@ -16,8 +16,8 @@ const FAQ_DATA = [
   {
     "order": 2,
     "answer": {
-      "en": "Foreigners cannot own freehold land in Indonesia, but the most widely used structure is a leasehold (Hak Sewa) — at Serenity Villas granted for 30 years with a guaranteed right to extend for an additional 30 years, for a total of 60 years of secured ownership. The lease is registered at the local land office and protected under Indonesian civil law. Our legal team prepares all documentation, including notarized contracts in English and Bahasa Indonesia, and guides you through every step to ensure full compliance and protection of your rights.",
-      "ru": "Иностранцы не могут владеть землёй на правах полной собственности в Индонезии, но наиболее распространённая схема — аренда (Hak Sewa) — в Serenity Villas оформляется на 30 лет с гарантированным правом продления ещё на 30 лет, итого 60 лет защищённого владения. Аренда регистрируется в местном земельном ведомстве и защищена гражданским правом Индонезии. Наша юридическая команда готовит все документы, включая нотариально заверенные контракты на английском и индонезийском языках, и сопровождает вас на каждом этапе для обеспечения полной защиты ваших прав."
+      "en": "Foreigners cannot own freehold land in Indonesia, but the most widely used structure is a leasehold (Hak Sewa) — at Global Bali Home granted for 29 years with a guaranteed right to extend for an additional 30 years, for a total of 59 years of secured ownership. The lease is registered at the local land office and protected under Indonesian civil law. Our legal team prepares all documentation, including notarized contracts in English and Bahasa Indonesia, and guides you through every step to ensure full compliance and protection of your rights.",
+      "ru": "Иностранцы не могут владеть землёй на правах полной собственности в Индонезии, но наиболее распространённая схема — аренда (Hak Sewa) — в проектах Global Bali Home оформляется на 29 лет с гарантированным правом продления ещё на 30 лет, итого 59 лет защищённого владения. Аренда регистрируется в местном земельном ведомстве и защищена гражданским правом Индонезии. Наша юридическая команда готовит все документы, включая нотариально заверенные контракты на английском и индонезийском языках, и сопровождает вас на каждом этапе для обеспечения полной защиты ваших прав."
     },
     "question": {
       "en": "Can foreigners buy property in Bali?",
@@ -115,12 +115,12 @@ const FAQ_DATA = [
   {
     "order": 11,
     "answer": {
-      "en": "Land in the Ubud corridor has appreciated 8–12% annually over the past five years, and land prices specifically in Bedulu — where Serenity Estates is located — have grown faster due to limited supply and Wanayu's master-planned development. Large plots of 3.5–14 are are the scarcest resource in the Bali market: only a handful of developments offer single-family villas on this scale. On top of rental income, our analysis projects 10–15% annual capital appreciation for Estates villas over the next 5–7 years. When you choose to exit, your leasehold rights transfer to the next buyer with the remaining term intact, and our team can help you list through our investor network.",
-      "ru": "Земля в коридоре Убуда росла на 8–12% в год за последние пять лет, а цены именно в Бедулу — где расположен Serenity Estates — растут быстрее из-за ограниченного предложения и генплана Wanayu. Крупные участки 3,5–14 соток — самый дефицитный ресурс на рынке Бали: единичные проекты предлагают виллы single-family на таком масштабе. Помимо арендного дохода, наш анализ прогнозирует 10–15% годового роста капитала для вилл Estates на ближайшие 5–7 лет. При выходе из инвестиции ваши арендные права переходят новому покупателю с нетронутым остатком срока, а наша команда поможет с размещением через инвесторскую сеть."
+      "en": "Land in the Ubud area has appreciated 8–12% annually over the past five years, and land prices specifically in Bedulu — where Serenity Estates is located — have grown faster due to limited supply and Wanayu's master-planned development. Large plots of 3.5–14 are are the scarcest resource in the Bali market: only a handful of developments offer single-family villas on this scale. On top of rental income, our analysis projects 10–15% annual capital appreciation for Estates villas over the next 5–7 years. When you choose to exit, your leasehold rights transfer to the next buyer with the remaining term intact, and our team can help you list through our investor network.",
+      "ru": "Земля в районе Убуда росла на 8–12% в год за последние пять лет, а цены именно в Бедулу — где расположен Serenity Estates — растут быстрее из-за ограниченного предложения и генплана Wanayu. Крупные участки 3,5–14 соток — самый дефицитный ресурс на рынке Бали: единичные проекты предлагают виллы single-family на таком масштабе. Помимо арендного дохода, наш анализ прогнозирует 10–15% годового роста капитала для вилл Estates на ближайшие 5–7 лет. При выходе из инвестиции ваши арендные права переходят новому покупателю с нетронутым остатком срока, а наша команда поможет с размещением через инвесторскую сеть."
     },
     "question": {
-      "en": "What capital appreciation can I expect in the Ubud corridor?",
-      "ru": "Какой рост капитала ожидать в коридоре Убуда?"
+      "en": "What capital appreciation can I expect in Ubud?",
+      "ru": "Какой рост капитала ожидать в Убуде?"
     }
   },
   {

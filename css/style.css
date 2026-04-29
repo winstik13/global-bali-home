@@ -6534,7 +6534,7 @@ a.testimonials__verified:hover {
 /* --- Sunrise / Sunset edge labels on master plan --- */
 .master-plan__edge-label {
   position: absolute;
-  top: 50%;
+  top: calc(50% - 25px);
   transform: translateY(-50%);
   display: flex;
   align-items: center;
@@ -6554,12 +6554,12 @@ a.testimonials__verified:hover {
   opacity: 1;
 }
 .master-plan__edge-label--sunset {
-  left: 8%;
+  left: calc(8% - 130px);
   color: #f07a1e;
   text-shadow: 0 0 14px rgba(240, 122, 30, 0.5), 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 .master-plan__edge-label--sunrise {
-  right: 3%;
+  right: calc(3% - 130px);
   color: #f5c842;
   text-shadow: 0 0 14px rgba(245, 200, 66, 0.5), 0 1px 3px rgba(0, 0, 0, 0.7);
 }
@@ -6580,6 +6580,13 @@ a.testimonials__verified:hover {
   stroke: #f5c842;
   filter: drop-shadow(0 0 8px rgba(245, 200, 66, 0.55));
 }
+/* Estates: shift labels down 50px, push sunrise extra 15px outward */
+.master-plan[data-master-plan="serenity-estates"] .master-plan__edge-label {
+  top: calc(50% + 25px);
+}
+.master-plan[data-master-plan="serenity-estates"] .master-plan__edge-label--sunrise {
+  right: calc(3% - 145px);
+}
 @media (max-width: 768px) {
   .master-plan__edge-label {
     font-size: 11px;
@@ -6591,7 +6598,7 @@ a.testimonials__verified:hover {
     height: 16px;
   }
   .master-plan__edge-label--sunset { left: 4%; }
-  .master-plan__edge-label--sunrise { right: 2%; }
+  .master-plan__edge-label--sunrise { display: none; }
 }
 
 /* Highlight target row when scrolled to from master plan */

@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
         villas: {
           'Rental income': 'Premium 2-3 bedroom villas from $335K — jungle views, private pools, and proven 12-15% rental yields.',
           'Personal residence': 'Spacious 2-3 bedroom villas from $335K surrounded by jungle and natural waterfalls — your Bali home.',
-          'Long-term investment': '2-3 bedroom villas from $335K in the Ubud corridor — proven demand and projected 8–12% annual capital appreciation.',
+          'Long-term investment': '2-3 bedroom villas from $335K in Ubud — proven demand and projected 8–12% annual capital appreciation.',
           'default': 'Premium 2-3 bedroom villas from $335K with jungle views, private pools, and full management.'
         },
         estates: {
@@ -394,7 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
         villas: {
           'Rental income': 'Премиальные виллы 2–3 спальни от $335K — вид на джунгли, приватные бассейны и подтверждённая доходность 12–15%.',
           'Personal residence': 'Просторные виллы 2–3 спальни от $335K в окружении джунглей и водопадов — ваш дом на Бали.',
-          'Long-term investment': 'Виллы 2–3 спальни от $335K в коридоре Убуда — стабильный спрос и прогнозируемый рост стоимости 8–12% в год.',
+          'Long-term investment': 'Виллы 2–3 спальни от $335K в Убуде — стабильный спрос и прогнозируемый рост стоимости 8–12% в год.',
           'default': 'Премиальные виллы 2–3 спальни от $335K с видом на джунгли, приватными бассейнами и полным управлением.'
         },
         estates: {

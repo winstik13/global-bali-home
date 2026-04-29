@@ -640,8 +640,8 @@ const PROJECTS_DATA = {
       "total": 4
     },
     "showcaseDesc": {
-      "en": "4 exclusive villas on spacious 3.5–14 are plots in the Ubud corridor — the scarcest resource in Bali real estate. Single-family privacy, projected 10–15% annual capital appreciation. ",
-      "ru": "4 эксклюзивные виллы на просторных участках 3,5–14 соток в коридоре Убуда — самом дефицитном ресурсе на рынке Бали. Приватность single-family, прогноз роста капитала 10–15% в год."
+      "en": "4 exclusive villas on spacious 3.5–14 are plots in the Ubud area — the scarcest resource in Bali real estate. Single-family privacy, projected 10–15% annual capital appreciation. ",
+      "ru": "4 эксклюзивные виллы на просторных участках 3,5–14 соток в районе Убуда — самом дефицитном ресурсе на рынке Бали. Приватность single-family, прогноз роста капитала 10–15% в год."
     },
     "showcaseMeta": {
       "en": [
@@ -1058,8 +1058,8 @@ const PROJECTS_DATA = {
       "total": 25
     },
     "showcaseDesc": {
-      "en": "25 villas from $132K — the lowest entry into Bali yield-generating real estate. Same construction insurance and notarized 60-year leasehold as our $500K+ projects. Shared pool and onsite cafe included.",
-      "ru": "25 вилл от $132K — самая низкая точка входа в доходную недвижимость Бали. Та же страхование строительных рисков и нотариальный leasehold на 60 лет, что в проектах от $500K+. Общий бассейн и кафе на территории."
+      "en": "25 villas from $132K — the lowest entry into Bali yield-generating real estate. Same construction insurance and notarized 59-year leasehold as our $500K+ projects. Shared pool and onsite cafe included.",
+      "ru": "25 вилл от $132K — самая низкая точка входа в доходную недвижимость Бали. То же страхование строительных рисков и нотариальный leasehold на 59 лет, что в проектах от $500K+. Общий бассейн и кафе на территории."
     },
     "showcaseMeta": {
       "en": [
