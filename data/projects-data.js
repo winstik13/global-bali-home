@@ -8,8 +8,8 @@ const PROJECTS_DATA = {
       "available": "Available"
     },
     "ru": {
-      "sold": "Не доступно",
-      "available": "Доступно"
+      "sold": "Не доступен",
+      "available": "Доступен"
     }
   },
   "serenity-villas": {
@@ -640,8 +640,8 @@ const PROJECTS_DATA = {
       "total": 4
     },
     "showcaseDesc": {
-      "en": "4 exclusive villas on spacious 3.5–14 are plots in the Ubud corridor — the scarcest resource in Bali real estate. Single-family privacy, projected 10–15% annual capital appreciation. ",
-      "ru": "4 эксклюзивные виллы на просторных участках 3,5–14 соток в коридоре Убуда — самом дефицитном ресурсе на рынке Бали. Приватность single-family, прогноз роста капитала 10–15% в год."
+      "en": "4 exclusive villas on 3.5–14 are of prime Ubud land — the scarcest resource in Bali real estate. Single-family privacy, projected 10–15% annual capital appreciation. ",
+      "ru": "4 эксклюзивные виллы на 3,5–14 сотках премиум-земли Убуда — самом дефицитном ресурсе на рынке Бали. Приватность single-family, прогноз роста капитала 10–15% в год."
     },
     "showcaseMeta": {
       "en": [
@@ -676,8 +676,8 @@ const PROJECTS_DATA = {
     "decisionGuide": {
       "icon": "land",
       "benefit": {
-        "en": "spacious Ubud plots",
-        "ru": "просторные участки в Убуде"
+        "en": "prime Ubud land",
+        "ru": "премиум-земля Убуда"
       },
       "question": {
         "en": "Want capital appreciation?",
@@ -711,9 +711,9 @@ const PROJECTS_DATA = {
         "land": "1.16 are",
         "type": "1 Bedroom",
         "badge": null,
-        "price": null,
+        "price": 140000,
         "floors": 1,
-        "status": "sold"
+        "status": "available"
       },
       {
         "id": "2",
@@ -731,9 +731,9 @@ const PROJECTS_DATA = {
         "land": "1.16 are",
         "type": "1 Bedroom",
         "badge": null,
-        "price": null,
+        "price": 132000,
         "floors": 1,
-        "status": "sold"
+        "status": "available"
       },
       {
         "id": "4",
@@ -861,9 +861,9 @@ const PROJECTS_DATA = {
         "land": "1.54 are",
         "type": "2 Bedroom",
         "badge": null,
-        "price": null,
+        "price": 195000,
         "floors": 2,
-        "status": "sold"
+        "status": "available"
       },
       {
         "id": "17",
@@ -881,9 +881,9 @@ const PROJECTS_DATA = {
         "land": "1.54 are",
         "type": "2 Bedroom",
         "badge": null,
-        "price": null,
+        "price": 195000,
         "floors": 2,
-        "status": "sold"
+        "status": "available"
       },
       {
         "id": "19",
@@ -901,9 +901,9 @@ const PROJECTS_DATA = {
         "land": "1.16 are",
         "type": "1 Bedroom",
         "badge": null,
-        "price": null,
+        "price": 140000,
         "floors": 1,
-        "status": "sold"
+        "status": "available"
       },
       {
         "id": "21",
@@ -911,9 +911,9 @@ const PROJECTS_DATA = {
         "land": "1.54 are",
         "type": "2 Bedroom",
         "badge": null,
-        "price": null,
+        "price": 220000,
         "floors": 2,
-        "status": "sold"
+        "status": "available"
       },
       {
         "id": "22",
@@ -921,9 +921,9 @@ const PROJECTS_DATA = {
         "land": "1.54 are",
         "type": "2 Bedroom",
         "badge": null,
-        "price": null,
+        "price": 195000,
         "floors": 2,
-        "status": "sold"
+        "status": "available"
       },
       {
         "id": "23",
@@ -931,9 +931,9 @@ const PROJECTS_DATA = {
         "land": "1.54 are",
         "type": "2 Bedroom",
         "badge": null,
-        "price": null,
+        "price": 195000,
         "floors": 2,
-        "status": "sold"
+        "status": "available"
       },
       {
         "id": "24",
@@ -941,9 +941,9 @@ const PROJECTS_DATA = {
         "land": "1.54 are",
         "type": "2 Bedroom",
         "badge": null,
-        "price": null,
+        "price": 220000,
         "floors": 2,
-        "status": "sold"
+        "status": "available"
       },
       {
         "id": "25",
@@ -951,9 +951,9 @@ const PROJECTS_DATA = {
         "land": "1.54 are",
         "type": "2 Bedroom",
         "badge": null,
-        "price": null,
+        "price": 220000,
         "floors": 2,
-        "status": "sold"
+        "status": "available"
       }
     ],
     "status": "in-progress",
@@ -1054,7 +1054,7 @@ const PROJECTS_DATA = {
       "ru": "Подробнее"
     },
     "availability": {
-      "sold": 19,
+      "sold": 9,
       "total": 25
     },
     "showcaseDesc": {
@@ -1113,8 +1113,8 @@ const PROJECTS_DATA = {
       "ru": "Комплекс из 25 вилл с общим бассейном и кафе — от $132K"
     },
     "showcaseAvailability": {
-      "en": "6 of 25 units available",
-      "ru": "Доступно 6 из 25"
+      "en": "16 of 25 units available",
+      "ru": "Доступно 16 из 25"
     }
   },
   "unitTableHeaders": {
