@@ -6543,13 +6543,11 @@ a.testimonials__verified:hover {
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #e8a04a;
   pointer-events: none;
   z-index: 2;
   white-space: nowrap;
   opacity: 0;
   transition: opacity 0.6s ease 0.6s;
-  text-shadow: 0 0 12px rgba(232, 160, 74, 0.35);
 }
 .master-plan.is-leveled .master-plan__direction {
   opacity: 1;
@@ -6559,23 +6557,33 @@ a.testimonials__verified:hover {
   transform: translateY(-50%) rotate(-90deg);
   transform-origin: left center;
   margin-left: 28px;
+  color: #f07a1e;
+  text-shadow: 0 0 12px rgba(240, 122, 30, 0.4);
+}
+.master-plan__direction--sunset .master-plan__direction-icon {
+  stroke: #f07a1e;
+  filter: drop-shadow(0 0 8px rgba(240, 122, 30, 0.5));
 }
 .master-plan__direction--sunrise {
   right: 0;
   transform: translateY(-50%) rotate(90deg);
   transform-origin: right center;
   margin-right: 28px;
+  color: #f5c842;
+  text-shadow: 0 0 12px rgba(245, 200, 66, 0.4);
+}
+.master-plan__direction--sunrise .master-plan__direction-icon {
+  stroke: #f5c842;
+  filter: drop-shadow(0 0 8px rgba(245, 200, 66, 0.5));
 }
 .master-plan__direction-icon {
   width: 26px;
   height: 26px;
   fill: none;
-  stroke: #e8a04a;
   stroke-width: 1.7;
   stroke-linecap: round;
   stroke-linejoin: round;
   flex-shrink: 0;
-  filter: drop-shadow(0 0 8px rgba(232, 160, 74, 0.45));
 }
 @media (max-width: 768px) {
   .master-plan__direction {
