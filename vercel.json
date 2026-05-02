@@ -4,6 +4,11 @@
   "outputDirectory": ".",
   "installCommand": "npm install --omit=dev",
   "framework": null,
+  "redirects": [
+    { "source": "/guide", "destination": "/", "permanent": false },
+    { "source": "/guide/(.*)", "destination": "/", "permanent": false },
+    { "source": "/assets/bali-investment-guide-2026.pdf", "destination": "/", "permanent": false }
+  ],
   "headers": [
     {
       "source": "/data/(.*)",
