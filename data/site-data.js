@@ -143,7 +143,7 @@ const SITE_DATA = {
         "placeholder": "Ваш email"
       }
     },
-    "enabled": false,
+    "enabled": true,
     "countdown": 7
   },
   "tourPopup": {

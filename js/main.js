@@ -246,6 +246,9 @@ document.addEventListener('DOMContentLoaded', () => {
       leadThankSub: 'Have a question? Chat with our advisor now',
       leadThankWa: 'WhatsApp Us',
       leadOpenBtn: 'Open the Guide',
+      // Manual-delivery mode (guide content under revision — auto-download disabled)
+      leadThankManualTitle: 'Thank You!',
+      leadThankManualText: 'Our team will email the Bali Investment Guide 2026 to you within 1 business day. We\'re finalising the latest update so you receive the most accurate market data.',
       contactThank: 'Our advisors will get back to you as soon as possible.',
       guideReadOnline: 'Read Online',
       guideDownloadPdf: 'Download PDF',
@@ -347,6 +350,9 @@ document.addEventListener('DOMContentLoaded', () => {
       leadThankSub: 'Есть вопросы? Напишите нашему консультанту',
       leadThankWa: 'Написать в WhatsApp',
       leadOpenBtn: 'Открыть гид',
+      // Manual-delivery mode (контент гида на доработке — авто-доставка временно отключена)
+      leadThankManualTitle: 'Спасибо!',
+      leadThankManualText: 'Мы вышлем гид по инвестициям в Бали 2026 на ваш email в течение 1 рабочего дня. Сейчас обновляем материалы с актуальными рыночными данными — пришлём свежую версию.',
       contactThank: 'Наши консультанты свяжутся с вами в ближайшее время.',
       guideReadOnline: 'Читать онлайн',
       guideDownloadPdf: 'Скачать PDF',
@@ -2014,12 +2020,8 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       sessionStorage.setItem('leadCaptured', 'true');
       var wrap = form.closest('.lead-magnet__form-wrap');
       var waNum2 = (typeof SITE_DATA !== 'undefined' && SITE_DATA.contacts) ? SITE_DATA.contacts.whatsapp : '6281338741177';
-      var guidePath = getGuidePath();
-      var guideWebPath = getGuideWebPath();
-      var guideButtons = '';
-      if (guideWebPath) guideButtons += '<a href="' + guideWebPath + '" target="_blank" rel="noopener noreferrer" class="btn btn--primary guide-open-btn">' + t.guideReadOnline + '</a>';
-      if (guidePath) guideButtons += '<a href="' + guidePath + '" target="_blank" rel="noopener noreferrer" class="btn btn--outline guide-open-btn">' + t.guideDownloadPdf + '</a>';
-      wrap.innerHTML = '<div class="lead-magnet__success"><h3>' + t.leadThankTitle + '</h3><p>' + t.leadThankText + '</p><div class="lead-magnet__guide-actions">' + guideButtons + '</div><div class="lead-magnet__divider"></div><p class="lead-magnet__sub">' + t.leadThankSub + '</p><a href="https://wa.me/' + waNum2 + '" target="_blank" rel="noopener noreferrer" class="btn lead-magnet__wa">' + t.leadThankWa + '</a></div>';
+      // Manual delivery mode: thank-you only, no download/read buttons
+      wrap.innerHTML = '<div class="lead-magnet__success"><h3>' + t.leadThankManualTitle + '</h3><p>' + t.leadThankManualText + '</p><div class="lead-magnet__divider"></div><p class="lead-magnet__sub">' + t.leadThankSub + '</p><a href="https://wa.me/' + waNum2 + '" target="_blank" rel="noopener noreferrer" class="btn lead-magnet__wa">' + t.leadThankWa + '</a></div>';
     });
   });
 
@@ -2169,17 +2171,9 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     trackEvent('generate_lead', 'exit_popup', 'investment_guide');
     sessionStorage.setItem('leadCaptured', 'true');
     var exitForm = exitOverlay.querySelector('.exit-popup__form');
-    var guidePath = getGuidePath();
-    var guideWebPath = getGuideWebPath();
-    var exitGuideButtons = '';
-    if (guideWebPath) exitGuideButtons += '<a href="' + guideWebPath + '" target="_blank" rel="noopener noreferrer" class="btn btn--primary guide-open-btn">' + t.guideReadOnline + '</a>';
-    if (guidePath) exitGuideButtons += '<a href="' + guidePath + '" target="_blank" rel="noopener noreferrer" class="btn btn--outline guide-open-btn">' + t.guideDownloadPdf + '</a>';
-    if (exitGuideButtons) {
-      exitForm.innerHTML = '<p style="text-align:center;font-weight:600;padding:12px 0;">' + t.exitSuccess + '</p><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;padding:8px 0;">' + exitGuideButtons + '</div>';
-    } else {
-      exitForm.innerHTML = '<p style="text-align:center;font-weight:600;padding:12px 0;">' + t.exitSuccess + '</p>';
-      setTimeout(closeExit, 3000);
-    }
+    // Manual delivery mode: thank-you only, no download/read buttons
+    exitForm.innerHTML = '<p style="text-align:center;font-weight:600;padding:12px 0 6px;">' + t.leadThankManualTitle + '</p><p style="text-align:center;padding:0 0 12px;font-size:.9em;color:var(--color-text-muted);line-height:1.5;">' + t.leadThankManualText + '</p>';
+    setTimeout(closeExit, 5000);
   });
 
   const pageLoadTime = Date.now();
