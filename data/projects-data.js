@@ -325,8 +325,8 @@ const PROJECTS_DATA = {
       "total": 12
     },
     "showcaseDesc": {
-      "en": "12 boutique villas built for turnkey rental. 12–15% projected yield, 80%+ occupancy through our French management partner, 75% already sold.",
-      "ru": "12 бутик-вилл, построенных под готовую аренду. Прогнозная доходность 12–15%, заполняемость 80%+ через французскую управляющую компанию, 75% уже продано."
+      "en": "12 boutique villas built for turnkey rental. 12–15% projected yield, ~80% occupancy through our French management partner.",
+      "ru": "12 бутик-вилл, построенных под готовую аренду. Прогнозная доходность 12–15%, заполняемость ~80% через французскую управляющую компанию."
     },
     "showcaseMeta": {
       "en": [
