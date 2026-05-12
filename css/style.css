@@ -1527,6 +1527,16 @@ td .price-idr {
   margin-bottom: 14px;
 }
 
+.footer__contact-item a {
+  color: inherit;
+  transition: color var(--transition);
+}
+
+.footer__contact-item a:hover {
+  color: var(--color-text);
+  text-decoration: underline;
+}
+
 .footer__social {
   display: flex;
   gap: 20px;
