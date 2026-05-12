@@ -1058,8 +1058,8 @@ const PROJECTS_DATA = {
       "total": 25
     },
     "showcaseDesc": {
-      "en": "25 villas from $132K — the lowest entry into Bali yield-generating real estate. Same construction insurance and notarized 59-year leasehold as our $500K+ projects. Shared pool and onsite cafe included.",
-      "ru": "25 вилл от $132K — самая низкая точка входа в доходную недвижимость Бали. То же страхование строительных рисков и нотариальный leasehold на 59 лет, что в проектах от $500K+. Общий бассейн и кафе на территории."
+      "en": "25 villas from $132K — the lowest entry into Bali yield-generating real estate. Same risk insurance and notarized 30-year leasehold as our $500K+ projects. Shared pool and onsite cafe included.",
+      "ru": "25 вилл от $132K — самая низкая точка входа в доходную недвижимость Бали. То же страхование рисков и нотариальный leasehold на 30 лет, что в проектах от $500K+. Общий бассейн и кафе на территории."
     },
     "showcaseMeta": {
       "en": [
