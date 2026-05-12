@@ -84,7 +84,7 @@ const SITE_DATA = {
       }
     },
     "rentalYield": "12-15%",
-    "occupancyRate": "80%+",
+    "occupancyRate": "~80%",
     "paybackPeriod": "7-8 yr",
     "propertyGrowth": "8-12%",
     "villasDesigned": "43",
