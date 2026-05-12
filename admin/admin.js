@@ -1,12 +1,12 @@
 /* ============================================
-   ADMIN PANEL — Global Bali Home
+   ADMIN PANEL â€” Global Bali Home
    Supabase Auth + Supabase content storage
    ============================================ */
 
 (function () {
   'use strict';
 
-  // ─── i18n ───
+  // â”€â”€â”€ i18n â”€â”€â”€
   let adminLang = localStorage.getItem('admin_lang') || 'en';
 
   const ADMIN_I18N = {
@@ -53,7 +53,7 @@
       'dash.couldNotLoad': 'Could not load commit history.',
       'dash.breakAvailable': 'available',
       'dash.breakSold': 'not available',
-      'rate.title': 'Exchange Rate (USD → IDR)',
+      'rate.title': 'Exchange Rate (USD â†’ IDR)',
       'rate.navTitle': 'Rate',
       'rate.auto': 'Auto (live rate from API)',
       'rate.save': 'Save Rate',
@@ -76,7 +76,7 @@
       'contacts.hint.phone': 'Display format, e.g. +62 813 251 438 49',
       'contacts.hint.whatsapp': 'Digits only, with country code, no +',
       'help.contacts.phone': '<strong>Phone:</strong> Any format with spaces/dashes, start with +country code.',
-      'help.contacts.whatsapp': '<strong>WhatsApp:</strong> DIGITS ONLY, no +, spaces or dashes. Example: 6281338741177',
+      'help.contacts.whatsapp': '<strong>WhatsApp:</strong> DIGITS ONLY, no +, spaces or dashes. Example: 6281325143849',
       'help.contacts.email': '<strong>Email:</strong> Standard email format.',
       'help.contacts.location': '<strong>Location:</strong> Display text, translate manually for each language.',
       'guide.title': 'Investment Guide PDF',
@@ -95,7 +95,7 @@
       'projects.publish': 'Publish Changes',
       'projects.generatePages': 'Generate Detail Pages',
       'projects.updateSeoOnly': 'Update SEO Only',
-      'projects.overwriteWarn': '⚠️ DANGER: Pages for "{name}" already exist.\n\nClicking OK will OVERWRITE the entire HTML files (EN + RU + ID) with the auto-generated template.\n\nYOU WILL LOSE:\n• Curated gallery images and any custom photo selections\n• Any manual content edits made directly to the HTML\n• Any custom sections added outside the template\n\nThe template DOES include: Hero, Concept, Units table, Gallery, ROI Calculator, Tour CTA, Final CTA.\n\nIf you only need to update SEO meta tags — CANCEL and use "Update SEO Only" instead.\n\nAre you absolutely sure you want to overwrite?',
+      'projects.overwriteWarn': 'âš ï¸ DANGER: Pages for "{name}" already exist.\n\nClicking OK will OVERWRITE the entire HTML files (EN + RU + ID) with the auto-generated template.\n\nYOU WILL LOSE:\nâ€¢ Curated gallery images and any custom photo selections\nâ€¢ Any manual content edits made directly to the HTML\nâ€¢ Any custom sections added outside the template\n\nThe template DOES include: Hero, Concept, Units table, Gallery, ROI Calculator, Tour CTA, Final CTA.\n\nIf you only need to update SEO meta tags â€” CANCEL and use "Update SEO Only" instead.\n\nAre you absolutely sure you want to overwrite?',
       'projects.overwriteAll': 'Overwrite All',
       'projects.cancel': 'Cancel',
       'projects.unsaved': 'Unsaved changes',
@@ -152,7 +152,7 @@
       'projects.handover': 'Handover',
       'projects.newProject': '+ New Project',
       'projects.decisionGuide': 'Decision Guide (catalog page)',
-      'projects.decisionGuideHint': 'Shown as a cell on projects.html — helps buyers match their goal to this project.',
+      'projects.decisionGuideHint': 'Shown as a cell on projects.html â€” helps buyers match their goal to this project.',
       'projects.decisionGuideIcon': 'Icon',
       'projects.decisionGuideIconYield': 'Yield (trending chart)',
       'projects.decisionGuideIconLand': 'Land (building)',
@@ -160,10 +160,10 @@
       'projects.decisionGuideQuestion': 'Question',
       'projects.decisionGuideQuestionPh': 'e.g. Want passive income?',
       'projects.decisionGuideBenefit': 'Benefit',
-      'projects.decisionGuideBenefitPh': 'e.g. 12–15% yield',
+      'projects.decisionGuideBenefitPh': 'e.g. 12â€“15% yield',
       'seo.title': 'SEO Editor',
       'seo.page': 'Page',
-      'seo.selectPage': '— Select page —',
+      'seo.selectPage': 'â€” Select page â€”',
       'seo.home': 'Home',
       'seo.about': 'About',
       'seo.projects': 'Projects',
@@ -179,18 +179,18 @@
       'seo.ogDesc': 'OG Description',
       'seo.ogImage': 'OG Image URL',
       'seo.canonical': 'Canonical URL',
-      'seo.viewOnSite': 'View on Site ↗',
+      'seo.viewOnSite': 'View on Site â†—',
       'seo.saveAll': 'Save All Languages',
       'seo.savingAll': 'Saving all languages...',
       'seo.loadingLangs': 'Loading all languages...',
       'gallery.title': 'Gallery Manager',
       'gallery.project': 'Project',
-      'gallery.selectProject': '— Select project —',
+      'gallery.selectProject': 'â€” Select project â€”',
       'gallery.upload': 'Upload Photos',
       'gallery.photos': 'photos',
       'gallery.noImages': 'No images in this project. Drag & drop or click Upload to add photos.',
       'gallery.dragDrop': 'Drag & drop images here or use Upload button',
-      'gallery.formats': 'JPG, PNG, WebP — max 10 MB per file',
+      'gallery.formats': 'JPG, PNG, WebP â€” max 10 MB per file',
       'gallery.uploading': 'Uploading',
       'gallery.savingData': 'Saving gallery data...',
       'gallery.uploaded': 'photos uploaded!',
@@ -245,9 +245,9 @@
       'help.colors.live': '<strong>Live preview:</strong> Changes apply instantly in admin panel.',
       'help.colors.site': '<strong>On site:</strong> Colors apply after Save + ~1-2 min deploy.',
       'help.colors.reset': 'Use <strong>Reset to Defaults</strong> to restore original palette.',
-      'help.exitpopup.what': '<strong>What it does:</strong> Shows a popup when a desktop visitor moves the cursor toward closing the tab. Offers a free investment guide in exchange for an email — a lead capture tool.',
+      'help.exitpopup.what': '<strong>What it does:</strong> Shows a popup when a desktop visitor moves the cursor toward closing the tab. Offers a free investment guide in exchange for an email â€” a lead capture tool.',
       'help.exitpopup.enabled': '<strong>Enabled:</strong> Turn the popup on or off across the entire site.',
-      'help.exitpopup.delay': '<strong>Trigger Delay:</strong> Minimum seconds a visitor must spend on the page before the popup can appear. Prevents annoying new visitors (recommended: 15–30 sec).',
+      'help.exitpopup.delay': '<strong>Trigger Delay:</strong> Minimum seconds a visitor must spend on the page before the popup can appear. Prevents annoying new visitors (recommended: 15â€“30 sec).',
       'help.exitpopup.content': '<strong>Content:</strong> All texts are fully customizable per language. Badge, title, description, button label, and success message. After submission, "Read Online" and "Download PDF" buttons appear automatically.',
       'nav.exitpopup': 'Popups',
       'popups.title': 'Popups',
@@ -314,12 +314,12 @@
       'roi.defaultInvestment': 'Default Investment ($)',
       'roi.defaultOccupancy': 'Default Occupancy (%)',
       'roi.occupancyRange': 'Occupancy Range (%)',
-      'roi.conservative': 'Conservative — Yield / Growth (%)',
-      'roi.normal': 'Normal — Yield / Growth (%)',
-      'roi.optimistic': 'Optimistic — Yield / Growth (%)',
+      'roi.conservative': 'Conservative â€” Yield / Growth (%)',
+      'roi.normal': 'Normal â€” Yield / Growth (%)',
+      'roi.optimistic': 'Optimistic â€” Yield / Growth (%)',
       'roi.save': 'Save ROI Settings',
       'roi.textsTitle': 'Calculator Texts (3 languages)',
-      'roi.textsHint': 'Use {project} placeholder in titleProject — it will be replaced with the project name.',
+      'roi.textsHint': 'Use {project} placeholder in titleProject â€” it will be replaced with the project name.',
       'roi.textsSave': 'Save Calculator Texts',
       'help.roi.investment': '<strong>Investment range:</strong> Min/max/step for the slider on homepage.',
       'help.roi.scenarios': '<strong>Scenarios:</strong> Yield and growth rates for Conservative/Normal/Optimistic.',
@@ -338,7 +338,7 @@
       'analytics.hint.yandex': 'Counter ID from metrika.yandex.ru',
       'analytics.hint.clarity': 'Project ID from clarity.microsoft.com',
       'analytics.hint.gsc': 'Verification code (content value of meta tag)',
-      'help.analytics.intro': '<strong>How it works:</strong> Paste your tracking IDs below. Scripts are injected automatically — no code changes needed.',
+      'help.analytics.intro': '<strong>How it works:</strong> Paste your tracking IDs below. Scripts are injected automatically â€” no code changes needed.',
       'help.analytics.empty': '<strong>Empty field</strong> = tracker disabled. Fill in only the services you use.',
       'help.analytics.events': '<strong>Auto-tracked events:</strong> form submissions (contact, quiz, lead magnet, exit popup), WhatsApp clicks, PDF downloads.',
       'newProject.title': 'Add New Project',
@@ -374,9 +374,9 @@
       'auth.invalidCredential': 'Invalid email or password.',
       'auth.failed': 'Authentication failed. Please try again.',
       'validate.wa.required': 'Required',
-      'validate.wa.digitsOnly': 'Digits only — no +, spaces or dashes',
-      'validate.wa.tooShort': 'Too short — include country code (e.g. 62...)',
-      'validate.wa.tooLong': 'Too long — max 15 digits',
+      'validate.wa.digitsOnly': 'Digits only â€” no +, spaces or dashes',
+      'validate.wa.tooShort': 'Too short â€” include country code (e.g. 62...)',
+      'validate.wa.tooLong': 'Too long â€” max 15 digits',
       'validate.wa.link': 'Link: wa.me/',
       'validate.phone.required': 'Required',
       'validate.phone.tooShort': 'Too short',
@@ -400,8 +400,8 @@
       'users.col.status': 'Status',
       'users.col.lastSignIn': 'Last sign-in',
       'users.col.actions': 'Actions',
-      'users.role.editor': 'Editor — gallery / FAQ / testimonials only',
-      'users.role.admin': 'Admin — all content (no user management)',
+      'users.role.editor': 'Editor â€” gallery / FAQ / testimonials only',
+      'users.role.admin': 'Admin â€” all content (no user management)',
       'users.role.editor.short': 'editor',
       'users.role.admin.short': 'admin',
       'users.role.super_admin.short': 'super admin',
@@ -410,415 +410,415 @@
       'users.status.pending': 'Invited (pending)',
       'users.action.delete': 'Delete',
       'users.action.confirmDelete': 'Delete user {email}? This is irreversible.',
-      'users.toast.sending': 'Sending invite…',
+      'users.toast.sending': 'Sending inviteâ€¦',
       'users.toast.sent': 'Invitation sent to {email}.',
       'users.toast.roleUpdated': 'Role updated.',
       'users.toast.userDeleted': 'User deleted.',
     },
     ru: {
-      'login.title': 'Панель управления',
+      'login.title': 'ÐŸÐ°Ð½ÐµÐ»ÑŒ ÑƒÐ¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ñ',
       'login.email': 'Email',
-      'login.password': 'Пароль',
-      'login.submit': 'Войти',
-      'login.signingIn': 'Вход...',
-      'header.title': 'Панель управления',
+      'login.password': 'ÐŸÐ°Ñ€Ð¾Ð»ÑŒ',
+      'login.submit': 'Ð’Ð¾Ð¹Ñ‚Ð¸',
+      'login.signingIn': 'Ð’Ñ…Ð¾Ð´...',
+      'header.title': 'ÐŸÐ°Ð½ÐµÐ»ÑŒ ÑƒÐ¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ñ',
       'header.rateLabel': 'USD / IDR',
-      'header.signOut': 'Выйти',
-      'deploy.deploying': 'Деплой...',
-      'deploy.live': 'Опубликовано!',
-      'deploy.failed': 'Ошибка деплоя',
-      'nav.dashboard': 'Обзор',
-      'nav.projects': 'Проекты',
+      'header.signOut': 'Ð’Ñ‹Ð¹Ñ‚Ð¸',
+      'deploy.deploying': 'Ð”ÐµÐ¿Ð»Ð¾Ð¹...',
+      'deploy.live': 'ÐžÐ¿ÑƒÐ±Ð»Ð¸ÐºÐ¾Ð²Ð°Ð½Ð¾!',
+      'deploy.failed': 'ÐžÑˆÐ¸Ð±ÐºÐ° Ð´ÐµÐ¿Ð»Ð¾Ñ',
+      'nav.dashboard': 'ÐžÐ±Ð·Ð¾Ñ€',
+      'nav.projects': 'ÐŸÑ€Ð¾ÐµÐºÑ‚Ñ‹',
       'nav.seo': 'SEO',
-      'nav.gallery': 'Галерея',
+      'nav.gallery': 'Ð“Ð°Ð»ÐµÑ€ÐµÑ',
       'nav.faq': 'FAQ',
-      'nav.testimonials': 'Отзывы',
-      'nav.analytics': 'Аналитика',
-      'nav.settings': 'Настройки',
-      'dash.title': 'Обзор',
-      'dash.loading': 'Загрузка данных...',
-      'dash.totalUnits': 'Всего юнитов',
-      'dash.available': 'Доступно',
-      'dash.progress': 'Прогресс',
-      'dash.potential': 'Потенциал',
-      'dash.price': 'Цена',
-      'dash.preSale': 'Предпродажа',
-      'dash.inProgress': 'Строится',
-      'dash.status_pre-sale': 'Предпродажа',
-      'dash.status_in-progress': 'Строится',
-      'dash.status_completed': 'Завершён',
-      'dash.status_sold-out': 'Все недоступны',
-      'dash.sold': 'Не доступно',
-      'dash.left': 'Доступно',
-      'dash.priceRange': 'Диапазон цен',
-      'dash.editProject': 'Редактировать',
-      'dash.viewOnSite': 'На сайте',
-      'dash.recentChanges': 'Последние изменения',
-      'dash.noChanges': 'Нет недавних изменений.',
-      'dash.couldNotLoad': 'Не удалось загрузить историю.',
-      'dash.breakAvailable': 'доступно',
-      'dash.breakSold': 'не доступно',
-      'rate.title': 'Курс валют (USD → IDR)',
-      'rate.navTitle': 'Курс',
-      'rate.auto': 'Авто (курс из API)',
-      'rate.save': 'Сохранить курс',
-      'rate.currentRate': 'Текущий курс:',
-      'rate.updated': 'Обновлён:',
-      'rate.manual': '(ручной)',
-      'rate.autoMode': '(авто)',
-      'rate.defaultMsg': 'Курс по умолчанию. Обновите для корректных цен в IDR.',
-      'rate.invalidRate': 'Введите корректный курс (напр. 16500)',
-      'help.rate.manual': '<strong>Вручную:</strong> Введите курс и нажмите Сохранить.',
-      'help.rate.auto': '<strong>Авто:</strong> Курс обновляется из API каждый час. Ручной ввод блокируется.',
-      'help.rate.fallback': '<strong>Резерв:</strong> Если API недоступен, используется последний сохранённый курс.',
-      'contacts.title': 'Контактная информация',
-      'contacts.phone': 'Телефон',
-      'contacts.whatsapp': 'Номер WhatsApp',
+      'nav.testimonials': 'ÐžÑ‚Ð·Ñ‹Ð²Ñ‹',
+      'nav.analytics': 'ÐÐ½Ð°Ð»Ð¸Ñ‚Ð¸ÐºÐ°',
+      'nav.settings': 'ÐÐ°ÑÑ‚Ñ€Ð¾Ð¹ÐºÐ¸',
+      'dash.title': 'ÐžÐ±Ð·Ð¾Ñ€',
+      'dash.loading': 'Ð—Ð°Ð³Ñ€ÑƒÐ·ÐºÐ° Ð´Ð°Ð½Ð½Ñ‹Ñ…...',
+      'dash.totalUnits': 'Ð’ÑÐµÐ³Ð¾ ÑŽÐ½Ð¸Ñ‚Ð¾Ð²',
+      'dash.available': 'Ð”Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð¾',
+      'dash.progress': 'ÐŸÑ€Ð¾Ð³Ñ€ÐµÑÑ',
+      'dash.potential': 'ÐŸÐ¾Ñ‚ÐµÐ½Ñ†Ð¸Ð°Ð»',
+      'dash.price': 'Ð¦ÐµÐ½Ð°',
+      'dash.preSale': 'ÐŸÑ€ÐµÐ´Ð¿Ñ€Ð¾Ð´Ð°Ð¶Ð°',
+      'dash.inProgress': 'Ð¡Ñ‚Ñ€Ð¾Ð¸Ñ‚ÑÑ',
+      'dash.status_pre-sale': 'ÐŸÑ€ÐµÐ´Ð¿Ñ€Ð¾Ð´Ð°Ð¶Ð°',
+      'dash.status_in-progress': 'Ð¡Ñ‚Ñ€Ð¾Ð¸Ñ‚ÑÑ',
+      'dash.status_completed': 'Ð—Ð°Ð²ÐµÑ€ÑˆÑ‘Ð½',
+      'dash.status_sold-out': 'Ð’ÑÐµ Ð½ÐµÐ´Ð¾ÑÑ‚ÑƒÐ¿Ð½Ñ‹',
+      'dash.sold': 'ÐÐµ Ð´Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð¾',
+      'dash.left': 'Ð”Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð¾',
+      'dash.priceRange': 'Ð”Ð¸Ð°Ð¿Ð°Ð·Ð¾Ð½ Ñ†ÐµÐ½',
+      'dash.editProject': 'Ð ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ',
+      'dash.viewOnSite': 'ÐÐ° ÑÐ°Ð¹Ñ‚Ðµ',
+      'dash.recentChanges': 'ÐŸÐ¾ÑÐ»ÐµÐ´Ð½Ð¸Ðµ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ',
+      'dash.noChanges': 'ÐÐµÑ‚ Ð½ÐµÐ´Ð°Ð²Ð½Ð¸Ñ… Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ð¹.',
+      'dash.couldNotLoad': 'ÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ Ð·Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚ÑŒ Ð¸ÑÑ‚Ð¾Ñ€Ð¸ÑŽ.',
+      'dash.breakAvailable': 'Ð´Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð¾',
+      'dash.breakSold': 'Ð½Ðµ Ð´Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð¾',
+      'rate.title': 'ÐšÑƒÑ€Ñ Ð²Ð°Ð»ÑŽÑ‚ (USD â†’ IDR)',
+      'rate.navTitle': 'ÐšÑƒÑ€Ñ',
+      'rate.auto': 'ÐÐ²Ñ‚Ð¾ (ÐºÑƒÑ€Ñ Ð¸Ð· API)',
+      'rate.save': 'Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ ÐºÑƒÑ€Ñ',
+      'rate.currentRate': 'Ð¢ÐµÐºÑƒÑ‰Ð¸Ð¹ ÐºÑƒÑ€Ñ:',
+      'rate.updated': 'ÐžÐ±Ð½Ð¾Ð²Ð»Ñ‘Ð½:',
+      'rate.manual': '(Ñ€ÑƒÑ‡Ð½Ð¾Ð¹)',
+      'rate.autoMode': '(Ð°Ð²Ñ‚Ð¾)',
+      'rate.defaultMsg': 'ÐšÑƒÑ€Ñ Ð¿Ð¾ ÑƒÐ¼Ð¾Ð»Ñ‡Ð°Ð½Ð¸ÑŽ. ÐžÐ±Ð½Ð¾Ð²Ð¸Ñ‚Ðµ Ð´Ð»Ñ ÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ñ‹Ñ… Ñ†ÐµÐ½ Ð² IDR.',
+      'rate.invalidRate': 'Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ñ‹Ð¹ ÐºÑƒÑ€Ñ (Ð½Ð°Ð¿Ñ€. 16500)',
+      'help.rate.manual': '<strong>Ð’Ñ€ÑƒÑ‡Ð½ÑƒÑŽ:</strong> Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÑƒÑ€Ñ Ð¸ Ð½Ð°Ð¶Ð¼Ð¸Ñ‚Ðµ Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ.',
+      'help.rate.auto': '<strong>ÐÐ²Ñ‚Ð¾:</strong> ÐšÑƒÑ€Ñ Ð¾Ð±Ð½Ð¾Ð²Ð»ÑÐµÑ‚ÑÑ Ð¸Ð· API ÐºÐ°Ð¶Ð´Ñ‹Ð¹ Ñ‡Ð°Ñ. Ð ÑƒÑ‡Ð½Ð¾Ð¹ Ð²Ð²Ð¾Ð´ Ð±Ð»Ð¾ÐºÐ¸Ñ€ÑƒÐµÑ‚ÑÑ.',
+      'help.rate.fallback': '<strong>Ð ÐµÐ·ÐµÑ€Ð²:</strong> Ð•ÑÐ»Ð¸ API Ð½ÐµÐ´Ð¾ÑÑ‚ÑƒÐ¿ÐµÐ½, Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐµÑ‚ÑÑ Ð¿Ð¾ÑÐ»ÐµÐ´Ð½Ð¸Ð¹ ÑÐ¾Ñ…Ñ€Ð°Ð½Ñ‘Ð½Ð½Ñ‹Ð¹ ÐºÑƒÑ€Ñ.',
+      'contacts.title': 'ÐšÐ¾Ð½Ñ‚Ð°ÐºÑ‚Ð½Ð°Ñ Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ñ',
+      'contacts.phone': 'Ð¢ÐµÐ»ÐµÑ„Ð¾Ð½',
+      'contacts.whatsapp': 'ÐÐ¾Ð¼ÐµÑ€ WhatsApp',
       'contacts.email': 'Email',
-      'contacts.locationEn': 'Адрес (EN)',
-      'contacts.locationRu': 'Адрес (RU)',
-      'contacts.save': 'Сохранить контакты',
-      'contacts.hint.phone': 'Формат отображения, напр. +62 813 251 438 49',
-      'contacts.hint.whatsapp': 'Только цифры, с кодом страны, без +',
-      'help.contacts.phone': '<strong>Телефон:</strong> Любой формат с пробелами/дефисами, начинать с +код страны.',
-      'help.contacts.whatsapp': '<strong>WhatsApp:</strong> ТОЛЬКО ЦИФРЫ, без +, пробелов или дефисов. Пример: 6281338741177',
-      'help.contacts.email': '<strong>Email:</strong> Стандартный формат email.',
-      'help.contacts.location': '<strong>Адрес:</strong> Отображаемый текст, переводить вручную для каждого языка.',
-      'guide.title': 'PDF Гид по инвестициям',
-      'guide.navTitle': 'Гид',
-      'guide.upload': 'Загрузить PDF',
-      'guide.currentFile': 'Текущий файл:',
-      'guide.version': 'Версия:',
-      'guide.updated': 'Обновлён:',
-      'guide.noFile': 'PDF ещё не загружен. Загрузите файл для активации скачивания гида.',
-      'guide.selectPdf': 'Выберите PDF файл',
-      'guide.uploading': 'Загрузка PDF...',
-      'help.guide.format': '<strong>Формат:</strong> Только PDF.',
-      'help.guide.afterUpload': '<strong>После загрузки:</strong> Файл сохраняется в репозитории и доступен посетителям.',
-      'help.guide.deployTime': '<strong>Деплой:</strong> ~1-2 минуты после загрузки.',
-      'projects.title': 'Редактор проектов',
-      'projects.publish': 'Опубликовать',
-      'projects.generatePages': 'Сгенерировать страницы',
-      'projects.updateSeoOnly': 'Обновить только SEO',
-      'projects.overwriteWarn': '⚠️ ОПАСНО: Страницы для "{name}" уже существуют.\n\nНажав OK, вы ПОЛНОСТЬЮ ПЕРЕЗАПИШЕТЕ HTML-файлы (EN + RU + ID) автогенерируемым шаблоном.\n\nВЫ ПОТЕРЯЕТЕ:\n• Курированные изображения галереи и кастомные подборки фото\n• Любые ручные правки контента внесённые прямо в HTML\n• Любые кастомные секции добавленные вне шаблона\n\nШаблон ВКЛЮЧАЕТ: Hero, Концепцию, Таблицу юнитов, Галерею, ROI калькулятор, Tour CTA, Финальный CTA.\n\nЕсли нужно обновить только SEO мета-теги — НАЖМИТЕ ОТМЕНА и используйте кнопку "Обновить только SEO".\n\nВы абсолютно уверены, что хотите перезаписать?',
-      'projects.overwriteAll': 'Перезаписать всё',
-      'projects.cancel': 'Отмена',
-      'projects.unsaved': 'Есть несохранённые изменения',
-      'projects.publishing': 'Публикация...',
-      'projects.published': 'Опубликовано! Сайт обновится (~1-2 мин)',
-      'projects.projectStatus': 'Статус проекта',
-      'projects.statusLabel': 'Статус',
-      'projects.soldOutAuto': 'Авто: все юниты проданы',
-      'projects.floorPlans': 'Планировки',
-      'projects.noPlan': 'Нет планировки',
-      'projects.uploadPlan': 'Загрузить',
-      'projects.deletePlan': 'Удалить планировку',
-      'projects.confirmDeletePlan': 'Удалить планировку для {type}?',
-      'projects.uploading': 'Загрузка...',
-      'projects.units': 'Юниты',
-      'projects.unitTypes': 'Типы юнитов',
-      'projects.availability': 'Доступность',
-      'projects.heroStats': 'Статистика Hero',
-      'projects.showcaseCard': 'Карточка проекта',
-      'projects.addUnit': '+ Добавить юнит',
-      'projects.addType': '+ Добавить тип',
-      'projects.deleteUnit': 'Удалить',
-      'projects.deleteType': 'Удалить',
-      'projects.confirmDeleteUnit': 'Удалить юнит {id}?',
-      'projects.confirmDeleteType': 'Удалить тип «{type}»?',
-      'gallery.confirmDelete': 'Удалить «{name}»?',
-      'gallery.deleteError': 'Ошибка удаления: ',
-      'faq.confirmDelete': 'Удалить этот вопрос?',
-      'test.confirmDelete': 'Удалить этот отзыв?',
-      'projects.unit': 'Юнит',
-      'projects.type': 'Тип',
-      'projects.floors': 'Этажи',
-      'projects.area': 'Площадь',
-      'projects.land': 'Участок',
-      'projects.badge': 'Бейдж',
-      'projects.status': 'Статус',
-      'projects.price': 'Цена ($)',
-      'projects.sold': 'Продано',
-      'projects.total': 'Всего',
-      'projects.availAutoHint': 'Рассчитывается автоматически из статусов юнитов',
-      'projects.number': 'Число',
-      'projects.label': 'Подпись',
-      'projects.priceLabel': 'Цена',
-      'projects.description': 'Описание',
-      'projects.positioning': 'Позиционирование (тэглайн)',
-      'projects.positioningPh': 'напр. Бутик-доходность',
-      'projects.projectDetails': 'Детали проекта',
-      'projects.startingPrice': 'Начальная цена (USD)',
-      'projects.bedrooms': 'Спальни',
-      'projects.compArea': 'Диапазон площади',
-      'projects.compLand': 'Диапазон участка',
-      'projects.totalUnits': 'Всего юнитов',
-      'projects.compPool': 'Бассейн',
-      'projects.handover': 'Сдача',
-      'projects.newProject': '+ Новый проект',
-      'projects.decisionGuide': 'Decision Guide (страница каталога)',
-      'projects.decisionGuideHint': 'Показывается ячейкой на projects.html — помогает покупателю сопоставить цель с этим проектом.',
-      'projects.decisionGuideIcon': 'Иконка',
-      'projects.decisionGuideIconYield': 'Доходность (график)',
-      'projects.decisionGuideIconLand': 'Земля (здание)',
-      'projects.decisionGuideIconCashflow': 'Cashflow (доллар)',
-      'projects.decisionGuideQuestion': 'Вопрос',
-      'projects.decisionGuideQuestionPh': 'напр. Хотите пассивный доход?',
-      'projects.decisionGuideBenefit': 'Бенефит',
-      'projects.decisionGuideBenefitPh': 'напр. 12–15% годовых',
-      'seo.title': 'SEO Редактор',
-      'seo.page': 'Страница',
-      'seo.selectPage': '— Выберите страницу —',
-      'seo.home': 'Главная',
-      'seo.about': 'О нас',
-      'seo.projects': 'Проекты',
-      'seo.services': 'Услуги',
-      'seo.gallery': 'Галерея',
-      'seo.contacts': 'Контакты',
-      'seo.googlePreview': 'Превью в Google',
-      'seo.socialPreview': 'Превью в соцсетях',
-      'seo.noOgImage': 'Нет OG-изображения',
-      'seo.pageTitle': 'Заголовок страницы',
-      'seo.metaDesc': 'Мета-описание',
-      'seo.ogTitle': 'OG Заголовок',
-      'seo.ogDesc': 'OG Описание',
-      'seo.ogImage': 'OG Изображение URL',
+      'contacts.locationEn': 'ÐÐ´Ñ€ÐµÑ (EN)',
+      'contacts.locationRu': 'ÐÐ´Ñ€ÐµÑ (RU)',
+      'contacts.save': 'Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ ÐºÐ¾Ð½Ñ‚Ð°ÐºÑ‚Ñ‹',
+      'contacts.hint.phone': 'Ð¤Ð¾Ñ€Ð¼Ð°Ñ‚ Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ, Ð½Ð°Ð¿Ñ€. +62 813 251 438 49',
+      'contacts.hint.whatsapp': 'Ð¢Ð¾Ð»ÑŒÐºÐ¾ Ñ†Ð¸Ñ„Ñ€Ñ‹, Ñ ÐºÐ¾Ð´Ð¾Ð¼ ÑÑ‚Ñ€Ð°Ð½Ñ‹, Ð±ÐµÐ· +',
+      'help.contacts.phone': '<strong>Ð¢ÐµÐ»ÐµÑ„Ð¾Ð½:</strong> Ð›ÑŽÐ±Ð¾Ð¹ Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚ Ñ Ð¿Ñ€Ð¾Ð±ÐµÐ»Ð°Ð¼Ð¸/Ð´ÐµÑ„Ð¸ÑÐ°Ð¼Ð¸, Ð½Ð°Ñ‡Ð¸Ð½Ð°Ñ‚ÑŒ Ñ +ÐºÐ¾Ð´ ÑÑ‚Ñ€Ð°Ð½Ñ‹.',
+      'help.contacts.whatsapp': '<strong>WhatsApp:</strong> Ð¢ÐžÐ›Ð¬ÐšÐž Ð¦Ð˜Ð¤Ð Ð«, Ð±ÐµÐ· +, Ð¿Ñ€Ð¾Ð±ÐµÐ»Ð¾Ð² Ð¸Ð»Ð¸ Ð´ÐµÑ„Ð¸ÑÐ¾Ð². ÐŸÑ€Ð¸Ð¼ÐµÑ€: 6281325143849',
+      'help.contacts.email': '<strong>Email:</strong> Ð¡Ñ‚Ð°Ð½Ð´Ð°Ñ€Ñ‚Ð½Ñ‹Ð¹ Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚ email.',
+      'help.contacts.location': '<strong>ÐÐ´Ñ€ÐµÑ:</strong> ÐžÑ‚Ð¾Ð±Ñ€Ð°Ð¶Ð°ÐµÐ¼Ñ‹Ð¹ Ñ‚ÐµÐºÑÑ‚, Ð¿ÐµÑ€ÐµÐ²Ð¾Ð´Ð¸Ñ‚ÑŒ Ð²Ñ€ÑƒÑ‡Ð½ÑƒÑŽ Ð´Ð»Ñ ÐºÐ°Ð¶Ð´Ð¾Ð³Ð¾ ÑÐ·Ñ‹ÐºÐ°.',
+      'guide.title': 'PDF Ð“Ð¸Ð´ Ð¿Ð¾ Ð¸Ð½Ð²ÐµÑÑ‚Ð¸Ñ†Ð¸ÑÐ¼',
+      'guide.navTitle': 'Ð“Ð¸Ð´',
+      'guide.upload': 'Ð—Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚ÑŒ PDF',
+      'guide.currentFile': 'Ð¢ÐµÐºÑƒÑ‰Ð¸Ð¹ Ñ„Ð°Ð¹Ð»:',
+      'guide.version': 'Ð’ÐµÑ€ÑÐ¸Ñ:',
+      'guide.updated': 'ÐžÐ±Ð½Ð¾Ð²Ð»Ñ‘Ð½:',
+      'guide.noFile': 'PDF ÐµÑ‰Ñ‘ Ð½Ðµ Ð·Ð°Ð³Ñ€ÑƒÐ¶ÐµÐ½. Ð—Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚Ðµ Ñ„Ð°Ð¹Ð» Ð´Ð»Ñ Ð°ÐºÑ‚Ð¸Ð²Ð°Ñ†Ð¸Ð¸ ÑÐºÐ°Ñ‡Ð¸Ð²Ð°Ð½Ð¸Ñ Ð³Ð¸Ð´Ð°.',
+      'guide.selectPdf': 'Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ PDF Ñ„Ð°Ð¹Ð»',
+      'guide.uploading': 'Ð—Ð°Ð³Ñ€ÑƒÐ·ÐºÐ° PDF...',
+      'help.guide.format': '<strong>Ð¤Ð¾Ñ€Ð¼Ð°Ñ‚:</strong> Ð¢Ð¾Ð»ÑŒÐºÐ¾ PDF.',
+      'help.guide.afterUpload': '<strong>ÐŸÐ¾ÑÐ»Ðµ Ð·Ð°Ð³Ñ€ÑƒÐ·ÐºÐ¸:</strong> Ð¤Ð°Ð¹Ð» ÑÐ¾Ñ…Ñ€Ð°Ð½ÑÐµÑ‚ÑÑ Ð² Ñ€ÐµÐ¿Ð¾Ð·Ð¸Ñ‚Ð¾Ñ€Ð¸Ð¸ Ð¸ Ð´Ð¾ÑÑ‚ÑƒÐ¿ÐµÐ½ Ð¿Ð¾ÑÐµÑ‚Ð¸Ñ‚ÐµÐ»ÑÐ¼.',
+      'help.guide.deployTime': '<strong>Ð”ÐµÐ¿Ð»Ð¾Ð¹:</strong> ~1-2 Ð¼Ð¸Ð½ÑƒÑ‚Ñ‹ Ð¿Ð¾ÑÐ»Ðµ Ð·Ð°Ð³Ñ€ÑƒÐ·ÐºÐ¸.',
+      'projects.title': 'Ð ÐµÐ´Ð°ÐºÑ‚Ð¾Ñ€ Ð¿Ñ€Ð¾ÐµÐºÑ‚Ð¾Ð²',
+      'projects.publish': 'ÐžÐ¿ÑƒÐ±Ð»Ð¸ÐºÐ¾Ð²Ð°Ñ‚ÑŒ',
+      'projects.generatePages': 'Ð¡Ð³ÐµÐ½ÐµÑ€Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ñ‹',
+      'projects.updateSeoOnly': 'ÐžÐ±Ð½Ð¾Ð²Ð¸Ñ‚ÑŒ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ SEO',
+      'projects.overwriteWarn': 'âš ï¸ ÐžÐŸÐÐ¡ÐÐž: Ð¡Ñ‚Ñ€Ð°Ð½Ð¸Ñ†Ñ‹ Ð´Ð»Ñ "{name}" ÑƒÐ¶Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÑŽÑ‚.\n\nÐÐ°Ð¶Ð°Ð² OK, Ð²Ñ‹ ÐŸÐžÐ›ÐÐžÐ¡Ð¢Ð¬Ð® ÐŸÐ•Ð Ð•Ð—ÐÐŸÐ˜Ð¨Ð•Ð¢Ð• HTML-Ñ„Ð°Ð¹Ð»Ñ‹ (EN + RU + ID) Ð°Ð²Ñ‚Ð¾Ð³ÐµÐ½ÐµÑ€Ð¸Ñ€ÑƒÐµÐ¼Ñ‹Ð¼ ÑˆÐ°Ð±Ð»Ð¾Ð½Ð¾Ð¼.\n\nÐ’Ð« ÐŸÐžÐ¢Ð•Ð Ð¯Ð•Ð¢Ð•:\nâ€¢ ÐšÑƒÑ€Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð½Ñ‹Ðµ Ð¸Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ Ð³Ð°Ð»ÐµÑ€ÐµÐ¸ Ð¸ ÐºÐ°ÑÑ‚Ð¾Ð¼Ð½Ñ‹Ðµ Ð¿Ð¾Ð´Ð±Ð¾Ñ€ÐºÐ¸ Ñ„Ð¾Ñ‚Ð¾\nâ€¢ Ð›ÑŽÐ±Ñ‹Ðµ Ñ€ÑƒÑ‡Ð½Ñ‹Ðµ Ð¿Ñ€Ð°Ð²ÐºÐ¸ ÐºÐ¾Ð½Ñ‚ÐµÐ½Ñ‚Ð° Ð²Ð½ÐµÑÑ‘Ð½Ð½Ñ‹Ðµ Ð¿Ñ€ÑÐ¼Ð¾ Ð² HTML\nâ€¢ Ð›ÑŽÐ±Ñ‹Ðµ ÐºÐ°ÑÑ‚Ð¾Ð¼Ð½Ñ‹Ðµ ÑÐµÐºÑ†Ð¸Ð¸ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð½Ñ‹Ðµ Ð²Ð½Ðµ ÑˆÐ°Ð±Ð»Ð¾Ð½Ð°\n\nÐ¨Ð°Ð±Ð»Ð¾Ð½ Ð’ÐšÐ›Ð®Ð§ÐÐ•Ð¢: Hero, ÐšÐ¾Ð½Ñ†ÐµÐ¿Ñ†Ð¸ÑŽ, Ð¢Ð°Ð±Ð»Ð¸Ñ†Ñƒ ÑŽÐ½Ð¸Ñ‚Ð¾Ð², Ð“Ð°Ð»ÐµÑ€ÐµÑŽ, ROI ÐºÐ°Ð»ÑŒÐºÑƒÐ»ÑÑ‚Ð¾Ñ€, Tour CTA, Ð¤Ð¸Ð½Ð°Ð»ÑŒÐ½Ñ‹Ð¹ CTA.\n\nÐ•ÑÐ»Ð¸ Ð½ÑƒÐ¶Ð½Ð¾ Ð¾Ð±Ð½Ð¾Ð²Ð¸Ñ‚ÑŒ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ SEO Ð¼ÐµÑ‚Ð°-Ñ‚ÐµÐ³Ð¸ â€” ÐÐÐ–ÐœÐ˜Ð¢Ð• ÐžÐ¢ÐœÐ•ÐÐ Ð¸ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐ¹Ñ‚Ðµ ÐºÐ½Ð¾Ð¿ÐºÑƒ "ÐžÐ±Ð½Ð¾Ð²Ð¸Ñ‚ÑŒ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ SEO".\n\nÐ’Ñ‹ Ð°Ð±ÑÐ¾Ð»ÑŽÑ‚Ð½Ð¾ ÑƒÐ²ÐµÑ€ÐµÐ½Ñ‹, Ñ‡Ñ‚Ð¾ Ñ…Ð¾Ñ‚Ð¸Ñ‚Ðµ Ð¿ÐµÑ€ÐµÐ·Ð°Ð¿Ð¸ÑÐ°Ñ‚ÑŒ?',
+      'projects.overwriteAll': 'ÐŸÐµÑ€ÐµÐ·Ð°Ð¿Ð¸ÑÐ°Ñ‚ÑŒ Ð²ÑÑ‘',
+      'projects.cancel': 'ÐžÑ‚Ð¼ÐµÐ½Ð°',
+      'projects.unsaved': 'Ð•ÑÑ‚ÑŒ Ð½ÐµÑÐ¾Ñ…Ñ€Ð°Ð½Ñ‘Ð½Ð½Ñ‹Ðµ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ',
+      'projects.publishing': 'ÐŸÑƒÐ±Ð»Ð¸ÐºÐ°Ñ†Ð¸Ñ...',
+      'projects.published': 'ÐžÐ¿ÑƒÐ±Ð»Ð¸ÐºÐ¾Ð²Ð°Ð½Ð¾! Ð¡Ð°Ð¹Ñ‚ Ð¾Ð±Ð½Ð¾Ð²Ð¸Ñ‚ÑÑ (~1-2 Ð¼Ð¸Ð½)',
+      'projects.projectStatus': 'Ð¡Ñ‚Ð°Ñ‚ÑƒÑ Ð¿Ñ€Ð¾ÐµÐºÑ‚Ð°',
+      'projects.statusLabel': 'Ð¡Ñ‚Ð°Ñ‚ÑƒÑ',
+      'projects.soldOutAuto': 'ÐÐ²Ñ‚Ð¾: Ð²ÑÐµ ÑŽÐ½Ð¸Ñ‚Ñ‹ Ð¿Ñ€Ð¾Ð´Ð°Ð½Ñ‹',
+      'projects.floorPlans': 'ÐŸÐ»Ð°Ð½Ð¸Ñ€Ð¾Ð²ÐºÐ¸',
+      'projects.noPlan': 'ÐÐµÑ‚ Ð¿Ð»Ð°Ð½Ð¸Ñ€Ð¾Ð²ÐºÐ¸',
+      'projects.uploadPlan': 'Ð—Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚ÑŒ',
+      'projects.deletePlan': 'Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ Ð¿Ð»Ð°Ð½Ð¸Ñ€Ð¾Ð²ÐºÑƒ',
+      'projects.confirmDeletePlan': 'Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ Ð¿Ð»Ð°Ð½Ð¸Ñ€Ð¾Ð²ÐºÑƒ Ð´Ð»Ñ {type}?',
+      'projects.uploading': 'Ð—Ð°Ð³Ñ€ÑƒÐ·ÐºÐ°...',
+      'projects.units': 'Ð®Ð½Ð¸Ñ‚Ñ‹',
+      'projects.unitTypes': 'Ð¢Ð¸Ð¿Ñ‹ ÑŽÐ½Ð¸Ñ‚Ð¾Ð²',
+      'projects.availability': 'Ð”Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð¾ÑÑ‚ÑŒ',
+      'projects.heroStats': 'Ð¡Ñ‚Ð°Ñ‚Ð¸ÑÑ‚Ð¸ÐºÐ° Hero',
+      'projects.showcaseCard': 'ÐšÐ°Ñ€Ñ‚Ð¾Ñ‡ÐºÐ° Ð¿Ñ€Ð¾ÐµÐºÑ‚Ð°',
+      'projects.addUnit': '+ Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ ÑŽÐ½Ð¸Ñ‚',
+      'projects.addType': '+ Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ñ‚Ð¸Ð¿',
+      'projects.deleteUnit': 'Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ',
+      'projects.deleteType': 'Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ',
+      'projects.confirmDeleteUnit': 'Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ ÑŽÐ½Ð¸Ñ‚ {id}?',
+      'projects.confirmDeleteType': 'Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ Ñ‚Ð¸Ð¿ Â«{type}Â»?',
+      'gallery.confirmDelete': 'Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ Â«{name}Â»?',
+      'gallery.deleteError': 'ÐžÑˆÐ¸Ð±ÐºÐ° ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ñ: ',
+      'faq.confirmDelete': 'Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ ÑÑ‚Ð¾Ñ‚ Ð²Ð¾Ð¿Ñ€Ð¾Ñ?',
+      'test.confirmDelete': 'Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ ÑÑ‚Ð¾Ñ‚ Ð¾Ñ‚Ð·Ñ‹Ð²?',
+      'projects.unit': 'Ð®Ð½Ð¸Ñ‚',
+      'projects.type': 'Ð¢Ð¸Ð¿',
+      'projects.floors': 'Ð­Ñ‚Ð°Ð¶Ð¸',
+      'projects.area': 'ÐŸÐ»Ð¾Ñ‰Ð°Ð´ÑŒ',
+      'projects.land': 'Ð£Ñ‡Ð°ÑÑ‚Ð¾Ðº',
+      'projects.badge': 'Ð‘ÐµÐ¹Ð´Ð¶',
+      'projects.status': 'Ð¡Ñ‚Ð°Ñ‚ÑƒÑ',
+      'projects.price': 'Ð¦ÐµÐ½Ð° ($)',
+      'projects.sold': 'ÐŸÑ€Ð¾Ð´Ð°Ð½Ð¾',
+      'projects.total': 'Ð’ÑÐµÐ³Ð¾',
+      'projects.availAutoHint': 'Ð Ð°ÑÑÑ‡Ð¸Ñ‚Ñ‹Ð²Ð°ÐµÑ‚ÑÑ Ð°Ð²Ñ‚Ð¾Ð¼Ð°Ñ‚Ð¸Ñ‡ÐµÑÐºÐ¸ Ð¸Ð· ÑÑ‚Ð°Ñ‚ÑƒÑÐ¾Ð² ÑŽÐ½Ð¸Ñ‚Ð¾Ð²',
+      'projects.number': 'Ð§Ð¸ÑÐ»Ð¾',
+      'projects.label': 'ÐŸÐ¾Ð´Ð¿Ð¸ÑÑŒ',
+      'projects.priceLabel': 'Ð¦ÐµÐ½Ð°',
+      'projects.description': 'ÐžÐ¿Ð¸ÑÐ°Ð½Ð¸Ðµ',
+      'projects.positioning': 'ÐŸÐ¾Ð·Ð¸Ñ†Ð¸Ð¾Ð½Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ (Ñ‚ÑÐ³Ð»Ð°Ð¹Ð½)',
+      'projects.positioningPh': 'Ð½Ð°Ð¿Ñ€. Ð‘ÑƒÑ‚Ð¸Ðº-Ð´Ð¾Ñ…Ð¾Ð´Ð½Ð¾ÑÑ‚ÑŒ',
+      'projects.projectDetails': 'Ð”ÐµÑ‚Ð°Ð»Ð¸ Ð¿Ñ€Ð¾ÐµÐºÑ‚Ð°',
+      'projects.startingPrice': 'ÐÐ°Ñ‡Ð°Ð»ÑŒÐ½Ð°Ñ Ñ†ÐµÐ½Ð° (USD)',
+      'projects.bedrooms': 'Ð¡Ð¿Ð°Ð»ÑŒÐ½Ð¸',
+      'projects.compArea': 'Ð”Ð¸Ð°Ð¿Ð°Ð·Ð¾Ð½ Ð¿Ð»Ð¾Ñ‰Ð°Ð´Ð¸',
+      'projects.compLand': 'Ð”Ð¸Ð°Ð¿Ð°Ð·Ð¾Ð½ ÑƒÑ‡Ð°ÑÑ‚ÐºÐ°',
+      'projects.totalUnits': 'Ð’ÑÐµÐ³Ð¾ ÑŽÐ½Ð¸Ñ‚Ð¾Ð²',
+      'projects.compPool': 'Ð‘Ð°ÑÑÐµÐ¹Ð½',
+      'projects.handover': 'Ð¡Ð´Ð°Ñ‡Ð°',
+      'projects.newProject': '+ ÐÐ¾Ð²Ñ‹Ð¹ Ð¿Ñ€Ð¾ÐµÐºÑ‚',
+      'projects.decisionGuide': 'Decision Guide (ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ð° ÐºÐ°Ñ‚Ð°Ð»Ð¾Ð³Ð°)',
+      'projects.decisionGuideHint': 'ÐŸÐ¾ÐºÐ°Ð·Ñ‹Ð²Ð°ÐµÑ‚ÑÑ ÑÑ‡ÐµÐ¹ÐºÐ¾Ð¹ Ð½Ð° projects.html â€” Ð¿Ð¾Ð¼Ð¾Ð³Ð°ÐµÑ‚ Ð¿Ð¾ÐºÑƒÐ¿Ð°Ñ‚ÐµÐ»ÑŽ ÑÐ¾Ð¿Ð¾ÑÑ‚Ð°Ð²Ð¸Ñ‚ÑŒ Ñ†ÐµÐ»ÑŒ Ñ ÑÑ‚Ð¸Ð¼ Ð¿Ñ€Ð¾ÐµÐºÑ‚Ð¾Ð¼.',
+      'projects.decisionGuideIcon': 'Ð˜ÐºÐ¾Ð½ÐºÐ°',
+      'projects.decisionGuideIconYield': 'Ð”Ð¾Ñ…Ð¾Ð´Ð½Ð¾ÑÑ‚ÑŒ (Ð³Ñ€Ð°Ñ„Ð¸Ðº)',
+      'projects.decisionGuideIconLand': 'Ð—ÐµÐ¼Ð»Ñ (Ð·Ð´Ð°Ð½Ð¸Ðµ)',
+      'projects.decisionGuideIconCashflow': 'Cashflow (Ð´Ð¾Ð»Ð»Ð°Ñ€)',
+      'projects.decisionGuideQuestion': 'Ð’Ð¾Ð¿Ñ€Ð¾Ñ',
+      'projects.decisionGuideQuestionPh': 'Ð½Ð°Ð¿Ñ€. Ð¥Ð¾Ñ‚Ð¸Ñ‚Ðµ Ð¿Ð°ÑÑÐ¸Ð²Ð½Ñ‹Ð¹ Ð´Ð¾Ñ…Ð¾Ð´?',
+      'projects.decisionGuideBenefit': 'Ð‘ÐµÐ½ÐµÑ„Ð¸Ñ‚',
+      'projects.decisionGuideBenefitPh': 'Ð½Ð°Ð¿Ñ€. 12â€“15% Ð³Ð¾Ð´Ð¾Ð²Ñ‹Ñ…',
+      'seo.title': 'SEO Ð ÐµÐ´Ð°ÐºÑ‚Ð¾Ñ€',
+      'seo.page': 'Ð¡Ñ‚Ñ€Ð°Ð½Ð¸Ñ†Ð°',
+      'seo.selectPage': 'â€” Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ñƒ â€”',
+      'seo.home': 'Ð“Ð»Ð°Ð²Ð½Ð°Ñ',
+      'seo.about': 'Ðž Ð½Ð°Ñ',
+      'seo.projects': 'ÐŸÑ€Ð¾ÐµÐºÑ‚Ñ‹',
+      'seo.services': 'Ð£ÑÐ»ÑƒÐ³Ð¸',
+      'seo.gallery': 'Ð“Ð°Ð»ÐµÑ€ÐµÑ',
+      'seo.contacts': 'ÐšÐ¾Ð½Ñ‚Ð°ÐºÑ‚Ñ‹',
+      'seo.googlePreview': 'ÐŸÑ€ÐµÐ²ÑŒÑŽ Ð² Google',
+      'seo.socialPreview': 'ÐŸÑ€ÐµÐ²ÑŒÑŽ Ð² ÑÐ¾Ñ†ÑÐµÑ‚ÑÑ…',
+      'seo.noOgImage': 'ÐÐµÑ‚ OG-Ð¸Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ',
+      'seo.pageTitle': 'Ð—Ð°Ð³Ð¾Ð»Ð¾Ð²Ð¾Ðº ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ñ‹',
+      'seo.metaDesc': 'ÐœÐµÑ‚Ð°-Ð¾Ð¿Ð¸ÑÐ°Ð½Ð¸Ðµ',
+      'seo.ogTitle': 'OG Ð—Ð°Ð³Ð¾Ð»Ð¾Ð²Ð¾Ðº',
+      'seo.ogDesc': 'OG ÐžÐ¿Ð¸ÑÐ°Ð½Ð¸Ðµ',
+      'seo.ogImage': 'OG Ð˜Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ðµ URL',
       'seo.canonical': 'Canonical URL',
-      'seo.viewOnSite': 'Открыть на сайте ↗',
-      'seo.saveAll': 'Сохранить все языки',
-      'seo.savingAll': 'Сохранение всех языков...',
-      'seo.loadingLangs': 'Загрузка всех языков...',
-      'gallery.title': 'Менеджер галереи',
-      'gallery.project': 'Проект',
-      'gallery.selectProject': '— Выберите проект —',
-      'gallery.upload': 'Загрузить фото',
-      'gallery.photos': 'фото',
-      'gallery.noImages': 'Нет изображений. Перетащите файлы или нажмите Загрузить.',
-      'gallery.dragDrop': 'Перетащите изображения сюда или нажмите Загрузить',
-      'gallery.formats': 'JPG, PNG, WebP — макс. 10 МБ на файл',
-      'gallery.uploading': 'Загрузка',
-      'gallery.savingData': 'Сохранение данных галереи...',
-      'gallery.uploaded': 'фото загружено!',
-      'gallery.moveLeft': 'Влево',
-      'gallery.moveRight': 'Вправо',
-      'gallery.delete': 'Удалить',
-      'gallery.previewTitle': 'Готово к загрузке',
-      'gallery.uploadAll': 'Загрузить все',
-      'gallery.cancelUpload': 'Отмена',
-      'gallery.duplicate': 'Уже существует',
-      'gallery.filesSelected': 'файлов выбрано',
-      'faq.title': 'Редактор FAQ',
-      'faq.addQuestion': '+ Добавить вопрос',
-      'faq.publish': 'Опубликовать FAQ',
-      'faq.publishing': 'Публикация FAQ...',
-      'faq.published': 'Опубликовано! Сайт обновится (~1-2 мин)',
-      'faq.noItems': 'Пока нет вопросов. Нажмите "+ Добавить вопрос".',
-      'faq.question': 'Вопрос',
-      'faq.answer': 'Ответ',
-      'test.title': 'Редактор отзывов',
-      'test.add': '+ Добавить отзыв',
-      'test.publish': 'Опубликовать отзывы',
-      'test.publishing': 'Публикация отзывов...',
-      'test.published': 'Опубликовано! Сайт обновится (~1-2 мин)',
-      'test.noItems': 'Пока нет отзывов. Нажмите "+ Добавить отзыв".',
-      'test.name': 'Имя',
-      'test.role': 'Роль',
-      'test.avatar': 'Фото',
-      'test.text': 'Текст',
-      'test.stars': 'Звёзды',
-      'test.sourceUrl': 'Ссылка на отзыв',
-      'test.sourceName': 'Источник',
-      'test.sourceHint': 'напр. Google Reviews, Trustpilot',
-      'test.copyFromEn': 'Скопировать из EN',
-      'faq.copyFromEn': 'Скопировать из EN',
-      'colors.title': 'Цвета сайта',
-      'colors.navTitle': 'Цвета',
-      'colors.mainBg': 'Основной фон',
-      'colors.altBg': 'Альтернативный фон',
-      'colors.cardPanel': 'Карточки / Панели',
-      'colors.primaryText': 'Основной текст',
-      'colors.cream': 'Кремовый (Кнопки)',
-      'colors.brandAccent': 'Акцентный цвет',
-      'colors.muted': 'Приглуш. 75%',
-      'colors.dim': 'Тусклый 50%',
-      'colors.border': 'Рамка 10%',
-      'colors.save': 'Сохранить цвета',
-      'colors.reset': 'Сбросить к стандартным',
-      'colors.resetDone': 'Сброшено (не сохранено)',
-      'colors.invalidHex': 'Неверный HEX для ',
-      'help.colors.text': '<strong>Цвет текста</strong> определяет производные цвета (приглушённый, рамки).',
-      'help.colors.live': '<strong>Предпросмотр:</strong> Изменения видны мгновенно в админке.',
-      'help.colors.site': '<strong>На сайте:</strong> Цвета применятся после сохранения + ~1-2 мин.',
-      'help.colors.reset': 'Используйте <strong>Сбросить</strong> для возврата палитры.',
-      'help.exitpopup.what': '<strong>Что делает:</strong> Показывает попап, когда десктопный посетитель двигает курсор к закрытию вкладки. Предлагает бесплатный гид по инвестициям в обмен на email — инструмент сбора лидов.',
-      'help.exitpopup.enabled': '<strong>Включён:</strong> Включает или выключает попап на всём сайте.',
-      'help.exitpopup.delay': '<strong>Задержка:</strong> Минимальное время (секунды) на странице до срабатывания попапа. Не раздражает новых посетителей (рекомендуется: 15–30 сек).',
-      'help.exitpopup.content': '<strong>Контент:</strong> Все тексты настраиваются для каждого языка. Бейдж, заголовок, описание, тексты кнопок и сообщение об успехе.',
+      'seo.viewOnSite': 'ÐžÑ‚ÐºÑ€Ñ‹Ñ‚ÑŒ Ð½Ð° ÑÐ°Ð¹Ñ‚Ðµ â†—',
+      'seo.saveAll': 'Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ Ð²ÑÐµ ÑÐ·Ñ‹ÐºÐ¸',
+      'seo.savingAll': 'Ð¡Ð¾Ñ…Ñ€Ð°Ð½ÐµÐ½Ð¸Ðµ Ð²ÑÐµÑ… ÑÐ·Ñ‹ÐºÐ¾Ð²...',
+      'seo.loadingLangs': 'Ð—Ð°Ð³Ñ€ÑƒÐ·ÐºÐ° Ð²ÑÐµÑ… ÑÐ·Ñ‹ÐºÐ¾Ð²...',
+      'gallery.title': 'ÐœÐµÐ½ÐµÐ´Ð¶ÐµÑ€ Ð³Ð°Ð»ÐµÑ€ÐµÐ¸',
+      'gallery.project': 'ÐŸÑ€Ð¾ÐµÐºÑ‚',
+      'gallery.selectProject': 'â€” Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð¿Ñ€Ð¾ÐµÐºÑ‚ â€”',
+      'gallery.upload': 'Ð—Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚ÑŒ Ñ„Ð¾Ñ‚Ð¾',
+      'gallery.photos': 'Ñ„Ð¾Ñ‚Ð¾',
+      'gallery.noImages': 'ÐÐµÑ‚ Ð¸Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ð¹. ÐŸÐµÑ€ÐµÑ‚Ð°Ñ‰Ð¸Ñ‚Ðµ Ñ„Ð°Ð¹Ð»Ñ‹ Ð¸Ð»Ð¸ Ð½Ð°Ð¶Ð¼Ð¸Ñ‚Ðµ Ð—Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚ÑŒ.',
+      'gallery.dragDrop': 'ÐŸÐµÑ€ÐµÑ‚Ð°Ñ‰Ð¸Ñ‚Ðµ Ð¸Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ ÑÑŽÐ´Ð° Ð¸Ð»Ð¸ Ð½Ð°Ð¶Ð¼Ð¸Ñ‚Ðµ Ð—Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚ÑŒ',
+      'gallery.formats': 'JPG, PNG, WebP â€” Ð¼Ð°ÐºÑ. 10 ÐœÐ‘ Ð½Ð° Ñ„Ð°Ð¹Ð»',
+      'gallery.uploading': 'Ð—Ð°Ð³Ñ€ÑƒÐ·ÐºÐ°',
+      'gallery.savingData': 'Ð¡Ð¾Ñ…Ñ€Ð°Ð½ÐµÐ½Ð¸Ðµ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð³Ð°Ð»ÐµÑ€ÐµÐ¸...',
+      'gallery.uploaded': 'Ñ„Ð¾Ñ‚Ð¾ Ð·Ð°Ð³Ñ€ÑƒÐ¶ÐµÐ½Ð¾!',
+      'gallery.moveLeft': 'Ð’Ð»ÐµÐ²Ð¾',
+      'gallery.moveRight': 'Ð’Ð¿Ñ€Ð°Ð²Ð¾',
+      'gallery.delete': 'Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ',
+      'gallery.previewTitle': 'Ð“Ð¾Ñ‚Ð¾Ð²Ð¾ Ðº Ð·Ð°Ð³Ñ€ÑƒÐ·ÐºÐµ',
+      'gallery.uploadAll': 'Ð—Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚ÑŒ Ð²ÑÐµ',
+      'gallery.cancelUpload': 'ÐžÑ‚Ð¼ÐµÐ½Ð°',
+      'gallery.duplicate': 'Ð£Ð¶Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚',
+      'gallery.filesSelected': 'Ñ„Ð°Ð¹Ð»Ð¾Ð² Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð¾',
+      'faq.title': 'Ð ÐµÐ´Ð°ÐºÑ‚Ð¾Ñ€ FAQ',
+      'faq.addQuestion': '+ Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð²Ð¾Ð¿Ñ€Ð¾Ñ',
+      'faq.publish': 'ÐžÐ¿ÑƒÐ±Ð»Ð¸ÐºÐ¾Ð²Ð°Ñ‚ÑŒ FAQ',
+      'faq.publishing': 'ÐŸÑƒÐ±Ð»Ð¸ÐºÐ°Ñ†Ð¸Ñ FAQ...',
+      'faq.published': 'ÐžÐ¿ÑƒÐ±Ð»Ð¸ÐºÐ¾Ð²Ð°Ð½Ð¾! Ð¡Ð°Ð¹Ñ‚ Ð¾Ð±Ð½Ð¾Ð²Ð¸Ñ‚ÑÑ (~1-2 Ð¼Ð¸Ð½)',
+      'faq.noItems': 'ÐŸÐ¾ÐºÐ° Ð½ÐµÑ‚ Ð²Ð¾Ð¿Ñ€Ð¾ÑÐ¾Ð². ÐÐ°Ð¶Ð¼Ð¸Ñ‚Ðµ "+ Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð²Ð¾Ð¿Ñ€Ð¾Ñ".',
+      'faq.question': 'Ð’Ð¾Ð¿Ñ€Ð¾Ñ',
+      'faq.answer': 'ÐžÑ‚Ð²ÐµÑ‚',
+      'test.title': 'Ð ÐµÐ´Ð°ÐºÑ‚Ð¾Ñ€ Ð¾Ñ‚Ð·Ñ‹Ð²Ð¾Ð²',
+      'test.add': '+ Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð¾Ñ‚Ð·Ñ‹Ð²',
+      'test.publish': 'ÐžÐ¿ÑƒÐ±Ð»Ð¸ÐºÐ¾Ð²Ð°Ñ‚ÑŒ Ð¾Ñ‚Ð·Ñ‹Ð²Ñ‹',
+      'test.publishing': 'ÐŸÑƒÐ±Ð»Ð¸ÐºÐ°Ñ†Ð¸Ñ Ð¾Ñ‚Ð·Ñ‹Ð²Ð¾Ð²...',
+      'test.published': 'ÐžÐ¿ÑƒÐ±Ð»Ð¸ÐºÐ¾Ð²Ð°Ð½Ð¾! Ð¡Ð°Ð¹Ñ‚ Ð¾Ð±Ð½Ð¾Ð²Ð¸Ñ‚ÑÑ (~1-2 Ð¼Ð¸Ð½)',
+      'test.noItems': 'ÐŸÐ¾ÐºÐ° Ð½ÐµÑ‚ Ð¾Ñ‚Ð·Ñ‹Ð²Ð¾Ð². ÐÐ°Ð¶Ð¼Ð¸Ñ‚Ðµ "+ Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð¾Ñ‚Ð·Ñ‹Ð²".',
+      'test.name': 'Ð˜Ð¼Ñ',
+      'test.role': 'Ð Ð¾Ð»ÑŒ',
+      'test.avatar': 'Ð¤Ð¾Ñ‚Ð¾',
+      'test.text': 'Ð¢ÐµÐºÑÑ‚',
+      'test.stars': 'Ð—Ð²Ñ‘Ð·Ð´Ñ‹',
+      'test.sourceUrl': 'Ð¡ÑÑ‹Ð»ÐºÐ° Ð½Ð° Ð¾Ñ‚Ð·Ñ‹Ð²',
+      'test.sourceName': 'Ð˜ÑÑ‚Ð¾Ñ‡Ð½Ð¸Ðº',
+      'test.sourceHint': 'Ð½Ð°Ð¿Ñ€. Google Reviews, Trustpilot',
+      'test.copyFromEn': 'Ð¡ÐºÐ¾Ð¿Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð¸Ð· EN',
+      'faq.copyFromEn': 'Ð¡ÐºÐ¾Ð¿Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð¸Ð· EN',
+      'colors.title': 'Ð¦Ð²ÐµÑ‚Ð° ÑÐ°Ð¹Ñ‚Ð°',
+      'colors.navTitle': 'Ð¦Ð²ÐµÑ‚Ð°',
+      'colors.mainBg': 'ÐžÑÐ½Ð¾Ð²Ð½Ð¾Ð¹ Ñ„Ð¾Ð½',
+      'colors.altBg': 'ÐÐ»ÑŒÑ‚ÐµÑ€Ð½Ð°Ñ‚Ð¸Ð²Ð½Ñ‹Ð¹ Ñ„Ð¾Ð½',
+      'colors.cardPanel': 'ÐšÐ°Ñ€Ñ‚Ð¾Ñ‡ÐºÐ¸ / ÐŸÐ°Ð½ÐµÐ»Ð¸',
+      'colors.primaryText': 'ÐžÑÐ½Ð¾Ð²Ð½Ð¾Ð¹ Ñ‚ÐµÐºÑÑ‚',
+      'colors.cream': 'ÐšÑ€ÐµÐ¼Ð¾Ð²Ñ‹Ð¹ (ÐšÐ½Ð¾Ð¿ÐºÐ¸)',
+      'colors.brandAccent': 'ÐÐºÑ†ÐµÐ½Ñ‚Ð½Ñ‹Ð¹ Ñ†Ð²ÐµÑ‚',
+      'colors.muted': 'ÐŸÑ€Ð¸Ð³Ð»ÑƒÑˆ. 75%',
+      'colors.dim': 'Ð¢ÑƒÑÐºÐ»Ñ‹Ð¹ 50%',
+      'colors.border': 'Ð Ð°Ð¼ÐºÐ° 10%',
+      'colors.save': 'Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ Ñ†Ð²ÐµÑ‚Ð°',
+      'colors.reset': 'Ð¡Ð±Ñ€Ð¾ÑÐ¸Ñ‚ÑŒ Ðº ÑÑ‚Ð°Ð½Ð´Ð°Ñ€Ñ‚Ð½Ñ‹Ð¼',
+      'colors.resetDone': 'Ð¡Ð±Ñ€Ð¾ÑˆÐµÐ½Ð¾ (Ð½Ðµ ÑÐ¾Ñ…Ñ€Ð°Ð½ÐµÐ½Ð¾)',
+      'colors.invalidHex': 'ÐÐµÐ²ÐµÑ€Ð½Ñ‹Ð¹ HEX Ð´Ð»Ñ ',
+      'help.colors.text': '<strong>Ð¦Ð²ÐµÑ‚ Ñ‚ÐµÐºÑÑ‚Ð°</strong> Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÑÐµÑ‚ Ð¿Ñ€Ð¾Ð¸Ð·Ð²Ð¾Ð´Ð½Ñ‹Ðµ Ñ†Ð²ÐµÑ‚Ð° (Ð¿Ñ€Ð¸Ð³Ð»ÑƒÑˆÑ‘Ð½Ð½Ñ‹Ð¹, Ñ€Ð°Ð¼ÐºÐ¸).',
+      'help.colors.live': '<strong>ÐŸÑ€ÐµÐ´Ð¿Ñ€Ð¾ÑÐ¼Ð¾Ñ‚Ñ€:</strong> Ð˜Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ Ð²Ð¸Ð´Ð½Ñ‹ Ð¼Ð³Ð½Ð¾Ð²ÐµÐ½Ð½Ð¾ Ð² Ð°Ð´Ð¼Ð¸Ð½ÐºÐµ.',
+      'help.colors.site': '<strong>ÐÐ° ÑÐ°Ð¹Ñ‚Ðµ:</strong> Ð¦Ð²ÐµÑ‚Ð° Ð¿Ñ€Ð¸Ð¼ÐµÐ½ÑÑ‚ÑÑ Ð¿Ð¾ÑÐ»Ðµ ÑÐ¾Ñ…Ñ€Ð°Ð½ÐµÐ½Ð¸Ñ + ~1-2 Ð¼Ð¸Ð½.',
+      'help.colors.reset': 'Ð˜ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐ¹Ñ‚Ðµ <strong>Ð¡Ð±Ñ€Ð¾ÑÐ¸Ñ‚ÑŒ</strong> Ð´Ð»Ñ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚Ð° Ð¿Ð°Ð»Ð¸Ñ‚Ñ€Ñ‹.',
+      'help.exitpopup.what': '<strong>Ð§Ñ‚Ð¾ Ð´ÐµÐ»Ð°ÐµÑ‚:</strong> ÐŸÐ¾ÐºÐ°Ð·Ñ‹Ð²Ð°ÐµÑ‚ Ð¿Ð¾Ð¿Ð°Ð¿, ÐºÐ¾Ð³Ð´Ð° Ð´ÐµÑÐºÑ‚Ð¾Ð¿Ð½Ñ‹Ð¹ Ð¿Ð¾ÑÐµÑ‚Ð¸Ñ‚ÐµÐ»ÑŒ Ð´Ð²Ð¸Ð³Ð°ÐµÑ‚ ÐºÑƒÑ€ÑÐ¾Ñ€ Ðº Ð·Ð°ÐºÑ€Ñ‹Ñ‚Ð¸ÑŽ Ð²ÐºÐ»Ð°Ð´ÐºÐ¸. ÐŸÑ€ÐµÐ´Ð»Ð°Ð³Ð°ÐµÑ‚ Ð±ÐµÑÐ¿Ð»Ð°Ñ‚Ð½Ñ‹Ð¹ Ð³Ð¸Ð´ Ð¿Ð¾ Ð¸Ð½Ð²ÐµÑÑ‚Ð¸Ñ†Ð¸ÑÐ¼ Ð² Ð¾Ð±Ð¼ÐµÐ½ Ð½Ð° email â€” Ð¸Ð½ÑÑ‚Ñ€ÑƒÐ¼ÐµÐ½Ñ‚ ÑÐ±Ð¾Ñ€Ð° Ð»Ð¸Ð´Ð¾Ð².',
+      'help.exitpopup.enabled': '<strong>Ð’ÐºÐ»ÑŽÑ‡Ñ‘Ð½:</strong> Ð’ÐºÐ»ÑŽÑ‡Ð°ÐµÑ‚ Ð¸Ð»Ð¸ Ð²Ñ‹ÐºÐ»ÑŽÑ‡Ð°ÐµÑ‚ Ð¿Ð¾Ð¿Ð°Ð¿ Ð½Ð° Ð²ÑÑ‘Ð¼ ÑÐ°Ð¹Ñ‚Ðµ.',
+      'help.exitpopup.delay': '<strong>Ð—Ð°Ð´ÐµÑ€Ð¶ÐºÐ°:</strong> ÐœÐ¸Ð½Ð¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ Ð²Ñ€ÐµÐ¼Ñ (ÑÐµÐºÑƒÐ½Ð´Ñ‹) Ð½Ð° ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ðµ Ð´Ð¾ ÑÑ€Ð°Ð±Ð°Ñ‚Ñ‹Ð²Ð°Ð½Ð¸Ñ Ð¿Ð¾Ð¿Ð°Ð¿Ð°. ÐÐµ Ñ€Ð°Ð·Ð´Ñ€Ð°Ð¶Ð°ÐµÑ‚ Ð½Ð¾Ð²Ñ‹Ñ… Ð¿Ð¾ÑÐµÑ‚Ð¸Ñ‚ÐµÐ»ÐµÐ¹ (Ñ€ÐµÐºÐ¾Ð¼ÐµÐ½Ð´ÑƒÐµÑ‚ÑÑ: 15â€“30 ÑÐµÐº).',
+      'help.exitpopup.content': '<strong>ÐšÐ¾Ð½Ñ‚ÐµÐ½Ñ‚:</strong> Ð’ÑÐµ Ñ‚ÐµÐºÑÑ‚Ñ‹ Ð½Ð°ÑÑ‚Ñ€Ð°Ð¸Ð²Ð°ÑŽÑ‚ÑÑ Ð´Ð»Ñ ÐºÐ°Ð¶Ð´Ð¾Ð³Ð¾ ÑÐ·Ñ‹ÐºÐ°. Ð‘ÐµÐ¹Ð´Ð¶, Ð·Ð°Ð³Ð¾Ð»Ð¾Ð²Ð¾Ðº, Ð¾Ð¿Ð¸ÑÐ°Ð½Ð¸Ðµ, Ñ‚ÐµÐºÑÑ‚Ñ‹ ÐºÐ½Ð¾Ð¿Ð¾Ðº Ð¸ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ Ð¾Ð± ÑƒÑÐ¿ÐµÑ…Ðµ.',
       'nav.exitpopup': 'Popups',
-      'popups.title': 'Попапы',
-      'exitpopup.title': 'Exit Intent попап',
-      'exitpopup.settings': 'Настройки',
-      'exitpopup.content': 'Контент',
-      'exitpopup.preview': 'Превью',
-      'exitpopup.afterSubmit': 'После отправки',
-      'exitpopup.enabled': 'Включён',
-      'exitpopup.delay': 'Задержка срабатывания (сек)',
-      'exitpopup.field.tag': 'Бейдж',
-      'exitpopup.field.title': 'Заголовок попапа',
-      'exitpopup.field.text': 'Описание',
-      'exitpopup.field.placeholder': 'Плейсхолдер email',
-      'exitpopup.field.submit': 'Кнопка отправки',
-      'exitpopup.field.success': 'Сообщение об успехе',
-      'exitpopup.save': 'Сохранить Exit Popup',
-      'tour.title': 'Попап тура',
-      'tour.steps': 'Шаги',
-      'tour.step': 'Шаг',
-      'tour.question': 'Вопрос',
-      'tour.option': 'Вариант',
-      'tour.form': 'Форма контактов',
-      'tour.formTitle': 'Заголовок формы',
-      'tour.formSubtitle': 'Подзаголовок формы',
-      'tour.name': 'Плейсхолдер имени',
-      'tour.whatsapp': 'Плейсхолдер WhatsApp',
-      'tour.email': 'Плейсхолдер Email',
-      'tour.time': 'Метка времени',
-      'tour.timeOption': 'Вариант времени',
-      'tour.comment': 'Плейсхолдер комментария',
-      'tour.consent': 'Текст согласия',
-      'tour.submit': 'Кнопка отправки',
-      'tour.thankYou': 'Экран благодарности',
-      'tour.thankTitle': 'Заголовок',
-      'tour.thankText': 'Текст',
-      'tour.thankWa': 'Кнопка WhatsApp',
-      'tour.thankProject': 'Текст ссылки на проект',
-      'tour.save': 'Сохранить попап тура',
-      'social.title': 'Социальные сети',
+      'popups.title': 'ÐŸÐ¾Ð¿Ð°Ð¿Ñ‹',
+      'exitpopup.title': 'Exit Intent Ð¿Ð¾Ð¿Ð°Ð¿',
+      'exitpopup.settings': 'ÐÐ°ÑÑ‚Ñ€Ð¾Ð¹ÐºÐ¸',
+      'exitpopup.content': 'ÐšÐ¾Ð½Ñ‚ÐµÐ½Ñ‚',
+      'exitpopup.preview': 'ÐŸÑ€ÐµÐ²ÑŒÑŽ',
+      'exitpopup.afterSubmit': 'ÐŸÐ¾ÑÐ»Ðµ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²ÐºÐ¸',
+      'exitpopup.enabled': 'Ð’ÐºÐ»ÑŽÑ‡Ñ‘Ð½',
+      'exitpopup.delay': 'Ð—Ð°Ð´ÐµÑ€Ð¶ÐºÐ° ÑÑ€Ð°Ð±Ð°Ñ‚Ñ‹Ð²Ð°Ð½Ð¸Ñ (ÑÐµÐº)',
+      'exitpopup.field.tag': 'Ð‘ÐµÐ¹Ð´Ð¶',
+      'exitpopup.field.title': 'Ð—Ð°Ð³Ð¾Ð»Ð¾Ð²Ð¾Ðº Ð¿Ð¾Ð¿Ð°Ð¿Ð°',
+      'exitpopup.field.text': 'ÐžÐ¿Ð¸ÑÐ°Ð½Ð¸Ðµ',
+      'exitpopup.field.placeholder': 'ÐŸÐ»ÐµÐ¹ÑÑ…Ð¾Ð»Ð´ÐµÑ€ email',
+      'exitpopup.field.submit': 'ÐšÐ½Ð¾Ð¿ÐºÐ° Ð¾Ñ‚Ð¿Ñ€Ð°Ð²ÐºÐ¸',
+      'exitpopup.field.success': 'Ð¡Ð¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ Ð¾Ð± ÑƒÑÐ¿ÐµÑ…Ðµ',
+      'exitpopup.save': 'Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ Exit Popup',
+      'tour.title': 'ÐŸÐ¾Ð¿Ð°Ð¿ Ñ‚ÑƒÑ€Ð°',
+      'tour.steps': 'Ð¨Ð°Ð³Ð¸',
+      'tour.step': 'Ð¨Ð°Ð³',
+      'tour.question': 'Ð’Ð¾Ð¿Ñ€Ð¾Ñ',
+      'tour.option': 'Ð’Ð°Ñ€Ð¸Ð°Ð½Ñ‚',
+      'tour.form': 'Ð¤Ð¾Ñ€Ð¼Ð° ÐºÐ¾Ð½Ñ‚Ð°ÐºÑ‚Ð¾Ð²',
+      'tour.formTitle': 'Ð—Ð°Ð³Ð¾Ð»Ð¾Ð²Ð¾Ðº Ñ„Ð¾Ñ€Ð¼Ñ‹',
+      'tour.formSubtitle': 'ÐŸÐ¾Ð´Ð·Ð°Ð³Ð¾Ð»Ð¾Ð²Ð¾Ðº Ñ„Ð¾Ñ€Ð¼Ñ‹',
+      'tour.name': 'ÐŸÐ»ÐµÐ¹ÑÑ…Ð¾Ð»Ð´ÐµÑ€ Ð¸Ð¼ÐµÐ½Ð¸',
+      'tour.whatsapp': 'ÐŸÐ»ÐµÐ¹ÑÑ…Ð¾Ð»Ð´ÐµÑ€ WhatsApp',
+      'tour.email': 'ÐŸÐ»ÐµÐ¹ÑÑ…Ð¾Ð»Ð´ÐµÑ€ Email',
+      'tour.time': 'ÐœÐµÑ‚ÐºÐ° Ð²Ñ€ÐµÐ¼ÐµÐ½Ð¸',
+      'tour.timeOption': 'Ð’Ð°Ñ€Ð¸Ð°Ð½Ñ‚ Ð²Ñ€ÐµÐ¼ÐµÐ½Ð¸',
+      'tour.comment': 'ÐŸÐ»ÐµÐ¹ÑÑ…Ð¾Ð»Ð´ÐµÑ€ ÐºÐ¾Ð¼Ð¼ÐµÐ½Ñ‚Ð°Ñ€Ð¸Ñ',
+      'tour.consent': 'Ð¢ÐµÐºÑÑ‚ ÑÐ¾Ð³Ð»Ð°ÑÐ¸Ñ',
+      'tour.submit': 'ÐšÐ½Ð¾Ð¿ÐºÐ° Ð¾Ñ‚Ð¿Ñ€Ð°Ð²ÐºÐ¸',
+      'tour.thankYou': 'Ð­ÐºÑ€Ð°Ð½ Ð±Ð»Ð°Ð³Ð¾Ð´Ð°Ñ€Ð½Ð¾ÑÑ‚Ð¸',
+      'tour.thankTitle': 'Ð—Ð°Ð³Ð¾Ð»Ð¾Ð²Ð¾Ðº',
+      'tour.thankText': 'Ð¢ÐµÐºÑÑ‚',
+      'tour.thankWa': 'ÐšÐ½Ð¾Ð¿ÐºÐ° WhatsApp',
+      'tour.thankProject': 'Ð¢ÐµÐºÑÑ‚ ÑÑÑ‹Ð»ÐºÐ¸ Ð½Ð° Ð¿Ñ€Ð¾ÐµÐºÑ‚',
+      'tour.save': 'Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ Ð¿Ð¾Ð¿Ð°Ð¿ Ñ‚ÑƒÑ€Ð°',
+      'social.title': 'Ð¡Ð¾Ñ†Ð¸Ð°Ð»ÑŒÐ½Ñ‹Ðµ ÑÐµÑ‚Ð¸',
       'social.facebook': 'URL Facebook',
       'social.instagram': 'URL Instagram',
-      'social.save': 'Сохранить соцсети',
-      'stats.title': 'Статистика компании',
-      'stats.navTitle': 'Стат.',
-      'stats.investorsWorldwide': 'Инвесторов по миру',
-      'stats.villasDesigned': 'Виллы в портфолио',
-      'stats.occupancyRate': 'Заполняемость',
-      'stats.founderExperience': 'Опыт транзакций',
-      'stats.touristArrivals': 'Приезд туристов',
-      'stats.rentalYield': 'Арендная доходность',
-      'stats.propertyGrowth': 'Рост стоимости',
-      'stats.paybackPeriod': 'Срок окупаемости',
-      'stats.save': 'Сохранить статистику',
-      'stats.labelsTitle': 'Подписи под цифрами (3 языка)',
-      'stats.labelsHint': 'Используйте &lt;br&gt; чтобы перенести подпись на 2 строки. На главной показываются первые 4 цифры.',
-      'stats.labelsSave': 'Сохранить подписи',
-      'roi.title': 'Параметры ROI-калькулятора',
+      'social.save': 'Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ ÑÐ¾Ñ†ÑÐµÑ‚Ð¸',
+      'stats.title': 'Ð¡Ñ‚Ð°Ñ‚Ð¸ÑÑ‚Ð¸ÐºÐ° ÐºÐ¾Ð¼Ð¿Ð°Ð½Ð¸Ð¸',
+      'stats.navTitle': 'Ð¡Ñ‚Ð°Ñ‚.',
+      'stats.investorsWorldwide': 'Ð˜Ð½Ð²ÐµÑÑ‚Ð¾Ñ€Ð¾Ð² Ð¿Ð¾ Ð¼Ð¸Ñ€Ñƒ',
+      'stats.villasDesigned': 'Ð’Ð¸Ð»Ð»Ñ‹ Ð² Ð¿Ð¾Ñ€Ñ‚Ñ„Ð¾Ð»Ð¸Ð¾',
+      'stats.occupancyRate': 'Ð—Ð°Ð¿Ð¾Ð»Ð½ÑÐµÐ¼Ð¾ÑÑ‚ÑŒ',
+      'stats.founderExperience': 'ÐžÐ¿Ñ‹Ñ‚ Ñ‚Ñ€Ð°Ð½Ð·Ð°ÐºÑ†Ð¸Ð¹',
+      'stats.touristArrivals': 'ÐŸÑ€Ð¸ÐµÐ·Ð´ Ñ‚ÑƒÑ€Ð¸ÑÑ‚Ð¾Ð²',
+      'stats.rentalYield': 'ÐÑ€ÐµÐ½Ð´Ð½Ð°Ñ Ð´Ð¾Ñ…Ð¾Ð´Ð½Ð¾ÑÑ‚ÑŒ',
+      'stats.propertyGrowth': 'Ð Ð¾ÑÑ‚ ÑÑ‚Ð¾Ð¸Ð¼Ð¾ÑÑ‚Ð¸',
+      'stats.paybackPeriod': 'Ð¡Ñ€Ð¾Ðº Ð¾ÐºÑƒÐ¿Ð°ÐµÐ¼Ð¾ÑÑ‚Ð¸',
+      'stats.save': 'Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ ÑÑ‚Ð°Ñ‚Ð¸ÑÑ‚Ð¸ÐºÑƒ',
+      'stats.labelsTitle': 'ÐŸÐ¾Ð´Ð¿Ð¸ÑÐ¸ Ð¿Ð¾Ð´ Ñ†Ð¸Ñ„Ñ€Ð°Ð¼Ð¸ (3 ÑÐ·Ñ‹ÐºÐ°)',
+      'stats.labelsHint': 'Ð˜ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐ¹Ñ‚Ðµ &lt;br&gt; Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð¿ÐµÑ€ÐµÐ½ÐµÑÑ‚Ð¸ Ð¿Ð¾Ð´Ð¿Ð¸ÑÑŒ Ð½Ð° 2 ÑÑ‚Ñ€Ð¾ÐºÐ¸. ÐÐ° Ð³Ð»Ð°Ð²Ð½Ð¾Ð¹ Ð¿Ð¾ÐºÐ°Ð·Ñ‹Ð²Ð°ÑŽÑ‚ÑÑ Ð¿ÐµÑ€Ð²Ñ‹Ðµ 4 Ñ†Ð¸Ñ„Ñ€Ñ‹.',
+      'stats.labelsSave': 'Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ Ð¿Ð¾Ð´Ð¿Ð¸ÑÐ¸',
+      'roi.title': 'ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ ROI-ÐºÐ°Ð»ÑŒÐºÑƒÐ»ÑÑ‚Ð¾Ñ€Ð°',
       'roi.navTitle': 'ROI',
-      'roi.scenarios': 'Сценарии',
-      'roi.minInvestment': 'Мин. инвестиция ($)',
-      'roi.maxInvestment': 'Макс. инвестиция ($)',
-      'roi.step': 'Шаг ($)',
-      'roi.defaultInvestment': 'Инвестиция по умолчанию ($)',
-      'roi.defaultOccupancy': 'Заполняемость по умолчанию (%)',
-      'roi.occupancyRange': 'Диапазон заполняемости (%)',
-      'roi.conservative': 'Консервативный — Доход / Рост (%)',
-      'roi.normal': 'Обычный — Доход / Рост (%)',
-      'roi.optimistic': 'Оптимистичный — Доход / Рост (%)',
-      'roi.save': 'Сохранить настройки ROI',
-      'roi.textsTitle': 'Тексты калькулятора (3 языка)',
-      'roi.textsHint': 'Используйте плейсхолдер {project} в titleProject — он заменится на название проекта.',
-      'roi.textsSave': 'Сохранить тексты калькулятора',
-      'help.roi.investment': '<strong>Диапазон инвестиций:</strong> Мин/макс/шаг для слайдера на главной.',
-      'help.roi.scenarios': '<strong>Сценарии:</strong> Ставки доходности и роста для каждого сценария.',
-      'help.roi.occupancy': '<strong>Заполняемость:</strong> Стандартное значение и диапазон слайдера.',
-      'analytics.title': 'Аналитика и трекинг',
-      'analytics.tracking': 'Сервисы трекинга',
-      'analytics.seo': 'SEO-верификация',
+      'roi.scenarios': 'Ð¡Ñ†ÐµÐ½Ð°Ñ€Ð¸Ð¸',
+      'roi.minInvestment': 'ÐœÐ¸Ð½. Ð¸Ð½Ð²ÐµÑÑ‚Ð¸Ñ†Ð¸Ñ ($)',
+      'roi.maxInvestment': 'ÐœÐ°ÐºÑ. Ð¸Ð½Ð²ÐµÑÑ‚Ð¸Ñ†Ð¸Ñ ($)',
+      'roi.step': 'Ð¨Ð°Ð³ ($)',
+      'roi.defaultInvestment': 'Ð˜Ð½Ð²ÐµÑÑ‚Ð¸Ñ†Ð¸Ñ Ð¿Ð¾ ÑƒÐ¼Ð¾Ð»Ñ‡Ð°Ð½Ð¸ÑŽ ($)',
+      'roi.defaultOccupancy': 'Ð—Ð°Ð¿Ð¾Ð»Ð½ÑÐµÐ¼Ð¾ÑÑ‚ÑŒ Ð¿Ð¾ ÑƒÐ¼Ð¾Ð»Ñ‡Ð°Ð½Ð¸ÑŽ (%)',
+      'roi.occupancyRange': 'Ð”Ð¸Ð°Ð¿Ð°Ð·Ð¾Ð½ Ð·Ð°Ð¿Ð¾Ð»Ð½ÑÐµÐ¼Ð¾ÑÑ‚Ð¸ (%)',
+      'roi.conservative': 'ÐšÐ¾Ð½ÑÐµÑ€Ð²Ð°Ñ‚Ð¸Ð²Ð½Ñ‹Ð¹ â€” Ð”Ð¾Ñ…Ð¾Ð´ / Ð Ð¾ÑÑ‚ (%)',
+      'roi.normal': 'ÐžÐ±Ñ‹Ñ‡Ð½Ñ‹Ð¹ â€” Ð”Ð¾Ñ…Ð¾Ð´ / Ð Ð¾ÑÑ‚ (%)',
+      'roi.optimistic': 'ÐžÐ¿Ñ‚Ð¸Ð¼Ð¸ÑÑ‚Ð¸Ñ‡Ð½Ñ‹Ð¹ â€” Ð”Ð¾Ñ…Ð¾Ð´ / Ð Ð¾ÑÑ‚ (%)',
+      'roi.save': 'Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ Ð½Ð°ÑÑ‚Ñ€Ð¾Ð¹ÐºÐ¸ ROI',
+      'roi.textsTitle': 'Ð¢ÐµÐºÑÑ‚Ñ‹ ÐºÐ°Ð»ÑŒÐºÑƒÐ»ÑÑ‚Ð¾Ñ€Ð° (3 ÑÐ·Ñ‹ÐºÐ°)',
+      'roi.textsHint': 'Ð˜ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐ¹Ñ‚Ðµ Ð¿Ð»ÐµÐ¹ÑÑ…Ð¾Ð»Ð´ÐµÑ€ {project} Ð² titleProject â€” Ð¾Ð½ Ð·Ð°Ð¼ÐµÐ½Ð¸Ñ‚ÑÑ Ð½Ð° Ð½Ð°Ð·Ð²Ð°Ð½Ð¸Ðµ Ð¿Ñ€Ð¾ÐµÐºÑ‚Ð°.',
+      'roi.textsSave': 'Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ Ñ‚ÐµÐºÑÑ‚Ñ‹ ÐºÐ°Ð»ÑŒÐºÑƒÐ»ÑÑ‚Ð¾Ñ€Ð°',
+      'help.roi.investment': '<strong>Ð”Ð¸Ð°Ð¿Ð°Ð·Ð¾Ð½ Ð¸Ð½Ð²ÐµÑÑ‚Ð¸Ñ†Ð¸Ð¹:</strong> ÐœÐ¸Ð½/Ð¼Ð°ÐºÑ/ÑˆÐ°Ð³ Ð´Ð»Ñ ÑÐ»Ð°Ð¹Ð´ÐµÑ€Ð° Ð½Ð° Ð³Ð»Ð°Ð²Ð½Ð¾Ð¹.',
+      'help.roi.scenarios': '<strong>Ð¡Ñ†ÐµÐ½Ð°Ñ€Ð¸Ð¸:</strong> Ð¡Ñ‚Ð°Ð²ÐºÐ¸ Ð´Ð¾Ñ…Ð¾Ð´Ð½Ð¾ÑÑ‚Ð¸ Ð¸ Ñ€Ð¾ÑÑ‚Ð° Ð´Ð»Ñ ÐºÐ°Ð¶Ð´Ð¾Ð³Ð¾ ÑÑ†ÐµÐ½Ð°Ñ€Ð¸Ñ.',
+      'help.roi.occupancy': '<strong>Ð—Ð°Ð¿Ð¾Ð»Ð½ÑÐµÐ¼Ð¾ÑÑ‚ÑŒ:</strong> Ð¡Ñ‚Ð°Ð½Ð´Ð°Ñ€Ñ‚Ð½Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ Ð¸ Ð´Ð¸Ð°Ð¿Ð°Ð·Ð¾Ð½ ÑÐ»Ð°Ð¹Ð´ÐµÑ€Ð°.',
+      'analytics.title': 'ÐÐ½Ð°Ð»Ð¸Ñ‚Ð¸ÐºÐ° Ð¸ Ñ‚Ñ€ÐµÐºÐ¸Ð½Ð³',
+      'analytics.tracking': 'Ð¡ÐµÑ€Ð²Ð¸ÑÑ‹ Ñ‚Ñ€ÐµÐºÐ¸Ð½Ð³Ð°',
+      'analytics.seo': 'SEO-Ð²ÐµÑ€Ð¸Ñ„Ð¸ÐºÐ°Ñ†Ð¸Ñ',
       'analytics.ga4': 'Google Analytics 4',
       'analytics.facebookPixel': 'Facebook Pixel',
-      'analytics.yandexMetrika': 'Яндекс Метрика',
+      'analytics.yandexMetrika': 'Ð¯Ð½Ð´ÐµÐºÑ ÐœÐµÑ‚Ñ€Ð¸ÐºÐ°',
       'analytics.clarity': 'Microsoft Clarity',
       'analytics.gsc': 'Google Search Console',
-      'analytics.save': 'Сохранить аналитику',
-      'analytics.hint.ga4': 'Measurement ID из свойства GA4',
-      'analytics.hint.facebook': 'Pixel ID из Meta Events Manager',
-      'analytics.hint.yandex': 'Номер счётчика с metrika.yandex.ru',
-      'analytics.hint.clarity': 'ID проекта с clarity.microsoft.com',
-      'analytics.hint.gsc': 'Код верификации (значение content мета-тега)',
-      'help.analytics.intro': '<strong>Как это работает:</strong> Вставьте ID трекеров ниже. Скрипты подключаются автоматически — менять код не нужно.',
-      'help.analytics.empty': '<strong>Пустое поле</strong> = трекер отключён. Заполняйте только те сервисы, которые используете.',
-      'help.analytics.events': '<strong>Авто-события:</strong> отправка форм (контакт, квиз, лид-магнит, exit popup), клики WhatsApp, скачивание PDF.',
-      'newProject.title': 'Добавить проект',
-      'newProject.name': 'Название проекта',
+      'analytics.save': 'Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ Ð°Ð½Ð°Ð»Ð¸Ñ‚Ð¸ÐºÑƒ',
+      'analytics.hint.ga4': 'Measurement ID Ð¸Ð· ÑÐ²Ð¾Ð¹ÑÑ‚Ð²Ð° GA4',
+      'analytics.hint.facebook': 'Pixel ID Ð¸Ð· Meta Events Manager',
+      'analytics.hint.yandex': 'ÐÐ¾Ð¼ÐµÑ€ ÑÑ‡Ñ‘Ñ‚Ñ‡Ð¸ÐºÐ° Ñ metrika.yandex.ru',
+      'analytics.hint.clarity': 'ID Ð¿Ñ€Ð¾ÐµÐºÑ‚Ð° Ñ clarity.microsoft.com',
+      'analytics.hint.gsc': 'ÐšÐ¾Ð´ Ð²ÐµÑ€Ð¸Ñ„Ð¸ÐºÐ°Ñ†Ð¸Ð¸ (Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ content Ð¼ÐµÑ‚Ð°-Ñ‚ÐµÐ³Ð°)',
+      'help.analytics.intro': '<strong>ÐšÐ°Ðº ÑÑ‚Ð¾ Ñ€Ð°Ð±Ð¾Ñ‚Ð°ÐµÑ‚:</strong> Ð’ÑÑ‚Ð°Ð²ÑŒÑ‚Ðµ ID Ñ‚Ñ€ÐµÐºÐµÑ€Ð¾Ð² Ð½Ð¸Ð¶Ðµ. Ð¡ÐºÑ€Ð¸Ð¿Ñ‚Ñ‹ Ð¿Ð¾Ð´ÐºÐ»ÑŽÑ‡Ð°ÑŽÑ‚ÑÑ Ð°Ð²Ñ‚Ð¾Ð¼Ð°Ñ‚Ð¸Ñ‡ÐµÑÐºÐ¸ â€” Ð¼ÐµÐ½ÑÑ‚ÑŒ ÐºÐ¾Ð´ Ð½Ðµ Ð½ÑƒÐ¶Ð½Ð¾.',
+      'help.analytics.empty': '<strong>ÐŸÑƒÑÑ‚Ð¾Ðµ Ð¿Ð¾Ð»Ðµ</strong> = Ñ‚Ñ€ÐµÐºÐµÑ€ Ð¾Ñ‚ÐºÐ»ÑŽÑ‡Ñ‘Ð½. Ð—Ð°Ð¿Ð¾Ð»Ð½ÑÐ¹Ñ‚Ðµ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ñ‚Ðµ ÑÐµÑ€Ð²Ð¸ÑÑ‹, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐµÑ‚Ðµ.',
+      'help.analytics.events': '<strong>ÐÐ²Ñ‚Ð¾-ÑÐ¾Ð±Ñ‹Ñ‚Ð¸Ñ:</strong> Ð¾Ñ‚Ð¿Ñ€Ð°Ð²ÐºÐ° Ñ„Ð¾Ñ€Ð¼ (ÐºÐ¾Ð½Ñ‚Ð°ÐºÑ‚, ÐºÐ²Ð¸Ð·, Ð»Ð¸Ð´-Ð¼Ð°Ð³Ð½Ð¸Ñ‚, exit popup), ÐºÐ»Ð¸ÐºÐ¸ WhatsApp, ÑÐºÐ°Ñ‡Ð¸Ð²Ð°Ð½Ð¸Ðµ PDF.',
+      'newProject.title': 'Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð¿Ñ€Ð¾ÐµÐºÑ‚',
+      'newProject.name': 'ÐÐ°Ð·Ð²Ð°Ð½Ð¸Ðµ Ð¿Ñ€Ð¾ÐµÐºÑ‚Ð°',
       'newProject.slug': 'Slug',
-      'newProject.slugHint': 'Генерируется из имени, можно редактировать',
-      'newProject.status': 'Статус',
-      'newProject.startingPrice': 'Начальная цена ($)',
-      'newProject.totalUnits': 'Всего юнитов',
-      'newProject.bedrooms': 'Спальни',
-      'newProject.handover': 'Сдача',
-      'newProject.showcaseImage': 'Изображение',
-      'newProject.showcaseText': 'Текст карточки (EN)',
-      'newProject.subtitle': 'Короткий подзаголовок',
-      'newProject.desc': 'Описание',
-      'newProject.comparisonData': 'Данные для сравнения',
-      'newProject.areaRange': 'Диапазон площади',
-      'newProject.landRange': 'Диапазон участка',
-      'newProject.pool': 'Бассейн',
-      'newProject.cancel': 'Отмена',
-      'newProject.create': 'Создать проект',
-      'newProject.nameRequired': 'Укажите название',
-      'newProject.slugExists': 'Проект с таким slug уже существует',
-      'preview.title': 'Превью',
-      'common.saving': 'Сохранение...',
-      'common.saved': 'Сохранено! Сайт обновится (~1-2 мин)',
-      'common.error': 'Ошибка: ',
-      'common.unsavedWarn': 'Есть несохранённые изменения. Переключить вкладку?',
-      'auth.wrongPassword': 'Неверный пароль.',
-      'auth.userNotFound': 'Аккаунт не найден.',
-      'auth.tooManyRequests': 'Слишком много попыток. Попробуйте позже.',
-      'auth.invalidEmail': 'Неверный email.',
-      'auth.invalidCredential': 'Неверный email или пароль.',
-      'auth.failed': 'Ошибка аутентификации.',
-      'validate.wa.required': 'Обязательное поле',
-      'validate.wa.digitsOnly': 'Только цифры — без +, пробелов или дефисов',
-      'validate.wa.tooShort': 'Слишком короткий — укажите код страны (напр. 62...)',
-      'validate.wa.tooLong': 'Слишком длинный — макс. 15 цифр',
-      'validate.wa.link': 'Ссылка: wa.me/',
-      'validate.phone.required': 'Обязательное поле',
-      'validate.phone.tooShort': 'Слишком короткий',
-      'time.justNow': 'только что',
-      'time.mAgo': 'м назад',
-      'time.hAgo': 'ч назад',
-      'time.dAgo': 'д назад',
-      'nav.users': 'Пользователи',
-      'users.title': 'Команда',
-      'users.invite': 'Пригласить участника',
+      'newProject.slugHint': 'Ð“ÐµÐ½ÐµÑ€Ð¸Ñ€ÑƒÐµÑ‚ÑÑ Ð¸Ð· Ð¸Ð¼ÐµÐ½Ð¸, Ð¼Ð¾Ð¶Ð½Ð¾ Ñ€ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ',
+      'newProject.status': 'Ð¡Ñ‚Ð°Ñ‚ÑƒÑ',
+      'newProject.startingPrice': 'ÐÐ°Ñ‡Ð°Ð»ÑŒÐ½Ð°Ñ Ñ†ÐµÐ½Ð° ($)',
+      'newProject.totalUnits': 'Ð’ÑÐµÐ³Ð¾ ÑŽÐ½Ð¸Ñ‚Ð¾Ð²',
+      'newProject.bedrooms': 'Ð¡Ð¿Ð°Ð»ÑŒÐ½Ð¸',
+      'newProject.handover': 'Ð¡Ð´Ð°Ñ‡Ð°',
+      'newProject.showcaseImage': 'Ð˜Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ðµ',
+      'newProject.showcaseText': 'Ð¢ÐµÐºÑÑ‚ ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐºÐ¸ (EN)',
+      'newProject.subtitle': 'ÐšÐ¾Ñ€Ð¾Ñ‚ÐºÐ¸Ð¹ Ð¿Ð¾Ð´Ð·Ð°Ð³Ð¾Ð»Ð¾Ð²Ð¾Ðº',
+      'newProject.desc': 'ÐžÐ¿Ð¸ÑÐ°Ð½Ð¸Ðµ',
+      'newProject.comparisonData': 'Ð”Ð°Ð½Ð½Ñ‹Ðµ Ð´Ð»Ñ ÑÑ€Ð°Ð²Ð½ÐµÐ½Ð¸Ñ',
+      'newProject.areaRange': 'Ð”Ð¸Ð°Ð¿Ð°Ð·Ð¾Ð½ Ð¿Ð»Ð¾Ñ‰Ð°Ð´Ð¸',
+      'newProject.landRange': 'Ð”Ð¸Ð°Ð¿Ð°Ð·Ð¾Ð½ ÑƒÑ‡Ð°ÑÑ‚ÐºÐ°',
+      'newProject.pool': 'Ð‘Ð°ÑÑÐµÐ¹Ð½',
+      'newProject.cancel': 'ÐžÑ‚Ð¼ÐµÐ½Ð°',
+      'newProject.create': 'Ð¡Ð¾Ð·Ð´Ð°Ñ‚ÑŒ Ð¿Ñ€Ð¾ÐµÐºÑ‚',
+      'newProject.nameRequired': 'Ð£ÐºÐ°Ð¶Ð¸Ñ‚Ðµ Ð½Ð°Ð·Ð²Ð°Ð½Ð¸Ðµ',
+      'newProject.slugExists': 'ÐŸÑ€Ð¾ÐµÐºÑ‚ Ñ Ñ‚Ð°ÐºÐ¸Ð¼ slug ÑƒÐ¶Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚',
+      'preview.title': 'ÐŸÑ€ÐµÐ²ÑŒÑŽ',
+      'common.saving': 'Ð¡Ð¾Ñ…Ñ€Ð°Ð½ÐµÐ½Ð¸Ðµ...',
+      'common.saved': 'Ð¡Ð¾Ñ…Ñ€Ð°Ð½ÐµÐ½Ð¾! Ð¡Ð°Ð¹Ñ‚ Ð¾Ð±Ð½Ð¾Ð²Ð¸Ñ‚ÑÑ (~1-2 Ð¼Ð¸Ð½)',
+      'common.error': 'ÐžÑˆÐ¸Ð±ÐºÐ°: ',
+      'common.unsavedWarn': 'Ð•ÑÑ‚ÑŒ Ð½ÐµÑÐ¾Ñ…Ñ€Ð°Ð½Ñ‘Ð½Ð½Ñ‹Ðµ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ. ÐŸÐµÑ€ÐµÐºÐ»ÑŽÑ‡Ð¸Ñ‚ÑŒ Ð²ÐºÐ»Ð°Ð´ÐºÑƒ?',
+      'auth.wrongPassword': 'ÐÐµÐ²ÐµÑ€Ð½Ñ‹Ð¹ Ð¿Ð°Ñ€Ð¾Ð»ÑŒ.',
+      'auth.userNotFound': 'ÐÐºÐºÐ°ÑƒÐ½Ñ‚ Ð½Ðµ Ð½Ð°Ð¹Ð´ÐµÐ½.',
+      'auth.tooManyRequests': 'Ð¡Ð»Ð¸ÑˆÐºÐ¾Ð¼ Ð¼Ð½Ð¾Ð³Ð¾ Ð¿Ð¾Ð¿Ñ‹Ñ‚Ð¾Ðº. ÐŸÐ¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹Ñ‚Ðµ Ð¿Ð¾Ð·Ð¶Ðµ.',
+      'auth.invalidEmail': 'ÐÐµÐ²ÐµÑ€Ð½Ñ‹Ð¹ email.',
+      'auth.invalidCredential': 'ÐÐµÐ²ÐµÑ€Ð½Ñ‹Ð¹ email Ð¸Ð»Ð¸ Ð¿Ð°Ñ€Ð¾Ð»ÑŒ.',
+      'auth.failed': 'ÐžÑˆÐ¸Ð±ÐºÐ° Ð°ÑƒÑ‚ÐµÐ½Ñ‚Ð¸Ñ„Ð¸ÐºÐ°Ñ†Ð¸Ð¸.',
+      'validate.wa.required': 'ÐžÐ±ÑÐ·Ð°Ñ‚ÐµÐ»ÑŒÐ½Ð¾Ðµ Ð¿Ð¾Ð»Ðµ',
+      'validate.wa.digitsOnly': 'Ð¢Ð¾Ð»ÑŒÐºÐ¾ Ñ†Ð¸Ñ„Ñ€Ñ‹ â€” Ð±ÐµÐ· +, Ð¿Ñ€Ð¾Ð±ÐµÐ»Ð¾Ð² Ð¸Ð»Ð¸ Ð´ÐµÑ„Ð¸ÑÐ¾Ð²',
+      'validate.wa.tooShort': 'Ð¡Ð»Ð¸ÑˆÐºÐ¾Ð¼ ÐºÐ¾Ñ€Ð¾Ñ‚ÐºÐ¸Ð¹ â€” ÑƒÐºÐ°Ð¶Ð¸Ñ‚Ðµ ÐºÐ¾Ð´ ÑÑ‚Ñ€Ð°Ð½Ñ‹ (Ð½Ð°Ð¿Ñ€. 62...)',
+      'validate.wa.tooLong': 'Ð¡Ð»Ð¸ÑˆÐºÐ¾Ð¼ Ð´Ð»Ð¸Ð½Ð½Ñ‹Ð¹ â€” Ð¼Ð°ÐºÑ. 15 Ñ†Ð¸Ñ„Ñ€',
+      'validate.wa.link': 'Ð¡ÑÑ‹Ð»ÐºÐ°: wa.me/',
+      'validate.phone.required': 'ÐžÐ±ÑÐ·Ð°Ñ‚ÐµÐ»ÑŒÐ½Ð¾Ðµ Ð¿Ð¾Ð»Ðµ',
+      'validate.phone.tooShort': 'Ð¡Ð»Ð¸ÑˆÐºÐ¾Ð¼ ÐºÐ¾Ñ€Ð¾Ñ‚ÐºÐ¸Ð¹',
+      'time.justNow': 'Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ñ‡Ñ‚Ð¾',
+      'time.mAgo': 'Ð¼ Ð½Ð°Ð·Ð°Ð´',
+      'time.hAgo': 'Ñ‡ Ð½Ð°Ð·Ð°Ð´',
+      'time.dAgo': 'Ð´ Ð½Ð°Ð·Ð°Ð´',
+      'nav.users': 'ÐŸÐ¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»Ð¸',
+      'users.title': 'ÐšÐ¾Ð¼Ð°Ð½Ð´Ð°',
+      'users.invite': 'ÐŸÑ€Ð¸Ð³Ð»Ð°ÑÐ¸Ñ‚ÑŒ ÑƒÑ‡Ð°ÑÑ‚Ð½Ð¸ÐºÐ°',
       'users.email': 'Email',
-      'users.fullName': 'Имя',
-      'users.role': 'Роль',
-      'users.send': 'Отправить приглашение',
-      'users.list': 'Активные участники',
-      'users.you': 'вы',
-      'users.empty': 'Команда пуста.',
+      'users.fullName': 'Ð˜Ð¼Ñ',
+      'users.role': 'Ð Ð¾Ð»ÑŒ',
+      'users.send': 'ÐžÑ‚Ð¿Ñ€Ð°Ð²Ð¸Ñ‚ÑŒ Ð¿Ñ€Ð¸Ð³Ð»Ð°ÑˆÐµÐ½Ð¸Ðµ',
+      'users.list': 'ÐÐºÑ‚Ð¸Ð²Ð½Ñ‹Ðµ ÑƒÑ‡Ð°ÑÑ‚Ð½Ð¸ÐºÐ¸',
+      'users.you': 'Ð²Ñ‹',
+      'users.empty': 'ÐšÐ¾Ð¼Ð°Ð½Ð´Ð° Ð¿ÑƒÑÑ‚Ð°.',
       'users.col.email': 'Email',
-      'users.col.name': 'Имя',
-      'users.col.role': 'Роль',
-      'users.col.status': 'Статус',
-      'users.col.lastSignIn': 'Был(а) в системе',
-      'users.col.actions': 'Действия',
-      'users.role.editor': 'Editor — только галерея / FAQ / отзывы',
-      'users.role.admin': 'Admin — весь контент (без управления пользователями)',
+      'users.col.name': 'Ð˜Ð¼Ñ',
+      'users.col.role': 'Ð Ð¾Ð»ÑŒ',
+      'users.col.status': 'Ð¡Ñ‚Ð°Ñ‚ÑƒÑ',
+      'users.col.lastSignIn': 'Ð‘Ñ‹Ð»(Ð°) Ð² ÑÐ¸ÑÑ‚ÐµÐ¼Ðµ',
+      'users.col.actions': 'Ð”ÐµÐ¹ÑÑ‚Ð²Ð¸Ñ',
+      'users.role.editor': 'Editor â€” Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ð³Ð°Ð»ÐµÑ€ÐµÑ / FAQ / Ð¾Ñ‚Ð·Ñ‹Ð²Ñ‹',
+      'users.role.admin': 'Admin â€” Ð²ÐµÑÑŒ ÐºÐ¾Ð½Ñ‚ÐµÐ½Ñ‚ (Ð±ÐµÐ· ÑƒÐ¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ñ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑÐ¼Ð¸)',
       'users.role.editor.short': 'editor',
       'users.role.admin.short': 'admin',
       'users.role.super_admin.short': 'super admin',
-      'users.status.active': 'Активен',
-      'users.status.deactivated': 'Отключён',
-      'users.status.pending': 'Приглашён',
-      'users.action.delete': 'Удалить',
-      'users.action.confirmDelete': 'Удалить пользователя {email}? Действие необратимо.',
-      'users.toast.sending': 'Отправка приглашения…',
-      'users.toast.sent': 'Приглашение отправлено на {email}.',
-      'users.toast.roleUpdated': 'Роль обновлена.',
-      'users.toast.userDeleted': 'Пользователь удалён.',
+      'users.status.active': 'ÐÐºÑ‚Ð¸Ð²ÐµÐ½',
+      'users.status.deactivated': 'ÐžÑ‚ÐºÐ»ÑŽÑ‡Ñ‘Ð½',
+      'users.status.pending': 'ÐŸÑ€Ð¸Ð³Ð»Ð°ÑˆÑ‘Ð½',
+      'users.action.delete': 'Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ',
+      'users.action.confirmDelete': 'Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»Ñ {email}? Ð”ÐµÐ¹ÑÑ‚Ð²Ð¸Ðµ Ð½ÐµÐ¾Ð±Ñ€Ð°Ñ‚Ð¸Ð¼Ð¾.',
+      'users.toast.sending': 'ÐžÑ‚Ð¿Ñ€Ð°Ð²ÐºÐ° Ð¿Ñ€Ð¸Ð³Ð»Ð°ÑˆÐµÐ½Ð¸Ñâ€¦',
+      'users.toast.sent': 'ÐŸÑ€Ð¸Ð³Ð»Ð°ÑˆÐµÐ½Ð¸Ðµ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¾ Ð½Ð° {email}.',
+      'users.toast.roleUpdated': 'Ð Ð¾Ð»ÑŒ Ð¾Ð±Ð½Ð¾Ð²Ð»ÐµÐ½Ð°.',
+      'users.toast.userDeleted': 'ÐŸÐ¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑŒ ÑƒÐ´Ð°Ð»Ñ‘Ð½.',
     }
   };
 
@@ -868,11 +868,11 @@
     }
   }
 
-  // ─── Auth backend: Supabase (см. admin/supabase-client.js) ───
-  // GitHub PAT и Firebase больше не используются — данные и картинки в Supabase,
-  // публикация — через build pipeline на Vercel (push не нужен).
+  // â”€â”€â”€ Auth backend: Supabase (ÑÐ¼. admin/supabase-client.js) â”€â”€â”€
+  // GitHub PAT Ð¸ Firebase Ð±Ð¾Ð»ÑŒÑˆÐµ Ð½Ðµ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÑŽÑ‚ÑÑ â€” Ð´Ð°Ð½Ð½Ñ‹Ðµ Ð¸ ÐºÐ°Ñ€Ñ‚Ð¸Ð½ÐºÐ¸ Ð² Supabase,
+  // Ð¿ÑƒÐ±Ð»Ð¸ÐºÐ°Ñ†Ð¸Ñ â€” Ñ‡ÐµÑ€ÐµÐ· build pipeline Ð½Ð° Vercel (push Ð½Ðµ Ð½ÑƒÐ¶ÐµÐ½).
 
-  // ─── State ───
+  // â”€â”€â”€ State â”€â”€â”€
   let currentUser = null;       // { id, email, full_name, role, is_active }
   let currentProject = 'serenity-villas';
   let projectsData = null;    // working copy of PROJECTS_DATA
@@ -891,7 +891,7 @@
     }
   });
 
-  // Map dirty keys to nav tab names. Settings tab agрeгate
+  // Map dirty keys to nav tab names. Settings tab agÑ€eÐ³ate
   // contacts/rate/colors/social/roi/stats/guide.
   const _dirtyTabMap = {
     rate: 'settings', contacts: 'settings', colors: 'settings',
@@ -906,8 +906,8 @@
     });
   }
 
-  // Делегирование dirty-tracking. На контейнере любой формы ловим input/change
-  // и помечаем нужный ключ. Переживает ре-рендеры внутренностей.
+  // Ð”ÐµÐ»ÐµÐ³Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ dirty-tracking. ÐÐ° ÐºÐ¾Ð½Ñ‚ÐµÐ¹Ð½ÐµÑ€Ðµ Ð»ÑŽÐ±Ð¾Ð¹ Ñ„Ð¾Ñ€Ð¼Ñ‹ Ð»Ð¾Ð²Ð¸Ð¼ input/change
+  // Ð¸ Ð¿Ð¾Ð¼ÐµÑ‡Ð°ÐµÐ¼ Ð½ÑƒÐ¶Ð½Ñ‹Ð¹ ÐºÐ»ÑŽÑ‡. ÐŸÐµÑ€ÐµÐ¶Ð¸Ð²Ð°ÐµÑ‚ Ñ€Ðµ-Ñ€ÐµÐ½Ð´ÐµÑ€Ñ‹ Ð²Ð½ÑƒÑ‚Ñ€ÐµÐ½Ð½Ð¾ÑÑ‚ÐµÐ¹.
   function bindDirtyDelegate(containerSel, key) {
     const el = document.querySelector(containerSel);
     if (!el || el.dataset.dirtyBound) return;
@@ -926,7 +926,7 @@
     return Object.values(_dirtyState).some(v => v);
   }
 
-  // ─── Live Exchange Rate ───
+  // â”€â”€â”€ Live Exchange Rate â”€â”€â”€
   let rateInterval = null;
 
   async function fetchLiveRate() {
@@ -943,7 +943,7 @@
         timeEl.textContent = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
       }
     } catch (e) {
-      valEl.textContent = '—';
+      valEl.textContent = 'â€”';
       timeEl.textContent = 'offline';
     }
   }
@@ -954,7 +954,7 @@
     rateInterval = setInterval(fetchLiveRate, 3600000);
   }
 
-  // ─── DOM Refs ───
+  // â”€â”€â”€ DOM Refs â”€â”€â”€
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -972,21 +972,21 @@
   const setpwForm = $('#setpw-form');
   const setpwError = $('#setpw-error');
 
-  // ─── Supabase client check ───
+  // â”€â”€â”€ Supabase client check â”€â”€â”€
   if (typeof window.SupabaseAdmin === 'undefined') {
-    loginError.textContent = 'Auth client (supabase-client.js) не загружен.';
+    loginError.textContent = 'Auth client (supabase-client.js) Ð½Ðµ Ð·Ð°Ð³Ñ€ÑƒÐ¶ÐµÐ½.';
     loginError.hidden = false;
     return;
   }
 
-  // ─── Recovery / Invite link handler ───
-  // Современный Supabase шлёт implicit-flow ссылки:
+  // â”€â”€â”€ Recovery / Invite link handler â”€â”€â”€
+  // Ð¡Ð¾Ð²Ñ€ÐµÐ¼ÐµÐ½Ð½Ñ‹Ð¹ Supabase ÑˆÐ»Ñ‘Ñ‚ implicit-flow ÑÑÑ‹Ð»ÐºÐ¸:
   //   /admin/#access_token=...&refresh_token=...&type=recovery
-  // SDK с detectSessionInUrl=true (default) сам ставит сессию и стреляет
-  // событием PASSWORD_RECOVERY — мы его слушаем ниже в onAuthStateChange.
+  // SDK Ñ detectSessionInUrl=true (default) ÑÐ°Ð¼ ÑÑ‚Ð°Ð²Ð¸Ñ‚ ÑÐµÑÑÐ¸ÑŽ Ð¸ ÑÑ‚Ñ€ÐµÐ»ÑÐµÑ‚
+  // ÑÐ¾Ð±Ñ‹Ñ‚Ð¸ÐµÐ¼ PASSWORD_RECOVERY â€” Ð¼Ñ‹ ÐµÐ³Ð¾ ÑÐ»ÑƒÑˆÐ°ÐµÐ¼ Ð½Ð¸Ð¶Ðµ Ð² onAuthStateChange.
   //
-  // Также поддерживаем legacy PKCE-flow (?token_hash=...&type=...) на случай
-  // старых писем — verifyOtp вручную.
+  // Ð¢Ð°ÐºÐ¶Ðµ Ð¿Ð¾Ð´Ð´ÐµÑ€Ð¶Ð¸Ð²Ð°ÐµÐ¼ legacy PKCE-flow (?token_hash=...&type=...) Ð½Ð° ÑÐ»ÑƒÑ‡Ð°Ð¹
+  // ÑÑ‚Ð°Ñ€Ñ‹Ñ… Ð¿Ð¸ÑÐµÐ¼ â€” verifyOtp Ð²Ñ€ÑƒÑ‡Ð½ÑƒÑŽ.
   let inRecoveryMode = false;
 
   async function maybeHandleLegacyToken() {
@@ -1000,7 +1000,7 @@
     if (error) {
       console.error('verifyOtp failed:', error);
       loginScreen.hidden = false;
-      loginError.textContent = `Ссылка устарела или недействительна: ${error.message}`;
+      loginError.textContent = `Ð¡ÑÑ‹Ð»ÐºÐ° ÑƒÑÑ‚Ð°Ñ€ÐµÐ»Ð° Ð¸Ð»Ð¸ Ð½ÐµÐ´ÐµÐ¹ÑÑ‚Ð²Ð¸Ñ‚ÐµÐ»ÑŒÐ½Ð°: ${error.message}`;
       loginError.hidden = false;
       return true;
     }
@@ -1016,12 +1016,12 @@
     const pw1 = $('#setpw-password').value;
     const pw2 = $('#setpw-confirm').value;
     if (pw1 !== pw2) {
-      setpwError.textContent = 'Пароли не совпадают.';
+      setpwError.textContent = 'ÐŸÐ°Ñ€Ð¾Ð»Ð¸ Ð½Ðµ ÑÐ¾Ð²Ð¿Ð°Ð´Ð°ÑŽÑ‚.';
       setpwError.hidden = false;
       return;
     }
     if (pw1.length < 8) {
-      setpwError.textContent = 'Минимум 8 символов.';
+      setpwError.textContent = 'ÐœÐ¸Ð½Ð¸Ð¼ÑƒÐ¼ 8 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð¾Ð².';
       setpwError.hidden = false;
       return;
     }
@@ -1030,9 +1030,9 @@
     try {
       const { error } = await SupabaseAdmin.client.auth.updateUser({ password: pw1 });
       if (error) throw error;
-      // Сессия уже стоит после verifyOtp + updateUser → грузим профиль и показываем админку
+      // Ð¡ÐµÑÑÐ¸Ñ ÑƒÐ¶Ðµ ÑÑ‚Ð¾Ð¸Ñ‚ Ð¿Ð¾ÑÐ»Ðµ verifyOtp + updateUser â†’ Ð³Ñ€ÑƒÐ·Ð¸Ð¼ Ð¿Ñ€Ð¾Ñ„Ð¸Ð»ÑŒ Ð¸ Ð¿Ð¾ÐºÐ°Ð·Ñ‹Ð²Ð°ÐµÐ¼ Ð°Ð´Ð¼Ð¸Ð½ÐºÑƒ
       const ctx = await SupabaseAdmin.getCurrentUser();
-      if (!ctx) throw new Error('Не удалось загрузить профиль');
+      if (!ctx) throw new Error('ÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ Ð·Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚ÑŒ Ð¿Ñ€Ð¾Ñ„Ð¸Ð»ÑŒ');
       currentUser = ctx.profile;
       $('#admin-user').textContent = currentUser.email;
       setpwScreen.hidden = true;
@@ -1046,16 +1046,16 @@
     }
   });
 
-  // ─── Auth State ───
-  // SDK сам обрабатывает hash-fragment (#access_token=...) благодаря
-  // detectSessionInUrl=true по умолчанию. Для recovery он стреляет событием
-  // PASSWORD_RECOVERY ДО того как мы успеваем проверить getSession().
-  // Поэтому слушатель ставим первым делом.
+  // â”€â”€â”€ Auth State â”€â”€â”€
+  // SDK ÑÐ°Ð¼ Ð¾Ð±Ñ€Ð°Ð±Ð°Ñ‚Ñ‹Ð²Ð°ÐµÑ‚ hash-fragment (#access_token=...) Ð±Ð»Ð°Ð³Ð¾Ð´Ð°Ñ€Ñ
+  // detectSessionInUrl=true Ð¿Ð¾ ÑƒÐ¼Ð¾Ð»Ñ‡Ð°Ð½Ð¸ÑŽ. Ð”Ð»Ñ recovery Ð¾Ð½ ÑÑ‚Ñ€ÐµÐ»ÑÐµÑ‚ ÑÐ¾Ð±Ñ‹Ñ‚Ð¸ÐµÐ¼
+  // PASSWORD_RECOVERY Ð”Ðž Ñ‚Ð¾Ð³Ð¾ ÐºÐ°Ðº Ð¼Ñ‹ ÑƒÑÐ¿ÐµÐ²Ð°ÐµÐ¼ Ð¿Ñ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ getSession().
+  // ÐŸÐ¾ÑÑ‚Ð¾Ð¼Ñƒ ÑÐ»ÑƒÑˆÐ°Ñ‚ÐµÐ»ÑŒ ÑÑ‚Ð°Ð²Ð¸Ð¼ Ð¿ÐµÑ€Ð²Ñ‹Ð¼ Ð´ÐµÐ»Ð¾Ð¼.
 
   SupabaseAdmin.onAuthStateChange(async (event, session) => {
     if (event === 'PASSWORD_RECOVERY') {
       inRecoveryMode = true;
-      // Очистим hash чтобы при F5 не повторять
+      // ÐžÑ‡Ð¸ÑÑ‚Ð¸Ð¼ hash Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð¿Ñ€Ð¸ F5 Ð½Ðµ Ð¿Ð¾Ð²Ñ‚Ð¾Ñ€ÑÑ‚ÑŒ
       history.replaceState({}, '', location.pathname);
       const authLoading = $('#auth-loading');
       if (authLoading) authLoading.remove();
@@ -1075,19 +1075,19 @@
   (async () => {
     const authLoading = $('#auth-loading');
 
-    // Legacy PKCE flow (старые письма с ?token_hash=...) — обрабатываем сами
+    // Legacy PKCE flow (ÑÑ‚Ð°Ñ€Ñ‹Ðµ Ð¿Ð¸ÑÑŒÐ¼Ð° Ñ ?token_hash=...) â€” Ð¾Ð±Ñ€Ð°Ð±Ð°Ñ‚Ñ‹Ð²Ð°ÐµÐ¼ ÑÐ°Ð¼Ð¸
     const legacy = await maybeHandleLegacyToken();
     if (legacy) {
       if (authLoading) authLoading.remove();
       return;
     }
 
-    // Маленькая задержка чтобы SDK успел обработать hash и стрельнуть PASSWORD_RECOVERY,
-    // если есть. Иначе можем showAdmin() до того как поймаем event.
+    // ÐœÐ°Ð»ÐµÐ½ÑŒÐºÐ°Ñ Ð·Ð°Ð´ÐµÑ€Ð¶ÐºÐ° Ñ‡Ñ‚Ð¾Ð±Ñ‹ SDK ÑƒÑÐ¿ÐµÐ» Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚Ð°Ñ‚ÑŒ hash Ð¸ ÑÑ‚Ñ€ÐµÐ»ÑŒÐ½ÑƒÑ‚ÑŒ PASSWORD_RECOVERY,
+    // ÐµÑÐ»Ð¸ ÐµÑÑ‚ÑŒ. Ð˜Ð½Ð°Ñ‡Ðµ Ð¼Ð¾Ð¶ÐµÐ¼ showAdmin() Ð´Ð¾ Ñ‚Ð¾Ð³Ð¾ ÐºÐ°Ðº Ð¿Ð¾Ð¹Ð¼Ð°ÐµÐ¼ event.
     await new Promise(r => setTimeout(r, 50));
     if (inRecoveryMode) {
       if (authLoading) authLoading.remove();
-      return; // setpwScreen уже показан listener'ом
+      return; // setpwScreen ÑƒÐ¶Ðµ Ð¿Ð¾ÐºÐ°Ð·Ð°Ð½ listener'Ð¾Ð¼
     }
 
     const ctx = await SupabaseAdmin.getCurrentUser();
@@ -1103,7 +1103,7 @@
     }
   })();
 
-  // ─── Login Form ───
+  // â”€â”€â”€ Login Form â”€â”€â”€
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     loginError.hidden = true;
@@ -1138,7 +1138,7 @@
     }
   });
 
-  // ─── Logout ───
+  // â”€â”€â”€ Logout â”€â”€â”€
   $('#btn-logout').addEventListener('click', async () => {
     await SupabaseAdmin.logout();
     if (rateInterval) { clearInterval(rateInterval); rateInterval = null; }
@@ -1147,13 +1147,13 @@
     adminApp.hidden = true;
   });
 
-  // ─── Show Admin ───
+  // â”€â”€â”€ Show Admin â”€â”€â”€
   async function showAdmin() {
     adminApp.hidden = false;
 
-    // Загружаем все 5 JSON-блоков из Supabase одним запросом и кладём
-    // в глобалы (SITE_DATA, PROJECTS_DATA, FAQ_DATA, TESTIMONIALS_DATA, GALLERY_DATA),
-    // которые ожидает остальной legacy-код админки.
+    // Ð—Ð°Ð³Ñ€ÑƒÐ¶Ð°ÐµÐ¼ Ð²ÑÐµ 5 JSON-Ð±Ð»Ð¾ÐºÐ¾Ð² Ð¸Ð· Supabase Ð¾Ð´Ð½Ð¸Ð¼ Ð·Ð°Ð¿Ñ€Ð¾ÑÐ¾Ð¼ Ð¸ ÐºÐ»Ð°Ð´Ñ‘Ð¼
+    // Ð² Ð³Ð»Ð¾Ð±Ð°Ð»Ñ‹ (SITE_DATA, PROJECTS_DATA, FAQ_DATA, TESTIMONIALS_DATA, GALLERY_DATA),
+    // ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ Ð¾Ð¶Ð¸Ð´Ð°ÐµÑ‚ Ð¾ÑÑ‚Ð°Ð»ÑŒÐ½Ð¾Ð¹ legacy-ÐºÐ¾Ð´ Ð°Ð´Ð¼Ð¸Ð½ÐºÐ¸.
     try {
       const all = await SupabaseAdmin.getAllContent();
       window.SITE_DATA         = all.site         || {};
@@ -1163,11 +1163,11 @@
       window.GALLERY_DATA      = all.gallery      || { villas: [], estates: [], village: [] };
     } catch (err) {
       console.error('[admin] Failed to load content from Supabase:', err);
-      alert('Не удалось загрузить данные сайта: ' + err.message);
+      alert('ÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ Ð·Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚ÑŒ Ð´Ð°Ð½Ð½Ñ‹Ðµ ÑÐ°Ð¹Ñ‚Ð°: ' + err.message);
       return;
     }
 
-    // Покажем Users-tab только super_admin'у
+    // ÐŸÐ¾ÐºÐ°Ð¶ÐµÐ¼ Users-tab Ñ‚Ð¾Ð»ÑŒÐºÐ¾ super_admin'Ñƒ
     if (currentUser && currentUser.role === 'super_admin') {
       document.querySelectorAll('[data-super-admin-only]').forEach(el => el.hidden = false);
       initUsersTab();
@@ -1192,8 +1192,8 @@
     loadFaqData();
     loadTestimonialsData();
 
-    // Dirty-tracking для секций без явных listener'ов.
-    // Контейнеры стабильные — внутренности могут ре-рендериться.
+    // Dirty-tracking Ð´Ð»Ñ ÑÐµÐºÑ†Ð¸Ð¹ Ð±ÐµÐ· ÑÐ²Ð½Ñ‹Ñ… listener'Ð¾Ð².
+    // ÐšÐ¾Ð½Ñ‚ÐµÐ¹Ð½ÐµÑ€Ñ‹ ÑÑ‚Ð°Ð±Ð¸Ð»ÑŒÐ½Ñ‹Ðµ â€” Ð²Ð½ÑƒÑ‚Ñ€ÐµÐ½Ð½Ð¾ÑÑ‚Ð¸ Ð¼Ð¾Ð³ÑƒÑ‚ Ñ€Ðµ-Ñ€ÐµÐ½Ð´ÐµÑ€Ð¸Ñ‚ÑŒÑÑ.
     bindDirtyDelegate('#set-social', 'social');
     bindDirtyDelegate('#set-stats', 'stats');
     bindDirtyDelegate('#set-roi', 'roi');
@@ -1212,12 +1212,12 @@
     if (loader) loader.hidden = true;
   }
 
-  // ─── Unsaved Changes Warning ───
+  // â”€â”€â”€ Unsaved Changes Warning â”€â”€â”€
   window.addEventListener('beforeunload', (e) => {
     if (pendingChanges || isAnyDirty()) { e.preventDefault(); e.returnValue = ''; }
   });
 
-  // ─── Loading Button Helper ───
+  // â”€â”€â”€ Loading Button Helper â”€â”€â”€
   function btnLoading(btn, loading) {
     if (loading) {
       btn.classList.add('is-loading');
@@ -1228,17 +1228,17 @@
     }
   }
 
-  // ─── Tab Navigation ───
+  // â”€â”€â”€ Tab Navigation â”€â”€â”€
   function isTabDirty(tab) {
-    // Aggregate всех _dirtyState ключей, маппящихся на этот tab.
+    // Aggregate Ð²ÑÐµÑ… _dirtyState ÐºÐ»ÑŽÑ‡ÐµÐ¹, Ð¼Ð°Ð¿Ð¿ÑÑ‰Ð¸Ñ…ÑÑ Ð½Ð° ÑÑ‚Ð¾Ñ‚ tab.
     return Object.entries(_dirtyState).some(([key, val]) => val && (_dirtyTabMap[key] || key) === tab);
   }
 
   $$('.admin-nav__btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const currentTab = getActiveTab();
-      // Dashboard сам по себе ничего не редактирует, но dirty rate/contacts
-      // лежат под settings — оставляем особый случай, чтобы предупредить.
+      // Dashboard ÑÐ°Ð¼ Ð¿Ð¾ ÑÐµÐ±Ðµ Ð½Ð¸Ñ‡ÐµÐ³Ð¾ Ð½Ðµ Ñ€ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€ÑƒÐµÑ‚, Ð½Ð¾ dirty rate/contacts
+      // Ð»ÐµÐ¶Ð°Ñ‚ Ð¿Ð¾Ð´ settings â€” Ð¾ÑÑ‚Ð°Ð²Ð»ÑÐµÐ¼ Ð¾ÑÐ¾Ð±Ñ‹Ð¹ ÑÐ»ÑƒÑ‡Ð°Ð¹, Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð¿Ñ€ÐµÐ´ÑƒÐ¿Ñ€ÐµÐ´Ð¸Ñ‚ÑŒ.
       const isDirty = currentTab === 'dashboard'
         ? (dirtyTabs.rate || dirtyTabs.contacts)
         : (pendingChanges || isTabDirty(currentTab));
@@ -1253,7 +1253,7 @@
 
   // Project tabs are now generated dynamically in buildDynamicUI()
 
-  // ─── Load Projects Data ───
+  // â”€â”€â”€ Load Projects Data â”€â”€â”€
   function loadProjectsData() {
     // Deep clone from the global constant loaded via <script>
     if (typeof PROJECTS_DATA !== 'undefined') {
@@ -1292,7 +1292,7 @@
       if (newProjBtn) newProjBtn.addEventListener('click', showNewProjectModal);
     }
 
-    // SEO page select — add project pages dynamically
+    // SEO page select â€” add project pages dynamically
     const seoSelect = $('#seo-page');
     if (seoSelect) {
       // Remove old project options
@@ -1315,14 +1315,14 @@
       }).join('');
     }
 
-    // Не сбрасывать currentProject, если он валиден — иначе после New Project
-    // или после удаления проекта рендерится не тот.
+    // ÐÐµ ÑÐ±Ñ€Ð°ÑÑ‹Ð²Ð°Ñ‚ÑŒ currentProject, ÐµÑÐ»Ð¸ Ð¾Ð½ Ð²Ð°Ð»Ð¸Ð´ÐµÐ½ â€” Ð¸Ð½Ð°Ñ‡Ðµ Ð¿Ð¾ÑÐ»Ðµ New Project
+    // Ð¸Ð»Ð¸ Ð¿Ð¾ÑÐ»Ðµ ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ñ Ð¿Ñ€Ð¾ÐµÐºÑ‚Ð° Ñ€ÐµÐ½Ð´ÐµÑ€Ð¸Ñ‚ÑÑ Ð½Ðµ Ñ‚Ð¾Ñ‚.
     if (!currentProject || !keys.includes(currentProject)) {
       currentProject = keys[0];
     }
 
-    // Синхронизируем active-таб с currentProject (innerHTML выше всегда ставит
-    // active на первый таб по индексу, что неверно для не-первого проекта).
+    // Ð¡Ð¸Ð½Ñ…Ñ€Ð¾Ð½Ð¸Ð·Ð¸Ñ€ÑƒÐµÐ¼ active-Ñ‚Ð°Ð± Ñ currentProject (innerHTML Ð²Ñ‹ÑˆÐµ Ð²ÑÐµÐ³Ð´Ð° ÑÑ‚Ð°Ð²Ð¸Ñ‚
+    // active Ð½Ð° Ð¿ÐµÑ€Ð²Ñ‹Ð¹ Ñ‚Ð°Ð± Ð¿Ð¾ Ð¸Ð½Ð´ÐµÐºÑÑƒ, Ñ‡Ñ‚Ð¾ Ð½ÐµÐ²ÐµÑ€Ð½Ð¾ Ð´Ð»Ñ Ð½Ðµ-Ð¿ÐµÑ€Ð²Ð¾Ð³Ð¾ Ð¿Ñ€Ð¾ÐµÐºÑ‚Ð°).
     if (tabsContainer) {
       tabsContainer.querySelectorAll('.project-tabs__btn').forEach(b => b.classList.remove('active'));
       const activeTab = tabsContainer.querySelector(`.project-tabs__btn[data-proj="${currentProject}"]`);
@@ -1337,7 +1337,7 @@
     if (p.status === 'pre-sale') {
       p.showcaseAvailability = {
         en: 'Pre-Sale Open',
-        ru: 'Предпродажа открыта',
+        ru: 'ÐŸÑ€ÐµÐ´Ð¿Ñ€Ð¾Ð´Ð°Ð¶Ð° Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚Ð°',
       };
       return;
     }
@@ -1345,11 +1345,11 @@
     const total = p.availability.total || 0;
     p.showcaseAvailability = {
       en: left + ' of ' + total + ' units available',
-      ru: 'Доступно ' + left + ' из ' + total,
+      ru: 'Ð”Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð¾ ' + left + ' Ð¸Ð· ' + total,
     };
   }
 
-  // ─── Dashboard ───
+  // â”€â”€â”€ Dashboard â”€â”€â”€
   function renderDashboard() {
     if (!projectsData) return;
     const container = $('#dashboard-cards');
@@ -1440,7 +1440,7 @@
       const minPrice = Math.min(...prices);
       const maxPrice = Math.max(...prices);
       const fmtPrice = v => v >= 1000000 ? '$' + (v / 1000000).toFixed(1) + 'M' : '$' + (v / 1000).toFixed(0) + 'K';
-      const priceRange = minPrice === maxPrice ? fmtPrice(minPrice) : fmtPrice(minPrice) + ' – ' + fmtPrice(maxPrice);
+      const priceRange = minPrice === maxPrice ? fmtPrice(minPrice) : fmtPrice(minPrice) + ' â€“ ' + fmtPrice(maxPrice);
 
       // Segmented bar counts (binary: available / sold)
       const counts = { available: 0, sold: 0 };
@@ -1512,8 +1512,8 @@
     const list = $('#dash-commits-list');
     if (!list) return;
     try {
-      // Читаем последние 5 записей из audit_log (Supabase RLS отфильтрует
-      // по роли: super_admin видит всё, остальные — свои).
+      // Ð§Ð¸Ñ‚Ð°ÐµÐ¼ Ð¿Ð¾ÑÐ»ÐµÐ´Ð½Ð¸Ðµ 5 Ð·Ð°Ð¿Ð¸ÑÐµÐ¹ Ð¸Ð· audit_log (Supabase RLS Ð¾Ñ‚Ñ„Ð¸Ð»ÑŒÑ‚Ñ€ÑƒÐµÑ‚
+      // Ð¿Ð¾ Ñ€Ð¾Ð»Ð¸: super_admin Ð²Ð¸Ð´Ð¸Ñ‚ Ð²ÑÑ‘, Ð¾ÑÑ‚Ð°Ð»ÑŒÐ½Ñ‹Ðµ â€” ÑÐ²Ð¾Ð¸).
       const { data, error } = await SupabaseAdmin.client
         .from('audit_log')
         .select('action, target, user_email, created_at')
@@ -1526,7 +1526,7 @@
       }
       list.innerHTML = data.map(c => {
         const ago = timeAgo(new Date(c.created_at));
-        const msg = `${c.action}${c.target ? ' · ' + c.target : ''}${c.user_email ? ' (' + c.user_email + ')' : ''}`;
+        const msg = `${c.action}${c.target ? ' Â· ' + c.target : ''}${c.user_email ? ' (' + c.user_email + ')' : ''}`;
         return `<div class="dash-commit">
           <span class="dash-commit__msg">${escAttr(msg)}</span>
           <span class="dash-commit__time">${ago}</span>
@@ -1546,7 +1546,7 @@
     return Math.floor(s / 86400) + t('time.dAgo');
   }
 
-  // ─── Project Editor ───
+  // â”€â”€â”€ Project Editor â”€â”€â”€
   function renderProjectEditor() {
     if (!projectsData) return;
     const editor = $('#project-editor');
@@ -1599,16 +1599,16 @@
             ${['1 Bedroom', '2 Bedroom', '3 Bedroom', '4 Bedroom', '5 Bedroom'].map(v => `<option value="${v}"${u.type === v ? ' selected' : ''}>${v}</option>`).join('')}
           </select></td>
           <td data-label="${t('projects.floors')}"><input type="number" data-unit="${i}" data-field="floors" class="unit-text" value="${u.floors}" style="width:48px" min="1" max="5"></td>
-          <td data-label="${t('projects.area')}"><div class="unit-suffix"><input type="number" data-unit="${i}" data-field="area" class="unit-text" value="${parseFloat(u.area) || ''}" style="width:56px" min="0" step="1"><span>m²</span></div></td>
+          <td data-label="${t('projects.area')}"><div class="unit-suffix"><input type="number" data-unit="${i}" data-field="area" class="unit-text" value="${parseFloat(u.area) || ''}" style="width:56px" min="0" step="1"><span>mÂ²</span></div></td>
           <td data-label="${t('projects.land')}"><div class="unit-suffix"><input type="number" data-unit="${i}" data-field="land" class="unit-text" value="${parseFloat(u.land) || ''}" style="width:56px" min="0" step="0.01"><span>are</span></div></td>
           <td data-label="${t('projects.badge')}"><select data-unit="${i}" data-field="badge" class="unit-badge">
-            ${[['', '—'], ['Premium', 'Premium'], ['Front Row', 'Front Row'], ['Large Plot', 'Large Plot'], ['Corner', 'Corner'], ['Last Unit', 'Last Unit'], ['Best Seller', 'Best Seller']].map(([v, l]) => `<option value="${v}"${(u.badge || '') === v ? ' selected' : ''}>${l}</option>`).join('')}
+            ${[['', 'â€”'], ['Premium', 'Premium'], ['Front Row', 'Front Row'], ['Large Plot', 'Large Plot'], ['Corner', 'Corner'], ['Last Unit', 'Last Unit'], ['Best Seller', 'Best Seller']].map(([v, l]) => `<option value="${v}"${(u.badge || '') === v ? ' selected' : ''}>${l}</option>`).join('')}
           </select></td>
           <td data-label="${t('projects.status')}"><select data-unit="${i}" data-field="status" class="unit-status">
             <option value="available"${u.status === 'available' ? ' selected' : ''}>${t('dash.available')}</option>
             <option value="sold"${u.status === 'sold' ? ' selected' : ''}>${t('dash.sold')}</option>
           </select></td>
-          <td data-label="${t('projects.price')}"><input type="number" data-unit="${i}" data-field="price" class="unit-price" value="${u.price || ''}" placeholder="—" min="0" step="1000"></td>
+          <td data-label="${t('projects.price')}"><input type="number" data-unit="${i}" data-field="price" class="unit-price" value="${u.price || ''}" placeholder="â€”" min="0" step="1000"></td>
           <td><button class="btn--icon btn--danger" data-delete-unit="${i}" title="${t('projects.deleteUnit')}">&times;</button></td>
         </tr>`;
       });
@@ -1626,7 +1626,7 @@
         html += `<tr>
           <td data-label="${t('projects.type')}"><input type="text" data-utype="${i}" data-field="type" class="utype-text" value="${escAttr(ut.type)}" style="width:100px"></td>
           <td data-label="${t('projects.floors')}"><input type="number" data-utype="${i}" data-field="floors" class="utype-text" value="${ut.floors}" style="width:48px" min="1" max="5"></td>
-          <td data-label="${t('projects.area')}"><div class="unit-suffix"><input type="number" data-utype="${i}" data-field="area" class="utype-text" value="${parseFloat(ut.area) || ''}" style="width:56px" min="0" step="1"><span>m²</span></div></td>
+          <td data-label="${t('projects.area')}"><div class="unit-suffix"><input type="number" data-utype="${i}" data-field="area" class="utype-text" value="${parseFloat(ut.area) || ''}" style="width:56px" min="0" step="1"><span>mÂ²</span></div></td>
           <td data-label="${t('projects.land')}"><div class="unit-suffix"><input type="number" data-utype="${i}" data-field="land" class="utype-text" value="${parseFloat(ut.land) || ''}" style="width:56px" min="0" step="0.01"><span>are</span></div></td>
           <td data-label="${t('projects.unit')}"><input type="number" data-utype="${i}" data-field="count" class="utype-text" value="${ut.count}" style="width:48px" min="0"></td>
           <td data-label="${t('projects.price')}"><input type="number" data-utype="${i}" data-field="price" class="utype-price" value="${ut.price || ''}" min="0" step="1000"></td>
@@ -1644,17 +1644,17 @@
     html += `<div class="editor-section"><h3>${t('projects.projectDetails')}</h3>
       <div class="form-grid--3">
         <div class="form-group"><label>${t('projects.startingPrice')}</label><input type="number" id="pd-startingPrice" value="${p.startingPrice || ''}" min="0" step="1000"></div>
-        <div class="form-group"><label>${t('projects.bedrooms')}</label><input type="text" id="pd-bedrooms" value="${p.bedrooms || ''}" placeholder="2–3"></div>
+        <div class="form-group"><label>${t('projects.bedrooms')}</label><input type="text" id="pd-bedrooms" value="${p.bedrooms || ''}" placeholder="2â€“3"></div>
         <div class="form-group"><label>${t('projects.handover')}</label><input type="text" id="pd-handover" value="${p.handover || ''}" placeholder="Q2 2026"></div>
       </div>
       <div class="form-grid--3">
-        <div class="form-group"><label>${t('projects.compArea')}</label><input type="text" id="pd-compArea" value="${p.compArea || ''}" placeholder="167–210 m²"></div>
-        <div class="form-group"><label>${t('projects.compLand')}</label><input type="text" id="pd-compLand" value="${p.compLand || ''}" placeholder="2–3 are"></div>
+        <div class="form-group"><label>${t('projects.compArea')}</label><input type="text" id="pd-compArea" value="${p.compArea || ''}" placeholder="167â€“210 mÂ²"></div>
+        <div class="form-group"><label>${t('projects.compLand')}</label><input type="text" id="pd-compLand" value="${p.compLand || ''}" placeholder="2â€“3 are"></div>
         <div class="form-group"><label>${t('projects.totalUnits')}</label><input type="number" id="pd-totalUnits" value="${p.totalUnits || ''}" min="1"></div>
       </div>
       <div class="form-grid">
         <div class="form-group"><label>${t('projects.compPool')} (EN)</label><input type="text" class="pd-compPool" data-lang="en" value="${p.compPool.en || ''}" placeholder="Private"></div>
-        <div class="form-group"><label>${t('projects.compPool')} (RU)</label><input type="text" class="pd-compPool" data-lang="ru" value="${p.compPool.ru || ''}" placeholder="Приватный"></div>
+        <div class="form-group"><label>${t('projects.compPool')} (RU)</label><input type="text" class="pd-compPool" data-lang="ru" value="${p.compPool.ru || ''}" placeholder="ÐŸÑ€Ð¸Ð²Ð°Ñ‚Ð½Ñ‹Ð¹"></div>
       </div>
     </div>`;
 
@@ -1690,7 +1690,7 @@
             <button class="btn--icon fp-move-up" data-type="${typeAttr}" title="Move up"${planTypes.indexOf(type) === 0 ? ' disabled' : ''}>&#9650;</button>
             <button class="btn--icon fp-move-down" data-type="${typeAttr}" title="Move down"${planTypes.indexOf(type) === planTypes.length - 1 ? ' disabled' : ''}>&#9660;</button>
           </div>
-          <span class="fp-type__name" data-rename="${typeAttr}" title="Click to rename">${typeText} <span class="fp-type__rename-icon">✎</span></span>
+          <span class="fp-type__name" data-rename="${typeAttr}" title="Click to rename">${typeText} <span class="fp-type__rename-icon">âœŽ</span></span>
           <div class="fp-type__actions">
             <button class="btn btn--outline btn--sm fp-add-floor" data-type="${typeAttr}">+ Floor</button>
             <button class="btn--icon btn--danger fp-delete-type" data-type="${typeAttr}" title="Delete type">&times;</button>
@@ -1718,7 +1718,7 @@
         const floorText = escapeHtml(floor);
         html += `<div class="fp-floor" data-type="${typeAttr}" data-floor="${floorAttr}">
             <div class="fp-floor__label">${floorText} <button class="fp-floor__delete fp-delete-floor" data-type="${typeAttr}" data-floor="${floorAttr}" title="Delete floor">&times;</button></div>
-            <div class="fp-floor__preview">${path ? `<img src="${escAttr(previewImageUrl(path))}" alt="${escAttr(type + ' — ' + floor)}">` : `<span class="fp-floor__empty">No image</span>`}</div>
+            <div class="fp-floor__preview">${path ? `<img src="${escAttr(previewImageUrl(path))}" alt="${escAttr(type + ' â€” ' + floor)}">` : `<span class="fp-floor__empty">No image</span>`}</div>
             <div class="fp-floor__actions">
               <label class="btn btn--outline btn--sm">Upload<input type="file" accept="image/*" class="fp-upload" data-type="${typeAttr}" data-floor="${floorAttr}" hidden></label>
             </div>
@@ -1756,7 +1756,7 @@
     });
     html += '</div>';
 
-    // Decision Guide — cell shown on projects.html catalog page
+    // Decision Guide â€” cell shown on projects.html catalog page
     // Ensure structure exists so the editor has values to show
     if (!p.decisionGuide) {
       p.decisionGuide = {
@@ -1800,7 +1800,7 @@
       });
     }
 
-    // Bind change events — unit fields
+    // Bind change events â€” unit fields
     editor.querySelectorAll('.unit-text').forEach(inp => {
       inp.addEventListener('input', () => {
         const idx = +inp.dataset.unit;
@@ -1808,7 +1808,7 @@
         if (field === 'floors') {
           p.units[idx][field] = +inp.value;
         } else if (field === 'area') {
-          p.units[idx][field] = inp.value ? inp.value + ' m²' : '';
+          p.units[idx][field] = inp.value ? inp.value + ' mÂ²' : '';
         } else if (field === 'land') {
           p.units[idx][field] = inp.value ? inp.value + ' are' : '';
         } else {
@@ -1859,7 +1859,7 @@
         if (field === 'floors' || field === 'count') {
           p.unitTypes[idx][field] = +inp.value;
         } else if (field === 'area') {
-          p.unitTypes[idx][field] = inp.value ? inp.value + ' m²' : '';
+          p.unitTypes[idx][field] = inp.value ? inp.value + ' mÂ²' : '';
         } else if (field === 'land') {
           p.unitTypes[idx][field] = inp.value ? inp.value + ' are' : '';
         } else {
@@ -2002,11 +2002,11 @@
           const base64 = resized.split(',')[1];
           const safeName = (type + '-' + floor).toLowerCase().replace(/[^a-z0-9]+/g, '-');
           const path = `images/${p.slug}/plans/${safeName}.webp`;
-          const result = await commitFile(path, null, `Add floor plan: ${type} — ${floor} (${p.name})`, null, base64);
-          // Сохраняем CDN-URL чтобы публичный сайт показывал картинку напрямую с Storage.
+          const result = await commitFile(path, null, `Add floor plan: ${type} â€” ${floor} (${p.name})`, null, base64);
+          // Ð¡Ð¾Ñ…Ñ€Ð°Ð½ÑÐµÐ¼ CDN-URL Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð¿ÑƒÐ±Ð»Ð¸Ñ‡Ð½Ñ‹Ð¹ ÑÐ°Ð¹Ñ‚ Ð¿Ð¾ÐºÐ°Ð·Ñ‹Ð²Ð°Ð» ÐºÐ°Ñ€Ñ‚Ð¸Ð½ÐºÑƒ Ð½Ð°Ð¿Ñ€ÑÐ¼ÑƒÑŽ Ñ Storage.
           p.floorPlans[type].floors[floor] = (result && result.url) || path;
           inp.closest('.fp-floor').querySelector('.fp-floor__preview').innerHTML =
-            `<img src="${resized}" alt="${type} — ${floor}">`;
+            `<img src="${resized}" alt="${type} â€” ${floor}">`;
           markChanged();
         } catch (err) {
           console.error('Floor plan upload error:', err);
@@ -2019,7 +2019,7 @@
     editor.querySelectorAll('.fp-delete-img').forEach(btn => {
       btn.addEventListener('click', () => {
         const { type, floor } = btn.dataset;
-        if (!confirm(`Remove image for "${type} — ${floor}"?`)) return;
+        if (!confirm(`Remove image for "${type} â€” ${floor}"?`)) return;
         p.floorPlans[type].floors[floor] = '';
         markChanged();
         renderProjectEditor();
@@ -2125,7 +2125,7 @@
     const addPlanBtn = editor.querySelector('#add-plan-type');
     if (addPlanBtn) {
       addPlanBtn.addEventListener('click', () => {
-        const name = prompt('Plan type name (e.g. "Type A — 2BR Villa"):');
+        const name = prompt('Plan type name (e.g. "Type A â€” 2BR Villa"):');
         if (!name || !name.trim()) return;
         const trimmed = name.trim();
         if (p.floorPlans[trimmed] !== undefined) { alert('This type already exists'); return; }
@@ -2153,7 +2153,7 @@
       });
     });
 
-    // Generate Pages button removed — landing pages поддерживаются вручную (см. ниже).
+    // Generate Pages button removed â€” landing pages Ð¿Ð¾Ð´Ð´ÐµÑ€Ð¶Ð¸Ð²Ð°ÑŽÑ‚ÑÑ Ð²Ñ€ÑƒÑ‡Ð½ÑƒÑŽ (ÑÐ¼. Ð½Ð¸Ð¶Ðµ).
   }
 
   function recalcAvailability() {
@@ -2172,7 +2172,7 @@
     $('#publish-status').className = 'publish-status';
   }
 
-  // ─── Publish ───
+  // â”€â”€â”€ Publish â”€â”€â”€
   $('#btn-publish').addEventListener('click', async () => {
     if (!pendingChanges) return;
     const btn = $('#btn-publish');
@@ -2198,7 +2198,7 @@
   });
 
   function buildProjectsDataJS() {
-    // Rebuild the JS file — copy all projects + global fields
+    // Rebuild the JS file â€” copy all projects + global fields
     const data = {};
     getProjectKeys().forEach(key => {
       data[key] = projectsData[key];
@@ -2211,7 +2211,7 @@
     return '/* eslint-disable */\nconst PROJECTS_DATA = ' + JSON.stringify(data, null, 2) + ';\n';
   }
 
-  // ─── SEO Editor ───
+  // â”€â”€â”€ SEO Editor â”€â”€â”€
   const LANGS = ['en', 'ru'];
   const LANG_NAMES = { en: 'English', ru: 'Russian' };
   const BASE_URL = 'https://globalbalihome.com';
@@ -2363,7 +2363,7 @@
       updateSEOCounter(inp);
     });
 
-    // Save button — use onclick to avoid stacking listeners on re-render
+    // Save button â€” use onclick to avoid stacking listeners on re-render
     $('#btn-seo-save').onclick = saveAllSEO;
   }
 
@@ -2475,7 +2475,7 @@
     return html;
   }
 
-  // ─── Gallery Manager ───
+  // â”€â”€â”€ Gallery Manager â”€â”€â”€
   const galleryProject = $('#gallery-project');
   const galleryGrid = $('#gallery-grid');
   const galleryUploadBtn = $('#btn-gallery-upload');
@@ -2527,7 +2527,7 @@
   }
 
   function renderUploadPreview() {
-    // Освобождаем blob URL предыдущего рендера, иначе утечка.
+    // ÐžÑÐ²Ð¾Ð±Ð¾Ð¶Ð´Ð°ÐµÐ¼ blob URL Ð¿Ñ€ÐµÐ´Ñ‹Ð´ÑƒÑ‰ÐµÐ³Ð¾ Ñ€ÐµÐ½Ð´ÐµÑ€Ð°, Ð¸Ð½Ð°Ñ‡Ðµ ÑƒÑ‚ÐµÑ‡ÐºÐ°.
     galleryPreview.querySelectorAll('img').forEach(img => {
       if (img.src.startsWith('blob:')) URL.revokeObjectURL(img.src);
     });
@@ -2568,7 +2568,7 @@
     html += '</div>';
     galleryPreview.innerHTML = html;
     galleryPreview.hidden = false;
-    // После того как браузер задекодит картинку — blob URL больше не нужен.
+    // ÐŸÐ¾ÑÐ»Ðµ Ñ‚Ð¾Ð³Ð¾ ÐºÐ°Ðº Ð±Ñ€Ð°ÑƒÐ·ÐµÑ€ Ð·Ð°Ð´ÐµÐºÐ¾Ð´Ð¸Ñ‚ ÐºÐ°Ñ€Ñ‚Ð¸Ð½ÐºÑƒ â€” blob URL Ð±Ð¾Ð»ÑŒÑˆÐµ Ð½Ðµ Ð½ÑƒÐ¶ÐµÐ½.
     galleryPreview.querySelectorAll('img').forEach(img => {
       img.addEventListener('load', () => URL.revokeObjectURL(img.src), { once: true });
       img.addEventListener('error', () => URL.revokeObjectURL(img.src), { once: true });
@@ -2582,7 +2582,7 @@
       });
     });
 
-    // Освобождает все blob URL внутри превью — на случай если onload не успел.
+    // ÐžÑÐ²Ð¾Ð±Ð¾Ð¶Ð´Ð°ÐµÑ‚ Ð²ÑÐµ blob URL Ð²Ð½ÑƒÑ‚Ñ€Ð¸ Ð¿Ñ€ÐµÐ²ÑŒÑŽ â€” Ð½Ð° ÑÐ»ÑƒÑ‡Ð°Ð¹ ÐµÑÐ»Ð¸ onload Ð½Ðµ ÑƒÑÐ¿ÐµÐ».
     const revokeAllPreviewBlobs = () => {
       galleryPreview.querySelectorAll('img').forEach(img => {
         if (img.src.startsWith('blob:')) URL.revokeObjectURL(img.src);
@@ -2672,7 +2672,7 @@
     if (!files.length) return;
 
     const cat = galleryProject.value;
-    // Build folder from project slug: "villas" → "serenity-villas" → "images/serenity-villas"
+    // Build folder from project slug: "villas" â†’ "serenity-villas" â†’ "images/serenity-villas"
     const matchKey = getProjectKeys().find(k => k.replace('serenity-', '') === cat) || ('serenity-' + cat);
     const folder = `images/${matchKey}`;
     const data = getGalleryData();
@@ -2697,7 +2697,7 @@
         uploaded++;
       } catch (err) {
         console.error('Upload failed:', file.name, err);
-        galleryProgress.innerHTML += `<div style="color:var(--color-danger);font-size:0.8rem">Failed: ${escAttr(file.name)} — ${err.message}</div>`;
+        galleryProgress.innerHTML += `<div style="color:var(--color-danger);font-size:0.8rem">Failed: ${escAttr(file.name)} â€” ${err.message}</div>`;
       }
     }
 
@@ -2768,19 +2768,19 @@
     });
   }
 
-  // ─── Storage / Content Adapter (Supabase) ───
-  // Сохраняем legacy-сигнатуры fetchFile / commitFile / deleteFile, чтобы
-  // не править вызовы по всему файлу. Внутри маппим на SupabaseAdmin.
+  // â”€â”€â”€ Storage / Content Adapter (Supabase) â”€â”€â”€
+  // Ð¡Ð¾Ñ…Ñ€Ð°Ð½ÑÐµÐ¼ legacy-ÑÐ¸Ð³Ð½Ð°Ñ‚ÑƒÑ€Ñ‹ fetchFile / commitFile / deleteFile, Ñ‡Ñ‚Ð¾Ð±Ñ‹
+  // Ð½Ðµ Ð¿Ñ€Ð°Ð²Ð¸Ñ‚ÑŒ Ð²Ñ‹Ð·Ð¾Ð²Ñ‹ Ð¿Ð¾ Ð²ÑÐµÐ¼Ñƒ Ñ„Ð°Ð¹Ð»Ñƒ. Ð’Ð½ÑƒÑ‚Ñ€Ð¸ Ð¼Ð°Ð¿Ð¿Ð¸Ð¼ Ð½Ð° SupabaseAdmin.
   //
-  // Маппинг path → key (для site_content table):
-  //   data/site-data.js         → 'site'
-  //   data/projects-data.js     → 'projects'
-  //   data/faq-data.js          → 'faq'
-  //   data/testimonials-data.js → 'testimonials'
-  //   gallery-data.js           → 'gallery'
-  //   images/<project>/<file>   → Storage upload в gallery/<project>/<file>
-  //   *.html                    → SEO tab временно отключён (см. saveAllSEO)
-  //   assets/*.pdf              → Storage upload в assets/<file>
+  // ÐœÐ°Ð¿Ð¿Ð¸Ð½Ð³ path â†’ key (Ð´Ð»Ñ site_content table):
+  //   data/site-data.js         â†’ 'site'
+  //   data/projects-data.js     â†’ 'projects'
+  //   data/faq-data.js          â†’ 'faq'
+  //   data/testimonials-data.js â†’ 'testimonials'
+  //   gallery-data.js           â†’ 'gallery'
+  //   images/<project>/<file>   â†’ Storage upload Ð² gallery/<project>/<file>
+  //   *.html                    â†’ SEO tab Ð²Ñ€ÐµÐ¼ÐµÐ½Ð½Ð¾ Ð¾Ñ‚ÐºÐ»ÑŽÑ‡Ñ‘Ð½ (ÑÐ¼. saveAllSEO)
+  //   assets/*.pdf              â†’ Storage upload Ð² assets/<file>
 
   function decodeBase64UTF8(base64) {
     const binary = atob(base64.replace(/\s/g, ''));
@@ -2795,8 +2795,8 @@
     return m ? m[1] : null;
   }
 
-  // Любое значение картинки (legacy относительный путь или CDN URL) →
-  // абсолютный URL для <img src>. Используется во всех админ-превью.
+  // Ð›ÑŽÐ±Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ ÐºÐ°Ñ€Ñ‚Ð¸Ð½ÐºÐ¸ (legacy Ð¾Ñ‚Ð½Ð¾ÑÐ¸Ñ‚ÐµÐ»ÑŒÐ½Ñ‹Ð¹ Ð¿ÑƒÑ‚ÑŒ Ð¸Ð»Ð¸ CDN URL) â†’
+  // Ð°Ð±ÑÐ¾Ð»ÑŽÑ‚Ð½Ñ‹Ð¹ URL Ð´Ð»Ñ <img src>. Ð˜ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐµÑ‚ÑÑ Ð²Ð¾ Ð²ÑÐµÑ… Ð°Ð´Ð¼Ð¸Ð½-Ð¿Ñ€ÐµÐ²ÑŒÑŽ.
   function previewImageUrl(pathOrUrl) {
     if (!pathOrUrl) return '';
     if (/^https?:\/\//i.test(pathOrUrl) || pathOrUrl.startsWith('data:') || pathOrUrl.startsWith('blob:')) {
@@ -2808,10 +2808,10 @@
   }
 
   function pathToStoragePath(path) {
-    // images/<project>/plans/<name>      → plans/<project>/<name>
-    // images/testimonials/<name>         → testimonials/<name>
-    // images/<project>/<name>            → gallery/<project>/<name>
-    // assets/<file>                      → assets/<file>
+    // images/<project>/plans/<name>      â†’ plans/<project>/<name>
+    // images/testimonials/<name>         â†’ testimonials/<name>
+    // images/<project>/<name>            â†’ gallery/<project>/<name>
+    // assets/<file>                      â†’ assets/<file>
     const plan = path.match(/^images\/([^/]+)\/plans\/(.+)$/);
     if (plan) return `plans/${plan[1]}/${plan[2]}`;
     const test = path.match(/^images\/testimonials\/(.+)$/);
@@ -2829,13 +2829,13 @@
     return new Blob([bytes], { type: mime || 'application/octet-stream' });
   }
 
-  // Парсит content вида `const X = {...};` и возвращает объект.
-  // Используется когда legacy-код собирает текст файла перед commit'ом.
-  // Контент всегда формируется через JSON.stringify, поэтому безопасно
-  // парсить через JSON.parse — Function/eval запрещены CSP админки.
+  // ÐŸÐ°Ñ€ÑÐ¸Ñ‚ content Ð²Ð¸Ð´Ð° `const X = {...};` Ð¸ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÑ‚ Ð¾Ð±ÑŠÐµÐºÑ‚.
+  // Ð˜ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐµÑ‚ÑÑ ÐºÐ¾Ð³Ð´Ð° legacy-ÐºÐ¾Ð´ ÑÐ¾Ð±Ð¸Ñ€Ð°ÐµÑ‚ Ñ‚ÐµÐºÑÑ‚ Ñ„Ð°Ð¹Ð»Ð° Ð¿ÐµÑ€ÐµÐ´ commit'Ð¾Ð¼.
+  // ÐšÐ¾Ð½Ñ‚ÐµÐ½Ñ‚ Ð²ÑÐµÐ³Ð´Ð° Ñ„Ð¾Ñ€Ð¼Ð¸Ñ€ÑƒÐµÑ‚ÑÑ Ñ‡ÐµÑ€ÐµÐ· JSON.stringify, Ð¿Ð¾ÑÑ‚Ð¾Ð¼Ñƒ Ð±ÐµÐ·Ð¾Ð¿Ð°ÑÐ½Ð¾
+  // Ð¿Ð°Ñ€ÑÐ¸Ñ‚ÑŒ Ñ‡ÐµÑ€ÐµÐ· JSON.parse â€” Function/eval Ð·Ð°Ð¿Ñ€ÐµÑ‰ÐµÐ½Ñ‹ CSP Ð°Ð´Ð¼Ð¸Ð½ÐºÐ¸.
   function parseDataFileContent(content) {
-    // Стрипаем все ведущие comment-блоки (build-data.mjs пишет 2-3 подряд),
-    // потом обёртку `const X = ` и завершающий `;`.
+    // Ð¡Ñ‚Ñ€Ð¸Ð¿Ð°ÐµÐ¼ Ð²ÑÐµ Ð²ÐµÐ´ÑƒÑ‰Ð¸Ðµ comment-Ð±Ð»Ð¾ÐºÐ¸ (build-data.mjs Ð¿Ð¸ÑˆÐµÑ‚ 2-3 Ð¿Ð¾Ð´Ñ€ÑÐ´),
+    // Ð¿Ð¾Ñ‚Ð¾Ð¼ Ð¾Ð±Ñ‘Ñ€Ñ‚ÐºÑƒ `const X = ` Ð¸ Ð·Ð°Ð²ÐµÑ€ÑˆÐ°ÑŽÑ‰Ð¸Ð¹ `;`.
     let cleaned = String(content);
     while (/^\s*\/\*[\s\S]*?\*\//.test(cleaned)) {
       cleaned = cleaned.replace(/^\s*\/\*[\s\S]*?\*\/\s*/, '');
@@ -2848,9 +2848,9 @@
   }
 
   async function fetchFile(path) {
-    // Legacy GitHub API возвращал { content, sha }. Используется в основном
-    // для получения SHA перед PUT. С Supabase SHA не нужен — отдаём stub.
-    // Для HTML-файлов (SEO tab) добавим явный throw — saveAllSEO его поймает.
+    // Legacy GitHub API Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°Ð» { content, sha }. Ð˜ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐµÑ‚ÑÑ Ð² Ð¾ÑÐ½Ð¾Ð²Ð½Ð¾Ð¼
+    // Ð´Ð»Ñ Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ñ SHA Ð¿ÐµÑ€ÐµÐ´ PUT. Ð¡ Supabase SHA Ð½Ðµ Ð½ÑƒÐ¶ÐµÐ½ â€” Ð¾Ñ‚Ð´Ð°Ñ‘Ð¼ stub.
+    // Ð”Ð»Ñ HTML-Ñ„Ð°Ð¹Ð»Ð¾Ð² (SEO tab) Ð´Ð¾Ð±Ð°Ð²Ð¸Ð¼ ÑÐ²Ð½Ñ‹Ð¹ throw â€” saveAllSEO ÐµÐ³Ð¾ Ð¿Ð¾Ð¹Ð¼Ð°ÐµÑ‚.
     if (/\.html$/.test(path)) {
       throw new Error('SEO HTML editing is temporarily disabled. Coming back soon.');
     }
@@ -2875,12 +2875,12 @@
     if (key) {
       const data = parseDataFileContent(content);
       await SupabaseAdmin.setContent(key, data);
-      // Пишем audit log для крупных операций
+      // ÐŸÐ¸ÑˆÐµÐ¼ audit log Ð´Ð»Ñ ÐºÑ€ÑƒÐ¿Ð½Ñ‹Ñ… Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸Ð¹
       SupabaseAdmin.logAudit('content.update', key, { message: message || null });
       return { ok: true };
     }
 
-    // 3) HTML files (SEO tab) — временно недоступно
+    // 3) HTML files (SEO tab) â€” Ð²Ñ€ÐµÐ¼ÐµÐ½Ð½Ð¾ Ð½ÐµÐ´Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð¾
     if (/\.html$/.test(path)) {
       throw new Error('SEO HTML editing is temporarily disabled. Coming back soon.');
     }
@@ -2889,7 +2889,7 @@
   }
 
   async function deleteFile(path, sha, message) {
-    // Полный CDN URL Supabase — отдаём deleteImage напрямую, он выкусит path.
+    // ÐŸÐ¾Ð»Ð½Ñ‹Ð¹ CDN URL Supabase â€” Ð¾Ñ‚Ð´Ð°Ñ‘Ð¼ deleteImage Ð½Ð°Ð¿Ñ€ÑÐ¼ÑƒÑŽ, Ð¾Ð½ Ð²Ñ‹ÐºÑƒÑÐ¸Ñ‚ path.
     if (/\/storage\/v1\/object\/public\/images\//.test(path)) {
       await SupabaseAdmin.deleteImage(path);
       return { ok: true };
@@ -2899,13 +2899,13 @@
       await SupabaseAdmin.deleteImage(storagePath);
       return { ok: true };
     }
-    // HTML files etc. — больше не удаляем через админку
+    // HTML files etc. â€” Ð±Ð¾Ð»ÑŒÑˆÐµ Ð½Ðµ ÑƒÐ´Ð°Ð»ÑÐµÐ¼ Ñ‡ÐµÑ€ÐµÐ· Ð°Ð´Ð¼Ð¸Ð½ÐºÑƒ
     throw new Error(`deleteFile: unsupported path "${path}"`);
   }
 
-  // GitHub rate limit / Actions deploy poller — больше не нужны.
-  // Vercel deploy запускается webhook'ом из Supabase автоматически после
-  // setContent. UI-стрелка прогресса деплоя пока скрыта.
+  // GitHub rate limit / Actions deploy poller â€” Ð±Ð¾Ð»ÑŒÑˆÐµ Ð½Ðµ Ð½ÑƒÐ¶Ð½Ñ‹.
+  // Vercel deploy Ð·Ð°Ð¿ÑƒÑÐºÐ°ÐµÑ‚ÑÑ webhook'Ð¾Ð¼ Ð¸Ð· Supabase Ð°Ð²Ñ‚Ð¾Ð¼Ð°Ñ‚Ð¸Ñ‡ÐµÑÐºÐ¸ Ð¿Ð¾ÑÐ»Ðµ
+  // setContent. UI-ÑÑ‚Ñ€ÐµÐ»ÐºÐ° Ð¿Ñ€Ð¾Ð³Ñ€ÐµÑÑÐ° Ð´ÐµÐ¿Ð»Ð¾Ñ Ð¿Ð¾ÐºÐ° ÑÐºÑ€Ñ‹Ñ‚Ð°.
   function updateRateLimit() {
     const el = $('#rate-limit');
     if (el) el.textContent = '';
@@ -2913,14 +2913,14 @@
     if (ds) ds.hidden = true;
   }
 
-  // ─── Removed: Generate Detail Pages (buildDetailPage / PAGE_LABELS / getLangConfigs / addGeneratePagesButton) ───
-  // Project landing pages (project-*.html × 3 languages) теперь поддерживаются
-  // вручную через Cursor/Claude — это лучше для SEO (custom titles, descriptions,
-  // service cards, Trust block, Place section и т.д. — все ручные оптимизации).
-  // Кнопка "Generate Pages" в редакторе проекта больше не добавляется.
+  // â”€â”€â”€ Removed: Generate Detail Pages (buildDetailPage / PAGE_LABELS / getLangConfigs / addGeneratePagesButton) â”€â”€â”€
+  // Project landing pages (project-*.html Ã— 3 languages) Ñ‚ÐµÐ¿ÐµÑ€ÑŒ Ð¿Ð¾Ð´Ð´ÐµÑ€Ð¶Ð¸Ð²Ð°ÑŽÑ‚ÑÑ
+  // Ð²Ñ€ÑƒÑ‡Ð½ÑƒÑŽ Ñ‡ÐµÑ€ÐµÐ· Cursor/Claude â€” ÑÑ‚Ð¾ Ð»ÑƒÑ‡ÑˆÐµ Ð´Ð»Ñ SEO (custom titles, descriptions,
+  // service cards, Trust block, Place section Ð¸ Ñ‚.Ð´. â€” Ð²ÑÐµ Ñ€ÑƒÑ‡Ð½Ñ‹Ðµ Ð¾Ð¿Ñ‚Ð¸Ð¼Ð¸Ð·Ð°Ñ†Ð¸Ð¸).
+  // ÐšÐ½Ð¾Ð¿ÐºÐ° "Generate Pages" Ð² Ñ€ÐµÐ´Ð°ÐºÑ‚Ð¾Ñ€Ðµ Ð¿Ñ€Ð¾ÐµÐºÑ‚Ð° Ð±Ð¾Ð»ÑŒÑˆÐµ Ð½Ðµ Ð´Ð¾Ð±Ð°Ð²Ð»ÑÐµÑ‚ÑÑ.
 
 
-  // ─── New Project Modal ───
+  // â”€â”€â”€ New Project Modal â”€â”€â”€
   function showNewProjectModal() {
     // Remove existing modal
     const existing = $('#new-project-modal');
@@ -2946,7 +2946,7 @@
             <div class="form-group" style="flex:1;min-width:140px"><label>${t('newProject.totalUnits')}</label><input type="number" id="np-units" value="1" min="1"></div>
           </div>
           <div style="display:flex;gap:16px;flex-wrap:wrap">
-            <div class="form-group" style="flex:1;min-width:140px"><label>${t('newProject.bedrooms')}</label><input type="text" id="np-bedrooms" placeholder="2–3"></div>
+            <div class="form-group" style="flex:1;min-width:140px"><label>${t('newProject.bedrooms')}</label><input type="text" id="np-bedrooms" placeholder="2â€“3"></div>
             <div class="form-group" style="flex:1;min-width:140px"><label>${t('newProject.handover')}</label><input type="text" id="np-handover" placeholder="Q1 2028"></div>
             <div class="form-group" style="flex:1;min-width:140px"><label>${t('newProject.showcaseImage')}</label><input type="text" id="np-image" placeholder="images/project/hero.webp"></div>
           </div>
@@ -2955,8 +2955,8 @@
           <div class="form-group"><label>${t('newProject.desc')}</label><textarea id="np-desc" rows="2" placeholder="Full description for projects page"></textarea></div>
           <h3 style="margin-top:16px">${t('newProject.comparisonData')}</h3>
           <div style="display:flex;gap:16px;flex-wrap:wrap">
-            <div class="form-group" style="flex:1;min-width:120px"><label>${t('newProject.areaRange')}</label><input type="text" id="np-area" placeholder="100–200 m²"></div>
-            <div class="form-group" style="flex:1;min-width:120px"><label>${t('newProject.landRange')}</label><input type="text" id="np-land" placeholder="2–3 are"></div>
+            <div class="form-group" style="flex:1;min-width:120px"><label>${t('newProject.areaRange')}</label><input type="text" id="np-area" placeholder="100â€“200 mÂ²"></div>
+            <div class="form-group" style="flex:1;min-width:120px"><label>${t('newProject.landRange')}</label><input type="text" id="np-land" placeholder="2â€“3 are"></div>
             <div class="form-group" style="flex:1;min-width:120px"><label>${t('newProject.pool')}</label><input type="text" id="np-pool" placeholder="Private"></div>
           </div>
         </div>
@@ -2992,7 +2992,7 @@
       const status = $('#np-status').value;
       const price = +$('#np-price').value || 0;
       const totalUnits = +$('#np-units').value || 1;
-      const bedrooms = $('#np-bedrooms').value || '1–2';
+      const bedrooms = $('#np-bedrooms').value || '1â€“2';
       const handover = $('#np-handover').value || '';
       const image = $('#np-image').value || '';
       const subtitle = $('#np-subtitle').value || name;
@@ -3019,7 +3019,7 @@
         showcaseSubtitle: { en: subtitle, ru: subtitle },
         showcaseMeta: {
           en: [{ strong: String(totalUnits), label: 'Villas' }, { strong: bedrooms, label: 'Bedrooms' }, { strong: handover || status, label: handover ? 'Handover' : 'Status' }],
-          ru: [{ strong: String(totalUnits), label: 'Вилл' }, { strong: bedrooms, label: 'Спальни' }, { strong: handover || status, label: handover ? 'Сдача' : 'Статус' }],
+          ru: [{ strong: String(totalUnits), label: 'Ð’Ð¸Ð»Ð»' }, { strong: bedrooms, label: 'Ð¡Ð¿Ð°Ð»ÑŒÐ½Ð¸' }, { strong: handover || status, label: handover ? 'Ð¡Ð´Ð°Ñ‡Ð°' : 'Ð¡Ñ‚Ð°Ñ‚ÑƒÑ' }],
         },
         compArea: area,
         compLand: land,
@@ -3031,35 +3031,35 @@
             { number: price ? '$' + (price / 1000 | 0) + 'K+' : '', label: 'From' }
           ],
           ru: [
-            { number: String(totalUnits), label: 'Вилл' },
-            { number: handover || bedrooms, label: handover ? 'Сдача' : 'Спальни' },
-            { number: price ? '$' + (price / 1000 | 0) + 'K+' : '', label: 'От' }
+            { number: String(totalUnits), label: 'Ð’Ð¸Ð»Ð»' },
+            { number: handover || bedrooms, label: handover ? 'Ð¡Ð´Ð°Ñ‡Ð°' : 'Ð¡Ð¿Ð°Ð»ÑŒÐ½Ð¸' },
+            { number: price ? '$' + (price / 1000 | 0) + 'K+' : '', label: 'ÐžÑ‚' }
           ],
         },
         availability: { sold: 0, total: totalUnits },
         showcaseStatus: {
           en: status === 'pre-sale' ? 'Pre-Sale' : status === 'completed' ? 'Completed' : 'In Progress',
-          ru: status === 'pre-sale' ? 'Предпродажа' : status === 'completed' ? 'Завершён' : 'Строится',
+          ru: status === 'pre-sale' ? 'ÐŸÑ€ÐµÐ´Ð¿Ñ€Ð¾Ð´Ð°Ð¶Ð°' : status === 'completed' ? 'Ð—Ð°Ð²ÐµÑ€ÑˆÑ‘Ð½' : 'Ð¡Ñ‚Ñ€Ð¾Ð¸Ñ‚ÑÑ',
         },
         positioning: {
           en: 'Investment Opportunity',
-          ru: 'Инвестиционная возможность',
+          ru: 'Ð˜Ð½Ð²ÐµÑÑ‚Ð¸Ñ†Ð¸Ð¾Ð½Ð½Ð°Ñ Ð²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾ÑÑ‚ÑŒ',
         },
         showcaseAvailability: {
           en: status === 'pre-sale' ? 'Pre-Sale Open' : totalUnits + ' of ' + totalUnits + ' units available',
-          ru: status === 'pre-sale' ? 'Предпродажа открыта' : 'Доступно ' + totalUnits + ' из ' + totalUnits,
+          ru: status === 'pre-sale' ? 'ÐŸÑ€ÐµÐ´Ð¿Ñ€Ð¾Ð´Ð°Ð¶Ð° Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚Ð°' : 'Ð”Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð¾ ' + totalUnits + ' Ð¸Ð· ' + totalUnits,
         },
         showcaseDesc: { en: desc, ru: desc },
-        showcaseCta: { en: 'View Details', ru: 'Подробнее' },
+        showcaseCta: { en: 'View Details', ru: 'ÐŸÐ¾Ð´Ñ€Ð¾Ð±Ð½ÐµÐµ' },
         decisionGuide: {
           icon: 'yield',
           question: {
             en: 'Interested in ' + name + '?',
-            ru: 'Интересен ' + name + '?',
+            ru: 'Ð˜Ð½Ñ‚ÐµÑ€ÐµÑÐµÐ½ ' + name + '?',
           },
           benefit: {
             en: bedrooms ? bedrooms + ' bedrooms' : 'premium villas',
-            ru: bedrooms ? bedrooms + ' спален' : 'премиум-виллы',
+            ru: bedrooms ? bedrooms + ' ÑÐ¿Ð°Ð»ÐµÐ½' : 'Ð¿Ñ€ÐµÐ¼Ð¸ÑƒÐ¼-Ð²Ð¸Ð»Ð»Ñ‹',
           }
         },
         units: []
@@ -3073,8 +3073,8 @@
       // Add pre-sale banner for pre-sale projects
       if (status === 'pre-sale') {
         proj.preSaleBanner = {
-          en: 'Pre-Sale Now Open — Register Your Interest Today',
-          ru: 'Предпродажа открыта — Зарегистрируйте ваш интерес',
+          en: 'Pre-Sale Now Open â€” Register Your Interest Today',
+          ru: 'ÐŸÑ€ÐµÐ´Ð¿Ñ€Ð¾Ð´Ð°Ð¶Ð° Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚Ð° â€” Ð—Ð°Ñ€ÐµÐ³Ð¸ÑÑ‚Ñ€Ð¸Ñ€ÑƒÐ¹Ñ‚Ðµ Ð²Ð°Ñˆ Ð¸Ð½Ñ‚ÐµÑ€ÐµÑ',
         };
       }
 
@@ -3083,8 +3083,8 @@
       currentProject = slug;
       markChanged();
 
-      // Rebuild UI — buildDynamicUI() сохраняет currentProject и ставит
-      // active-таб на нужный проект автоматически.
+      // Rebuild UI â€” buildDynamicUI() ÑÐ¾Ñ…Ñ€Ð°Ð½ÑÐµÑ‚ currentProject Ð¸ ÑÑ‚Ð°Ð²Ð¸Ñ‚
+      // active-Ñ‚Ð°Ð± Ð½Ð° Ð½ÑƒÐ¶Ð½Ñ‹Ð¹ Ð¿Ñ€Ð¾ÐµÐºÑ‚ Ð°Ð²Ñ‚Ð¾Ð¼Ð°Ñ‚Ð¸Ñ‡ÐµÑÐºÐ¸.
       buildDynamicUI();
       renderDashboard();
       renderProjectEditor();
@@ -3093,7 +3093,7 @@
     });
   }
 
-  // ─── Investment Guide PDF Upload ───
+  // â”€â”€â”€ Investment Guide PDF Upload â”€â”€â”€
   let siteData = null;
 
   function loadSiteData() {
@@ -3195,7 +3195,7 @@
     }
   }
 
-  // ─── Contact Info Editor ───
+  // â”€â”€â”€ Contact Info Editor â”€â”€â”€
   function sanitizeWhatsApp(val) {
     return val.replace(/[\s\-\(\)\+]/g, '');
   }
@@ -3251,8 +3251,8 @@
       v('contact-location-en', c.location.en);
       v('contact-location-ru', c.location.ru);
     }
-    // Attach live validation. Guard от повторного навешивания —
-    // renderContactsForm может вызываться при каждом возврате на Settings таб.
+    // Attach live validation. Guard Ð¾Ñ‚ Ð¿Ð¾Ð²Ñ‚Ð¾Ñ€Ð½Ð¾Ð³Ð¾ Ð½Ð°Ð²ÐµÑˆÐ¸Ð²Ð°Ð½Ð¸Ñ â€”
+    // renderContactsForm Ð¼Ð¾Ð¶ÐµÑ‚ Ð²Ñ‹Ð·Ñ‹Ð²Ð°Ñ‚ÑŒÑÑ Ð¿Ñ€Ð¸ ÐºÐ°Ð¶Ð´Ð¾Ð¼ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚Ðµ Ð½Ð° Settings Ñ‚Ð°Ð±.
     const waInput = $('#contact-whatsapp');
     if (waInput && !waInput.dataset.bound) {
       waInput.dataset.bound = '1';
@@ -3261,7 +3261,7 @@
     }
     updateWaPreview();
 
-    // Track contacts changes (один раз на инпут)
+    // Track contacts changes (Ð¾Ð´Ð¸Ð½ Ñ€Ð°Ð· Ð½Ð° Ð¸Ð½Ð¿ÑƒÑ‚)
     ['contact-phone', 'contact-whatsapp', 'contact-email', 'contact-location-en', 'contact-location-ru'].forEach(id => {
       const el = $('#' + id);
       if (el && !el.dataset.dirtyBound) {
@@ -3376,7 +3376,7 @@
     });
   }
 
-  // ─── Social Media ───
+  // â”€â”€â”€ Social Media â”€â”€â”€
   function renderSocialForm() {
     if (!siteData) return;
     const social = siteData.social || {};
@@ -3405,7 +3405,7 @@
     btnLoading(btn, false);
   });
 
-  // ─── ROI Calculator Settings ───
+  // â”€â”€â”€ ROI Calculator Settings â”€â”€â”€
   function renderRoiForm() {
     if (!siteData) return;
     const roi = siteData.roi || {};
@@ -3463,13 +3463,13 @@
     btnLoading(btn, false);
   });
 
-  // ─── ROI Calculator Texts (i18n) ───
+  // â”€â”€â”€ ROI Calculator Texts (i18n) â”€â”€â”€
   const ROI_TEXT_KEYS = [
     { key: 'tag', label: 'Tag (eyebrow)' },
-    { key: 'title', label: 'Title — Homepage' },
-    { key: 'titleProject', label: 'Title — Project page (use {project})' },
-    { key: 'subtitle', label: 'Subtitle — Homepage' },
-    { key: 'subtitleProject', label: 'Subtitle — Project page' },
+    { key: 'title', label: 'Title â€” Homepage' },
+    { key: 'titleProject', label: 'Title â€” Project page (use {project})' },
+    { key: 'subtitle', label: 'Subtitle â€” Homepage' },
+    { key: 'subtitleProject', label: 'Subtitle â€” Project page' },
     { key: 'investmentLabel', label: 'Investment Amount label' },
     { key: 'scenarioLabel', label: 'Scenario label' },
     { key: 'conservative', label: 'Conservative scenario name' },
@@ -3481,12 +3481,12 @@
     { key: 'return5y', label: '5-Year Return label' },
     { key: 'return10y', label: '10-Year Return label' },
     { key: 'disclaimer', label: 'Disclaimer (small text under results)' },
-    { key: 'ctaHome', label: 'CTA button — Homepage' },
-    { key: 'ctaProject', label: 'CTA button — Project page' },
+    { key: 'ctaHome', label: 'CTA button â€” Homepage' },
+    { key: 'ctaProject', label: 'CTA button â€” Project page' },
   ];
   const ROI_TEXT_DEFAULTS = {
     en: { tag: 'Investment Calculator', title: 'Calculate Your Returns', titleProject: 'Calculate Returns for {project}', subtitle: 'See the potential of your Bali real estate investment', subtitleProject: 'See the potential income from your investment in this project', investmentLabel: 'Investment Amount', scenarioLabel: 'Scenario', conservative: 'Conservative', normal: 'Normal', optimistic: 'Optimistic', yieldSuffix: 'yield', occupancyLabel: 'Occupancy Rate', annualIncome: 'Annual Rental Income', return5y: '5-Year Total Return', return10y: '10-Year Total Return', disclaimer: '*Projections based on current market data. Actual returns may vary.', ctaHome: 'Discuss Your Investment', ctaProject: 'Schedule a Private Tour' },
-    ru: { tag: 'Инвестиционный калькулятор', title: 'Рассчитайте доходность', titleProject: 'Рассчитайте доходность {project}', subtitle: 'Оцените потенциал инвестиций в недвижимость на Бали', subtitleProject: 'Оцените потенциальный доход от инвестиций в этот проект', investmentLabel: 'Сумма инвестиций', scenarioLabel: 'Сценарий', conservative: 'Консервативный', normal: 'Обычный', optimistic: 'Оптимистичный', yieldSuffix: 'доходность', occupancyLabel: 'Заполняемость', annualIncome: 'Годовой доход от аренды', return5y: 'Общий доход за 5 лет', return10y: 'Общий доход за 10 лет', disclaimer: '*Прогнозы основаны на текущих рыночных данных.', ctaHome: 'Обсудить инвестиции', ctaProject: 'Записаться на приватный тур' },
+    ru: { tag: 'Ð˜Ð½Ð²ÐµÑÑ‚Ð¸Ñ†Ð¸Ð¾Ð½Ð½Ñ‹Ð¹ ÐºÐ°Ð»ÑŒÐºÑƒÐ»ÑÑ‚Ð¾Ñ€', title: 'Ð Ð°ÑÑÑ‡Ð¸Ñ‚Ð°Ð¹Ñ‚Ðµ Ð´Ð¾Ñ…Ð¾Ð´Ð½Ð¾ÑÑ‚ÑŒ', titleProject: 'Ð Ð°ÑÑÑ‡Ð¸Ñ‚Ð°Ð¹Ñ‚Ðµ Ð´Ð¾Ñ…Ð¾Ð´Ð½Ð¾ÑÑ‚ÑŒ {project}', subtitle: 'ÐžÑ†ÐµÐ½Ð¸Ñ‚Ðµ Ð¿Ð¾Ñ‚ÐµÐ½Ñ†Ð¸Ð°Ð» Ð¸Ð½Ð²ÐµÑÑ‚Ð¸Ñ†Ð¸Ð¹ Ð² Ð½ÐµÐ´Ð²Ð¸Ð¶Ð¸Ð¼Ð¾ÑÑ‚ÑŒ Ð½Ð° Ð‘Ð°Ð»Ð¸', subtitleProject: 'ÐžÑ†ÐµÐ½Ð¸Ñ‚Ðµ Ð¿Ð¾Ñ‚ÐµÐ½Ñ†Ð¸Ð°Ð»ÑŒÐ½Ñ‹Ð¹ Ð´Ð¾Ñ…Ð¾Ð´ Ð¾Ñ‚ Ð¸Ð½Ð²ÐµÑÑ‚Ð¸Ñ†Ð¸Ð¹ Ð² ÑÑ‚Ð¾Ñ‚ Ð¿Ñ€Ð¾ÐµÐºÑ‚', investmentLabel: 'Ð¡ÑƒÐ¼Ð¼Ð° Ð¸Ð½Ð²ÐµÑÑ‚Ð¸Ñ†Ð¸Ð¹', scenarioLabel: 'Ð¡Ñ†ÐµÐ½Ð°Ñ€Ð¸Ð¹', conservative: 'ÐšÐ¾Ð½ÑÐµÑ€Ð²Ð°Ñ‚Ð¸Ð²Ð½Ñ‹Ð¹', normal: 'ÐžÐ±Ñ‹Ñ‡Ð½Ñ‹Ð¹', optimistic: 'ÐžÐ¿Ñ‚Ð¸Ð¼Ð¸ÑÑ‚Ð¸Ñ‡Ð½Ñ‹Ð¹', yieldSuffix: 'Ð´Ð¾Ñ…Ð¾Ð´Ð½Ð¾ÑÑ‚ÑŒ', occupancyLabel: 'Ð—Ð°Ð¿Ð¾Ð»Ð½ÑÐµÐ¼Ð¾ÑÑ‚ÑŒ', annualIncome: 'Ð“Ð¾Ð´Ð¾Ð²Ð¾Ð¹ Ð´Ð¾Ñ…Ð¾Ð´ Ð¾Ñ‚ Ð°Ñ€ÐµÐ½Ð´Ñ‹', return5y: 'ÐžÐ±Ñ‰Ð¸Ð¹ Ð´Ð¾Ñ…Ð¾Ð´ Ð·Ð° 5 Ð»ÐµÑ‚', return10y: 'ÐžÐ±Ñ‰Ð¸Ð¹ Ð´Ð¾Ñ…Ð¾Ð´ Ð·Ð° 10 Ð»ÐµÑ‚', disclaimer: '*ÐŸÑ€Ð¾Ð³Ð½Ð¾Ð·Ñ‹ Ð¾ÑÐ½Ð¾Ð²Ð°Ð½Ñ‹ Ð½Ð° Ñ‚ÐµÐºÑƒÑ‰Ð¸Ñ… Ñ€Ñ‹Ð½Ð¾Ñ‡Ð½Ñ‹Ñ… Ð´Ð°Ð½Ð½Ñ‹Ñ….', ctaHome: 'ÐžÐ±ÑÑƒÐ´Ð¸Ñ‚ÑŒ Ð¸Ð½Ð²ÐµÑÑ‚Ð¸Ñ†Ð¸Ð¸', ctaProject: 'Ð—Ð°Ð¿Ð¸ÑÐ°Ñ‚ÑŒÑÑ Ð½Ð° Ð¿Ñ€Ð¸Ð²Ð°Ñ‚Ð½Ñ‹Ð¹ Ñ‚ÑƒÑ€' },
   };
   let roiTextsActiveLang = 'en';
 
@@ -3569,7 +3569,7 @@
     btnLoading(btn, false);
   });
 
-  // ─── Company Statistics ───
+  // â”€â”€â”€ Company Statistics â”€â”€â”€
   const STAT_KEYS = ['investorsWorldwide', 'villasDesigned', 'occupancyRate', 'founderExperience', 'touristArrivals', 'rentalYield', 'propertyGrowth', 'paybackPeriod'];
   const HOMEPAGE_STAT_KEYS = ['investorsWorldwide', 'villasDesigned', 'occupancyRate', 'founderExperience'];
   const STAT_LABEL_DEFAULTS = {
@@ -3580,10 +3580,10 @@
       founderExperience: 'Combined<br>Transaction Experience',
     },
     ru: {
-      investorsWorldwide: 'Инвесторов<br>по всему миру',
-      villasDesigned: 'Виллы<br>в портфолио',
-      occupancyRate: 'Прогнозируемая<br>заполняемость',
-      founderExperience: 'Совокупный опыт<br>транзакций',
+      investorsWorldwide: 'Ð˜Ð½Ð²ÐµÑÑ‚Ð¾Ñ€Ð¾Ð²<br>Ð¿Ð¾ Ð²ÑÐµÐ¼Ñƒ Ð¼Ð¸Ñ€Ñƒ',
+      villasDesigned: 'Ð’Ð¸Ð»Ð»Ñ‹<br>Ð² Ð¿Ð¾Ñ€Ñ‚Ñ„Ð¾Ð»Ð¸Ð¾',
+      occupancyRate: 'ÐŸÑ€Ð¾Ð³Ð½Ð¾Ð·Ð¸Ñ€ÑƒÐµÐ¼Ð°Ñ<br>Ð·Ð°Ð¿Ð¾Ð»Ð½ÑÐµÐ¼Ð¾ÑÑ‚ÑŒ',
+      founderExperience: 'Ð¡Ð¾Ð²Ð¾ÐºÑƒÐ¿Ð½Ñ‹Ð¹ Ð¾Ð¿Ñ‹Ñ‚<br>Ñ‚Ñ€Ð°Ð½Ð·Ð°ÐºÑ†Ð¸Ð¹',
     },
   };
 
@@ -3591,7 +3591,7 @@
     STAT_KEYS.forEach(key => {
       const preview = $(`#sp-${key}`);
       const input = $(`#stat-${key}`);
-      if (preview && input) preview.textContent = input.value || '—';
+      if (preview && input) preview.textContent = input.value || 'â€”';
     });
   }
 
@@ -3705,7 +3705,7 @@
     btnLoading(btn, false);
   });
 
-  // ─── FAQ Editor ───
+  // â”€â”€â”€ FAQ Editor â”€â”€â”€
   let faqData = null;
   // faqChanged is now dirtyTabs.faq
   let faqPreviewLang = 'en';
@@ -3758,9 +3758,9 @@
         <div class="faq-editor-item__header">
           <span class="faq-editor-item__num">#${idx + 1}</span>
           <div class="faq-editor-item__controls">
-            <button class="btn btn--icon" data-faq-up="${i}" title="Move Up" ${idx === 0 ? 'disabled' : ''}>↑</button>
-            <button class="btn btn--icon" data-faq-down="${i}" title="Move Down" ${idx === sorted.length - 1 ? 'disabled' : ''}>↓</button>
-            <button class="btn btn--icon btn--danger" data-faq-delete="${i}" title="Delete">🗑</button>
+            <button class="btn btn--icon" data-faq-up="${i}" title="Move Up" ${idx === 0 ? 'disabled' : ''}>â†‘</button>
+            <button class="btn btn--icon" data-faq-down="${i}" title="Move Down" ${idx === sorted.length - 1 ? 'disabled' : ''}>â†“</button>
+            <button class="btn btn--icon btn--danger" data-faq-delete="${i}" title="Delete">ðŸ—‘</button>
           </div>
         </div>
         ${LANGS.map(lng => `<div class="faq-editor-lang">
@@ -3898,8 +3898,8 @@
     });
   }
 
-  // ─── Testimonials Editor ───
-  const LANGS_FULL = { en: 'English', ru: 'Русский' };
+  // â”€â”€â”€ Testimonials Editor â”€â”€â”€
+  const LANGS_FULL = { en: 'English', ru: 'Ð ÑƒÑÑÐºÐ¸Ð¹' };
   let testimonialsData = null;
   let testPreviewIdx = 0;
   let testPreviewLang = 'en';
@@ -3917,7 +3917,7 @@
     const name = item.name[lng] || item.name.en || '';
     const role = item.role[lng] || item.role.en || '';
     const text = item.text[lng] || item.text.en || '';
-    const stars = '★'.repeat(item.stars || 5);
+    const stars = 'â˜…'.repeat(item.stars || 5);
     let avatarHTML;
     if (item.avatar) {
       avatarHTML = '<img class="test-preview__avatar" src="' + previewImageUrl(item.avatar) + '" alt="">';
@@ -3927,7 +3927,7 @@
     }
     let verifiedHTML = '';
     if (item.sourceName) {
-      verifiedHTML = '<span class="test-preview__verified">✓ Verified via ' + escapeHtml(item.sourceName) + '</span>';
+      verifiedHTML = '<span class="test-preview__verified">âœ“ Verified via ' + escapeHtml(item.sourceName) + '</span>';
     }
     container.innerHTML = '<div class="test-preview__card">' +
       '<div class="test-preview__stars">' + stars + '</div>' +
@@ -3971,9 +3971,9 @@
         <div class="faq-editor-item__header">
           <span class="faq-editor-item__num">#${idx + 1}</span>
           <div class="faq-editor-item__controls">
-            <button class="btn btn--icon" data-test-up="${i}" title="Move Up" ${idx === 0 ? 'disabled' : ''}>↑</button>
-            <button class="btn btn--icon" data-test-down="${i}" title="Move Down" ${idx === sorted.length - 1 ? 'disabled' : ''}>↓</button>
-            <button class="btn btn--icon btn--danger" data-test-delete="${i}" title="Delete">🗑</button>
+            <button class="btn btn--icon" data-test-up="${i}" title="Move Up" ${idx === 0 ? 'disabled' : ''}>â†‘</button>
+            <button class="btn btn--icon" data-test-down="${i}" title="Move Down" ${idx === sorted.length - 1 ? 'disabled' : ''}>â†“</button>
+            <button class="btn btn--icon btn--danger" data-test-delete="${i}" title="Delete">ðŸ—‘</button>
           </div>
         </div>
         <div style="display:grid;grid-template-columns:auto 1fr;gap:12px;margin-bottom:12px;align-items:end">
@@ -4076,8 +4076,8 @@
         try {
           const resized = await resizeImage(file, 200, 0.85);
           const base64 = resized.split(',')[1];
-          // Префикс именем + timestamp защищает от коллизий имён (двух
-          // testimonials с одинаковым first-name или пустыми именами).
+          // ÐŸÑ€ÐµÑ„Ð¸ÐºÑ Ð¸Ð¼ÐµÐ½ÐµÐ¼ + timestamp Ð·Ð°Ñ‰Ð¸Ñ‰Ð°ÐµÑ‚ Ð¾Ñ‚ ÐºÐ¾Ð»Ð»Ð¸Ð·Ð¸Ð¹ Ð¸Ð¼Ñ‘Ð½ (Ð´Ð²ÑƒÑ…
+          // testimonials Ñ Ð¾Ð´Ð¸Ð½Ð°ÐºÐ¾Ð²Ñ‹Ð¼ first-name Ð¸Ð»Ð¸ Ð¿ÑƒÑÑ‚Ñ‹Ð¼Ð¸ Ð¸Ð¼ÐµÐ½Ð°Ð¼Ð¸).
           const baseName = (testimonialsData[i].name.en || 'avatar').replace(/[^a-z0-9]/gi, '-').toLowerCase();
           const safeName = `${baseName}-${Date.now()}`;
           const path = `images/testimonials/${safeName}.webp`;
@@ -4149,7 +4149,7 @@
     });
   }
 
-  // ─── Help Tooltips ───
+  // â”€â”€â”€ Help Tooltips â”€â”€â”€
   document.querySelectorAll('.editor-help-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -4165,7 +4165,7 @@
     document.querySelectorAll('.editor-help-popup').forEach(p => p.hidden = true);
   });
 
-  // ─── Colors Tab ───
+  // â”€â”€â”€ Colors Tab â”€â”€â”€
   const DEFAULT_COLORS = {
     bg: '#1a1a14', bgAlt: '#111110', bgCard: '#2a2a20',
     accent: '#6B8F4E', text: '#E1D9C9', cream: '#F7F7F0'
@@ -4321,7 +4321,7 @@
     });
   }
 
-  // ─── Analytics Tab ───
+  // â”€â”€â”€ Analytics Tab â”€â”€â”€
   const ANALYTICS_FIELDS = [
     { id: 'analytics-ga4', key: 'ga4' },
     { id: 'analytics-facebook', key: 'facebookPixel' },
@@ -4375,7 +4375,7 @@
     });
   }
 
-  // ─── Exit Intent Popup Settings ───
+  // â”€â”€â”€ Exit Intent Popup Settings â”€â”€â”€
   const EP_LANGS = ['en', 'ru'];
   const EP_FIELDS = ['tag', 'title', 'text', 'placeholder', 'submit', 'success'];
   let epActiveLang = 'en';
@@ -4475,7 +4475,7 @@
       dirtyTabs.exitpopup = true;
     });
   });
-  // Enabled / delay тоже помечают dirty
+  // Enabled / delay Ñ‚Ð¾Ð¶Ðµ Ð¿Ð¾Ð¼ÐµÑ‡Ð°ÑŽÑ‚ dirty
   ['#exitpopup-enabled', '#exitpopup-delay'].forEach(sel => {
     const el = document.querySelector(sel);
     if (el) {
@@ -4537,7 +4537,7 @@
     });
   }
 
-  // ─── Tour Popup Editor ───
+  // â”€â”€â”€ Tour Popup Editor â”€â”€â”€
   var tourActiveLang = 'en';
   const TOUR_LANGS = ['en', 'ru'];
 
@@ -4724,7 +4724,7 @@
     if (tourPreviewStep < totalSteps) {
       const s = steps[tourPreviewStep] || { question: '', options: [] };
       body += '<p class="tour__step-label">Step ' + (tourPreviewStep + 1) + ' of ' + totalSteps + '</p>';
-      body += '<h3 class="tour__question">' + escAttr(s.question || '—') + '</h3>';
+      body += '<h3 class="tour__question">' + escAttr(s.question || 'â€”') + '</h3>';
       body += '<div class="tour__options">';
       var stepIcons = previewIcons[tourPreviewStep] || [];
       (s.options || []).forEach(function(opt, oi) {
@@ -4753,7 +4753,7 @@
         body += '</div></div>';
       }
       body += '<textarea class="tour__input tour__textarea" placeholder="' + escAttr(form.comment || 'Comments') + '" rows="2" disabled></textarea>';
-      body += '<div class="form-consent"><input type="checkbox" class="form-consent__checkbox" disabled><label class="form-consent__text">' + escAttr((form.consent || '').substring(0, 120)) + (form.consent && form.consent.length > 120 ? '…' : '') + '</label></div>';
+      body += '<div class="form-consent"><input type="checkbox" class="form-consent__checkbox" disabled><label class="form-consent__text">' + escAttr((form.consent || '').substring(0, 120)) + (form.consent && form.consent.length > 120 ? 'â€¦' : '') + '</label></div>';
       body += '<button class="btn btn--primary" style="width:100%;" disabled>' + escAttr(form.submit || 'Request a Tour') + '</button>';
       body += '</div>';
     } else {
@@ -4854,7 +4854,7 @@
     });
   }
 
-  // ─── Language Toggle ───
+  // â”€â”€â”€ Language Toggle â”€â”€â”€
   document.querySelectorAll('[data-admin-lang]').forEach(btn => {
     btn.addEventListener('click', () => {
       setAdminLang(btn.dataset.adminLang);
@@ -4864,15 +4864,15 @@
   // Apply saved language on load (for login/pat screens)
   translateUI();
 
-  // ─── Helpers ───
+  // â”€â”€â”€ Helpers â”€â”€â”€
   function escAttr(str) {
     if (str == null) return '';
     return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
-  // ─── Users tab (super_admin only) ───
-  // Инициализируется из showAdmin() если currentUser.role === 'super_admin'.
-  // Вкладка скрыта от editor/admin (data-super-admin-only в index.html).
+  // â”€â”€â”€ Users tab (super_admin only) â”€â”€â”€
+  // Ð˜Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð¸Ñ€ÑƒÐµÑ‚ÑÑ Ð¸Ð· showAdmin() ÐµÑÐ»Ð¸ currentUser.role === 'super_admin'.
+  // Ð’ÐºÐ»Ð°Ð´ÐºÐ° ÑÐºÑ€Ñ‹Ñ‚Ð° Ð¾Ñ‚ editor/admin (data-super-admin-only Ð² index.html).
   let usersInited = false;
   async function initUsersTab() {
     if (usersInited) return;
@@ -4911,7 +4911,7 @@
         const st = statusLabel(u);
         const lastSeen = u.last_sign_in_at
           ? new Date(u.last_sign_in_at).toLocaleString()
-          : '—';
+          : 'â€”';
         const roleCell = (u.role === 'super_admin' || isSelf)
           ? `<span class="users-role-tag">${escapeHtml(roleLabel(u.role))}</span>`
           : `<select class="users-role-select" data-change-role="${u.id}">
@@ -4923,7 +4923,7 @@
           : `<button class="btn btn--outline btn--sm" data-delete-user="${u.id}" data-email="${escAttr(u.email)}">${t('users.action.delete')}</button>`;
         return `<tr>
           <td data-label="${t('users.col.email')}">${escapeHtml(u.email)}${isSelf ? ` <span class="users-self-badge">${t('users.you')}</span>` : ''}</td>
-          <td data-label="${t('users.col.name')}">${escapeHtml(u.full_name || '—')}</td>
+          <td data-label="${t('users.col.name')}">${escapeHtml(u.full_name || 'â€”')}</td>
           <td data-label="${t('users.col.role')}">${roleCell}</td>
           <td data-label="${t('users.col.status')}"><span class="users-status ${st.cls}">${escapeHtml(st.text)}</span></td>
           <td data-label="${t('users.col.lastSignIn')}">${escapeHtml(lastSeen)}</td>

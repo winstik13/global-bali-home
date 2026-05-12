@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https://ttmmremmgrsaazzyikph.supabase.co data: blob:; connect-src 'self' https://ttmmremmgrsaazzyikph.supabase.co https://open.er-api.com">
-  <title>Admin Panel — Global Bali Home</title>
+  <title>Admin Panel â€” Global Bali Home</title>
   <link rel="icon" type="image/svg+xml" href="../images/common/favicon.svg">
   <link rel="icon" type="image/x-icon" href="../images/common/favicon.ico">
   <link rel="icon" type="image/png" sizes="96x96" href="../images/common/favicon/favicon-96x96.png">
@@ -51,14 +51,14 @@
     </div>
   </div>
 
-  <!-- Set Password Screen (после клика по invite/recovery email) -->
+  <!-- Set Password Screen (Ð¿Ð¾ÑÐ»Ðµ ÐºÐ»Ð¸ÐºÐ° Ð¿Ð¾ invite/recovery email) -->
   <div id="setpw-screen" class="login-screen" hidden>
     <div class="login-card">
       <div class="login-card__logo">
         <img src="../images/common/logo-transparent.png" alt="Global Bali Home" height="60">
       </div>
       <h1 class="login-card__title">Set your password</h1>
-      <p class="login-card__desc">Задай пароль для входа в админку. Минимум 8 символов.</p>
+      <p class="login-card__desc">Ð—Ð°Ð´Ð°Ð¹ Ð¿Ð°Ñ€Ð¾Ð»ÑŒ Ð´Ð»Ñ Ð²Ñ…Ð¾Ð´Ð° Ð² Ð°Ð´Ð¼Ð¸Ð½ÐºÑƒ. ÐœÐ¸Ð½Ð¸Ð¼ÑƒÐ¼ 8 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð¾Ð².</p>
       <form id="setpw-form" class="login-form">
         <div class="form-group">
           <label for="setpw-password">New password</label>
@@ -90,7 +90,7 @@
         </div>
         <div class="admin-header__rate" id="header-rate">
           <span class="admin-header__rate-label" data-i18n="header.rateLabel">USD/IDR</span>
-          <span class="admin-header__rate-value" id="header-rate-value">—</span>
+          <span class="admin-header__rate-value" id="header-rate-value">â€”</span>
           <span class="admin-header__rate-time" id="header-rate-time"></span>
         </div>
         <div class="admin-header__lang">
@@ -107,7 +107,7 @@
     <nav class="admin-nav">
       <button class="admin-nav__btn active" data-tab="dashboard" data-i18n="nav.dashboard">Dashboard</button>
       <button class="admin-nav__btn" data-tab="projects" data-i18n="nav.projects">Projects</button>
-      <button class="admin-nav__btn" data-tab="seo" data-i18n="nav.seo" hidden title="Временно недоступно — переезжает в Supabase">SEO</button>
+      <button class="admin-nav__btn" data-tab="seo" data-i18n="nav.seo" hidden title="Ð’Ñ€ÐµÐ¼ÐµÐ½Ð½Ð¾ Ð½ÐµÐ´Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð¾ â€” Ð¿ÐµÑ€ÐµÐµÐ·Ð¶Ð°ÐµÑ‚ Ð² Supabase">SEO</button>
       <button class="admin-nav__btn" data-tab="gallery" data-i18n="nav.gallery">Gallery</button>
       <button class="admin-nav__btn" data-tab="faq" data-i18n="nav.faq">FAQ</button>
       <button class="admin-nav__btn" data-tab="testimonials" data-i18n="nav.testimonials">Testimonials</button>
@@ -151,7 +151,7 @@
           <div class="form-group">
             <label for="seo-page" data-i18n="seo.page">Page</label>
             <select id="seo-page">
-              <option value="" data-i18n="seo.selectPage">— Select page —</option>
+              <option value="" data-i18n="seo.selectPage">â€” Select page â€”</option>
               <option value="index.html" data-i18n="seo.home">Home</option>
               <option value="about.html" data-i18n="seo.about">About</option>
               <option value="projects.html" data-i18n="seo.projects">Projects</option>
@@ -164,7 +164,7 @@
             <button class="lang-tab seo-lang-tab active" data-seo-lang="en">EN</button>
             <button class="lang-tab seo-lang-tab" data-seo-lang="ru">RU</button>
           </div>
-          <a id="seo-preview-link" class="btn btn--outline btn--sm" href="#" target="_blank" rel="noopener noreferrer" hidden data-i18n="seo.viewOnSite">View on Site ↗</a>
+          <a id="seo-preview-link" class="btn btn--outline btn--sm" href="#" target="_blank" rel="noopener noreferrer" hidden data-i18n="seo.viewOnSite">View on Site â†—</a>
         </div>
         <div id="seo-editor"></div>
       </section>
@@ -186,7 +186,7 @@
         <div id="gallery-drop-zone" class="gallery-drop-zone">
           <svg class="gallery-drop-zone__icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
           <div class="gallery-drop-zone__text" data-i18n="gallery.dragDrop">Drag & drop images here or use Upload button</div>
-          <div class="gallery-drop-zone__hint" data-i18n="gallery.formats">JPG, PNG, WebP — max 10 MB per file</div>
+          <div class="gallery-drop-zone__hint" data-i18n="gallery.formats">JPG, PNG, WebP â€” max 10 MB per file</div>
         </div>
         <div id="gallery-grid" class="admin-gallery-grid"></div>
       </section>
@@ -217,7 +217,7 @@
         <div class="editor-section editor-section--has-help">
           <button class="editor-help-btn" data-help="analytics" aria-label="Help">?</button>
           <div class="editor-help-popup" id="help-analytics" hidden>
-            <p data-i18n="help.analytics.intro"><strong>How it works:</strong> Paste your tracking IDs below. Scripts are injected automatically — no code changes needed.</p>
+            <p data-i18n="help.analytics.intro"><strong>How it works:</strong> Paste your tracking IDs below. Scripts are injected automatically â€” no code changes needed.</p>
             <p data-i18n="help.analytics.empty"><strong>Empty field</strong> = tracker disabled. Fill in only the services you use.</p>
             <p data-i18n="help.analytics.events"><strong>Auto-tracked events:</strong> form submissions (contact, quiz, lead magnet, exit popup), WhatsApp clicks, PDF downloads.</p>
           </div>
@@ -283,7 +283,7 @@
           <button class="editor-help-btn" data-help="contacts" aria-label="Help">?</button>
           <div class="editor-help-popup" id="help-contacts" hidden>
             <p data-i18n="help.contacts.phone"><strong>Phone:</strong> Any format with spaces/dashes, start with +country code.</p>
-            <p data-i18n="help.contacts.whatsapp"><strong>WhatsApp:</strong> DIGITS ONLY, no +, spaces or dashes. Example: 6281338741177</p>
+            <p data-i18n="help.contacts.whatsapp"><strong>WhatsApp:</strong> DIGITS ONLY, no +, spaces or dashes. Example: 6281325143849</p>
             <p data-i18n="help.contacts.email"><strong>Email:</strong> Standard email format.</p>
             <p data-i18n="help.contacts.location"><strong>Location:</strong> Display text, translate manually for each language.</p>
           </div>
@@ -296,7 +296,7 @@
             </div>
             <div class="form-group">
               <label data-i18n="contacts.whatsapp">WhatsApp Number</label>
-              <input type="tel" id="contact-whatsapp" placeholder="6281338741177">
+              <input type="tel" id="contact-whatsapp" placeholder="6281325143849">
               <small class="field-hint" data-i18n="contacts.hint.whatsapp">Digits only, with country code, no +</small>
               <small class="field-hint field-hint--preview" id="wa-preview"></small>
             </div>
@@ -310,7 +310,7 @@
             </div>
             <div class="form-group">
               <label data-i18n="contacts.locationRu">Location (RU)</label>
-              <input type="text" id="contact-location-ru" placeholder="Убуд, Бали, Индонезия">
+              <input type="text" id="contact-location-ru" placeholder="Ð£Ð±ÑƒÐ´, Ð‘Ð°Ð»Ð¸, Ð˜Ð½Ð´Ð¾Ð½ÐµÐ·Ð¸Ñ">
             </div>
           </div>
           <div class="editor-actions editor-actions--inline">
@@ -346,7 +346,7 @@
             <p data-i18n="help.rate.auto"><strong>Auto:</strong> Rate updates from API every hour. Manual input is disabled.</p>
             <p data-i18n="help.rate.fallback"><strong>Fallback:</strong> If API is unavailable, the last saved rate is used on the site.</p>
           </div>
-          <h3 data-i18n="rate.title">Exchange Rate (USD → IDR)</h3>
+          <h3 data-i18n="rate.title">Exchange Rate (USD â†’ IDR)</h3>
           <div class="guide-upload">
             <div id="rate-info" class="guide-info"></div>
             <div class="guide-actions">
@@ -517,21 +517,21 @@
           <h4 data-i18n="roi.scenarios">Scenarios</h4>
           <div class="form-grid--3">
             <div class="form-group">
-              <label data-i18n="roi.conservative">Conservative — Yield / Growth (%)</label>
+              <label data-i18n="roi.conservative">Conservative â€” Yield / Growth (%)</label>
               <div class="input-pair">
                 <input type="number" id="roi-cons-yield" min="0" max="100" step="0.5" placeholder="8">
                 <input type="number" id="roi-cons-growth" min="0" max="100" step="0.5" placeholder="6">
               </div>
             </div>
             <div class="form-group">
-              <label data-i18n="roi.normal">Normal — Yield / Growth (%)</label>
+              <label data-i18n="roi.normal">Normal â€” Yield / Growth (%)</label>
               <div class="input-pair">
                 <input type="number" id="roi-norm-yield" min="0" max="100" step="0.5" placeholder="12">
                 <input type="number" id="roi-norm-growth" min="0" max="100" step="0.5" placeholder="10">
               </div>
             </div>
             <div class="form-group">
-              <label data-i18n="roi.optimistic">Optimistic — Yield / Growth (%)</label>
+              <label data-i18n="roi.optimistic">Optimistic â€” Yield / Growth (%)</label>
               <div class="input-pair">
                 <input type="number" id="roi-opt-yield" min="0" max="100" step="0.5" placeholder="15">
                 <input type="number" id="roi-opt-growth" min="0" max="100" step="0.5" placeholder="12">
@@ -544,7 +544,7 @@
           </div>
 
           <h3 style="margin-top:32px" data-i18n="roi.textsTitle">Calculator Texts (3 languages)</h3>
-          <p class="field-hint" data-i18n="roi.textsHint">Use {project} placeholder in titleProject — it will be replaced with the project name.</p>
+          <p class="field-hint" data-i18n="roi.textsHint">Use {project} placeholder in titleProject â€” it will be replaced with the project name.</p>
           <div class="lang-tabs" id="roi-texts-tabs">
             <button class="lang-tab active" data-lang="en">EN</button>
             <button class="lang-tab" data-lang="ru">RU</button>
@@ -638,10 +638,10 @@
               <h3 data-i18n="exitpopup.settings">Settings</h3>
               <button class="editor-help-btn" data-help="exitpopup" aria-label="Help">?</button>
               <div class="editor-help-popup" id="help-exitpopup" hidden>
-                <p data-i18n="help.exitpopup.what"><strong>What it does:</strong> Shows a popup when a desktop visitor moves the cursor toward closing the tab. Offers a free investment guide in exchange for an email — a lead capture tool.</p>
+                <p data-i18n="help.exitpopup.what"><strong>What it does:</strong> Shows a popup when a desktop visitor moves the cursor toward closing the tab. Offers a free investment guide in exchange for an email â€” a lead capture tool.</p>
                 <p data-i18n="help.exitpopup.enabled"><strong>Enabled:</strong> Turn the popup on or off across the entire site.</p>
-                <p data-i18n="help.exitpopup.delay"><strong>Trigger Delay:</strong> Minimum seconds a visitor must spend on the page before the popup can appear. Prevents annoying new visitors (recommended: 15–30 sec).</p>
-                <p data-i18n="help.exitpopup.countdown"><strong>Countdown:</strong> After submitting the form, a countdown shows before the "Open Guide" button appears. Creates urgency (recommended: 5–10 sec).</p>
+                <p data-i18n="help.exitpopup.delay"><strong>Trigger Delay:</strong> Minimum seconds a visitor must spend on the page before the popup can appear. Prevents annoying new visitors (recommended: 15â€“30 sec).</p>
+                <p data-i18n="help.exitpopup.countdown"><strong>Countdown:</strong> After submitting the form, a countdown shows before the "Open Guide" button appears. Creates urgency (recommended: 5â€“10 sec).</p>
                 <p data-i18n="help.exitpopup.content"><strong>Content:</strong> All texts are fully customizable per language. Badge, title, description, button labels, and success message.</p>
               </div>
               <div class="settings-row">
@@ -784,8 +784,8 @@
             <div class="form-group">
               <label for="invite-role" data-i18n="users.role">Role</label>
               <select id="invite-role" required>
-                <option value="editor" data-i18n="users.role.editor">Editor — gallery / FAQ / testimonials only</option>
-                <option value="admin" data-i18n="users.role.admin">Admin — all content (no user management)</option>
+                <option value="editor" data-i18n="users.role.editor">Editor â€” gallery / FAQ / testimonials only</option>
+                <option value="admin" data-i18n="users.role.admin">Admin â€” all content (no user management)</option>
               </select>
             </div>
             <div class="form-group" style="grid-column: 1 / -1;">

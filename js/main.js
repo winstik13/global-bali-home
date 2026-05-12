@@ -1,12 +1,12 @@
 /* ============================================
-   GLOBAL BALI HOME — Main JS
+   GLOBAL BALI HOME â€” Main JS
    Dark Premium Theme
    ============================================ */
 
 // --- SSR placeholder: mark as initializing ---
 // Hide [data-ssr-placeholder] elements while JS is rebuilding them
 // from PROJECTS_DATA. If this script never runs (JS disabled, bot,
-// load error), the class is never added → content is visible by
+// load error), the class is never added â†’ content is visible by
 // default. Removed inside DOMContentLoaded after all rebuilds.
 document.documentElement.classList.add('js-initializing');
 
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Analytics event helper — sends to all active trackers
+  // Analytics event helper â€” sends to all active trackers
   function trackEvent(action, category, label) {
     if (typeof gtag === 'function') gtag('event', action, { event_category: category, event_label: label });
     if (typeof fbq === 'function') fbq('track', action === 'generate_lead' ? 'Lead' : (action === 'contact' ? 'Contact' : 'ViewContent'), { content_name: label });
@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
           question: 'What is your budget?',
-          options: ['Exploring Options', '$150K – $350K', '$350K – $500K', '$500K+']
+          options: ['Exploring Options', '$150K â€“ $350K', '$350K â€“ $500K', '$500K+']
         },
         {
           question: 'When are you planning to buy?',
@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
       of: 'of',
       stickyCta: 'Find My Villa',
       exitTag: 'Exclusive Guide',
-      exitTitle: 'Before You Go — A Complimentary Resource',
+      exitTitle: 'Before You Go â€” A Complimentary Resource',
       exitText: 'Access our comprehensive Bali Real Estate Investment Guide with market analysis, ROI projections, and expert insights.',
       exitPlaceholder: 'Your email address',
       exitSubmit: 'Access the Investment Guide',
@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
       leadThankSub: 'Have a question? Chat with our advisor now',
       leadThankWa: 'WhatsApp Us',
       leadOpenBtn: 'Open the Guide',
-      // Manual-delivery mode (guide content under revision — auto-download disabled)
+      // Manual-delivery mode (guide content under revision â€” auto-download disabled)
       leadThankManualTitle: 'Thank You!',
       leadThankManualText: 'Our team will email the Bali Investment Guide 2026 to you within 1 business day. We\'re finalising the latest update so you receive the most accurate market data.',
       contactThank: 'Our advisors will get back to you as soon as possible.',
@@ -278,7 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
       tourWhatsapp: 'WhatsApp or phone number',
       tourEmail: 'Email (optional)',
       tourTime: 'Preferred time',
-      tourTimeOptions: ['Morning (9–12)', 'Afternoon (12–17)', 'Evening (17–20)', 'Any time'],
+      tourTimeOptions: ['Morning (9â€“12)', 'Afternoon (12â€“17)', 'Evening (17â€“20)', 'Any time'],
       tourComment: 'Any special requests? (optional)',
       tourConsent: 'I agree to the processing of my personal data in accordance with the Privacy Policy',
       tourSubmit: 'Request a Tour',
@@ -288,21 +288,21 @@ document.addEventListener('DOMContentLoaded', () => {
       tourThankProject: 'Learn more about',
       descs: {
         village: {
-          'Rental income': 'Compact villas from $132K — ideal for short-term rental with strong occupancy rates and low entry cost.',
-          'Personal residence': 'Cozy 1-2 bedroom villas from $132K in a vibrant complex with shared pool and café.',
-          'Long-term investment': 'Our most accessible entry point from $132K — high rental demand and strong capital growth potential.',
+          'Rental income': 'Compact villas from $132K â€” ideal for short-term rental with strong occupancy rates and low entry cost.',
+          'Personal residence': 'Cozy 1-2 bedroom villas from $132K in a vibrant complex with shared pool and cafÃ©.',
+          'Long-term investment': 'Our most accessible entry point from $132K â€” high rental demand and strong capital growth potential.',
           'default': 'Affordable 1-2 bedroom villas from $132K in a vibrant complex with shared amenities.'
         },
         villas: {
-          'Rental income': 'Premium 2-3 bedroom villas from $335K — jungle views, private pools, and proven 12-15% rental yields.',
-          'Personal residence': 'Spacious 2-3 bedroom villas from $335K surrounded by jungle and natural waterfalls — your Bali home.',
-          'Long-term investment': '2-3 bedroom villas from $335K in Ubud — proven demand and projected 8–12% annual capital appreciation.',
+          'Rental income': 'Premium 2-3 bedroom villas from $335K â€” jungle views, private pools, and proven 12-15% rental yields.',
+          'Personal residence': 'Spacious 2-3 bedroom villas from $335K surrounded by jungle and natural waterfalls â€” your Bali home.',
+          'Long-term investment': '2-3 bedroom villas from $335K in Ubud â€” proven demand and projected 8â€“12% annual capital appreciation.',
           'default': 'Premium 2-3 bedroom villas from $335K with jungle views, private pools, and full management.'
         },
         estates: {
-          'Rental income': 'Exclusive estates from $310K with private pools and up to 250m² — premium nightly rates and high-end guests.',
-          'Personal residence': 'Spacious estates from $310K with private pools, fish ponds, and panoramic rice terrace views — luxury living.',
-          'Long-term investment': '4 exclusive estates from $310K on spacious plots up to 14 are — projected 10–15% annual capital appreciation.',
+          'Rental income': 'Exclusive estates from $310K with private pools and up to 250mÂ² â€” premium nightly rates and high-end guests.',
+          'Personal residence': 'Spacious estates from $310K with private pools, fish ponds, and panoramic rice terrace views â€” luxury living.',
+          'Long-term investment': '4 exclusive estates from $310K on spacious plots up to 14 are â€” projected 10â€“15% annual capital appreciation.',
           'default': 'Exclusive 2-5 bedroom estates from $310K with private pools and panoramic views.'
         }
       }
@@ -310,104 +310,104 @@ document.addEventListener('DOMContentLoaded', () => {
     ru: {
       quizSteps: [
         {
-          question: 'Какова ваша цель инвестиции?',
-          options: ['Личная резиденция', 'Арендный доход', 'Долгосрочная инвестиция', 'Все вышеперечисленное']
+          question: 'ÐšÐ°ÐºÐ¾Ð²Ð° Ð²Ð°ÑˆÐ° Ñ†ÐµÐ»ÑŒ Ð¸Ð½Ð²ÐµÑÑ‚Ð¸Ñ†Ð¸Ð¸?',
+          options: ['Ð›Ð¸Ñ‡Ð½Ð°Ñ Ñ€ÐµÐ·Ð¸Ð´ÐµÐ½Ñ†Ð¸Ñ', 'ÐÑ€ÐµÐ½Ð´Ð½Ñ‹Ð¹ Ð´Ð¾Ñ…Ð¾Ð´', 'Ð”Ð¾Ð»Ð³Ð¾ÑÑ€Ð¾Ñ‡Ð½Ð°Ñ Ð¸Ð½Ð²ÐµÑÑ‚Ð¸Ñ†Ð¸Ñ', 'Ð’ÑÐµ Ð²Ñ‹ÑˆÐµÐ¿ÐµÑ€ÐµÑ‡Ð¸ÑÐ»ÐµÐ½Ð½Ð¾Ðµ']
         },
         {
-          question: 'Какой у вас бюджет?',
-          options: ['Изучаю варианты', '$150K – $350K', '$350K – $500K', '$500K+']
+          question: 'ÐšÐ°ÐºÐ¾Ð¹ Ñƒ Ð²Ð°Ñ Ð±ÑŽÐ´Ð¶ÐµÑ‚?',
+          options: ['Ð˜Ð·ÑƒÑ‡Ð°ÑŽ Ð²Ð°Ñ€Ð¸Ð°Ð½Ñ‚Ñ‹', '$150K â€“ $350K', '$350K â€“ $500K', '$500K+']
         },
         {
-          question: 'Когда планируете покупку?',
-          options: ['Готов купить сейчас', 'В ближайшие 6 месяцев', 'Просто изучаю']
+          question: 'ÐšÐ¾Ð³Ð´Ð° Ð¿Ð»Ð°Ð½Ð¸Ñ€ÑƒÐµÑ‚Ðµ Ð¿Ð¾ÐºÑƒÐ¿ÐºÑƒ?',
+          options: ['Ð“Ð¾Ñ‚Ð¾Ð² ÐºÑƒÐ¿Ð¸Ñ‚ÑŒ ÑÐµÐ¹Ñ‡Ð°Ñ', 'Ð’ Ð±Ð»Ð¸Ð¶Ð°Ð¹ÑˆÐ¸Ðµ 6 Ð¼ÐµÑÑÑ†ÐµÐ²', 'ÐŸÑ€Ð¾ÑÑ‚Ð¾ Ð¸Ð·ÑƒÑ‡Ð°ÑŽ']
         }
       ],
-      quizRec: 'Наша рекомендация для вас',
-      quizMatch: 'совпадение',
-      quizName: 'Ваше имя',
+      quizRec: 'ÐÐ°ÑˆÐ° Ñ€ÐµÐºÐ¾Ð¼ÐµÐ½Ð´Ð°Ñ†Ð¸Ñ Ð´Ð»Ñ Ð²Ð°Ñ',
+      quizMatch: 'ÑÐ¾Ð²Ð¿Ð°Ð´ÐµÐ½Ð¸Ðµ',
+      quizName: 'Ð’Ð°ÑˆÐµ Ð¸Ð¼Ñ',
       quizEmail: 'Email',
-      quizPhone: 'WhatsApp / Телефон (необязательно)',
-      quizConsent: 'Я согласен на обработку персональных данных в соответствии с Политикой конфиденциальности',
-      quizSubmit: 'Получить подробности',
-      quizSkip: 'Смотреть проект без отправки',
-      quizBack: 'Назад',
-      quizThankTitle: 'Спасибо!',
-      quizThankText: 'Мы свяжемся с вами в ближайшее время',
-      quizThankDesc: 'А пока — изучите рекомендованный проект:',
-      quizThankBtn: 'Смотреть',
-      stepOf: 'Шаг',
-      of: 'из',
-      stickyCta: 'Подобрать виллу мечты',
-      exitTag: 'Эксклюзивный гид',
-      exitTitle: 'Прежде чем уйти — бесплатный ресурс',
-      exitText: 'Получите наш подробный гид по инвестициям в недвижимость Бали с анализом рынка, прогнозами доходности и экспертными оценками.',
-      exitPlaceholder: 'Ваш email',
-      exitSubmit: 'Получить инвестиционный гид',
-      exitSuccess: 'Спасибо! Ваш гид готов.',
-      exitOpenBtn: 'Открыть гид',
-      leadThankTitle: 'Ваш гид готов!',
-      leadThankText: 'Выберите удобный формат:',
-      leadThankSub: 'Есть вопросы? Напишите нашему консультанту',
-      leadThankWa: 'Написать в WhatsApp',
-      leadOpenBtn: 'Открыть гид',
-      // Manual-delivery mode (контент гида на доработке — авто-доставка временно отключена)
-      leadThankManualTitle: 'Спасибо!',
-      leadThankManualText: 'Мы вышлем гид по инвестициям в Бали 2026 на ваш email в течение 1 рабочего дня. Сейчас обновляем материалы с актуальными рыночными данными — пришлём свежую версию.',
-      contactThank: 'Наши консультанты свяжутся с вами в ближайшее время.',
-      guideReadOnline: 'Читать онлайн',
-      guideDownloadPdf: 'Скачать PDF',
-      valName: 'Пожалуйста, введите имя',
-      valEmail: 'Введите корректный email',
-      valConsent: 'Необходимо согласие с политикой',
+      quizPhone: 'WhatsApp / Ð¢ÐµÐ»ÐµÑ„Ð¾Ð½ (Ð½ÐµÐ¾Ð±ÑÐ·Ð°Ñ‚ÐµÐ»ÑŒÐ½Ð¾)',
+      quizConsent: 'Ð¯ ÑÐ¾Ð³Ð»Ð°ÑÐµÐ½ Ð½Ð° Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÑƒ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð»ÑŒÐ½Ñ‹Ñ… Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð² ÑÐ¾Ð¾Ñ‚Ð²ÐµÑ‚ÑÑ‚Ð²Ð¸Ð¸ Ñ ÐŸÐ¾Ð»Ð¸Ñ‚Ð¸ÐºÐ¾Ð¹ ÐºÐ¾Ð½Ñ„Ð¸Ð´ÐµÐ½Ñ†Ð¸Ð°Ð»ÑŒÐ½Ð¾ÑÑ‚Ð¸',
+      quizSubmit: 'ÐŸÐ¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ Ð¿Ð¾Ð´Ñ€Ð¾Ð±Ð½Ð¾ÑÑ‚Ð¸',
+      quizSkip: 'Ð¡Ð¼Ð¾Ñ‚Ñ€ÐµÑ‚ÑŒ Ð¿Ñ€Ð¾ÐµÐºÑ‚ Ð±ÐµÐ· Ð¾Ñ‚Ð¿Ñ€Ð°Ð²ÐºÐ¸',
+      quizBack: 'ÐÐ°Ð·Ð°Ð´',
+      quizThankTitle: 'Ð¡Ð¿Ð°ÑÐ¸Ð±Ð¾!',
+      quizThankText: 'ÐœÑ‹ ÑÐ²ÑÐ¶ÐµÐ¼ÑÑ Ñ Ð²Ð°Ð¼Ð¸ Ð² Ð±Ð»Ð¸Ð¶Ð°Ð¹ÑˆÐµÐµ Ð²Ñ€ÐµÐ¼Ñ',
+      quizThankDesc: 'Ð Ð¿Ð¾ÐºÐ° â€” Ð¸Ð·ÑƒÑ‡Ð¸Ñ‚Ðµ Ñ€ÐµÐºÐ¾Ð¼ÐµÐ½Ð´Ð¾Ð²Ð°Ð½Ð½Ñ‹Ð¹ Ð¿Ñ€Ð¾ÐµÐºÑ‚:',
+      quizThankBtn: 'Ð¡Ð¼Ð¾Ñ‚Ñ€ÐµÑ‚ÑŒ',
+      stepOf: 'Ð¨Ð°Ð³',
+      of: 'Ð¸Ð·',
+      stickyCta: 'ÐŸÐ¾Ð´Ð¾Ð±Ñ€Ð°Ñ‚ÑŒ Ð²Ð¸Ð»Ð»Ñƒ Ð¼ÐµÑ‡Ñ‚Ñ‹',
+      exitTag: 'Ð­ÐºÑÐºÐ»ÑŽÐ·Ð¸Ð²Ð½Ñ‹Ð¹ Ð³Ð¸Ð´',
+      exitTitle: 'ÐŸÑ€ÐµÐ¶Ð´Ðµ Ñ‡ÐµÐ¼ ÑƒÐ¹Ñ‚Ð¸ â€” Ð±ÐµÑÐ¿Ð»Ð°Ñ‚Ð½Ñ‹Ð¹ Ñ€ÐµÑÑƒÑ€Ñ',
+      exitText: 'ÐŸÐ¾Ð»ÑƒÑ‡Ð¸Ñ‚Ðµ Ð½Ð°Ñˆ Ð¿Ð¾Ð´Ñ€Ð¾Ð±Ð½Ñ‹Ð¹ Ð³Ð¸Ð´ Ð¿Ð¾ Ð¸Ð½Ð²ÐµÑÑ‚Ð¸Ñ†Ð¸ÑÐ¼ Ð² Ð½ÐµÐ´Ð²Ð¸Ð¶Ð¸Ð¼Ð¾ÑÑ‚ÑŒ Ð‘Ð°Ð»Ð¸ Ñ Ð°Ð½Ð°Ð»Ð¸Ð·Ð¾Ð¼ Ñ€Ñ‹Ð½ÐºÐ°, Ð¿Ñ€Ð¾Ð³Ð½Ð¾Ð·Ð°Ð¼Ð¸ Ð´Ð¾Ñ…Ð¾Ð´Ð½Ð¾ÑÑ‚Ð¸ Ð¸ ÑÐºÑÐ¿ÐµÑ€Ñ‚Ð½Ñ‹Ð¼Ð¸ Ð¾Ñ†ÐµÐ½ÐºÐ°Ð¼Ð¸.',
+      exitPlaceholder: 'Ð’Ð°Ñˆ email',
+      exitSubmit: 'ÐŸÐ¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ Ð¸Ð½Ð²ÐµÑÑ‚Ð¸Ñ†Ð¸Ð¾Ð½Ð½Ñ‹Ð¹ Ð³Ð¸Ð´',
+      exitSuccess: 'Ð¡Ð¿Ð°ÑÐ¸Ð±Ð¾! Ð’Ð°Ñˆ Ð³Ð¸Ð´ Ð³Ð¾Ñ‚Ð¾Ð².',
+      exitOpenBtn: 'ÐžÑ‚ÐºÑ€Ñ‹Ñ‚ÑŒ Ð³Ð¸Ð´',
+      leadThankTitle: 'Ð’Ð°Ñˆ Ð³Ð¸Ð´ Ð³Ð¾Ñ‚Ð¾Ð²!',
+      leadThankText: 'Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ ÑƒÐ´Ð¾Ð±Ð½Ñ‹Ð¹ Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚:',
+      leadThankSub: 'Ð•ÑÑ‚ÑŒ Ð²Ð¾Ð¿Ñ€Ð¾ÑÑ‹? ÐÐ°Ð¿Ð¸ÑˆÐ¸Ñ‚Ðµ Ð½Ð°ÑˆÐµÐ¼Ñƒ ÐºÐ¾Ð½ÑÑƒÐ»ÑŒÑ‚Ð°Ð½Ñ‚Ñƒ',
+      leadThankWa: 'ÐÐ°Ð¿Ð¸ÑÐ°Ñ‚ÑŒ Ð² WhatsApp',
+      leadOpenBtn: 'ÐžÑ‚ÐºÑ€Ñ‹Ñ‚ÑŒ Ð³Ð¸Ð´',
+      // Manual-delivery mode (ÐºÐ¾Ð½Ñ‚ÐµÐ½Ñ‚ Ð³Ð¸Ð´Ð° Ð½Ð° Ð´Ð¾Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐµ â€” Ð°Ð²Ñ‚Ð¾-Ð´Ð¾ÑÑ‚Ð°Ð²ÐºÐ° Ð²Ñ€ÐµÐ¼ÐµÐ½Ð½Ð¾ Ð¾Ñ‚ÐºÐ»ÑŽÑ‡ÐµÐ½Ð°)
+      leadThankManualTitle: 'Ð¡Ð¿Ð°ÑÐ¸Ð±Ð¾!',
+      leadThankManualText: 'ÐœÑ‹ Ð²Ñ‹ÑˆÐ»ÐµÐ¼ Ð³Ð¸Ð´ Ð¿Ð¾ Ð¸Ð½Ð²ÐµÑÑ‚Ð¸Ñ†Ð¸ÑÐ¼ Ð² Ð‘Ð°Ð»Ð¸ 2026 Ð½Ð° Ð²Ð°Ñˆ email Ð² Ñ‚ÐµÑ‡ÐµÐ½Ð¸Ðµ 1 Ñ€Ð°Ð±Ð¾Ñ‡ÐµÐ³Ð¾ Ð´Ð½Ñ. Ð¡ÐµÐ¹Ñ‡Ð°Ñ Ð¾Ð±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ Ð¼Ð°Ñ‚ÐµÑ€Ð¸Ð°Ð»Ñ‹ Ñ Ð°ÐºÑ‚ÑƒÐ°Ð»ÑŒÐ½Ñ‹Ð¼Ð¸ Ñ€Ñ‹Ð½Ð¾Ñ‡Ð½Ñ‹Ð¼Ð¸ Ð´Ð°Ð½Ð½Ñ‹Ð¼Ð¸ â€” Ð¿Ñ€Ð¸ÑˆÐ»Ñ‘Ð¼ ÑÐ²ÐµÐ¶ÑƒÑŽ Ð²ÐµÑ€ÑÐ¸ÑŽ.',
+      contactThank: 'ÐÐ°ÑˆÐ¸ ÐºÐ¾Ð½ÑÑƒÐ»ÑŒÑ‚Ð°Ð½Ñ‚Ñ‹ ÑÐ²ÑÐ¶ÑƒÑ‚ÑÑ Ñ Ð²Ð°Ð¼Ð¸ Ð² Ð±Ð»Ð¸Ð¶Ð°Ð¹ÑˆÐµÐµ Ð²Ñ€ÐµÐ¼Ñ.',
+      guideReadOnline: 'Ð§Ð¸Ñ‚Ð°Ñ‚ÑŒ Ð¾Ð½Ð»Ð°Ð¹Ð½',
+      guideDownloadPdf: 'Ð¡ÐºÐ°Ñ‡Ð°Ñ‚ÑŒ PDF',
+      valName: 'ÐŸÐ¾Ð¶Ð°Ð»ÑƒÐ¹ÑÑ‚Ð°, Ð²Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¸Ð¼Ñ',
+      valEmail: 'Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ñ‹Ð¹ email',
+      valConsent: 'ÐÐµÐ¾Ð±Ñ…Ð¾Ð´Ð¸Ð¼Ð¾ ÑÐ¾Ð³Ð»Ð°ÑÐ¸Ðµ Ñ Ð¿Ð¾Ð»Ð¸Ñ‚Ð¸ÐºÐ¾Ð¹',
       // Tour popup
-      tourTitle: 'Запланировать частный тур',
+      tourTitle: 'Ð—Ð°Ð¿Ð»Ð°Ð½Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ñ‡Ð°ÑÑ‚Ð½Ñ‹Ð¹ Ñ‚ÑƒÑ€',
       tourSteps: [
         {
-          question: 'Какой проект вас интересует?',
-          options: ['Serenity Villas', 'Serenity Estates', 'Serenity Village', 'Ещё не определился']
+          question: 'ÐšÐ°ÐºÐ¾Ð¹ Ð¿Ñ€Ð¾ÐµÐºÑ‚ Ð²Ð°Ñ Ð¸Ð½Ñ‚ÐµÑ€ÐµÑÑƒÐµÑ‚?',
+          options: ['Serenity Villas', 'Serenity Estates', 'Serenity Village', 'Ð•Ñ‰Ñ‘ Ð½Ðµ Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»Ð¸Ð»ÑÑ']
         },
         {
-          question: 'Когда вы на Бали?',
-          options: ['Я уже здесь', 'В ближайшие 2 недели', 'В ближайший месяц', 'Планирую поездку']
+          question: 'ÐšÐ¾Ð³Ð´Ð° Ð²Ñ‹ Ð½Ð° Ð‘Ð°Ð»Ð¸?',
+          options: ['Ð¯ ÑƒÐ¶Ðµ Ð·Ð´ÐµÑÑŒ', 'Ð’ Ð±Ð»Ð¸Ð¶Ð°Ð¹ÑˆÐ¸Ðµ 2 Ð½ÐµÐ´ÐµÐ»Ð¸', 'Ð’ Ð±Ð»Ð¸Ð¶Ð°Ð¹ÑˆÐ¸Ð¹ Ð¼ÐµÑÑÑ†', 'ÐŸÐ»Ð°Ð½Ð¸Ñ€ÑƒÑŽ Ð¿Ð¾ÐµÐ·Ð´ÐºÑƒ']
         },
         {
-          question: 'Что хотите увидеть?',
+          question: 'Ð§Ñ‚Ð¾ Ñ…Ð¾Ñ‚Ð¸Ñ‚Ðµ ÑƒÐ²Ð¸Ð´ÐµÑ‚ÑŒ?',
           multi: true,
-          options: ['Осмотр стройплощадки', 'Встреча с архитектором', 'Обзор условий инвестиций', 'Показ готовых вилл', 'Знакомство с районом']
+          options: ['ÐžÑÐ¼Ð¾Ñ‚Ñ€ ÑÑ‚Ñ€Ð¾Ð¹Ð¿Ð»Ð¾Ñ‰Ð°Ð´ÐºÐ¸', 'Ð’ÑÑ‚Ñ€ÐµÑ‡Ð° Ñ Ð°Ñ€Ñ…Ð¸Ñ‚ÐµÐºÑ‚Ð¾Ñ€Ð¾Ð¼', 'ÐžÐ±Ð·Ð¾Ñ€ ÑƒÑÐ»Ð¾Ð²Ð¸Ð¹ Ð¸Ð½Ð²ÐµÑÑ‚Ð¸Ñ†Ð¸Ð¹', 'ÐŸÐ¾ÐºÐ°Ð· Ð³Ð¾Ñ‚Ð¾Ð²Ñ‹Ñ… Ð²Ð¸Ð»Ð»', 'Ð—Ð½Ð°ÐºÐ¾Ð¼ÑÑ‚Ð²Ð¾ Ñ Ñ€Ð°Ð¹Ð¾Ð½Ð¾Ð¼']
         }
       ],
-      tourFormTitle: 'Как с вами связаться?',
-      tourFormSub: 'Наш менеджер свяжется с вами в течение 2 часов для подтверждения деталей тура.',
-      tourName: 'Ваше имя',
-      tourWhatsapp: 'WhatsApp или телефон',
-      tourEmail: 'Email (необязательно)',
-      tourTime: 'Удобное время',
-      tourTimeOptions: ['Утро (9–12)', 'День (12–17)', 'Вечер (17–20)', 'Любое время'],
-      tourComment: 'Особые пожелания? (необязательно)',
-      tourConsent: 'Я согласен на обработку персональных данных в соответствии с Политикой конфиденциальности',
-      tourSubmit: 'Запросить тур',
-      tourThankTitle: 'Заявка на тур отправлена!',
-      tourThankText: 'Наш менеджер свяжется с вами в течение 2 часов для согласования деталей.',
-      tourThankWa: 'Написать в WhatsApp',
-      tourThankProject: 'Подробнее о проекте',
+      tourFormTitle: 'ÐšÐ°Ðº Ñ Ð²Ð°Ð¼Ð¸ ÑÐ²ÑÐ·Ð°Ñ‚ÑŒÑÑ?',
+      tourFormSub: 'ÐÐ°Ñˆ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ€ ÑÐ²ÑÐ¶ÐµÑ‚ÑÑ Ñ Ð²Ð°Ð¼Ð¸ Ð² Ñ‚ÐµÑ‡ÐµÐ½Ð¸Ðµ 2 Ñ‡Ð°ÑÐ¾Ð² Ð´Ð»Ñ Ð¿Ð¾Ð´Ñ‚Ð²ÐµÑ€Ð¶Ð´ÐµÐ½Ð¸Ñ Ð´ÐµÑ‚Ð°Ð»ÐµÐ¹ Ñ‚ÑƒÑ€Ð°.',
+      tourName: 'Ð’Ð°ÑˆÐµ Ð¸Ð¼Ñ',
+      tourWhatsapp: 'WhatsApp Ð¸Ð»Ð¸ Ñ‚ÐµÐ»ÐµÑ„Ð¾Ð½',
+      tourEmail: 'Email (Ð½ÐµÐ¾Ð±ÑÐ·Ð°Ñ‚ÐµÐ»ÑŒÐ½Ð¾)',
+      tourTime: 'Ð£Ð´Ð¾Ð±Ð½Ð¾Ðµ Ð²Ñ€ÐµÐ¼Ñ',
+      tourTimeOptions: ['Ð£Ñ‚Ñ€Ð¾ (9â€“12)', 'Ð”ÐµÐ½ÑŒ (12â€“17)', 'Ð’ÐµÑ‡ÐµÑ€ (17â€“20)', 'Ð›ÑŽÐ±Ð¾Ðµ Ð²Ñ€ÐµÐ¼Ñ'],
+      tourComment: 'ÐžÑÐ¾Ð±Ñ‹Ðµ Ð¿Ð¾Ð¶ÐµÐ»Ð°Ð½Ð¸Ñ? (Ð½ÐµÐ¾Ð±ÑÐ·Ð°Ñ‚ÐµÐ»ÑŒÐ½Ð¾)',
+      tourConsent: 'Ð¯ ÑÐ¾Ð³Ð»Ð°ÑÐµÐ½ Ð½Ð° Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÑƒ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð»ÑŒÐ½Ñ‹Ñ… Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð² ÑÐ¾Ð¾Ñ‚Ð²ÐµÑ‚ÑÑ‚Ð²Ð¸Ð¸ Ñ ÐŸÐ¾Ð»Ð¸Ñ‚Ð¸ÐºÐ¾Ð¹ ÐºÐ¾Ð½Ñ„Ð¸Ð´ÐµÐ½Ñ†Ð¸Ð°Ð»ÑŒÐ½Ð¾ÑÑ‚Ð¸',
+      tourSubmit: 'Ð—Ð°Ð¿Ñ€Ð¾ÑÐ¸Ñ‚ÑŒ Ñ‚ÑƒÑ€',
+      tourThankTitle: 'Ð—Ð°ÑÐ²ÐºÐ° Ð½Ð° Ñ‚ÑƒÑ€ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð°!',
+      tourThankText: 'ÐÐ°Ñˆ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ€ ÑÐ²ÑÐ¶ÐµÑ‚ÑÑ Ñ Ð²Ð°Ð¼Ð¸ Ð² Ñ‚ÐµÑ‡ÐµÐ½Ð¸Ðµ 2 Ñ‡Ð°ÑÐ¾Ð² Ð´Ð»Ñ ÑÐ¾Ð³Ð»Ð°ÑÐ¾Ð²Ð°Ð½Ð¸Ñ Ð´ÐµÑ‚Ð°Ð»ÐµÐ¹.',
+      tourThankWa: 'ÐÐ°Ð¿Ð¸ÑÐ°Ñ‚ÑŒ Ð² WhatsApp',
+      tourThankProject: 'ÐŸÐ¾Ð´Ñ€Ð¾Ð±Ð½ÐµÐµ Ð¾ Ð¿Ñ€Ð¾ÐµÐºÑ‚Ðµ',
       descs: {
         village: {
-          'Rental income': 'Компактные виллы от $132K — идеально для краткосрочной аренды с высокой заполняемостью и низким порогом входа.',
-          'Personal residence': 'Уютные виллы 1–2 спальни от $132K в живом комплексе с общим бассейном и кафе.',
-          'Long-term investment': 'Самый доступный вход от $132K — высокий спрос на аренду и сильный потенциал роста капитала.',
-          'default': 'Доступные виллы 1–2 спальни от $132K в комплексе с общими удобствами.'
+          'Rental income': 'ÐšÐ¾Ð¼Ð¿Ð°ÐºÑ‚Ð½Ñ‹Ðµ Ð²Ð¸Ð»Ð»Ñ‹ Ð¾Ñ‚ $132K â€” Ð¸Ð´ÐµÐ°Ð»ÑŒÐ½Ð¾ Ð´Ð»Ñ ÐºÑ€Ð°Ñ‚ÐºÐ¾ÑÑ€Ð¾Ñ‡Ð½Ð¾Ð¹ Ð°Ñ€ÐµÐ½Ð´Ñ‹ Ñ Ð²Ñ‹ÑÐ¾ÐºÐ¾Ð¹ Ð·Ð°Ð¿Ð¾Ð»Ð½ÑÐµÐ¼Ð¾ÑÑ‚ÑŒÑŽ Ð¸ Ð½Ð¸Ð·ÐºÐ¸Ð¼ Ð¿Ð¾Ñ€Ð¾Ð³Ð¾Ð¼ Ð²Ñ…Ð¾Ð´Ð°.',
+          'Personal residence': 'Ð£ÑŽÑ‚Ð½Ñ‹Ðµ Ð²Ð¸Ð»Ð»Ñ‹ 1â€“2 ÑÐ¿Ð°Ð»ÑŒÐ½Ð¸ Ð¾Ñ‚ $132K Ð² Ð¶Ð¸Ð²Ð¾Ð¼ ÐºÐ¾Ð¼Ð¿Ð»ÐµÐºÑÐµ Ñ Ð¾Ð±Ñ‰Ð¸Ð¼ Ð±Ð°ÑÑÐµÐ¹Ð½Ð¾Ð¼ Ð¸ ÐºÐ°Ñ„Ðµ.',
+          'Long-term investment': 'Ð¡Ð°Ð¼Ñ‹Ð¹ Ð´Ð¾ÑÑ‚ÑƒÐ¿Ð½Ñ‹Ð¹ Ð²Ñ…Ð¾Ð´ Ð¾Ñ‚ $132K â€” Ð²Ñ‹ÑÐ¾ÐºÐ¸Ð¹ ÑÐ¿Ñ€Ð¾Ñ Ð½Ð° Ð°Ñ€ÐµÐ½Ð´Ñƒ Ð¸ ÑÐ¸Ð»ÑŒÐ½Ñ‹Ð¹ Ð¿Ð¾Ñ‚ÐµÐ½Ñ†Ð¸Ð°Ð» Ñ€Ð¾ÑÑ‚Ð° ÐºÐ°Ð¿Ð¸Ñ‚Ð°Ð»Ð°.',
+          'default': 'Ð”Ð¾ÑÑ‚ÑƒÐ¿Ð½Ñ‹Ðµ Ð²Ð¸Ð»Ð»Ñ‹ 1â€“2 ÑÐ¿Ð°Ð»ÑŒÐ½Ð¸ Ð¾Ñ‚ $132K Ð² ÐºÐ¾Ð¼Ð¿Ð»ÐµÐºÑÐµ Ñ Ð¾Ð±Ñ‰Ð¸Ð¼Ð¸ ÑƒÐ´Ð¾Ð±ÑÑ‚Ð²Ð°Ð¼Ð¸.'
         },
         villas: {
-          'Rental income': 'Премиальные виллы 2–3 спальни от $335K — вид на джунгли, приватные бассейны и подтверждённая доходность 12–15%.',
-          'Personal residence': 'Просторные виллы 2–3 спальни от $335K в окружении джунглей и водопадов — ваш дом на Бали.',
-          'Long-term investment': 'Виллы 2–3 спальни от $335K в Убуде — стабильный спрос и прогнозируемый рост стоимости 8–12% в год.',
-          'default': 'Премиальные виллы 2–3 спальни от $335K с видом на джунгли, приватными бассейнами и полным управлением.'
+          'Rental income': 'ÐŸÑ€ÐµÐ¼Ð¸Ð°Ð»ÑŒÐ½Ñ‹Ðµ Ð²Ð¸Ð»Ð»Ñ‹ 2â€“3 ÑÐ¿Ð°Ð»ÑŒÐ½Ð¸ Ð¾Ñ‚ $335K â€” Ð²Ð¸Ð´ Ð½Ð° Ð´Ð¶ÑƒÐ½Ð³Ð»Ð¸, Ð¿Ñ€Ð¸Ð²Ð°Ñ‚Ð½Ñ‹Ðµ Ð±Ð°ÑÑÐµÐ¹Ð½Ñ‹ Ð¸ Ð¿Ð¾Ð´Ñ‚Ð²ÐµÑ€Ð¶Ð´Ñ‘Ð½Ð½Ð°Ñ Ð´Ð¾Ñ…Ð¾Ð´Ð½Ð¾ÑÑ‚ÑŒ 12â€“15%.',
+          'Personal residence': 'ÐŸÑ€Ð¾ÑÑ‚Ð¾Ñ€Ð½Ñ‹Ðµ Ð²Ð¸Ð»Ð»Ñ‹ 2â€“3 ÑÐ¿Ð°Ð»ÑŒÐ½Ð¸ Ð¾Ñ‚ $335K Ð² Ð¾ÐºÑ€ÑƒÐ¶ÐµÐ½Ð¸Ð¸ Ð´Ð¶ÑƒÐ½Ð³Ð»ÐµÐ¹ Ð¸ Ð²Ð¾Ð´Ð¾Ð¿Ð°Ð´Ð¾Ð² â€” Ð²Ð°Ñˆ Ð´Ð¾Ð¼ Ð½Ð° Ð‘Ð°Ð»Ð¸.',
+          'Long-term investment': 'Ð’Ð¸Ð»Ð»Ñ‹ 2â€“3 ÑÐ¿Ð°Ð»ÑŒÐ½Ð¸ Ð¾Ñ‚ $335K Ð² Ð£Ð±ÑƒÐ´Ðµ â€” ÑÑ‚Ð°Ð±Ð¸Ð»ÑŒÐ½Ñ‹Ð¹ ÑÐ¿Ñ€Ð¾Ñ Ð¸ Ð¿Ñ€Ð¾Ð³Ð½Ð¾Ð·Ð¸Ñ€ÑƒÐµÐ¼Ñ‹Ð¹ Ñ€Ð¾ÑÑ‚ ÑÑ‚Ð¾Ð¸Ð¼Ð¾ÑÑ‚Ð¸ 8â€“12% Ð² Ð³Ð¾Ð´.',
+          'default': 'ÐŸÑ€ÐµÐ¼Ð¸Ð°Ð»ÑŒÐ½Ñ‹Ðµ Ð²Ð¸Ð»Ð»Ñ‹ 2â€“3 ÑÐ¿Ð°Ð»ÑŒÐ½Ð¸ Ð¾Ñ‚ $335K Ñ Ð²Ð¸Ð´Ð¾Ð¼ Ð½Ð° Ð´Ð¶ÑƒÐ½Ð³Ð»Ð¸, Ð¿Ñ€Ð¸Ð²Ð°Ñ‚Ð½Ñ‹Ð¼Ð¸ Ð±Ð°ÑÑÐµÐ¹Ð½Ð°Ð¼Ð¸ Ð¸ Ð¿Ð¾Ð»Ð½Ñ‹Ð¼ ÑƒÐ¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸ÐµÐ¼.'
         },
         estates: {
-          'Rental income': 'Эксклюзивные эстейты от $310K с приватными бассейнами и площадью до 250 м² — премиальные ставки аренды.',
-          'Personal residence': 'Просторные эстейты от $310K с приватными бассейнами, прудами и панорамным видом на рисовые террасы.',
-          'Long-term investment': '4 эксклюзивных эстейта от $310K на просторных участках до 14 соток — прогноз роста капитала 10–15% в год.',
-          'default': 'Эксклюзивные эстейты 2–5 спален от $310K с приватными бассейнами и панорамными видами.'
+          'Rental income': 'Ð­ÐºÑÐºÐ»ÑŽÐ·Ð¸Ð²Ð½Ñ‹Ðµ ÑÑÑ‚ÐµÐ¹Ñ‚Ñ‹ Ð¾Ñ‚ $310K Ñ Ð¿Ñ€Ð¸Ð²Ð°Ñ‚Ð½Ñ‹Ð¼Ð¸ Ð±Ð°ÑÑÐµÐ¹Ð½Ð°Ð¼Ð¸ Ð¸ Ð¿Ð»Ð¾Ñ‰Ð°Ð´ÑŒÑŽ Ð´Ð¾ 250 Ð¼Â² â€” Ð¿Ñ€ÐµÐ¼Ð¸Ð°Ð»ÑŒÐ½Ñ‹Ðµ ÑÑ‚Ð°Ð²ÐºÐ¸ Ð°Ñ€ÐµÐ½Ð´Ñ‹.',
+          'Personal residence': 'ÐŸÑ€Ð¾ÑÑ‚Ð¾Ñ€Ð½Ñ‹Ðµ ÑÑÑ‚ÐµÐ¹Ñ‚Ñ‹ Ð¾Ñ‚ $310K Ñ Ð¿Ñ€Ð¸Ð²Ð°Ñ‚Ð½Ñ‹Ð¼Ð¸ Ð±Ð°ÑÑÐµÐ¹Ð½Ð°Ð¼Ð¸, Ð¿Ñ€ÑƒÐ´Ð°Ð¼Ð¸ Ð¸ Ð¿Ð°Ð½Ð¾Ñ€Ð°Ð¼Ð½Ñ‹Ð¼ Ð²Ð¸Ð´Ð¾Ð¼ Ð½Ð° Ñ€Ð¸ÑÐ¾Ð²Ñ‹Ðµ Ñ‚ÐµÑ€Ñ€Ð°ÑÑ‹.',
+          'Long-term investment': '4 ÑÐºÑÐºÐ»ÑŽÐ·Ð¸Ð²Ð½Ñ‹Ñ… ÑÑÑ‚ÐµÐ¹Ñ‚Ð° Ð¾Ñ‚ $310K Ð½Ð° Ð¿Ñ€Ð¾ÑÑ‚Ð¾Ñ€Ð½Ñ‹Ñ… ÑƒÑ‡Ð°ÑÑ‚ÐºÐ°Ñ… Ð´Ð¾ 14 ÑÐ¾Ñ‚Ð¾Ðº â€” Ð¿Ñ€Ð¾Ð³Ð½Ð¾Ð· Ñ€Ð¾ÑÑ‚Ð° ÐºÐ°Ð¿Ð¸Ñ‚Ð°Ð»Ð° 10â€“15% Ð² Ð³Ð¾Ð´.',
+          'default': 'Ð­ÐºÑÐºÐ»ÑŽÐ·Ð¸Ð²Ð½Ñ‹Ðµ ÑÑÑ‚ÐµÐ¹Ñ‚Ñ‹ 2â€“5 ÑÐ¿Ð°Ð»ÐµÐ½ Ð¾Ñ‚ $310K Ñ Ð¿Ñ€Ð¸Ð²Ð°Ñ‚Ð½Ñ‹Ð¼Ð¸ Ð±Ð°ÑÑÐµÐ¹Ð½Ð°Ð¼Ð¸ Ð¸ Ð¿Ð°Ð½Ð¾Ñ€Ð°Ð¼Ð½Ñ‹Ð¼Ð¸ Ð²Ð¸Ð´Ð°Ð¼Ð¸.'
         }
       }
     }
@@ -530,7 +530,7 @@ document.addEventListener('DOMContentLoaded', () => {
       hamburger.setAttribute('aria-expanded', 'true');
       document.body.style.overflow = 'hidden';
       // backdrop-filter on header creates a containing block that breaks
-      // position:fixed on the nav overlay — disable it while menu is open
+      // position:fixed on the nav overlay â€” disable it while menu is open
       if (header) header.classList.add('header--menu-open');
     };
 
@@ -550,7 +550,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Inject contact block at the bottom of the mobile menu
-    // (visible only on mobile via CSS — contact populator runs earlier than this
+    // (visible only on mobile via CSS â€” contact populator runs earlier than this
     // init, so we fill values inline from SITE_DATA)
     if (!nav.querySelector('.header__nav-contact') && typeof SITE_DATA !== 'undefined' && SITE_DATA.contacts) {
       const ct = SITE_DATA.contacts;
@@ -565,7 +565,7 @@ document.addEventListener('DOMContentLoaded', () => {
       nav.appendChild(navContact);
     }
 
-    // Persist menu-open state across language switch — if user clicks a lang
+    // Persist menu-open state across language switch â€” if user clicks a lang
     // link while menu is open, the new page should reopen the menu automatically
     document.addEventListener('click', (e) => {
       const langLink = e.target.closest('.header__lang-dropdown a');
@@ -774,7 +774,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (galleryGrid) {
     const galleryData = typeof GALLERY_DATA !== 'undefined' ? GALLERY_DATA : {};
-    // Detect subfolder pages (ru/, id/) — they use ../css/style.css
+    // Detect subfolder pages (ru/, id/) â€” they use ../css/style.css
     const isSubfolder = !!document.querySelector('link[href^="../css/"]');
     const imgPathPrefix = isSubfolder ? '../' : '';
     const isAbsoluteImgUrl = (u) => /^(https?:)?\/\//i.test(u);
@@ -788,7 +788,7 @@ document.addEventListener('DOMContentLoaded', () => {
       village: 'Serenity Village'
     };
 
-    // Curated picks for "All" — best images from each project, fixed order
+    // Curated picks for "All" â€” best images from each project, fixed order
     const curatedAll = [
       { src: 'images/serenity-villas/aerial-view.webp', category: 'villas' },
       { src: 'images/serenity-estates/Static.0000.webp', category: 'estates' },
@@ -1215,7 +1215,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sendEmail(EMAILJS_TPL_CONTACT, {
           from_name: cName,
           from_email: cEmail,
-          phone: cPhone || '—',
+          phone: cPhone || 'â€”',
           source: 'Contact Form (' + lang.toUpperCase() + ')'
         });
         trackEvent('generate_lead', 'contact_form', 'contact_page');
@@ -1271,8 +1271,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Budget (60% weight)
     if (budget === 'Exploring Options')    { scores.village += 60; scores.villas += 15; scores.estates += 10; }
-    else if (budget === '$150K – $350K')   { scores.village += 30; scores.villas += 60; scores.estates += 35; }
-    else if (budget === '$350K – $500K')   { scores.village += 5;  scores.villas += 35; scores.estates += 60; }
+    else if (budget === '$150K â€“ $350K')   { scores.village += 30; scores.villas += 60; scores.estates += 35; }
+    else if (budget === '$350K â€“ $500K')   { scores.village += 5;  scores.villas += 35; scores.estates += 60; }
     else /* $500K+ */                      { scores.village += 0;  scores.villas += 20; scores.estates += 60; }
 
     // Goal (25% weight)
@@ -1418,7 +1418,7 @@ document.addEventListener('DOMContentLoaded', () => {
       sendEmail(EMAILJS_TPL_LEAD, {
         from_name: name,
         from_email: email,
-        phone: phone || '—',
+        phone: phone || 'â€”',
         source: 'Quiz (' + lang.toUpperCase() + ')',
         details: 'Goal: ' + (quizAnswers[0] || '') + '\nBudget: ' + (quizAnswers[1] || '') + '\nTimeline: ' + (quizAnswers[2] || '') + '\nRecommended: ' + rec.project
       });
@@ -1462,7 +1462,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Attach quiz via event delegation (works for dynamically rendered buttons)
-  // Exclude [data-tour] buttons — they open tour popup, not quiz
+  // Exclude [data-tour] buttons â€” they open tour popup, not quiz
   document.addEventListener('click', function(e) {
     var btn = e.target.closest('[data-quiz]');
     if (!btn) {
@@ -1550,12 +1550,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="tour__options tour__options--multi">
           ${step.options.map((opt, idx) => `<label class="tour__checkbox"><input type="checkbox" value="${idx}"><span class="tour__checkbox-icon">${opt.icon}</span><span>${opt.label}</span></label>`).join('')}
         </div>
-        <button class="btn btn--primary tour__continue" style="width:100%;margin-top:24px;" disabled>${t.tourSubmit.replace(/tour|tur|тур/i, '').trim() || 'Continue'}</button>
+        <button class="btn btn--primary tour__continue" style="width:100%;margin-top:24px;" disabled>${t.tourSubmit.replace(/tour|tur|Ñ‚ÑƒÑ€/i, '').trim() || 'Continue'}</button>
         ${tourStep > 0 ? `<button class="tour__back">&larr; ${t.quizBack}</button>` : ''}
       `;
 
       const continueBtn = tourBody.querySelector('.tour__continue');
-      continueBtn.textContent = lang === 'ru' ? 'Продолжить' : 'Continue';
+      continueBtn.textContent = lang === 'ru' ? 'ÐŸÑ€Ð¾Ð´Ð¾Ð»Ð¶Ð¸Ñ‚ÑŒ' : 'Continue';
 
       tourBody.querySelectorAll('.tour__checkbox input').forEach(cb => {
         cb.addEventListener('change', () => {
@@ -1678,10 +1678,10 @@ document.addEventListener('DOMContentLoaded', () => {
         lang: lang
       };
 
-      var tourDetails = 'Project: ' + data.project + '\nWhen in Bali: ' + data.whenInBali + '\nInterests: ' + (Array.isArray(data.interests) ? data.interests.join(', ') : data.interests) + '\nPreferred time: ' + (data.time || '—') + '\nComment: ' + (data.comment || '—');
+      var tourDetails = 'Project: ' + data.project + '\nWhen in Bali: ' + data.whenInBali + '\nInterests: ' + (Array.isArray(data.interests) ? data.interests.join(', ') : data.interests) + '\nPreferred time: ' + (data.time || 'â€”') + '\nComment: ' + (data.comment || 'â€”');
       sendEmail(EMAILJS_TPL_LEAD, {
         from_name: data.name,
-        from_email: data.email || '—',
+        from_email: data.email || 'â€”',
         phone: data.whatsapp,
         source: 'Tour Booking (' + lang.toUpperCase() + ')',
         details: tourDetails
@@ -1692,7 +1692,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Thank you screen
       tourBar.style.width = '100%';
       const projectUrl = tourProjectUrls[data.project] || '';
-      const waNum = (typeof SITE_DATA !== 'undefined' && SITE_DATA.contacts) ? SITE_DATA.contacts.whatsapp : '6281338741177';
+      const waNum = (typeof SITE_DATA !== 'undefined' && SITE_DATA.contacts) ? SITE_DATA.contacts.whatsapp : '6281325143849';
       tourBody.innerHTML = `
         <div class="tour__result">
           <svg class="tour__result-icon" viewBox="0 0 48 48" width="56" height="56"><circle cx="24" cy="24" r="22" stroke="var(--color-accent)" stroke-width="1.5" fill="none"/><path d="M15 24l7 7 11-11" stroke="var(--color-accent)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1768,7 +1768,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ─── IDR Currency Helpers ───
+  // â”€â”€â”€ IDR Currency Helpers â”€â”€â”€
   var xRate = (typeof SITE_DATA !== 'undefined' && SITE_DATA.exchangeRate) ? SITE_DATA.exchangeRate.usdToIdr : 0;
   var xRateAuto = (typeof SITE_DATA !== 'undefined' && SITE_DATA.exchangeRate && SITE_DATA.exchangeRate.auto);
 
@@ -1818,10 +1818,10 @@ document.addEventListener('DOMContentLoaded', () => {
     opts = opts || {};
     var short = !!opts.short;
     var fmt = short ? fmtUsdShort : fmtUsdFull;
-    var usd = (r.min === r.max) ? fmt(r.min) : fmt(r.min) + ' – ' + fmt(r.max);
+    var usd = (r.min === r.max) ? fmt(r.min) : fmt(r.min) + ' â€“ ' + fmt(r.max);
     var idr = '';
     if (xRate) {
-      idr = (r.min === r.max) ? fmtIdr(r.min) : fmtIdr(r.min) + ' – ' + fmtIdr(r.max);
+      idr = (r.min === r.max) ? fmtIdr(r.min) : fmtIdr(r.min) + ' â€“ ' + fmtIdr(r.max);
     }
     return usd + (idr ? '<span class="price-idr">' + idr + '</span>' : '');
   }
@@ -2012,14 +2012,14 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       sendEmail(EMAILJS_TPL_LEAD, {
         from_name: name,
         from_email: email,
-        phone: '—',
+        phone: 'â€”',
         source: 'Lead Magnet (' + lang.toUpperCase() + ')',
         details: 'Investment Guide download'
       });
       trackEvent('generate_lead', 'lead_magnet', 'investment_guide');
       sessionStorage.setItem('leadCaptured', 'true');
       var wrap = form.closest('.lead-magnet__form-wrap');
-      var waNum2 = (typeof SITE_DATA !== 'undefined' && SITE_DATA.contacts) ? SITE_DATA.contacts.whatsapp : '6281338741177';
+      var waNum2 = (typeof SITE_DATA !== 'undefined' && SITE_DATA.contacts) ? SITE_DATA.contacts.whatsapp : '6281325143849';
       // Manual delivery mode: thank-you only, no download/read buttons
       wrap.innerHTML = '<div class="lead-magnet__success"><h3>' + t.leadThankManualTitle + '</h3><p>' + t.leadThankManualText + '</p><div class="lead-magnet__divider"></div><p class="lead-magnet__sub">' + t.leadThankSub + '</p><a href="https://wa.me/' + waNum2 + '" target="_blank" rel="noopener noreferrer" class="btn lead-magnet__wa">' + t.leadThankWa + '</a></div>';
     });
@@ -2047,7 +2047,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     }[heroStatsEl.dataset.project] || '' : '';
 
     if (stickyProjectName) {
-      const stickyTourLabel = lang === 'ru' ? 'Запланировать тур' : 'Schedule a Tour';
+      const stickyTourLabel = lang === 'ru' ? 'Ð—Ð°Ð¿Ð»Ð°Ð½Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ñ‚ÑƒÑ€' : 'Schedule a Tour';
       stickyCTA.innerHTML = `<button class="sticky-cta__btn btn btn--primary">${stickyTourLabel}</button>`;
       stickyCTA.querySelector('button').addEventListener('click', (e) => {
         e.preventDefault();
@@ -2162,9 +2162,9 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     if (!ok) return;
     const email = exitInput.value.trim();
     sendEmail(EMAILJS_TPL_LEAD, {
-      from_name: '—',
+      from_name: 'â€”',
       from_email: email,
-      phone: '—',
+      phone: 'â€”',
       source: 'Exit Popup (' + lang.toUpperCase() + ')',
       details: 'Investment Guide interest'
     });
@@ -2225,7 +2225,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     if (idr) el.innerHTML = el.innerHTML + '<span class="price-idr">' + idr + '</span>';
   });
 
-  // ─── Dynamic Contact Data from SITE_DATA ───
+  // â”€â”€â”€ Dynamic Contact Data from SITE_DATA â”€â”€â”€
   if (typeof SITE_DATA !== 'undefined' && SITE_DATA.contacts) {
     var c = SITE_DATA.contacts;
     document.querySelectorAll('[data-contact="phone"]').forEach(function(el) { el.textContent = c.phone; });
@@ -2244,20 +2244,20 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     });
   }
 
-  // ─── Dynamic Testimonials from TESTIMONIALS_DATA ───
+  // â”€â”€â”€ Dynamic Testimonials from TESTIMONIALS_DATA â”€â”€â”€
   // Supports optional data-testimonials-ids="1,3" attribute for filtering by order field.
   if (typeof TESTIMONIALS_DATA !== 'undefined') {
     var tContainers = document.querySelectorAll('[data-testimonials-container]');
     if (tContainers.length) {
       var rmLabels = {
         en: { more: 'Read more', less: 'Show less' },
-        ru: { more: 'Читать полностью', less: 'Свернуть' },
+        ru: { more: 'Ð§Ð¸Ñ‚Ð°Ñ‚ÑŒ Ð¿Ð¾Ð»Ð½Ð¾ÑÑ‚ÑŒÑŽ', less: 'Ð¡Ð²ÐµÑ€Ð½ÑƒÑ‚ÑŒ' },
         id: { more: 'Baca selengkapnya', less: 'Sembunyikan' }
       };
       var rm = rmLabels[lang] || rmLabels.en;
       function renderTestimonial(t) {
         var stars = '';
-        for (var s = 0; s < (t.stars || 5); s++) stars += '★';
+        for (var s = 0; s < (t.stars || 5); s++) stars += 'â˜…';
         var authorName = t.name[lang] || t.name.en;
         var avatarHTML = '';
         if (t.avatar) {
@@ -2268,7 +2268,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         }
         var verifiedHTML = '';
         if (t.sourceName) {
-          var verifiedText = '✓ Verified via ' + t.sourceName;
+          var verifiedText = 'âœ“ Verified via ' + t.sourceName;
           verifiedHTML = t.sourceUrl
             ? '<a class="testimonials__verified" href="' + t.sourceUrl + '" target="_blank" rel="noopener noreferrer">' + verifiedText + '</a>'
             : '<span class="testimonials__verified">' + verifiedText + '</span>';
@@ -2309,7 +2309,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     }
   }
 
-  // ─── Dynamic Render from PROJECTS_DATA ───
+  // â”€â”€â”€ Dynamic Render from PROJECTS_DATA â”€â”€â”€
   if (typeof PROJECTS_DATA !== 'undefined') {
     const PD = PROJECTS_DATA;
     const dataLang = lang;
@@ -2357,7 +2357,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     });
 
     // --- Availability Bar ---
-    // Uses "left" framing (stronger scarcity) across all projects — pulls the
+    // Uses "left" framing (stronger scarcity) across all projects â€” pulls the
     // label text directly from proj.showcaseAvailability so there's a single
     // source of truth. Admin auto-syncs that field when units change.
     document.querySelectorAll('.availability-bar[data-project]').forEach(el => {
@@ -2449,20 +2449,20 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       if (!title && !desc) return;
 
       if (dataLang === 'ru') {
-        // Plural forms: 1 вилла / 2-4 виллы / 5+ вилл (with 11-14 exception)
+        // Plural forms: 1 Ð²Ð¸Ð»Ð»Ð° / 2-4 Ð²Ð¸Ð»Ð»Ñ‹ / 5+ Ð²Ð¸Ð»Ð» (with 11-14 exception)
         var lastTwo = available % 100;
         var lastOne = available % 10;
         var villaForm;
         var availForm;
-        if (lastTwo >= 11 && lastTwo <= 14) { villaForm = 'вилл'; availForm = 'Доступно'; }
-        else if (lastOne === 1) { villaForm = 'вилла'; availForm = 'Доступна'; }
-        else if (lastOne >= 2 && lastOne <= 4) { villaForm = 'виллы'; availForm = 'Доступно'; }
-        else { villaForm = 'вилл'; availForm = 'Доступно'; }
+        if (lastTwo >= 11 && lastTwo <= 14) { villaForm = 'Ð²Ð¸Ð»Ð»'; availForm = 'Ð”Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð¾'; }
+        else if (lastOne === 1) { villaForm = 'Ð²Ð¸Ð»Ð»Ð°'; availForm = 'Ð”Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð°'; }
+        else if (lastOne >= 2 && lastOne <= 4) { villaForm = 'Ð²Ð¸Ð»Ð»Ñ‹'; availForm = 'Ð”Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð¾'; }
+        else { villaForm = 'Ð²Ð¸Ð»Ð»'; availForm = 'Ð”Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð¾'; }
         if (title) title.textContent = availForm + ' ' + available + ' ' + villaForm;
-        if (desc) desc.textContent = 'Свяжитесь с нами до того, как последние юниты уйдут — расскажем о ценах, планировках и инвестиционных условиях.';
+        if (desc) desc.textContent = 'Ð¡Ð²ÑÐ¶Ð¸Ñ‚ÐµÑÑŒ Ñ Ð½Ð°Ð¼Ð¸ Ð´Ð¾ Ñ‚Ð¾Ð³Ð¾, ÐºÐ°Ðº Ð¿Ð¾ÑÐ»ÐµÐ´Ð½Ð¸Ðµ ÑŽÐ½Ð¸Ñ‚Ñ‹ ÑƒÐ¹Ð´ÑƒÑ‚ â€” Ñ€Ð°ÑÑÐºÐ°Ð¶ÐµÐ¼ Ð¾ Ñ†ÐµÐ½Ð°Ñ…, Ð¿Ð»Ð°Ð½Ð¸Ñ€Ð¾Ð²ÐºÐ°Ñ… Ð¸ Ð¸Ð½Ð²ÐµÑÑ‚Ð¸Ñ†Ð¸Ð¾Ð½Ð½Ñ‹Ñ… ÑƒÑÐ»Ð¾Ð²Ð¸ÑÑ….';
       } else {
         if (title) title.textContent = available + (available === 1 ? ' Villa Available' : ' Villas Available');
-        if (desc) desc.textContent = 'Get in touch before the last units are gone — our team will walk you through pricing, layouts, and investment details.';
+        if (desc) desc.textContent = 'Get in touch before the last units are gone â€” our team will walk you through pricing, layouts, and investment details.';
       }
     });
 
@@ -2674,32 +2674,32 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       }
     };
 
-    // Master plan header — title shows how many units are still available.
+    // Master plan header â€” title shows how many units are still available.
     // Premium tone: neutral "available" framing regardless of % sold (no scarcity pressure).
     var MASTER_PLAN_HEADER_STATIC = {
       en: { tag: 'Master Plan', desc: 'Click on any villa to see its details. Unavailable villas are dimmed.' },
-      ru: { tag: 'Генплан', desc: 'Кликните на виллу, чтобы посмотреть детали. Недоступные подсвечены серым.' }
+      ru: { tag: 'Ð“ÐµÐ½Ð¿Ð»Ð°Ð½', desc: 'ÐšÐ»Ð¸ÐºÐ½Ð¸Ñ‚Ðµ Ð½Ð° Ð²Ð¸Ð»Ð»Ñƒ, Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð¿Ð¾ÑÐ¼Ð¾Ñ‚Ñ€ÐµÑ‚ÑŒ Ð´ÐµÑ‚Ð°Ð»Ð¸. ÐÐµÐ´Ð¾ÑÑ‚ÑƒÐ¿Ð½Ñ‹Ðµ Ð¿Ð¾Ð´ÑÐ²ÐµÑ‡ÐµÐ½Ñ‹ ÑÐµÑ€Ñ‹Ð¼.' }
     };
     function buildMasterPlanTitle(lang, available, total) {
       if (available === 0) {
-        if (lang === 'ru') return 'Все недоступны';
+        if (lang === 'ru') return 'Ð’ÑÐµ Ð½ÐµÐ´Ð¾ÑÑ‚ÑƒÐ¿Ð½Ñ‹';
         return 'Not Available';
       }
       if (lang === 'ru') {
-        // 1 вилла / 2-4 виллы / 5+ вилл — with -teen exception (11-14 always plural genitive)
+        // 1 Ð²Ð¸Ð»Ð»Ð° / 2-4 Ð²Ð¸Ð»Ð»Ñ‹ / 5+ Ð²Ð¸Ð»Ð» â€” with -teen exception (11-14 always plural genitive)
         var lastTwo = available % 100;
         var lastOne = available % 10;
-        if (lastTwo >= 11 && lastTwo <= 14) return 'Доступно ' + available + ' вилл';
-        if (lastOne === 1) return 'Доступна ' + available + ' вилла';
-        if (lastOne >= 2 && lastOne <= 4) return 'Доступно ' + available + ' виллы';
-        return 'Доступно ' + available + ' вилл';
+        if (lastTwo >= 11 && lastTwo <= 14) return 'Ð”Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð¾ ' + available + ' Ð²Ð¸Ð»Ð»';
+        if (lastOne === 1) return 'Ð”Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð° ' + available + ' Ð²Ð¸Ð»Ð»Ð°';
+        if (lastOne >= 2 && lastOne <= 4) return 'Ð”Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð¾ ' + available + ' Ð²Ð¸Ð»Ð»Ñ‹';
+        return 'Ð”Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð¾ ' + available + ' Ð²Ð¸Ð»Ð»';
       }
       return available + (available === 1 ? ' villa available' : ' villas available');
     }
 
     var MASTER_PLAN_SHEET_TEXT = {
       en: { cta: 'Book a Tour', ctaSold: 'Not Available', close: 'Close' },
-      ru: { cta: 'Записаться на показ', ctaSold: 'Не доступно', close: 'Закрыть' }
+      ru: { cta: 'Ð—Ð°Ð¿Ð¸ÑÐ°Ñ‚ÑŒÑÑ Ð½Ð° Ð¿Ð¾ÐºÐ°Ð·', ctaSold: 'ÐÐµ Ð´Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð¾', close: 'Ð—Ð°ÐºÑ€Ñ‹Ñ‚ÑŒ' }
     };
 
     document.querySelectorAll('[data-master-plan]').forEach(function(el) {
@@ -2755,14 +2755,14 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
 
       function openSheet(u) {
         sheetRefs.badge.textContent = u.badge || '';
-        sheetRefs.title.textContent = u.id + ' · ' + u.type;
+        sheetRefs.title.textContent = u.id + ' Â· ' + u.type;
         sheetRefs.subtitle.textContent = proj.name || '';
-        sheetRefs.area.textContent = u.area || '—';
-        sheetRefs.land.textContent = u.land || '—';
-        sheetRefs.floors.textContent = u.floors || '—';
+        sheetRefs.area.textContent = u.area || 'â€”';
+        sheetRefs.land.textContent = u.land || 'â€”';
+        sheetRefs.floors.textContent = u.floors || 'â€”';
         sheetRefs.status.textContent = sl[u.status] || u.status;
         sheetRefs.status.className = 'master-plan__sheet-spec-value status--' + u.status;
-        sheetRefs.price.innerHTML = u.price ? fmtDualPrice(u.price) : '—';
+        sheetRefs.price.innerHTML = u.price ? fmtDualPrice(u.price) : 'â€”';
 
         var isSold = u.status === 'sold';
         sheetRefs.cta.textContent = isSold ? sheetText.ctaSold : sheetText.cta;
@@ -2803,17 +2803,17 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         btn.style.left = pos.x + '%';
         btn.style.top = pos.y + '%';
         btn.dataset.unitId = u.id;
-        btn.setAttribute('aria-label', u.id + ' — ' + (sl[u.status] || u.status));
+        btn.setAttribute('aria-label', u.id + ' â€” ' + (sl[u.status] || u.status));
 
         var priceLine = '<span class="master-plan__tooltip-price">'
-          + (u.price ? fmtDualPrice(u.price) : '—')
+          + (u.price ? fmtDualPrice(u.price) : 'â€”')
           + '</span>';
 
         btn.innerHTML =
           '<span class="master-plan__hotspot-label">' + u.id + '</span>' +
           '<span class="master-plan__tooltip">' +
-            '<strong>' + u.id + ' · ' + u.type + '</strong>' +
-            '<span class="master-plan__tooltip-row">' + u.area + ' · ' + (sl[u.status] || u.status) + '</span>' +
+            '<strong>' + u.id + ' Â· ' + u.type + '</strong>' +
+            '<span class="master-plan__tooltip-row">' + u.area + ' Â· ' + (sl[u.status] || u.status) + '</span>' +
             priceLine +
           '</span>';
 
@@ -2821,7 +2821,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
           var isTouch = window.matchMedia('(hover: none)').matches;
 
           // Mobile: open bottom-sheet with full unit details (incl. sold).
-          // Other hotspots stay tappable — openSheet just repopulates content.
+          // Other hotspots stay tappable â€” openSheet just repopulates content.
           if (isTouch) {
             e.preventDefault();
             openSheet(u);
@@ -2912,7 +2912,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         }
       });
 
-      var comingSoon = dataLang === 'ru' ? 'Скоро' : 'Coming Soon';
+      var comingSoon = dataLang === 'ru' ? 'Ð¡ÐºÐ¾Ñ€Ð¾' : 'Coming Soon';
       var placeholderSvg = '<svg viewBox="0 0 80 80" fill="none"><rect x="12" y="16" width="56" height="48" rx="3" stroke="currentColor" stroke-width="1.5"/><line x1="12" y1="40" x2="68" y2="40" stroke="currentColor" stroke-width="1.5"/><line x1="40" y1="16" x2="40" y2="64" stroke="currentColor" stroke-width="1.5"/><rect x="18" y="22" width="10" height="12" rx="1" stroke="currentColor" stroke-width="1"/><rect x="46" y="22" width="10" height="12" rx="1" stroke="currentColor" stroke-width="1"/></svg>';
 
       // Type selector tabs
@@ -2922,7 +2922,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       });
       html += '</div>';
 
-      // Content panels per type — side-by-side layout
+      // Content panels per type â€” side-by-side layout
       types.forEach(function(type, i) {
         var data = proj.floorPlans[type];
         var floors = data.floors;
@@ -2941,7 +2941,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
           }
           if (img) {
             var imgSrc = resolveAsset(img);
-            html += '<div class="fp-floor__img" data-lightbox-src="' + imgSrc + '"><img src="' + imgSrc + '" alt="' + type + ' — ' + floor + '" loading="lazy"></div>';
+            html += '<div class="fp-floor__img" data-lightbox-src="' + imgSrc + '"><img src="' + imgSrc + '" alt="' + type + ' â€” ' + floor + '" loading="lazy"></div>';
           } else {
             html += '<div class="fp-floor__placeholder">' + placeholderSvg + '<span>' + comingSoon + '</span></div>';
           }
@@ -3007,7 +3007,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
 
   // --- SSR placeholder reveal ---
   // All data-driven rebuilds above this line are complete. Remove
-  // the initializing class → [data-ssr-placeholder] elements become
+  // the initializing class â†’ [data-ssr-placeholder] elements become
   // visible. The safety net below fires 1s after script parse in
   // case this handler threw somewhere above.
   document.documentElement.classList.remove('js-initializing');
