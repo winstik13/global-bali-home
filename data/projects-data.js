@@ -640,8 +640,8 @@ const PROJECTS_DATA = {
       "total": 4
     },
     "showcaseDesc": {
-      "en": "4 exclusive villas on spacious 3.5–14 are plots in the Ubud area — the scarcest resource in Bali real estate. Single-family privacy, projected 10–15% annual capital appreciation. ",
-      "ru": "4 эксклюзивные виллы на просторных участках 3,5–14 соток в районе Убуда — самом дефицитном ресурсе на рынке Бали. Приватность single-family, прогноз роста капитала 10–15% в год."
+      "en": "4 villas for a family residence or second home near Ubud — on plots up to 1,400 m², each with a private pool. Land of this size is becoming scarce in this area, supporting projected ~10% annual value growth.",
+      "ru": "4 виллы для семейной резиденции или второго дома у Убуда — на участках до 1400 м², с приватным бассейном. Земля такого размера в этой локации становится редкостью, что поддерживает прогноз роста стоимости ~10% в год."
     },
     "showcaseMeta": {
       "en": [
