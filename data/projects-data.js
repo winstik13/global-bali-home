@@ -1058,8 +1058,8 @@ const PROJECTS_DATA = {
       "total": 25
     },
     "showcaseDesc": {
-      "en": "25 villas from $132K — the lowest entry into Bali yield-generating real estate. Same risk insurance and notarized 29-year leasehold (with extension rights) as our $500K+ projects. Shared pool and onsite cafe included.",
-      "ru": "25 вилл от $132K — самая низкая точка входа в доходную недвижимость Бали. То же страхование рисков и нотариальный leasehold на 29 лет с правом продления, что в проектах от $500K+. Общий бассейн и кафе на территории."
+      "en": "25 villas from $132K — the lowest entry into Bali yield-generating real estate. Same risk insurance and notarized 29-year leasehold (with extension rights) as our $350K+ projects. Shared pool and onsite cafe included.",
+      "ru": "25 вилл от $132K — самая низкая точка входа в доходную недвижимость Бали. То же страхование рисков и нотариальный leasehold на 29 лет с правом продления, что в проектах от $350K+. Общий бассейн и кафе на территории."
     },
     "showcaseMeta": {
       "en": [
@@ -1099,7 +1099,7 @@ const PROJECTS_DATA = {
       },
       "question": {
         "en": "Want entry-level cashflow?",
-        "ru": "Хотите стартовый cashflow?"
+        "ru": "Хотите стартовый арендный доход?"
       }
     },
     "showcaseImage": "images/serenity-village/6House_Max.0001.webp",

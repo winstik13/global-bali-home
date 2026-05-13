@@ -2942,6 +2942,16 @@ td .price-idr {
   gap: 0;
 }
 
+.services-grid--4col {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1200px) {
+  .services-grid--4col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* Bordered variant — adds vertical dividers between cards (used in Project Overview block on villas) */
 .services-grid--bordered > .service-card + .service-card {
   border-left: 1px solid var(--color-border);
