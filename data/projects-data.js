@@ -479,8 +479,8 @@ const PROJECTS_DATA = {
           "number": "Q1 2027"
         },
         {
-          "label": "Annual Yield",
-          "number": "12–15%"
+          "label": "Value Growth",
+          "number": "~10%"
         }
       ],
       "ru": [
@@ -493,8 +493,8 @@ const PROJECTS_DATA = {
           "number": "Q1 2027"
         },
         {
-          "label": "Годовая доходность",
-          "number": "12–15%"
+          "label": "Рост стоимости",
+          "number": "~10%"
         }
       ]
     },
@@ -976,8 +976,8 @@ const PROJECTS_DATA = {
           "number": "Q3 2027"
         },
         {
-          "label": "Annual Yield",
-          "number": "12–15%"
+          "label": "Entry Price",
+          "number": "$132K"
         }
       ],
       "ru": [
@@ -990,8 +990,8 @@ const PROJECTS_DATA = {
           "number": "Q3 2027"
         },
         {
-          "label": "Годовая доходность",
-          "number": "12–15%"
+          "label": "Точка входа",
+          "number": "$132K"
         }
       ]
     },
