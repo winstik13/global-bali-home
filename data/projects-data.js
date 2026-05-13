@@ -375,6 +375,10 @@ const PROJECTS_DATA = {
       "en": "Handover Q2 2026",
       "ru": "Сдача Q2 2026"
     },
+    "showcaseBadge": {
+      "en": "On-Site Waterfall",
+      "ru": "Водопад на территории"
+    },
     "showcaseSubtitle": {
       "en": "12 modern villas with jungle views and natural waterfalls in Ubud",
       "ru": "12 современных вилл с видом на джунгли и природными водопадами в Убуде"
@@ -689,6 +693,10 @@ const PROJECTS_DATA = {
     "showcaseStatus": {
       "en": "Handover Q1 2027",
       "ru": "Сдача Q1 2027"
+    },
+    "showcaseBadge": {
+      "en": "Plots Up to 14 Are",
+      "ru": "Участки до 14 соток"
     },
     "showcaseSubtitle": {
       "en": "4 exclusive villas with private pools and rice terrace views",
@@ -1107,6 +1115,10 @@ const PROJECTS_DATA = {
     "showcaseStatus": {
       "en": "In Progress",
       "ru": "Строится"
+    },
+    "showcaseBadge": {
+      "en": "Shared Pool & Café",
+      "ru": "Бассейн + кафе"
     },
     "showcaseSubtitle": {
       "en": "Complex of 25 villas with shared pool and cafe — from $132K",

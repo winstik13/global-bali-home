@@ -2494,17 +2494,13 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       return 'project-card__badge--construction';
     }
 
-    // --- Helper: showcase badge text (scarcity signal from availability) ---
+    // --- Helper: showcase badge text ---
+    // Priority: showcaseBadge (defining feature) > pre-sale status > showcaseStatus fallback
     function getShowcaseBadgeText(proj) {
+      var custom = loc(proj.showcaseBadge);
+      if (custom) return custom;
       if (proj.status === 'pre-sale') {
         return loc(proj.showcaseStatus) || 'Pre-Sale';
-      }
-      var a = proj.availability;
-      if (a && a.total && a.sold > 0) {
-        var pct = Math.round(a.sold / a.total * 100);
-        var labels = PD.availabilityLabels ? (PD.availabilityLabels[dataLang] || PD.availabilityLabels.en) : {};
-        var soldLabel = labels.sold || 'sold';
-        return pct + '% ' + soldLabel.charAt(0).toUpperCase() + soldLabel.slice(1);
       }
       return loc(proj.showcaseStatus) || '';
     }
