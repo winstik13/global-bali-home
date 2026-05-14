@@ -985,7 +985,8 @@ const PROJECTS_DATA = {
         },
         {
           "label": "Entry Price",
-          "number": "$132K"
+          "number": "$132K",
+          "usd": 132000
         }
       ],
       "ru": [
@@ -999,7 +1000,8 @@ const PROJECTS_DATA = {
         },
         {
           "label": "Точка входа",
-          "number": "$132K"
+          "number": "$132K",
+          "usd": 132000
         }
       ]
     },

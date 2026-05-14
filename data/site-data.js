@@ -269,7 +269,11 @@ const SITE_DATA = {
   "exchangeRate": {
     "auto": true,
     "usdToIdr": 17218,
-    "updatedAt": "2026-04-27"
+    "updatedAt": "2026-04-27",
+    "disclaimer": {
+      "en": "Prices are denominated in Indonesian Rupiah (IDR) in accordance with Law No. 7/2011 and PBI 17/3/PBI/2015. USD figures are indicative, converted at 1 USD ≈ {rate} IDR. Settlement is in IDR.",
+      "ru": "Цены выражены в индонезийских рупиях (IDR) в соответствии с законом № 7/2011 и PBI 17/3/PBI/2015. Значения в USD приведены справочно по курсу 1 USD ≈ {rate} IDR. Расчёт производится в рупиях."
+    }
   },
   "investmentGuide": {
     "path": "assets/bali-investment-guide-2026.pdf",

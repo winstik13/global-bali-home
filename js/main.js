@@ -1776,8 +1776,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!usd || !xRate) return '';
     var idr = Math.round(usd * xRate);
     if (short) {
-      if (idr >= 1e9) return 'Rp ' + (idr / 1e9).toFixed(1).replace('.', ',') + ' Miliar';
-      return 'Rp ' + Math.round(idr / 1e6).toLocaleString('id-ID') + ' jt';
+      var pageLang = (document.documentElement.lang || 'en').split('-')[0];
+      if (pageLang === 'ru') {
+        if (idr >= 1e9) return 'Rp ' + (idr / 1e9).toFixed(2).replace(/\.?0+$/, '').replace('.', ',') + ' млрд';
+        return 'Rp ' + Math.round(idr / 1e6) + ' млн';
+      }
+      // EN / default
+      if (idr >= 1e9) return 'Rp ' + (idr / 1e9).toFixed(2).replace(/\.?0+$/, '') + 'B';
+      return 'Rp ' + Math.round(idr / 1e6) + 'M';
     }
     return 'Rp ' + idr.toLocaleString('id-ID');
   }
@@ -1817,13 +1823,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!r) return '';
     opts = opts || {};
     var short = !!opts.short;
-    var fmt = short ? fmtUsdShort : fmtUsdFull;
-    var usd = (r.min === r.max) ? fmt(r.min) : fmt(r.min) + ' – ' + fmt(r.max);
+    var usdFmt = short ? fmtUsdShort : fmtUsdFull;
+    var usd = (r.min === r.max) ? usdFmt(r.min) : usdFmt(r.min) + ' – ' + usdFmt(r.max);
     var idr = '';
     if (xRate) {
-      idr = (r.min === r.max) ? fmtIdr(r.min) : fmtIdr(r.min) + ' – ' + fmtIdr(r.max);
+      idr = (r.min === r.max) ? fmtIdr(r.min, true) : fmtIdr(r.min, true) + ' – ' + fmtIdr(r.max, true);
     }
-    return usd + (idr ? '<span class="price-idr">' + idr + '</span>' : '');
+    if (!idr) return usd;
+    return idr + '<span class="price-aux">≈ ' + usd + '</span>';
   }
 
   // --- ROI Calculator (auto-rendered into [data-roi-calc] placeholders) ---
@@ -2191,13 +2198,26 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
   function refreshIdrDisplay() {
     document.querySelectorAll('[data-usd]').forEach(function(el) {
       var usd = parseFloat(el.dataset.usd);
-      if (usd && xRate) {
-        var idrEl = el.querySelector('.idr-amount') || el.nextElementSibling;
-        if (idrEl && idrEl.classList.contains('idr-amount')) {
-          idrEl.textContent = fmtIdr(usd);
-        }
-      }
+      if (!usd || !xRate) return;
+      var idr = fmtIdr(usd, true);
+      if (!idr) return;
+      var usdLabel = el.dataset.usdLabel || ('$' + usd.toLocaleString('en-US'));
+      el.innerHTML = idr + '<span class="price-aux">≈ ' + usdLabel + '</span>';
     });
+    renderPriceDisclaimer();
+  }
+
+  function renderPriceDisclaimer() {
+    var nodes = document.querySelectorAll('[data-price-disclaimer]');
+    if (!nodes.length || !xRate) return;
+    var pageLang = (document.documentElement.lang || 'en').split('-')[0];
+    var tpl = (typeof SITE_DATA !== 'undefined' && SITE_DATA.exchangeRate && SITE_DATA.exchangeRate.disclaimer)
+      ? (SITE_DATA.exchangeRate.disclaimer[pageLang] || SITE_DATA.exchangeRate.disclaimer.en)
+      : '';
+    if (!tpl) return;
+    var rateStr = xRate.toLocaleString('id-ID');
+    var text = tpl.replace('{rate}', rateStr);
+    nodes.forEach(function(el) { el.textContent = text; });
   }
 
   if (xRateAuto) {
@@ -2217,13 +2237,20 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     }, 3600000);
   }
 
-  // Auto-inject IDR into any element with data-usd="123000"
+  // Auto-replace any element with data-usd="123000": IDR primary + USD aux.
+  // The element's original innerHTML (typically the USD label like "$335K")
+  // becomes the secondary line and is cached in data-usd-label for later refresh.
   document.querySelectorAll('[data-usd]').forEach(function(el) {
     var usd = parseFloat(el.dataset.usd);
-    var short = !!el.closest('.hero__stats, .hero-stats');
-    var idr = fmtIdr(usd, short);
-    if (idr) el.innerHTML = el.innerHTML + '<span class="price-idr">' + idr + '</span>';
+    if (!usd) return;
+    var idr = fmtIdr(usd, true);
+    if (!idr) return;
+    var usdLabel = el.dataset.usdLabel || (el.textContent || '').trim() || ('$' + usd.toLocaleString('en-US'));
+    el.dataset.usdLabel = usdLabel;
+    el.innerHTML = idr + '<span class="price-aux">≈ ' + usdLabel + '</span>';
   });
+
+  renderPriceDisclaimer();
 
   // ─── Dynamic Contact Data from SITE_DATA ───
   if (typeof SITE_DATA !== 'undefined' && SITE_DATA.contacts) {
@@ -2324,9 +2351,9 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     function fmtDualPrice(p) {
       if (!p) return '\u2014';
       var usd = '$' + p.toLocaleString('en-US');
-      var idr = fmtIdr(p);
+      var idr = fmtIdr(p, true);
       if (!idr) return usd;
-      return usd + '<span class="price-idr">' + idr + '</span>';
+      return idr + '<span class="price-aux">\u2248 ' + usd + '</span>';
     }
 
     // Helper: get project keys sorted by order
@@ -2352,7 +2379,13 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       if (!proj || !proj.heroStats) return;
       const stats = proj.heroStats[lang] || proj.heroStats.en;
       el.innerHTML = stats.map(s => {
-        return '<div class="hero-stats__item"><div class="hero-stats__number">' + s.number + '</div><div class="hero-stats__label">' + s.label + '</div></div>';
+        let numberHtml = s.number;
+        if (typeof s.usd === 'number' && s.usd > 0) {
+          const idr = fmtIdr(s.usd, true);
+          const usd = '$' + s.usd.toLocaleString('en-US');
+          if (idr) numberHtml = idr + '<span class="price-aux">≈ ' + usd + '</span>';
+        }
+        return '<div class="hero-stats__item"><div class="hero-stats__number">' + numberHtml + '</div><div class="hero-stats__label">' + s.label + '</div></div>';
       }).join('');
     });
 
