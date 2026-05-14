@@ -4,8 +4,6 @@ const GALLERY_DATA = {
     "images/serenity-villas/bathroom.webp",
     "images/serenity-villas/complex-overview.webp",
     "images/serenity-villas/exterior-view.webp",
-    "images/serenity-villas/master-plan.png",
-    "images/serenity-villas/master-plan.webp",
     "images/serenity-villas/progress-photo.webp",
     "images/serenity-villas/R1_Bath_ (1).webp",
     "images/serenity-villas/R1_Bath_ (2).webp",
@@ -29,8 +27,6 @@ const GALLERY_DATA = {
     "images/serenity-villas/waterfall.webp"
   ],
   estates: [
-    "images/serenity-estates/master-plan.png",
-    "images/serenity-estates/master-plan.webp",
     "images/serenity-estates/pool-villa-a1.webp",
     "images/serenity-estates/Static.0000.webp",
     "images/serenity-estates/Static.0001.webp",
@@ -68,8 +64,6 @@ const GALLERY_DATA = {
     "images/serenity-village/Front_2BR.0001.webp",
     "images/serenity-village/House_night.0000.webp",
     "images/serenity-village/Interior_sun.0001.webp",
-    "images/serenity-village/master-plan.png",
-    "images/serenity-village/master-plan.webp",
     "images/serenity-village/Night.0000.webp",
     "images/serenity-village/Night.0001.webp",
     "images/serenity-village/Night_green_Max.0000.webp",
@@ -83,7 +77,6 @@ const GALLERY_DATA = {
     "images/serenity-village/S Village_Bedroom_2.webp",
     "images/serenity-village/S Village_Bedroom_3.webp",
     "images/serenity-village/SunRise.0001.webp",
-    "images/serenity-village/SV 3.0.webp",
-    "images/serenity-village/SVg_MasterPlan.0000.webp"
+    "images/serenity-village/SV 3.0.webp"
   ],
 };

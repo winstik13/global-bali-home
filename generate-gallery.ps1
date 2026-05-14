@@ -4,6 +4,9 @@
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $extensions = @('.jpg', '.jpeg', '.png', '.webp')
 
+# Technical drawings — NOT marketing visualizations. Excluded from gallery.
+$excludePatterns = @('master-plan', 'masterplan', 'site-plan', 'siteplan', 'floor-plan', 'floorplan')
+
 $categories = @{
     villas  = 'images/serenity-villas'
     estates = 'images/serenity-estates'
@@ -19,6 +22,14 @@ foreach ($cat in $categories.GetEnumerator()) {
     if (Test-Path $folder) {
         $files = Get-ChildItem -Path $folder -File |
             Where-Object { $extensions -contains $_.Extension.ToLower() } |
+            Where-Object {
+                $baseName = $_.BaseName.ToLower()
+                $matched = $false
+                foreach ($pattern in $excludePatterns) {
+                    if ($baseName -like "*$pattern*") { $matched = $true; break }
+                }
+                -not $matched
+            } |
             Sort-Object Name |
             ForEach-Object { "`"$($cat.Value)/$($_.Name)`"" }
     }
