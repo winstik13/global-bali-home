@@ -110,7 +110,6 @@
       'projects.units': 'Units',
       'projects.unitTypes': 'Unit Types',
       'projects.availability': 'Availability',
-      'projects.heroStats': 'Hero Stats',
       'projects.addUnit': '+ Add Unit',
       'projects.addType': '+ Add Type',
       'projects.deleteUnit': 'Delete',
@@ -131,8 +130,6 @@
       'projects.price': 'Price ($)',
       'projects.sold': 'Sold',
       'projects.total': 'Total',
-      'projects.number': 'Number',
-      'projects.label': 'Label',
       'projects.priceLabel': 'Price',
       'projects.newProject': '+ New Project',
       'seo.title': 'SEO Editor',
@@ -447,7 +444,6 @@
       'projects.units': 'Юниты',
       'projects.unitTypes': 'Типы юнитов',
       'projects.availability': 'Доступность',
-      'projects.heroStats': 'Статистика Hero',
       'projects.addUnit': '+ Добавить юнит',
       'projects.addType': '+ Добавить тип',
       'projects.deleteUnit': 'Удалить',
@@ -468,8 +464,6 @@
       'projects.price': 'Цена ($)',
       'projects.sold': 'Продано',
       'projects.total': 'Всего',
-      'projects.number': 'Число',
-      'projects.label': 'Подпись',
       'projects.priceLabel': 'Цена',
       'projects.newProject': '+ Новый проект',
       'seo.title': 'SEO Редактор',
@@ -1544,22 +1538,6 @@
       <button class="btn btn--outline btn--sm" id="add-plan-type" style="margin-top:12px">+ Add Plan Type</button>
     </div>`;
 
-    // Hero Stats (4 languages)
-    html += `<div class="editor-section"><h3>${t('projects.heroStats')}</h3>`;
-    ['en', 'ru'].forEach(lng => {
-      const stats = (p.heroStats && p.heroStats[lng]) || [];
-      html += `<div style="margin-bottom:16px"><div class="hero-stat-field__lang">${lng.toUpperCase()}</div>
-        <div class="hero-stats-grid">`;
-      stats.forEach((s, i) => {
-        html += `<div class="hero-stat-field">
-          <div class="form-group"><label>${t('projects.number')}</label><input type="text" data-lang="${lng}" data-stat="${i}" data-field="number" class="stat-input" value="${escAttr(s.number)}"></div>
-          <div class="form-group"><label>${t('projects.label')}</label><input type="text" data-lang="${lng}" data-stat="${i}" data-field="label" class="stat-input" value="${escAttr(s.label)}"></div>
-        </div>`;
-      });
-      html += '</div></div>';
-    });
-    html += '</div>';
-
     editor.innerHTML = html;
 
     // Bind change events — unit fields
@@ -1625,16 +1603,6 @@
       inp.addEventListener('input', () => {
         const idx = +inp.dataset.utype;
         p.unitTypes[idx].price = inp.value ? +inp.value : null;
-        markChanged();
-      });
-    });
-
-    editor.querySelectorAll('.stat-input').forEach(inp => {
-      inp.addEventListener('input', () => {
-        const lng = inp.dataset.lang;
-        const idx = +inp.dataset.stat;
-        const field = inp.dataset.field;
-        p.heroStats[lng][idx][field] = inp.value;
         markChanged();
       });
     });

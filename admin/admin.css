@@ -1863,29 +1863,6 @@ select option:disabled {
   background: var(--color-danger);
 }
 
-/* ─── HERO STATS EDITOR ─── */
-.hero-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 12px;
-}
-
-.hero-stat-field {
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
-  padding: 12px;
-}
-
-.hero-stat-field__lang {
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--color-accent);
-  margin-bottom: 8px;
-}
-
 /* ─── NEW PROJECT BUTTON ─── */
 .project-tabs__btn--add {
   border-style: dashed !important;
