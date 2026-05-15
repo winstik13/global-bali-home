@@ -43,12 +43,16 @@ const supabase = createClient(SUPABASE_URL, SERVICE_ROLE, {
 });
 
 // ─── маппинг key → файл + имя глобальной константы ───
+// gallery НЕ обрабатывается этим скриптом — gallery-data.js
+// генерится отдельно (scripts/sync-images.mjs или generate-gallery.ps1)
+// из локальной папки images/. Это путь 2 архитектуры: картинки
+// в git → быстрая отдача с Vercel edge, sync из Supabase делается
+// по команде вручную.
 const TARGETS = {
   site:         { file: 'data/site-data.js',         varName: 'SITE_DATA' },
   projects:     { file: 'data/projects-data.js',     varName: 'PROJECTS_DATA' },
   faq:          { file: 'data/faq-data.js',          varName: 'FAQ_DATA' },
   testimonials: { file: 'data/testimonials-data.js', varName: 'TESTIMONIALS_DATA' },
-  gallery:      { file: 'gallery-data.js',           varName: 'GALLERY_DATA' },
 };
 
 // ─── helpers ───
