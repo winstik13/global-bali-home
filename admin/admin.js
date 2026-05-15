@@ -101,9 +101,6 @@
       'projects.unsaved': 'Unsaved changes',
       'projects.publishing': 'Publishing...',
       'projects.published': 'Published! Site updating (~1-2 min)',
-      'projects.projectStatus': 'Project Status',
-      'projects.statusLabel': 'Status',
-      'projects.soldOutAuto': 'Auto: all units sold',
       'projects.floorPlans': 'Floor Plans',
       'projects.noPlan': 'No plan',
       'projects.uploadPlan': 'Upload',
@@ -135,7 +132,6 @@
       'projects.price': 'Price ($)',
       'projects.sold': 'Sold',
       'projects.total': 'Total',
-      'projects.availAutoHint': 'Auto-calculated from unit statuses above',
       'projects.number': 'Number',
       'projects.label': 'Label',
       'projects.priceLabel': 'Price',
@@ -454,9 +450,6 @@
       'projects.unsaved': 'Есть несохранённые изменения',
       'projects.publishing': 'Публикация...',
       'projects.published': 'Опубликовано! Сайт обновится (~1-2 мин)',
-      'projects.projectStatus': 'Статус проекта',
-      'projects.statusLabel': 'Статус',
-      'projects.soldOutAuto': 'Авто: все юниты проданы',
       'projects.floorPlans': 'Планировки',
       'projects.noPlan': 'Нет планировки',
       'projects.uploadPlan': 'Загрузить',
@@ -488,7 +481,6 @@
       'projects.price': 'Цена ($)',
       'projects.sold': 'Продано',
       'projects.total': 'Всего',
-      'projects.availAutoHint': 'Рассчитывается автоматически из статусов юнитов',
       'projects.number': 'Число',
       'projects.label': 'Подпись',
       'projects.priceLabel': 'Цена',
@@ -1444,8 +1436,8 @@
 
     let html = '';
 
-    // Project Status + Availability (merged)
-    const canEditSold = !p.units && p.unitTypes;
+    // Availability recompute (keeps p.availability + showcase in sync, no UI).
+    // p.status is preserved as-is — edited elsewhere if needed.
     if (p.units) {
       p.availability.sold = p.units.filter(u => u.status === 'sold').length;
       p.availability.total = p.units.length;
@@ -1453,26 +1445,6 @@
       p.availability.total = p.unitTypes.reduce((s, ut) => s + ut.count, 0);
     }
     syncShowcaseAvailability(p);
-    const availPct = p.availability.total ? Math.round(p.availability.sold / p.availability.total * 100) : 0;
-    const isAllSold = p.units ? p.units.every(u => u.status === 'sold') : (p.availability.sold >= p.availability.total);
-    const effectiveStatus = isAllSold ? 'sold-out' : (p.status || 'in-progress');
-    const statusOptions = ['pre-sale', 'in-progress', 'completed'];
-    const badgeMap = { 'pre-sale': 'presale', 'in-progress': 'progress', 'completed': 'completed', 'sold-out': 'soldout' };
-    html += `<div class="editor-section"><h3>${t('projects.projectStatus')}</h3>
-      <div class="status-row">
-        <select id="project-status" ${isAllSold ? 'disabled' : ''}>
-          ${statusOptions.map(s => `<option value="${s}"${p.status === s ? ' selected' : ''}>${t('dash.status_' + s)}</option>`).join('')}
-          ${isAllSold ? `<option value="sold-out" selected>${t('dash.status_sold-out')}</option>` : ''}
-        </select>
-        ${canEditSold ? `<input type="number" id="avail-sold" value="${p.availability.sold}" min="0" max="${p.availability.total}" class="status-sold-input">` : `<input type="hidden" id="avail-sold" value="${p.availability.sold}">`}
-        <input type="hidden" id="avail-total" value="${p.availability.total}">
-        <span class="status-sold-text">${p.availability.sold} / ${p.availability.total} ${t('dash.sold').toLowerCase()}</span>
-        <div class="status-bar"><div class="status-bar__fill" style="width:${availPct}%"></div></div>
-        <span class="status-pct">${availPct}%</span>
-      </div>
-      ${isAllSold ? `<small class="field-hint">${t('projects.soldOutAuto')}</small>` : ''}
-      ${!canEditSold && !isAllSold ? `<small class="field-hint">${t('projects.availAutoHint')}</small>` : ''}
-    </div>`;
 
     // Unit Table
     if (p.units) {
@@ -1483,11 +1455,9 @@
 
       p.units.forEach((u, i) => {
         html += `<tr>
-          <td data-label="${t('projects.unit')}"><input type="text" data-unit="${i}" data-field="id" class="unit-text" value="${escAttr(u.id)}" style="width:48px"></td>
-          <td data-label="${t('projects.type')}"><select data-unit="${i}" data-field="type" class="unit-text-sel">
-            ${['1 Bedroom', '2 Bedroom', '3 Bedroom', '4 Bedroom', '5 Bedroom'].map(v => `<option value="${v}"${u.type === v ? ' selected' : ''}>${v}</option>`).join('')}
-          </select></td>
-          <td data-label="${t('projects.floors')}"><input type="number" data-unit="${i}" data-field="floors" class="unit-text" value="${u.floors}" style="width:48px" min="1" max="5"></td>
+          <td data-label="${t('projects.unit')}"><span class="unit-readonly">${escapeHtml(u.id)}</span></td>
+          <td data-label="${t('projects.type')}"><span class="unit-readonly">${escapeHtml(u.type)}</span></td>
+          <td data-label="${t('projects.floors')}"><span class="unit-readonly">${u.floors}</span></td>
           <td data-label="${t('projects.area')}"><div class="unit-suffix"><input type="number" data-unit="${i}" data-field="area" class="unit-text" value="${parseFloat(u.area) || ''}" style="width:56px" min="0" step="1"><span>m²</span></div></td>
           <td data-label="${t('projects.land')}"><div class="unit-suffix"><input type="number" data-unit="${i}" data-field="land" class="unit-text" value="${parseFloat(u.land) || ''}" style="width:56px" min="0" step="0.01"><span>are</span></div></td>
           <td data-label="${t('projects.badge')}"><select data-unit="${i}" data-field="badge" class="unit-badge">
@@ -1679,38 +1649,18 @@
 
     editor.innerHTML = html;
 
-    // Bind project status
-    const statusSel = $('#project-status');
-    if (statusSel && !statusSel.disabled) {
-      statusSel.addEventListener('change', () => {
-        p.status = statusSel.value;
-        markChanged();
-        renderProjectEditor();
-      });
-    }
-
     // Bind change events — unit fields
     editor.querySelectorAll('.unit-text').forEach(inp => {
       inp.addEventListener('input', () => {
         const idx = +inp.dataset.unit;
         const field = inp.dataset.field;
-        if (field === 'floors') {
-          p.units[idx][field] = +inp.value;
-        } else if (field === 'area') {
+        if (field === 'area') {
           p.units[idx][field] = inp.value ? inp.value + ' m²' : '';
         } else if (field === 'land') {
           p.units[idx][field] = inp.value ? inp.value + ' are' : '';
         } else {
           p.units[idx][field] = inp.value;
         }
-        markChanged();
-      });
-    });
-
-    editor.querySelectorAll('.unit-text-sel').forEach(sel => {
-      sel.addEventListener('change', () => {
-        const idx = +sel.dataset.unit;
-        p.units[idx][sel.dataset.field] = sel.value;
         markChanged();
       });
     });
@@ -1868,14 +1818,6 @@
         renderProjectEditor();
       });
     });
-
-    // Only allow manual sold editing for Village (unitTypes without per-unit statuses)
-    if (!p.units && p.unitTypes) {
-      $('#avail-sold').addEventListener('input', (e) => {
-        p.availability.sold = +e.target.value;
-        markChanged();
-      });
-    }
 
     // Floor plan upload (per floor)
     editor.querySelectorAll('.fp-upload').forEach(inp => {
