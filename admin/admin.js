@@ -285,6 +285,16 @@
       'help.analytics.intro': '<strong>How it works:</strong> Paste your tracking IDs below. Scripts are injected automatically — no code changes needed.',
       'help.analytics.empty': '<strong>Empty field</strong> = tracker disabled. Fill in only the services you use.',
       'help.analytics.events': '<strong>Auto-tracked events:</strong> form submissions (contact, quiz, lead magnet, exit popup), WhatsApp clicks, PDF downloads.',
+      'newUnit.title': 'Add New Unit',
+      'newUnit.name': 'Unit Name',
+      'newUnit.namePh': 'e.g. A1, B2, C3',
+      'newUnit.nameHint': 'Fixed after creation — cannot be edited later.',
+      'newUnit.type': 'Type',
+      'newUnit.floors': 'Floors',
+      'newUnit.add': 'Add Unit',
+      'newUnit.cancel': 'Cancel',
+      'newUnit.nameRequired': 'Unit name is required.',
+      'newUnit.nameExists': 'Unit "{name}" already exists in this project.',
       'newProject.title': 'Add New Project',
       'newProject.name': 'Project Name',
       'newProject.slug': 'Slug',
@@ -634,6 +644,16 @@
       'help.analytics.intro': '<strong>Как это работает:</strong> Вставьте ID трекеров ниже. Скрипты подключаются автоматически — менять код не нужно.',
       'help.analytics.empty': '<strong>Пустое поле</strong> = трекер отключён. Заполняйте только те сервисы, которые используете.',
       'help.analytics.events': '<strong>Авто-события:</strong> отправка форм (контакт, квиз, лид-магнит, exit popup), клики WhatsApp, скачивание PDF.',
+      'newUnit.title': 'Добавить юнит',
+      'newUnit.name': 'Название юнита',
+      'newUnit.namePh': 'напр. A1, B2, C3',
+      'newUnit.nameHint': 'Фиксируется при создании — потом изменить нельзя.',
+      'newUnit.type': 'Тип',
+      'newUnit.floors': 'Этажность',
+      'newUnit.add': 'Добавить юнит',
+      'newUnit.cancel': 'Отмена',
+      'newUnit.nameRequired': 'Укажите название юнита.',
+      'newUnit.nameExists': 'Юнит «{name}» уже есть в этом проекте.',
       'newProject.title': 'Добавить проект',
       'newProject.name': 'Название проекта',
       'newProject.slug': 'Slug',
@@ -1776,13 +1796,7 @@
     // Add/Delete units
     const addUnitBtn = $('#btn-add-unit');
     if (addUnitBtn) {
-      addUnitBtn.addEventListener('click', () => {
-        p.units.push({ id: 'NEW', type: '2 Bedroom', floors: 1, area: '', land: '', status: 'available', price: null, badge: null });
-        p.availability.total = p.units.length;
-        recalcAvailability();
-        markChanged();
-        renderProjectEditor();
-      });
+      addUnitBtn.addEventListener('click', () => showNewUnitModal(p));
     }
 
     editor.querySelectorAll('[data-delete-unit]').forEach(btn => {
@@ -2750,6 +2764,70 @@
   // service cards, Trust block, Place section и т.д. — все ручные оптимизации).
   // Кнопка "Generate Pages" в редакторе проекта больше не добавляется.
 
+
+  // ─── New Unit Modal ───
+  function showNewUnitModal(p) {
+    const existing = $('#new-unit-modal');
+    if (existing) existing.remove();
+
+    const modal = document.createElement('div');
+    modal.id = 'new-unit-modal';
+    modal.className = 'admin-modal';
+    const typeOptions = ['1 Bedroom', '2 Bedroom', '3 Bedroom', '4 Bedroom', '5 Bedroom'];
+    modal.innerHTML = `<div class="admin-modal__backdrop"></div>
+      <div class="admin-modal__content">
+        <div class="admin-modal__header">
+          <h2>${t('newUnit.title')}</h2>
+          <button class="admin-modal__close">&times;</button>
+        </div>
+        <div class="admin-modal__body">
+          <div class="form-group">
+            <label>${t('newUnit.name')}</label>
+            <input type="text" id="nu-name" placeholder="${t('newUnit.namePh')}" autofocus>
+            <small class="field-hint">${t('newUnit.nameHint')}</small>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>${t('newUnit.type')}</label>
+              <select id="nu-type">
+                ${typeOptions.map(v => `<option value="${v}"${v === '2 Bedroom' ? ' selected' : ''}>${v}</option>`).join('')}
+              </select>
+            </div>
+            <div class="form-group">
+              <label>${t('newUnit.floors')}</label>
+              <input type="number" id="nu-floors" value="1" min="1" max="5">
+            </div>
+          </div>
+        </div>
+        <div class="admin-modal__footer">
+          <button class="btn btn--outline" id="nu-cancel">${t('newUnit.cancel')}</button>
+          <button class="btn btn--primary" id="nu-add">${t('newUnit.add')}</button>
+        </div>
+      </div>`;
+
+    document.body.appendChild(modal);
+
+    const close = () => modal.remove();
+    modal.querySelector('.admin-modal__backdrop').addEventListener('click', close);
+    modal.querySelector('.admin-modal__close').addEventListener('click', close);
+    $('#nu-cancel').addEventListener('click', close);
+
+    const submit = () => {
+      const name = $('#nu-name').value.trim();
+      const type = $('#nu-type').value;
+      const floors = Math.max(1, Math.min(5, +$('#nu-floors').value || 1));
+      if (!name) { alert(t('newUnit.nameRequired')); return; }
+      if (p.units.some(u => u.id === name)) { alert(t('newUnit.nameExists').replace('{name}', name)); return; }
+      p.units.push({ id: name, type, floors, area: '', land: '', status: 'available', price: null, badge: null });
+      p.availability.total = p.units.length;
+      recalcAvailability();
+      markChanged();
+      close();
+      renderProjectEditor();
+    };
+    $('#nu-add').addEventListener('click', submit);
+    $('#nu-name').addEventListener('keydown', (e) => { if (e.key === 'Enter') submit(); });
+  }
 
   // ─── New Project Modal ───
   function showNewProjectModal() {
