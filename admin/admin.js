@@ -175,6 +175,8 @@
       'gallery.filesSelected': 'files selected',
       'faq.title': 'FAQ Editor',
       'faq.addQuestion': '+ Add Question',
+      'faq.allProjects': 'All projects',
+      'faq.projectHint': 'Which project does this question relate to? Choose "All projects" for general questions.',
       'faq.publish': 'Publish FAQ',
       'faq.publishing': 'Publishing FAQ...',
       'faq.published': 'Published! Site updating (~1-2 min)',
@@ -509,6 +511,8 @@
       'gallery.filesSelected': 'файлов выбрано',
       'faq.title': 'Редактор FAQ',
       'faq.addQuestion': '+ Добавить вопрос',
+      'faq.allProjects': 'Все проекты',
+      'faq.projectHint': 'К какому проекту относится вопрос? «Все проекты» — для общих вопросов.',
       'faq.publish': 'Опубликовать FAQ',
       'faq.publishing': 'Публикация FAQ...',
       'faq.published': 'Опубликовано! Сайт обновится (~1-2 мин)',
@@ -3175,11 +3179,20 @@
       return;
     }
 
+    const projectOpts = projectsData
+      ? Object.keys(projectsData).map(slug => ({ slug, name: projectsData[slug].name || slug }))
+      : [];
+
     editor.innerHTML = sorted.map((item, idx) => {
       const i = faqData.indexOf(item);
+      const itemProject = item.project || 'all';
       return `<div class="faq-editor-item" data-faq-idx="${i}">
         <div class="faq-editor-item__header">
           <span class="faq-editor-item__num">#${idx + 1}</span>
+          <select class="faq-editor-item__project" data-faq-project="${i}" title="${t('faq.projectHint')}">
+            <option value="all"${itemProject === 'all' ? ' selected' : ''}>${t('faq.allProjects')}</option>
+            ${projectOpts.map(p => `<option value="${p.slug}"${itemProject === p.slug ? ' selected' : ''}>${escapeHtml(p.name)}</option>`).join('')}
+          </select>
           <div class="faq-editor-item__controls">
             <button class="btn btn--icon" data-faq-up="${i}" title="Move Up" ${idx === 0 ? 'disabled' : ''}>↑</button>
             <button class="btn btn--icon" data-faq-down="${i}" title="Move Down" ${idx === sorted.length - 1 ? 'disabled' : ''}>↓</button>
@@ -3206,6 +3219,15 @@
         faqPreviewLang = lng;
         dirtyTabs.faq = true;
         updateFaqPreview();
+      });
+    });
+
+    // Project scope select
+    editor.querySelectorAll('[data-faq-project]').forEach(sel => {
+      sel.addEventListener('change', () => {
+        const i = +sel.dataset.faqProject;
+        faqData[i].project = sel.value;
+        dirtyTabs.faq = true;
       });
     });
 
@@ -3275,6 +3297,7 @@
       const maxOrder = faqData.reduce((m, it) => Math.max(m, it.order || 0), 0);
       faqData.push({
         order: maxOrder + 1,
+        project: 'all',
         question: { en: '', ru: '' },
         answer: { en: '', ru: '' }
       });
