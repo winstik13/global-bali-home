@@ -291,25 +291,6 @@
       'social.facebook': 'Facebook URL',
       'social.instagram': 'Instagram URL',
       'social.save': 'Save Social',
-      'roi.title': 'ROI Calculator Parameters',
-      'roi.navTitle': 'ROI',
-      'roi.scenarios': 'Scenarios',
-      'roi.minInvestment': 'Min Investment ($)',
-      'roi.maxInvestment': 'Max Investment ($)',
-      'roi.step': 'Step ($)',
-      'roi.defaultInvestment': 'Default Investment ($)',
-      'roi.defaultOccupancy': 'Default Occupancy (%)',
-      'roi.occupancyRange': 'Occupancy Range (%)',
-      'roi.conservative': 'Conservative — Yield / Growth (%)',
-      'roi.normal': 'Normal — Yield / Growth (%)',
-      'roi.optimistic': 'Optimistic — Yield / Growth (%)',
-      'roi.save': 'Save ROI Settings',
-      'roi.textsTitle': 'Calculator Texts (3 languages)',
-      'roi.textsHint': 'Use {project} placeholder in titleProject — it will be replaced with the project name.',
-      'roi.textsSave': 'Save Calculator Texts',
-      'help.roi.investment': '<strong>Investment range:</strong> Min/max/step for the slider on homepage.',
-      'help.roi.scenarios': '<strong>Scenarios:</strong> Yield and growth rates for Conservative/Normal/Optimistic.',
-      'help.roi.occupancy': '<strong>Occupancy:</strong> Default occupancy rate and its slider range.',
       'analytics.title': 'Analytics & Tracking',
       'analytics.tracking': 'Tracking Services',
       'analytics.seo': 'SEO Verification',
@@ -682,25 +663,6 @@
       'social.facebook': 'URL Facebook',
       'social.instagram': 'URL Instagram',
       'social.save': 'Сохранить соцсети',
-      'roi.title': 'Параметры ROI-калькулятора',
-      'roi.navTitle': 'ROI',
-      'roi.scenarios': 'Сценарии',
-      'roi.minInvestment': 'Мин. инвестиция ($)',
-      'roi.maxInvestment': 'Макс. инвестиция ($)',
-      'roi.step': 'Шаг ($)',
-      'roi.defaultInvestment': 'Инвестиция по умолчанию ($)',
-      'roi.defaultOccupancy': 'Заполняемость по умолчанию (%)',
-      'roi.occupancyRange': 'Диапазон заполняемости (%)',
-      'roi.conservative': 'Консервативный — Доход / Рост (%)',
-      'roi.normal': 'Обычный — Доход / Рост (%)',
-      'roi.optimistic': 'Оптимистичный — Доход / Рост (%)',
-      'roi.save': 'Сохранить настройки ROI',
-      'roi.textsTitle': 'Тексты калькулятора (3 языка)',
-      'roi.textsHint': 'Используйте плейсхолдер {project} в titleProject — он заменится на название проекта.',
-      'roi.textsSave': 'Сохранить тексты калькулятора',
-      'help.roi.investment': '<strong>Диапазон инвестиций:</strong> Мин/макс/шаг для слайдера на главной.',
-      'help.roi.scenarios': '<strong>Сценарии:</strong> Ставки доходности и роста для каждого сценария.',
-      'help.roi.occupancy': '<strong>Заполняемость:</strong> Стандартное значение и диапазон слайдера.',
       'analytics.title': 'Аналитика и трекинг',
       'analytics.tracking': 'Сервисы трекинга',
       'analytics.seo': 'SEO-верификация',
@@ -1154,8 +1116,6 @@
     renderContactsForm();
     renderGuideInfo();
     renderSocialForm();
-    renderRoiForm();
-    renderRoiTextsForm();
     populateExitPopup();
     renderProjectEditor();
     renderGallery();
@@ -1166,7 +1126,6 @@
     // Dirty-tracking для секций без явных listener'ов.
     // Контейнеры стабильные — внутренности могут ре-рендериться.
     bindDirtyDelegate('#set-social', 'social');
-    bindDirtyDelegate('#set-roi', 'roi');
     bindDirtyDelegate('#set-guide', 'guide');
     bindDirtyDelegate('#tab-analytics', 'analytics');
     // Restore last active tab
@@ -3375,170 +3334,6 @@
     btnLoading(btn, false);
   });
 
-  // ─── ROI Calculator Settings ───
-  function renderRoiForm() {
-    if (!siteData) return;
-    const roi = siteData.roi || {};
-    $('#roi-min').value = roi.minInvestment || 100000;
-    $('#roi-max').value = roi.maxInvestment || 1000000;
-    $('#roi-step').value = roi.step || 10000;
-    $('#roi-default').value = roi.defaultInvestment || 335000;
-    $('#roi-occ-default').value = roi.defaultOccupancy || 80;
-    $('#roi-occ-min').value = roi.minOccupancy || 50;
-    $('#roi-occ-max').value = roi.maxOccupancy || 95;
-    const sc = roi.scenarios || {};
-    $('#roi-cons-yield').value = (sc.conservative?.yield || 0.08) * 100;
-    $('#roi-cons-growth').value = (sc.conservative?.growth || 0.06) * 100;
-    $('#roi-norm-yield').value = (sc.normal?.yield || 0.12) * 100;
-    $('#roi-norm-growth').value = (sc.normal?.growth || 0.10) * 100;
-    $('#roi-opt-yield').value = (sc.optimistic?.yield || 0.15) * 100;
-    $('#roi-opt-growth').value = (sc.optimistic?.growth || 0.12) * 100;
-  }
-
-  $('#btn-roi-save')?.addEventListener('click', async () => {
-    const btn = $('#btn-roi-save');
-    const status = $('#roi-save-status');
-    btnLoading(btn, true);
-    try {
-      // Preserve any pending text edits in the open lang pane
-      try { captureRoiTextsPane(); } catch (e) {}
-      // Preserve existing texts when saving numeric params
-      const existingTexts = (siteData.roi && siteData.roi.texts) || undefined;
-      siteData.roi = {
-        minInvestment: parseInt($('#roi-min').value) || 100000,
-        maxInvestment: parseInt($('#roi-max').value) || 1000000,
-        step: parseInt($('#roi-step').value) || 10000,
-        defaultInvestment: parseInt($('#roi-default').value) || 335000,
-        minOccupancy: parseInt($('#roi-occ-min').value) || 50,
-        maxOccupancy: parseInt($('#roi-occ-max').value) || 95,
-        occupancyStep: 5,
-        defaultOccupancy: parseInt($('#roi-occ-default').value) || 80,
-        scenarios: {
-          conservative: { yield: parseFloat($('#roi-cons-yield').value) / 100 || 0.08, growth: parseFloat($('#roi-cons-growth').value) / 100 || 0.06 },
-          normal: { yield: parseFloat($('#roi-norm-yield').value) / 100 || 0.12, growth: parseFloat($('#roi-norm-growth').value) / 100 || 0.10 },
-          optimistic: { yield: parseFloat($('#roi-opt-yield').value) / 100 || 0.15, growth: parseFloat($('#roi-opt-growth').value) / 100 || 0.12 }
-        }
-      };
-      if (existingTexts) siteData.roi.texts = existingTexts;
-      const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
-      await commitFile('data/site-data.js', content, 'Update ROI calculator parameters via admin');
-      dirtyTabs.roi = false;
-      status.textContent = t('common.saved');
-      status.className = 'publish-status success';
-      updateRateLimit();
-    } catch (err) {
-      status.textContent = t('common.error') + err.message;
-      status.className = 'publish-status error';
-    }
-    btnLoading(btn, false);
-  });
-
-  // ─── ROI Calculator Texts (i18n) ───
-  const ROI_TEXT_KEYS = [
-    { key: 'tag', label: 'Tag (eyebrow)' },
-    { key: 'title', label: 'Title — Homepage' },
-    { key: 'titleProject', label: 'Title — Project page (use {project})' },
-    { key: 'subtitle', label: 'Subtitle — Homepage' },
-    { key: 'subtitleProject', label: 'Subtitle — Project page' },
-    { key: 'investmentLabel', label: 'Investment Amount label' },
-    { key: 'scenarioLabel', label: 'Scenario label' },
-    { key: 'conservative', label: 'Conservative scenario name' },
-    { key: 'normal', label: 'Normal scenario name' },
-    { key: 'optimistic', label: 'Optimistic scenario name' },
-    { key: 'yieldSuffix', label: 'Yield suffix (e.g. "yield")' },
-    { key: 'occupancyLabel', label: 'Occupancy Rate label' },
-    { key: 'annualIncome', label: 'Annual Rental Income label' },
-    { key: 'return5y', label: '5-Year Return label' },
-    { key: 'return10y', label: '10-Year Return label' },
-    { key: 'disclaimer', label: 'Disclaimer (small text under results)' },
-    { key: 'ctaHome', label: 'CTA button — Homepage' },
-    { key: 'ctaProject', label: 'CTA button — Project page' },
-  ];
-  const ROI_TEXT_DEFAULTS = {
-    en: { tag: 'Investment Calculator', title: 'Calculate Your Returns', titleProject: 'Calculate Returns for {project}', subtitle: 'See the potential of your Bali real estate investment', subtitleProject: 'See the potential income from your investment in this project', investmentLabel: 'Investment Amount', scenarioLabel: 'Scenario', conservative: 'Conservative', normal: 'Normal', optimistic: 'Optimistic', yieldSuffix: 'yield', occupancyLabel: 'Occupancy Rate', annualIncome: 'Annual Rental Income', return5y: '5-Year Total Return', return10y: '10-Year Total Return', disclaimer: '*Projections based on current market data. Actual returns may vary.', ctaHome: 'Discuss Your Investment', ctaProject: 'Schedule a Private Tour' },
-    ru: { tag: 'Инвестиционный калькулятор', title: 'Рассчитайте доходность', titleProject: 'Рассчитайте доходность {project}', subtitle: 'Оцените потенциал инвестиций в недвижимость на Бали', subtitleProject: 'Оцените потенциальный доход от инвестиций в этот проект', investmentLabel: 'Сумма инвестиций', scenarioLabel: 'Сценарий', conservative: 'Консервативный', normal: 'Обычный', optimistic: 'Оптимистичный', yieldSuffix: 'доходность', occupancyLabel: 'Заполняемость', annualIncome: 'Годовой доход от аренды', return5y: 'Общий доход за 5 лет', return10y: 'Общий доход за 10 лет', disclaimer: '*Прогнозы основаны на текущих рыночных данных.', ctaHome: 'Обсудить инвестиции', ctaProject: 'Записаться на приватный тур' },
-  };
-  let roiTextsActiveLang = 'en';
-
-  function renderRoiTextsPane() {
-    const pane = $('#roi-texts-pane');
-    if (!pane) return;
-    const lang = roiTextsActiveLang;
-    const texts = (siteData.roi && siteData.roi.texts && siteData.roi.texts[lang]) || ROI_TEXT_DEFAULTS[lang];
-    let html = '';
-    ROI_TEXT_KEYS.forEach(({ key, label }) => {
-      const raw = texts[key] || '';
-      const isLong = key === 'disclaimer' || key === 'subtitle' || key === 'subtitleProject';
-      html += `<div class="form-group"><label>${label}</label>` +
-        (isLong
-          ? `<textarea class="roi-text-input" data-roi-text="${key}" rows="2">${escapeHtml(raw)}</textarea>`
-          : `<input type="text" class="roi-text-input" data-roi-text="${key}" value="${escAttr(raw)}">`) +
-        `</div>`;
-    });
-    pane.innerHTML = html;
-  }
-
-  function renderRoiTextsForm() {
-    if (!siteData) return;
-    if (!siteData.roi) siteData.roi = {};
-    if (!siteData.roi.texts) siteData.roi.texts = JSON.parse(JSON.stringify(ROI_TEXT_DEFAULTS));
-    roiTextsActiveLang = 'en';
-    const tabs = document.querySelectorAll('#roi-texts-tabs .lang-tab');
-    tabs.forEach(t => {
-      t.classList.toggle('active', t.dataset.lang === 'en');
-      t.onclick = () => {
-        // Save current pane values into siteData first
-        captureRoiTextsPane();
-        roiTextsActiveLang = t.dataset.lang;
-        tabs.forEach(x => x.classList.toggle('active', x.dataset.lang === roiTextsActiveLang));
-        renderRoiTextsPane();
-      };
-    });
-    renderRoiTextsPane();
-  }
-
-  function captureRoiTextsPane() {
-    const lang = roiTextsActiveLang;
-    if (!siteData.roi.texts[lang]) siteData.roi.texts[lang] = {};
-    document.querySelectorAll('#roi-texts-pane .roi-text-input').forEach(inp => {
-      siteData.roi.texts[lang][inp.dataset.roiText] = inp.value;
-    });
-  }
-
-  $('#btn-roi-texts-save')?.addEventListener('click', async () => {
-    const btn = $('#btn-roi-texts-save');
-    const status = $('#roi-texts-status');
-    btnLoading(btn, true);
-    try {
-      captureRoiTextsPane();
-      // Preserve any pending numeric param edits
-      const roiNum = $('#roi-min');
-      if (roiNum && siteData.roi) {
-        siteData.roi.minInvestment = parseInt($('#roi-min').value) || siteData.roi.minInvestment;
-        siteData.roi.maxInvestment = parseInt($('#roi-max').value) || siteData.roi.maxInvestment;
-        siteData.roi.step = parseInt($('#roi-step').value) || siteData.roi.step;
-        siteData.roi.defaultInvestment = parseInt($('#roi-default').value) || siteData.roi.defaultInvestment;
-        siteData.roi.minOccupancy = parseInt($('#roi-occ-min').value) || siteData.roi.minOccupancy;
-        siteData.roi.maxOccupancy = parseInt($('#roi-occ-max').value) || siteData.roi.maxOccupancy;
-        siteData.roi.defaultOccupancy = parseInt($('#roi-occ-default').value) || siteData.roi.defaultOccupancy;
-        if (!siteData.roi.scenarios) siteData.roi.scenarios = {};
-        siteData.roi.scenarios.conservative = { yield: parseFloat($('#roi-cons-yield').value) / 100 || 0.08, growth: parseFloat($('#roi-cons-growth').value) / 100 || 0.06 };
-        siteData.roi.scenarios.normal = { yield: parseFloat($('#roi-norm-yield').value) / 100 || 0.12, growth: parseFloat($('#roi-norm-growth').value) / 100 || 0.10 };
-        siteData.roi.scenarios.optimistic = { yield: parseFloat($('#roi-opt-yield').value) / 100 || 0.15, growth: parseFloat($('#roi-opt-growth').value) / 100 || 0.12 };
-      }
-      const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
-      await commitFile('data/site-data.js', content, 'Update calculator texts via admin');
-      dirtyTabs.roi = false;
-      status.textContent = t('common.saved');
-      status.className = 'publish-status success';
-      updateRateLimit();
-    } catch (err) {
-      status.textContent = t('common.error') + err.message;
-      status.className = 'publish-status error';
-    }
-    btnLoading(btn, false);
-  });
-
   // ─── FAQ Editor ───
   let faqData = null;
   // faqChanged is now dirtyTabs.faq
@@ -4091,8 +3886,6 @@
       renderContactsForm();
       renderGuideInfo();
       renderSocialForm();
-      renderRoiForm();
-      renderRoiTextsForm();
     });
   }
 

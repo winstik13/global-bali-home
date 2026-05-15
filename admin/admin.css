@@ -1426,13 +1426,6 @@ select option:disabled {
   box-shadow: none;
 }
 
-/* Paired inputs (e.g. min/max, yield/growth) */
-.input-pair {
-  display: flex;
-  gap: var(--sp-sm);
-}
-.input-pair input { width: 50%; }
-
 /* Section subheading */
 .editor-section h4 {
   font-size: 0.85rem;
