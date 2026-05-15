@@ -13,7 +13,7 @@
 
   --color-text:       #E1D9C9;
   --color-text-muted: rgba(225, 217, 201, 0.75);
-  --color-text-dim:   rgba(225, 217, 201, 0.65);
+  --color-text-dim:   rgba(225, 217, 201, 0.5);
   --color-border:     rgba(225, 217, 201, 0.1);
   --color-border-hover: rgba(225, 217, 201, 0.25);
 
@@ -2196,91 +2196,6 @@ select option:disabled {
   height: 16px;
 }
 
-/* ─── COLOR PICKER TAB ─── */
-.color-group {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: var(--sp-md);
-}
-.color-group:first-of-type { margin-top: 0; }
-
-.color-picker-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.color-picker-row > label {
-  min-width: 180px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--color-text-muted);
-}
-
-.color-input-pair {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.color-input-pair input[type="color"] {
-  width: 44px;
-  height: 36px;
-  padding: 2px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  background: transparent;
-  cursor: pointer;
-}
-
-.color-input-pair input[type="color"]::-webkit-color-swatch-wrapper { padding: 2px; }
-.color-input-pair input[type="color"]::-webkit-color-swatch { border: none; border-radius: 2px; }
-
-.color-hex-input {
-  width: 90px;
-  font-family: monospace;
-  font-size: 0.85rem;
-  padding: 6px 8px;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--color-border);
-  color: var(--color-text);
-  text-transform: uppercase;
-}
-
-.color-hex-input:focus {
-  border-bottom-color: var(--color-accent);
-  outline: none;
-}
-
-.color-hint {
-  font-size: 0.75rem;
-  color: var(--color-text-dim);
-  margin-bottom: 12px;
-}
-
-.color-derived {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 0.7rem;
-  color: var(--color-text-dim);
-  margin-top: 4px;
-  flex-basis: 100%;
-  padding-left: 196px;
-}
-
-.color-swatch {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-hover);
-  vertical-align: middle;
-}
-
 /* ─── DASH CARD ACTIONS ─── */
 .dash-card__actions {
   display: grid;
@@ -2339,8 +2254,6 @@ select option:disabled {
   .dashboard-grid { grid-template-columns: 1fr; }
   .seo-controls { flex-direction: column; }
   .gallery-controls { flex-wrap: wrap; }
-  .color-derived { padding-left: 0; }
-  .color-picker-row > label { min-width: 120px; }
   .editor-help-popup { width: 260px; right: 8px; }
 
   /* Sticky action bars: uniform sizing on mobile */

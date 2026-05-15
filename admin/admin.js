@@ -226,25 +226,6 @@
       'test.sourceHint': 'e.g. Google Reviews, Trustpilot',
       'test.copyFromEn': 'Copy from EN',
       'faq.copyFromEn': 'Copy from EN',
-      'colors.title': 'Site Colors',
-      'colors.navTitle': 'Colors',
-      'colors.mainBg': 'Main Background',
-      'colors.altBg': 'Alternate Background',
-      'colors.cardPanel': 'Card / Panel',
-      'colors.primaryText': 'Primary Text',
-      'colors.cream': 'Cream (Buttons)',
-      'colors.brandAccent': 'Brand Accent',
-      'colors.muted': 'Muted 75%',
-      'colors.dim': 'Dim 50%',
-      'colors.border': 'Border 10%',
-      'colors.save': 'Save Colors',
-      'colors.reset': 'Reset to Defaults',
-      'colors.resetDone': 'Reset to defaults (not saved yet)',
-      'colors.invalidHex': 'Invalid hex for ',
-      'help.colors.text': '<strong>Text color</strong> determines derived colors (muted text, borders).',
-      'help.colors.live': '<strong>Live preview:</strong> Changes apply instantly in admin panel.',
-      'help.colors.site': '<strong>On site:</strong> Colors apply after Save + ~1-2 min deploy.',
-      'help.colors.reset': 'Use <strong>Reset to Defaults</strong> to restore original palette.',
       'help.exitpopup.what': '<strong>What it does:</strong> Shows a popup when a desktop visitor moves the cursor toward closing the tab. Offers a free investment guide in exchange for an email — a lead capture tool.',
       'help.exitpopup.enabled': '<strong>Enabled:</strong> Turn the popup on or off across the entire site.',
       'help.exitpopup.delay': '<strong>Trigger Delay:</strong> Minimum seconds a visitor must spend on the page before the popup can appear. Prevents annoying new visitors (recommended: 15–30 sec).',
@@ -598,25 +579,6 @@
       'test.sourceHint': 'напр. Google Reviews, Trustpilot',
       'test.copyFromEn': 'Скопировать из EN',
       'faq.copyFromEn': 'Скопировать из EN',
-      'colors.title': 'Цвета сайта',
-      'colors.navTitle': 'Цвета',
-      'colors.mainBg': 'Основной фон',
-      'colors.altBg': 'Альтернативный фон',
-      'colors.cardPanel': 'Карточки / Панели',
-      'colors.primaryText': 'Основной текст',
-      'colors.cream': 'Кремовый (Кнопки)',
-      'colors.brandAccent': 'Акцентный цвет',
-      'colors.muted': 'Приглуш. 75%',
-      'colors.dim': 'Тусклый 50%',
-      'colors.border': 'Рамка 10%',
-      'colors.save': 'Сохранить цвета',
-      'colors.reset': 'Сбросить к стандартным',
-      'colors.resetDone': 'Сброшено (не сохранено)',
-      'colors.invalidHex': 'Неверный HEX для ',
-      'help.colors.text': '<strong>Цвет текста</strong> определяет производные цвета (приглушённый, рамки).',
-      'help.colors.live': '<strong>Предпросмотр:</strong> Изменения видны мгновенно в админке.',
-      'help.colors.site': '<strong>На сайте:</strong> Цвета применятся после сохранения + ~1-2 мин.',
-      'help.colors.reset': 'Используйте <strong>Сбросить</strong> для возврата палитры.',
       'help.exitpopup.what': '<strong>Что делает:</strong> Показывает попап, когда десктопный посетитель двигает курсор к закрытию вкладки. Предлагает бесплатный гид по инвестициям в обмен на email — инструмент сбора лидов.',
       'help.exitpopup.enabled': '<strong>Включён:</strong> Включает или выключает попап на всём сайте.',
       'help.exitpopup.delay': '<strong>Задержка:</strong> Минимальное время (секунды) на странице до срабатывания попапа. Не раздражает новых посетителей (рекомендуется: 15–30 сек).',
@@ -813,9 +775,8 @@
   let pendingChanges = false;
   const _dirtyState = {
     projects: false, faq: false, testimonials: false, seo: false,
-    colors: false, contacts: false, rate: false, exitpopup: false,
-    social: false, roi: false, stats: false, guide: false,
-    analytics: false,
+    contacts: false, rate: false, exitpopup: false,
+    social: false, guide: false, analytics: false,
   };
   const dirtyTabs = new Proxy(_dirtyState, {
     set(target, prop, value) {
@@ -825,11 +786,11 @@
     }
   });
 
-  // Map dirty keys to nav tab names. Settings tab agрeгate
-  // contacts/rate/colors/social/roi/stats/guide.
+  // Map dirty keys to nav tab names. Settings tab aggregates
+  // contacts/rate/social/guide.
   const _dirtyTabMap = {
-    rate: 'settings', contacts: 'settings', colors: 'settings',
-    social: 'settings', roi: 'settings', stats: 'settings', guide: 'settings',
+    rate: 'settings', contacts: 'settings',
+    social: 'settings', guide: 'settings',
   };
 
   function updateDirtyIndicators() {
@@ -1119,7 +1080,6 @@
     populateExitPopup();
     renderProjectEditor();
     renderGallery();
-    renderColorsTab();
     loadFaqData();
     loadTestimonialsData();
 
@@ -3794,156 +3754,14 @@
     document.querySelectorAll('.editor-help-popup').forEach(p => p.hidden = true);
   });
 
-  // ─── Colors Tab ───
-  const DEFAULT_COLORS = {
-    bg: '#1a1a14', bgAlt: '#111110', bgCard: '#2a2a20',
-    accent: '#6B8F4E', text: '#E1D9C9', cream: '#F7F7F0'
-  };
-
-  const COLOR_VAR_MAP = {
-    bg: '--color-bg', bgAlt: '--color-bg-alt', bgCard: '--color-bg-card',
-    accent: '--color-accent', text: '--color-text', cream: '--color-cream'
-  };
-
-  function hexToRgb(hex) {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
-    return { r, g, b };
-  }
-
-  function isValidHex(str) {
-    return /^#[0-9A-Fa-f]{6}$/.test(str);
-  }
-
-  function applyDerivedColors(hex) {
-    const { r, g, b } = hexToRgb(hex);
-    const root = document.documentElement.style;
-    root.setProperty('--color-text-muted', `rgba(${r},${g},${b},0.75)`);
-    root.setProperty('--color-text-dim', `rgba(${r},${g},${b},0.5)`);
-    root.setProperty('--color-border', `rgba(${r},${g},${b},0.1)`);
-    root.setProperty('--color-border-hover', `rgba(${r},${g},${b},0.25)`);
-    // Update swatches
-    const sm = $('#swatch-muted');
-    const sd = $('#swatch-dim');
-    const sb = $('#swatch-border');
-    if (sm) sm.style.background = `rgba(${r},${g},${b},0.75)`;
-    if (sd) sd.style.background = `rgba(${r},${g},${b},0.5)`;
-    if (sb) sb.style.background = `rgba(${r},${g},${b},0.1)`;
-  }
-
-  function applyColorLive(key, hex) {
-    const varName = COLOR_VAR_MAP[key];
-    if (varName) document.documentElement.style.setProperty(varName, hex);
-    if (key === 'text') applyDerivedColors(hex);
-  }
-
-  function renderColorsTab() {
-    if (!siteData) loadSiteData();
-    if (!siteData.colors) siteData.colors = JSON.parse(JSON.stringify(DEFAULT_COLORS));
-    const colors = siteData.colors;
-    for (const key of Object.keys(DEFAULT_COLORS)) {
-      const picker = $('#color-' + key);
-      const hexInput = $('#color-' + key + '-hex');
-      if (picker) picker.value = colors[key] || DEFAULT_COLORS[key];
-      if (hexInput) hexInput.value = (colors[key] || DEFAULT_COLORS[key]).toUpperCase();
-    }
-    applyDerivedColors(colors.text || DEFAULT_COLORS.text);
-  }
-
-  // Wire color picker events
-  for (const key of Object.keys(DEFAULT_COLORS)) {
-    const picker = $('#color-' + key);
-    const hexInput = $('#color-' + key + '-hex');
-    if (picker && hexInput) {
-      picker.addEventListener('input', () => {
-        dirtyTabs.colors = true;
-        hexInput.value = picker.value.toUpperCase();
-        hexInput.classList.remove('input--error');
-        applyColorLive(key, picker.value);
-      });
-      hexInput.addEventListener('input', () => {
-        dirtyTabs.colors = true;
-        let val = hexInput.value.trim();
-        if (val.length > 0 && val[0] !== '#') val = '#' + val;
-        if (isValidHex(val)) {
-          picker.value = val;
-          hexInput.classList.remove('input--error');
-          applyColorLive(key, val);
-        } else {
-          hexInput.classList.add('input--error');
-        }
-      });
-    }
-  }
-
-  // Settings tab activation (colors + other settings)
+  // Settings tab activation
   const settingsNavBtn = document.querySelector('.admin-nav__btn[data-tab="settings"]');
   if (settingsNavBtn) {
     settingsNavBtn.addEventListener('click', () => {
-      renderColorsTab();
       renderRateInfo();
       renderContactsForm();
       renderGuideInfo();
       renderSocialForm();
-    });
-  }
-
-  // Save colors
-  const colorsSaveBtn = $('#btn-colors-save');
-  if (colorsSaveBtn) {
-    colorsSaveBtn.addEventListener('click', async () => {
-      if (!siteData) loadSiteData();
-      const status = $('#colors-save-status');
-      const colors = {};
-      for (const key of Object.keys(DEFAULT_COLORS)) {
-        const hexInput = $('#color-' + key + '-hex');
-        const val = hexInput ? hexInput.value.trim() : '';
-        if (!isValidHex(val)) {
-          status.textContent = t('colors.invalidHex') + key;
-          status.className = 'publish-status error';
-          return;
-        }
-        colors[key] = val.toUpperCase();
-      }
-      siteData.colors = colors;
-      btnLoading(colorsSaveBtn, true);
-      status.textContent = t('common.saving');
-      status.className = 'publish-status';
-      try {
-        const content = '/* eslint-disable */\nconst SITE_DATA = ' + JSON.stringify(siteData, null, 2) + ';\n';
-        await commitFile('data/site-data.js', content, 'Update site colors via admin panel');
-        dirtyTabs.colors = false;
-        status.textContent = t('common.saved');
-        status.className = 'publish-status success';
-        updateRateLimit();
-      } catch (err) {
-        status.textContent = t('common.error') + err.message;
-        status.className = 'publish-status error';
-      }
-      btnLoading(colorsSaveBtn, false);
-    });
-  }
-
-  // Reset colors
-  const colorsResetBtn = $('#btn-colors-reset');
-  if (colorsResetBtn) {
-    colorsResetBtn.addEventListener('click', () => {
-      for (const key of Object.keys(DEFAULT_COLORS)) {
-        const picker = $('#color-' + key);
-        const hexInput = $('#color-' + key + '-hex');
-        if (picker) picker.value = DEFAULT_COLORS[key];
-        if (hexInput) {
-          hexInput.value = DEFAULT_COLORS[key].toUpperCase();
-          hexInput.classList.remove('input--error');
-        }
-        applyColorLive(key, DEFAULT_COLORS[key]);
-      }
-      const status = $('#colors-save-status');
-      if (status) {
-        status.textContent = t('colors.resetDone');
-        status.className = 'publish-status';
-      }
     });
   }
 

@@ -273,7 +273,6 @@
           <a href="#set-social" data-i18n="social.title">Social</a>
           <a href="#set-rate" data-i18n="rate.navTitle">Rate</a>
           <a href="#set-guide" data-i18n="guide.navTitle">Guide</a>
-          <a href="#set-colors" data-i18n="colors.navTitle">Colors</a>
         </nav>
 
         <!-- Contact Information -->
@@ -377,74 +376,6 @@
               <input type="file" id="guide-file-input" accept=".pdf" hidden>
               <span id="guide-upload-status" class="publish-status"></span>
             </div>
-          </div>
-        </div>
-
-        <!-- Site Colors -->
-        <div id="set-colors" class="editor-section editor-section--has-help">
-          <button class="editor-help-btn" data-help="colors" aria-label="Help">?</button>
-          <div class="editor-help-popup" id="help-colors" hidden>
-            <p data-i18n="help.colors.text"><strong>Text color</strong> determines derived colors (muted text, borders).</p>
-            <p data-i18n="help.colors.live"><strong>Live preview:</strong> Changes apply instantly in admin panel.</p>
-            <p data-i18n="help.colors.site"><strong>On site:</strong> Colors apply after Save + ~1-2 min deploy.</p>
-            <p data-i18n="help.colors.reset">Use <strong>Reset to Defaults</strong> to restore original palette.</p>
-          </div>
-          <h3 data-i18n="colors.title">Site Colors</h3>
-          <div class="color-group">
-            <div class="color-picker-row">
-              <label data-i18n="colors.mainBg">Main Background</label>
-              <div class="color-input-pair">
-                <input type="color" id="color-bg" value="#1a1a14">
-                <input type="text" id="color-bg-hex" class="color-hex-input" value="#1a1a14" maxlength="7" placeholder="#1a1a14">
-              </div>
-            </div>
-            <div class="color-picker-row">
-              <label data-i18n="colors.altBg">Alternate Background</label>
-              <div class="color-input-pair">
-                <input type="color" id="color-bgAlt" value="#111110">
-                <input type="text" id="color-bgAlt-hex" class="color-hex-input" value="#111110" maxlength="7" placeholder="#111110">
-              </div>
-            </div>
-            <div class="color-picker-row">
-              <label data-i18n="colors.cardPanel">Card / Panel</label>
-              <div class="color-input-pair">
-                <input type="color" id="color-bgCard" value="#2a2a20">
-                <input type="text" id="color-bgCard-hex" class="color-hex-input" value="#2a2a20" maxlength="7" placeholder="#2a2a20">
-              </div>
-            </div>
-          </div>
-          <div class="color-group">
-            <div class="color-picker-row">
-              <label data-i18n="colors.primaryText">Primary Text</label>
-              <div class="color-input-pair">
-                <input type="color" id="color-text" value="#E1D9C9">
-                <input type="text" id="color-text-hex" class="color-hex-input" value="#E1D9C9" maxlength="7" placeholder="#E1D9C9">
-              </div>
-              <div class="color-derived" id="text-derived-preview">
-                <span class="color-swatch" id="swatch-muted"></span> <span data-i18n="colors.muted">Muted 75%</span>
-                <span class="color-swatch" id="swatch-dim"></span> <span data-i18n="colors.dim">Dim 50%</span>
-                <span class="color-swatch" id="swatch-border"></span> <span data-i18n="colors.border">Border 10%</span>
-              </div>
-            </div>
-            <div class="color-picker-row">
-              <label data-i18n="colors.cream">Cream (Buttons)</label>
-              <div class="color-input-pair">
-                <input type="color" id="color-cream" value="#F7F7F0">
-                <input type="text" id="color-cream-hex" class="color-hex-input" value="#F7F7F0" maxlength="7" placeholder="#F7F7F0">
-              </div>
-            </div>
-            <div class="color-picker-row">
-              <label data-i18n="colors.brandAccent">Brand Accent</label>
-              <div class="color-input-pair">
-                <input type="color" id="color-accent" value="#6B8F4E">
-                <input type="text" id="color-accent-hex" class="color-hex-input" value="#6B8F4E" maxlength="7" placeholder="#6B8F4E">
-              </div>
-            </div>
-          </div>
-          <div class="editor-actions editor-actions--inline">
-            <button id="btn-colors-save" class="btn btn--primary btn--sm" data-i18n="colors.save">Save Colors</button>
-            <button id="btn-colors-reset" class="btn btn--outline btn--sm" data-i18n="colors.reset">Reset to Defaults</button>
-            <span id="colors-save-status" class="publish-status"></span>
           </div>
         </div>
 
