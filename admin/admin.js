@@ -138,14 +138,6 @@
       'projects.description': 'Description',
       'projects.positioning': 'Positioning Tagline',
       'projects.positioningPh': 'e.g. Boutique Yield Play',
-      'projects.projectDetails': 'Project Details',
-      'projects.startingPrice': 'Starting Price (USD)',
-      'projects.bedrooms': 'Bedrooms',
-      'projects.compArea': 'Area Range',
-      'projects.compLand': 'Land Range',
-      'projects.totalUnits': 'Total Units',
-      'projects.compPool': 'Pool',
-      'projects.handover': 'Handover',
       'projects.newProject': '+ New Project',
       'projects.decisionGuide': 'Decision Guide (catalog page)',
       'projects.decisionGuideHint': 'Shown as a cell on projects.html — helps buyers match their goal to this project.',
@@ -497,14 +489,6 @@
       'projects.description': 'Описание',
       'projects.positioning': 'Позиционирование (тэглайн)',
       'projects.positioningPh': 'напр. Бутик-доходность',
-      'projects.projectDetails': 'Детали проекта',
-      'projects.startingPrice': 'Начальная цена (USD)',
-      'projects.bedrooms': 'Спальни',
-      'projects.compArea': 'Диапазон площади',
-      'projects.compLand': 'Диапазон участка',
-      'projects.totalUnits': 'Всего юнитов',
-      'projects.compPool': 'Бассейн',
-      'projects.handover': 'Сдача',
       'projects.newProject': '+ Новый проект',
       'projects.decisionGuide': 'Decision Guide (страница каталога)',
       'projects.decisionGuideHint': 'Показывается ячейкой на projects.html — помогает покупателю сопоставить цель с этим проектом.',
@@ -1516,27 +1500,6 @@
     }
 
 
-    // Project Details (comparison table fields)
-    if (!p.compPool || typeof p.compPool === 'string') {
-      p.compPool = { en: p.compPool || '', ru: '' };
-    }
-    html += `<div class="editor-section"><h3>${t('projects.projectDetails')}</h3>
-      <div class="form-grid--3">
-        <div class="form-group"><label>${t('projects.startingPrice')}</label><input type="number" id="pd-startingPrice" value="${p.startingPrice || ''}" min="0" step="1000"></div>
-        <div class="form-group"><label>${t('projects.bedrooms')}</label><input type="text" id="pd-bedrooms" value="${p.bedrooms || ''}" placeholder="2–3"></div>
-        <div class="form-group"><label>${t('projects.handover')}</label><input type="text" id="pd-handover" value="${p.handover || ''}" placeholder="Q2 2026"></div>
-      </div>
-      <div class="form-grid--3">
-        <div class="form-group"><label>${t('projects.compArea')}</label><input type="text" id="pd-compArea" value="${p.compArea || ''}" placeholder="167–210 m²"></div>
-        <div class="form-group"><label>${t('projects.compLand')}</label><input type="text" id="pd-compLand" value="${p.compLand || ''}" placeholder="2–3 are"></div>
-        <div class="form-group"><label>${t('projects.totalUnits')}</label><input type="number" id="pd-totalUnits" value="${p.totalUnits || ''}" min="1"></div>
-      </div>
-      <div class="form-grid">
-        <div class="form-group"><label>${t('projects.compPool')} (EN)</label><input type="text" class="pd-compPool" data-lang="en" value="${p.compPool.en || ''}" placeholder="Private"></div>
-        <div class="form-group"><label>${t('projects.compPool')} (RU)</label><input type="text" class="pd-compPool" data-lang="ru" value="${p.compPool.ru || ''}" placeholder="Приватный"></div>
-      </div>
-    </div>`;
-
     // Floor Plans
     if (!p.floorPlans) p.floorPlans = {};
     // Migrate: ensure { floors, specs } structure
@@ -1776,22 +1739,6 @@
       });
     });
 
-    // Project Details bindings
-    ['startingPrice', 'totalUnits'].forEach(field => {
-      const inp = document.getElementById('pd-' + field);
-      if (inp) inp.addEventListener('input', () => { p[field] = +inp.value || 0; markChanged(); });
-    });
-    ['bedrooms', 'compArea', 'compLand', 'handover'].forEach(field => {
-      const inp = document.getElementById('pd-' + field);
-      if (inp) inp.addEventListener('input', () => { p[field] = inp.value; markChanged(); });
-    });
-    editor.querySelectorAll('.pd-compPool').forEach(inp => {
-      inp.addEventListener('input', () => {
-        if (!p.compPool || typeof p.compPool === 'string') p.compPool = { en: '', ru: '' };
-        p.compPool[inp.dataset.lang] = inp.value;
-        markChanged();
-      });
-    });
 
     // Add/Delete units
     const addUnitBtn = $('#btn-add-unit');
