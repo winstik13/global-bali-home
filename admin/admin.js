@@ -111,7 +111,6 @@
       'projects.unitTypes': 'Unit Types',
       'projects.availability': 'Availability',
       'projects.heroStats': 'Hero Stats',
-      'projects.showcaseCard': 'Showcase Card',
       'projects.addUnit': '+ Add Unit',
       'projects.addType': '+ Add Type',
       'projects.deleteUnit': 'Delete',
@@ -135,20 +134,7 @@
       'projects.number': 'Number',
       'projects.label': 'Label',
       'projects.priceLabel': 'Price',
-      'projects.description': 'Description',
-      'projects.positioning': 'Positioning Tagline',
-      'projects.positioningPh': 'e.g. Boutique Yield Play',
       'projects.newProject': '+ New Project',
-      'projects.decisionGuide': 'Decision Guide (catalog page)',
-      'projects.decisionGuideHint': 'Shown as a cell on projects.html — helps buyers match their goal to this project.',
-      'projects.decisionGuideIcon': 'Icon',
-      'projects.decisionGuideIconYield': 'Yield (trending chart)',
-      'projects.decisionGuideIconLand': 'Land (building)',
-      'projects.decisionGuideIconCashflow': 'Cashflow (dollar)',
-      'projects.decisionGuideQuestion': 'Question',
-      'projects.decisionGuideQuestionPh': 'e.g. Want passive income?',
-      'projects.decisionGuideBenefit': 'Benefit',
-      'projects.decisionGuideBenefitPh': 'e.g. 12–15% yield',
       'seo.title': 'SEO Editor',
       'seo.page': 'Page',
       'seo.selectPage': '— Select page —',
@@ -462,7 +448,6 @@
       'projects.unitTypes': 'Типы юнитов',
       'projects.availability': 'Доступность',
       'projects.heroStats': 'Статистика Hero',
-      'projects.showcaseCard': 'Карточка проекта',
       'projects.addUnit': '+ Добавить юнит',
       'projects.addType': '+ Добавить тип',
       'projects.deleteUnit': 'Удалить',
@@ -486,20 +471,7 @@
       'projects.number': 'Число',
       'projects.label': 'Подпись',
       'projects.priceLabel': 'Цена',
-      'projects.description': 'Описание',
-      'projects.positioning': 'Позиционирование (тэглайн)',
-      'projects.positioningPh': 'напр. Бутик-доходность',
       'projects.newProject': '+ Новый проект',
-      'projects.decisionGuide': 'Decision Guide (страница каталога)',
-      'projects.decisionGuideHint': 'Показывается ячейкой на projects.html — помогает покупателю сопоставить цель с этим проектом.',
-      'projects.decisionGuideIcon': 'Иконка',
-      'projects.decisionGuideIconYield': 'Доходность (график)',
-      'projects.decisionGuideIconLand': 'Земля (здание)',
-      'projects.decisionGuideIconCashflow': 'Cashflow (доллар)',
-      'projects.decisionGuideQuestion': 'Вопрос',
-      'projects.decisionGuideQuestionPh': 'напр. Хотите пассивный доход?',
-      'projects.decisionGuideBenefit': 'Бенефит',
-      'projects.decisionGuideBenefitPh': 'напр. 12–15% годовых',
       'seo.title': 'SEO Редактор',
       'seo.page': 'Страница',
       'seo.selectPage': '— Выберите страницу —',
@@ -1588,48 +1560,6 @@
     });
     html += '</div>';
 
-    // Showcase Text (4 languages)
-    html += `<div class="editor-section"><h3>${t('projects.showcaseCard')}</h3>`;
-    ['en', 'ru'].forEach(lng => {
-      html += `<div style="margin-bottom:16px"><div class="hero-stat-field__lang">${lng.toUpperCase()}</div>
-        <div class="form-group"><label>${t('projects.positioning')}</label><input type="text" class="showcase-input" data-lang="${lng}" data-field="positioning" value="${escAttr((p.positioning && p.positioning[lng]) || '')}" placeholder="${t('projects.positioningPh')}"></div>
-        <div class="form-group"><label>${t('projects.description')}</label><textarea class="showcase-input" data-lang="${lng}" data-field="showcaseDesc" rows="2">${escapeHtml((p.showcaseDesc && p.showcaseDesc[lng]) || '')}</textarea></div>
-      </div>`;
-    });
-    html += '</div>';
-
-    // Decision Guide — cell shown on projects.html catalog page
-    // Ensure structure exists so the editor has values to show
-    if (!p.decisionGuide) {
-      p.decisionGuide = {
-        icon: 'yield',
-        question: { en: '', ru: '' },
-        benefit: { en: '', ru: '' }
-      };
-    }
-    if (!p.decisionGuide.question) p.decisionGuide.question = { en: '', ru: '' };
-    if (!p.decisionGuide.benefit) p.decisionGuide.benefit = { en: '', ru: '' };
-    const dgIconOptions = [
-      ['yield',    t('projects.decisionGuideIconYield')],
-      ['land',     t('projects.decisionGuideIconLand')],
-      ['cashflow', t('projects.decisionGuideIconCashflow')]
-    ];
-    html += `<div class="editor-section"><h3>${t('projects.decisionGuide')}</h3>
-      <small class="field-hint">${t('projects.decisionGuideHint')}</small>
-      <div class="form-group">
-        <label>${t('projects.decisionGuideIcon')}</label>
-        <select id="dg-icon">
-          ${dgIconOptions.map(([v, l]) => `<option value="${v}"${p.decisionGuide.icon === v ? ' selected' : ''}>${l}</option>`).join('')}
-        </select>
-      </div>`;
-    ['en', 'ru'].forEach(lng => {
-      html += `<div style="margin-bottom:16px"><div class="hero-stat-field__lang">${lng.toUpperCase()}</div>
-        <div class="form-group"><label>${t('projects.decisionGuideQuestion')}</label><input type="text" class="dg-input" data-lang="${lng}" data-field="question" value="${escAttr(p.decisionGuide.question[lng] || '')}" placeholder="${t('projects.decisionGuideQuestionPh')}"></div>
-        <div class="form-group"><label>${t('projects.decisionGuideBenefit')}</label><input type="text" class="dg-input" data-lang="${lng}" data-field="benefit" value="${escAttr(p.decisionGuide.benefit[lng] || '')}" placeholder="${t('projects.decisionGuideBenefitPh')}"></div>
-      </div>`;
-    });
-    html += '</div>';
-
     editor.innerHTML = html;
 
     // Bind change events — unit fields
@@ -1708,37 +1638,6 @@
         markChanged();
       });
     });
-
-    editor.querySelectorAll('.showcase-input').forEach(inp => {
-      inp.addEventListener('input', () => {
-        const lng = inp.dataset.lang;
-        const field = inp.dataset.field;
-        if (!p[field] || typeof p[field] !== 'object') p[field] = { en: '', ru: '' };
-        p[field][lng] = inp.value;
-        markChanged();
-      });
-    });
-
-    // Decision Guide bindings
-    const dgIconSel = $('#dg-icon');
-    if (dgIconSel) {
-      dgIconSel.addEventListener('change', () => {
-        if (!p.decisionGuide) p.decisionGuide = { icon: 'yield', question: { en: '', ru: '' }, benefit: { en: '', ru: '' } };
-        p.decisionGuide.icon = dgIconSel.value;
-        markChanged();
-      });
-    }
-    editor.querySelectorAll('.dg-input').forEach(inp => {
-      inp.addEventListener('input', () => {
-        if (!p.decisionGuide) p.decisionGuide = { icon: 'yield', question: { en: '', ru: '' }, benefit: { en: '', ru: '' } };
-        const field = inp.dataset.field;
-        const lng = inp.dataset.lang;
-        if (!p.decisionGuide[field]) p.decisionGuide[field] = { en: '', ru: '' };
-        p.decisionGuide[field][lng] = inp.value;
-        markChanged();
-      });
-    });
-
 
     // Add/Delete units
     const addUnitBtn = $('#btn-add-unit');
