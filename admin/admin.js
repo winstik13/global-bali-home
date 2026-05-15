@@ -3623,20 +3623,64 @@
   }
 
   // ─── Analytics Tab ───
+  // Regex и format обязаны совпадать с проверкой в js/main.js.
+  // Если формат тут не пройдёт — на сайте трекер не подключится.
   const ANALYTICS_FIELDS = [
-    { id: 'analytics-ga4', key: 'ga4' },
-    { id: 'analytics-facebook', key: 'facebookPixel' },
-    { id: 'analytics-yandex', key: 'yandexMetrika' },
-    { id: 'analytics-clarity', key: 'clarity' },
-    { id: 'analytics-gsc', key: 'gscVerification' }
+    { id: 'analytics-ga4',      key: 'ga4',             regex: /^G-[A-Z0-9]{4,10}$/,        format: 'G-XXXXXXXXXX' },
+    { id: 'analytics-facebook', key: 'facebookPixel',   regex: /^\d{10,20}$/,               format: '10–20 цифр' },
+    { id: 'analytics-yandex',   key: 'yandexMetrika',   regex: /^\d{5,12}$/,                format: '5–12 цифр' },
+    { id: 'analytics-clarity',  key: 'clarity',         regex: /^[a-z0-9]{8,12}$/i,         format: '8–12 буквенно-цифровых символов' },
+    { id: 'analytics-gsc',      key: 'gscVerification', regex: /^[A-Za-z0-9_-]{30,60}$/,    format: '30–60 символов (буквы/цифры/-/_)' }
   ];
+
+  function validateAnalyticsInput(input, field, statusEl) {
+    const val = input.value.trim();
+    input.classList.remove('input--valid', 'input--invalid');
+    statusEl.classList.remove('input-status--valid', 'input-status--invalid');
+    statusEl.textContent = '';
+    statusEl.title = '';
+
+    if (val === '') return; // пусто = трекер выключен, это нормальное состояние
+
+    if (field.regex.test(val)) {
+      input.classList.add('input--valid');
+      statusEl.classList.add('input-status--valid');
+      statusEl.textContent = '✓';
+      statusEl.title = 'Формат корректный';
+    } else {
+      input.classList.add('input--invalid');
+      statusEl.classList.add('input-status--invalid');
+      statusEl.textContent = '✗';
+      statusEl.title = 'Неверный формат. Ожидается: ' + field.format;
+    }
+  }
 
   function renderAnalyticsForm() {
     if (!siteData) loadSiteData();
     const a = (siteData && siteData.analytics) || {};
     for (const f of ANALYTICS_FIELDS) {
       const input = $('#' + f.id);
-      if (input) input.value = a[f.key] || '';
+      if (!input) continue;
+      input.value = a[f.key] || '';
+
+      // Wire validation один раз на input. Defensive: если уже было,
+      // только перепроверяем текущее значение.
+      let statusEl;
+      if (!input.dataset.validationBound) {
+        input.dataset.validationBound = '1';
+        // Оборачиваем input в .input-wrapper для абсолютного позиционирования иконки
+        const wrapper = document.createElement('div');
+        wrapper.className = 'input-wrapper';
+        input.parentNode.insertBefore(wrapper, input);
+        wrapper.appendChild(input);
+        statusEl = document.createElement('span');
+        statusEl.className = 'input-status';
+        wrapper.appendChild(statusEl);
+        input.addEventListener('input', () => validateAnalyticsInput(input, f, statusEl));
+      } else {
+        statusEl = input.parentNode.querySelector('.input-status');
+      }
+      if (statusEl) validateAnalyticsInput(input, f, statusEl);
     }
   }
 

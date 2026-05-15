@@ -227,6 +227,45 @@ input[type="number"] {
   border-bottom-color: var(--color-accent);
 }
 
+/* Inline validation: ✓/✗ icon to the right of input.
+   Used in Analytics tab (admin.js wires this up dynamically). */
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper input {
+  /* leave room for the status icon */
+  padding-right: 24px;
+}
+
+.input-status {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.input-status--valid {
+  color: var(--color-success);
+}
+
+.input-status--invalid {
+  color: var(--color-danger);
+}
+
+.form-group input.input--valid {
+  border-bottom-color: var(--color-success);
+}
+
+.form-group input.input--invalid {
+  border-bottom-color: var(--color-danger);
+}
+
 .form-group select {
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23E1D9C9' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
