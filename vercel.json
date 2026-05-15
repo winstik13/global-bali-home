@@ -5,6 +5,7 @@
   "installCommand": "npm install --omit=dev",
   "framework": null,
   "redirects": [
+    { "source": "/admin", "destination": "/admin/", "permanent": true },
     { "source": "/guide", "destination": "/", "permanent": false },
     { "source": "/guide/(.*)", "destination": "/", "permanent": false },
     { "source": "/assets/bali-investment-guide-2026.pdf", "destination": "/", "permanent": false }
