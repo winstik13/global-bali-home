@@ -892,6 +892,12 @@ td .price-idr {
 .unit-table td:nth-child(7) {
   display: none !important;
 }
+
+/* Temporarily hide price line in project showcase cards (index.html, projects.html).
+   To re-enable: remove this block. */
+.project-showcase__price {
+  display: none !important;
+}
 .price-aux {
   font-family: var(--font-body);
   font-size: 0.72em;
