@@ -73,13 +73,13 @@ const SITE_DATA = {
       "en": {
         "occupancyRate": "Projected<br>Occupancy Rate",
         "villasDesigned": "Villas<br>in Portfolio",
-        "founderExperience": "Years on<br>Wall Street",
+        "founderExperience": "Years in Investment<br>Real Estate",
         "investorsWorldwide": "Investors<br>Worldwide"
       },
       "ru": {
         "occupancyRate": "Прогнозируемая<br>заполняемость",
         "villasDesigned": "Виллы<br>в портфолио",
-        "founderExperience": "Лет на<br>Уолл-стрит",
+        "founderExperience": "Лет в инвестиционной<br>недвижимости",
         "investorsWorldwide": "Инвесторов<br>по всему миру"
       }
     },
