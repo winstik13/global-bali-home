@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
           question: 'What is your budget?',
-          options: ['Exploring Options', 'Rp 2.58B – Rp 6.03B', 'Rp 6.03B – Rp 8.61B', 'Rp 8.61B+']
+          options: ['Exploring Options', 'Rp 2.58B – Rp 6.03B ($150K – $350K)', 'Rp 6.03B – Rp 8.61B ($350K – $500K)', 'Rp 8.61B+ ($500K+)']
         },
         {
           question: 'When are you planning to buy?',
@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
           question: 'Какой у вас бюджет?',
-          options: ['Изучаю варианты', 'Rp 2.58B – Rp 6.03B', 'Rp 6.03B – Rp 8.61B', 'Rp 8.61B+']
+          options: ['Изучаю варианты', 'Rp 2,58 млрд – Rp 6,03 млрд ($150K – $350K)', 'Rp 6,03 млрд – Rp 8,61 млрд ($350K – $500K)', 'Rp 8,61 млрд+ ($500K+)']
         },
         {
           question: 'Когда планируете покупку?',
@@ -1270,10 +1270,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const scores = { village: 0, villas: 0, estates: 0 };
 
     // Budget (60% weight)
-    if (budget === 'Exploring Options')    { scores.village += 60; scores.villas += 15; scores.estates += 10; }
-    else if (budget === 'Rp 2.58B – Rp 6.03B')   { scores.village += 30; scores.villas += 60; scores.estates += 35; }
-    else if (budget === 'Rp 6.03B – Rp 8.61B')   { scores.village += 5;  scores.villas += 35; scores.estates += 60; }
-    else /* Rp 8.61B+ */                      { scores.village += 0;  scores.villas += 20; scores.estates += 60; }
+    if (budget === 'Exploring Options' || budget === 'Изучаю варианты') { scores.village += 60; scores.villas += 15; scores.estates += 10; }
+    else if (budget.indexOf('($150K') >= 0)   { scores.village += 30; scores.villas += 60; scores.estates += 35; }
+    else if (budget.indexOf('($350K') >= 0)   { scores.village += 5;  scores.villas += 35; scores.estates += 60; }
+    else /* $500K+ tier */                    { scores.village += 0;  scores.villas += 20; scores.estates += 60; }
 
     // Goal (25% weight)
     if (goal === 'Rental income')          { scores.village += 25; scores.villas += 20; scores.estates += 15; }
@@ -2615,7 +2615,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       projects.forEach(function(k) { html += '<th>' + PD[k].name + '</th>'; });
       html += '</tr></thead><tbody>';
       var rows = [
-        { key: 'price', accent: true, fn: function(k) { return fmtPriceRangeHtml(PD[k], { short: true }); } },
+        // 'price' row temporarily hidden (IDR-only mode)
         { key: 'bedrooms', fn: function(k) { return PD[k].bedrooms || '\u2014'; } },
         { key: 'area', fn: function(k) { return PD[k].compArea || '\u2014'; } },
         { key: 'land', fn: function(k) { return PD[k].compLand || '\u2014'; } },

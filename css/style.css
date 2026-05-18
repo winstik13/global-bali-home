@@ -885,6 +885,13 @@ td .price-idr {
 .price-aux-inline {
   display: none !important;
 }
+
+/* Temporarily hide the "Price" column (7th column) in unit tables.
+   To re-enable: remove this block. */
+.unit-table th:nth-child(7),
+.unit-table td:nth-child(7) {
+  display: none !important;
+}
 .price-aux {
   font-family: var(--font-body);
   font-size: 0.72em;
