@@ -279,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
           'default': 'Affordable 1-2 bedroom villas in a vibrant complex with shared amenities.'
         },
         villas: {
-          'Rental income': 'Premium 2-3 bedroom villas — jungle views, private pools, and proven 12-15% rental yields.',
+          'Rental income': 'Premium 2-3 bedroom villas — jungle views, private pools, and proven 10-15% rental yields.',
           'Personal residence': 'Spacious 2-3 bedroom villas surrounded by jungle and natural waterfalls — your Bali home.',
           'Long-term investment': '2-3 bedroom villas in Ubud — proven demand and projected 8–12% annual capital appreciation.',
           'default': 'Premium 2-3 bedroom villas with jungle views, private pools, and full management.'
@@ -383,7 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
           'default': 'Доступные виллы 1–2 спальни в комплексе с общими удобствами.'
         },
         villas: {
-          'Rental income': 'Премиальные виллы 2–3 спальни — вид на джунгли, приватные бассейны и подтверждённая доходность 12–15%.',
+          'Rental income': 'Премиальные виллы 2–3 спальни — вид на джунгли, приватные бассейны и подтверждённая доходность 10–15%.',
           'Personal residence': 'Просторные виллы 2–3 спальни в окружении джунглей и водопадов — ваш дом на Бали.',
           'Long-term investment': 'Виллы 2–3 спальни в Убуде — стабильный спрос и прогнозируемый рост стоимости 8–12% в год.',
           'default': 'Премиальные виллы 2–3 спальни с видом на джунгли, приватными бассейнами и полным управлением.'

@@ -5,8 +5,8 @@ const FAQ_DATA = [
   {
     "order": 1,
     "answer": {
-      "en": "Bali welcomed over 6 million international visitors in 2024, and tourism continues to grow year over year. This drives consistent short-term rental demand, especially in premium areas like Ubud. Property values in central Bali have appreciated 8–12% annually over the past five years. Combined with rental yields of 12–15%, the total return potential makes Bali one of the strongest markets in Southeast Asia for real estate investment.",
-      "ru": "Бали принял более 6 миллионов иностранных туристов в 2024 году, и туристический поток продолжает расти. Это обеспечивает стабильный спрос на краткосрочную аренду, особенно в премиальных районах, таких как Убуд. Стоимость недвижимости в центральных районах Бали растёт на 8–12% ежегодно за последние пять лет. В сочетании с арендной доходностью 12–15% совокупный потенциал возврата делает Бали одним из наиболее привлекательных рынков недвижимости в Юго-Восточной Азии."
+      "en": "Bali welcomed over 6 million international visitors in 2024, and tourism continues to grow year over year. This drives consistent short-term rental demand, especially in premium areas like Ubud. Property values in central Bali have appreciated 8–12% annually over the past five years. Combined with rental yields of 10–15%, the total return potential makes Bali one of the strongest markets in Southeast Asia for real estate investment.",
+      "ru": "Бали принял более 6 миллионов иностранных туристов в 2024 году, и туристический поток продолжает расти. Это обеспечивает стабильный спрос на краткосрочную аренду, особенно в премиальных районах, таких как Убуд. Стоимость недвижимости в центральных районах Бали растёт на 8–12% ежегодно за последние пять лет. В сочетании с арендной доходностью 10–15% совокупный потенциал возврата делает Бали одним из наиболее привлекательных рынков недвижимости в Юго-Восточной Азии."
     },
     "question": {
       "en": "Why invest in Bali real estate?",
@@ -27,8 +27,8 @@ const FAQ_DATA = [
   {
     "order": 3,
     "answer": {
-      "en": "Our projects target 12–15% annual rental yield. For example, a Rp 5.77B villa in Serenity Villas at 80% occupancy generates Rp 689M–Rp 861M per year in rental income — a payback period of around 7–8 years. On top of rental income, property appreciation in Bali adds 8–12% annually to your total return. Detailed projections for each unit are available upon request — our team will walk you through the numbers.",
-      "ru": "Наши проекты нацелены на 12–15% годовой арендной доходности. Например, вилла стоимостью Rp 5,77 млрд в Serenity Villas при заполняемости 80% генерирует Rp 689 млн – Rp 861 млн в год арендного дохода — срок окупаемости около 7–8 лет. Помимо аренды, рост стоимости недвижимости на Бали добавляет 8–12% ежегодно к вашему совокупному доходу. Детальные прогнозы по каждому юниту доступны по запросу — наша команда подробно разберёт с вами все цифры."
+      "en": "Our projects target 10–15% annual rental yield. For example, a Rp 5.77B villa in Serenity Villas at 80% occupancy generates Rp 689M–Rp 861M per year in rental income — a payback period of around 7–8 years. On top of rental income, property appreciation in Bali adds 8–12% annually to your total return. Detailed projections for each unit are available upon request — our team will walk you through the numbers.",
+      "ru": "Наши проекты нацелены на 10–15% годовой арендной доходности. Например, вилла стоимостью Rp 5,77 млрд в Serenity Villas при заполняемости 80% генерирует Rp 689 млн – Rp 861 млн в год арендного дохода — срок окупаемости около 7–8 лет. Помимо аренды, рост стоимости недвижимости на Бали добавляет 8–12% ежегодно к вашему совокупному доходу. Детальные прогнозы по каждому юниту доступны по запросу — наша команда подробно разберёт с вами все цифры."
     },
     "question": {
       "en": "What ROI can I expect?",
