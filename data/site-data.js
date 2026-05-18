@@ -126,13 +126,13 @@ const SITE_DATA = {
     "form": {
       "en": {
         "name": "Your name",
-        "time": "Preferred time",
+        "time": "Convenient time to contact",
         "email": "Email (optional)",
         "title": "How can we reach you?",
         "submit": "Request a Tour",
         "comment": "Any special requests? (optional)",
         "consent": "I agree to the processing of my personal data in accordance with the Privacy Policy",
-        "subtitle": "Our manager will contact you within 2 hours to confirm the tour details.",
+        "subtitle": "Our manager will contact you at a convenient time to confirm the tour details.",
         "whatsapp": "WhatsApp or phone number",
         "timeOptions": [
           "Morning (9–12)",
@@ -143,13 +143,13 @@ const SITE_DATA = {
       },
       "ru": {
         "name": "Ваше имя",
-        "time": "Удобное время",
+        "time": "Удобное время для связи",
         "email": "Email (необязательно)",
         "title": "Как с вами связаться?",
         "submit": "Запросить тур",
         "comment": "Особые пожелания? (необязательно)",
         "consent": "Я согласен на обработку персональных данных в соответствии с Политикой конфиденциальности",
-        "subtitle": "Наш менеджер свяжется с вами в течение 2 часов для подтверждения деталей тура.",
+        "subtitle": "Наш менеджер свяжется с вами в удобное для вас время для подтверждения деталей тура.",
         "whatsapp": "WhatsApp или телефон",
         "timeOptions": [
           "Утро (9–12)",
@@ -229,13 +229,13 @@ const SITE_DATA = {
     },
     "thankYou": {
       "en": {
-        "text": "Our manager will contact you within 2 hours to arrange the details.",
+        "text": "Our manager will contact you at a convenient time to arrange the details.",
         "title": "Tour Request Sent!",
         "whatsapp": "Message us on WhatsApp",
         "projectLink": "Learn more about"
       },
       "ru": {
-        "text": "Наш менеджер свяжется с вами в течение 2 часов для согласования деталей.",
+        "text": "Наш менеджер свяжется с вами в удобное для вас время для согласования деталей.",
         "title": "Заявка на тур отправлена!",
         "whatsapp": "Написать в WhatsApp",
         "projectLink": "Подробнее о проекте"
