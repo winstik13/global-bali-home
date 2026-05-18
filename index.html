@@ -85,20 +85,20 @@
     <div class="container">
       <div class="stats-grid reveal-stagger">
         <div class="stat-card">
-          <div class="stat-card__number" data-counter data-stat="investorsWorldwide">20+</div>
-          <div class="stat-card__label" data-stat-label="investorsWorldwide">Investors<br>Worldwide</div>
+          <div class="stat-card__number" data-counter>20+</div>
+          <div class="stat-card__label">Investors<br>Worldwide</div>
         </div>
         <div class="stat-card">
-          <div class="stat-card__number" data-counter data-stat="villasDesigned">43</div>
-          <div class="stat-card__label" data-stat-label="villasDesigned">Villas<br>in Portfolio</div>
+          <div class="stat-card__number" data-counter>43</div>
+          <div class="stat-card__label">Villas<br>in Portfolio</div>
         </div>
         <div class="stat-card">
-          <div class="stat-card__number" data-counter data-stat="occupancyRate">~80%</div>
-          <div class="stat-card__label" data-stat-label="occupancyRate">Projected<br>Occupancy Rate</div>
+          <div class="stat-card__number" data-counter>~80%</div>
+          <div class="stat-card__label">Projected<br>Occupancy Rate</div>
         </div>
         <div class="stat-card">
-          <div class="stat-card__number" data-stat="founderExperience">25+</div>
-          <div class="stat-card__label" data-stat-label="founderExperience">Years in Investment<br>Real Estate</div>
+          <div class="stat-card__number">25+</div>
+          <div class="stat-card__label">Years in Investment<br>Real Estate</div>
         </div>
       </div>
     </div>
@@ -117,7 +117,7 @@
       <p>Our projects are on Bali, near Ubud — the cultural heart of the island, surrounded by lush rice terraces, ancient temples, and a thriving international community.</p>
       <div class="why-bali-stats">
         <div class="why-bali-stat">
-          <strong data-counter data-stat="touristArrivals">16M+</strong>
+          <strong data-counter>16M+</strong>
           <span>Tourists annually</span>
         </div>
         <div class="why-bali-stat">
@@ -125,11 +125,11 @@
           <span>Visit Ubud</span>
         </div>
         <div class="why-bali-stat">
-          <strong data-stat="rentalYield">12-15%</strong>
+          <strong>10-15%</strong>
           <span>Annual rental yield</span>
         </div>
         <div class="why-bali-stat">
-          <strong data-stat="paybackPeriod">7-8 yr</strong>
+          <strong>7-8 yr</strong>
           <span>Payback period</span>
         </div>
       </div>
@@ -149,7 +149,83 @@
         <p>Three premium villa developments in the heart of Ubud</p>
       </div>
 
-      <div data-projects-container></div>
+      <div class="project-showcase reveal" data-project="serenity-villas" id="project-serenity-villas">
+        <a href="project-serenity-villas.html" class="project-showcase__image">
+          <img src="images/serenity-villas/complex-overview.webp" alt="Serenity Villas" loading="lazy" width="1920" height="1080">
+          <span class="project-showcase__badge project-showcase__badge--construction">On-Site Waterfall</span>
+        </a>
+        <div class="project-showcase__content">
+          <div class="project-showcase__tagline">
+            <span class="project-showcase__num">01</span>
+            <span class="project-showcase__positioning">Stable Yield</span>
+          </div>
+          <h3>Serenity Villas</h3>
+          <p>12 boutique villas built for turnkey rental. 12–15% projected yield, ~80% occupancy through our French management partner.</p>
+          <div class="project-showcase__meta">
+            <div><strong>12</strong> Villas</div>
+            <div><strong>2–3</strong> Bedrooms</div>
+            <div><strong>Q2 2026</strong> Handover</div>
+          </div>
+          <p class="project-showcase__price">Rp 6.03B – Rp 6.87B</p>
+          <div class="availability-bar" data-project="serenity-villas">
+            <div class="availability-bar__header"><span class="availability-bar__label">3 of 12 units available</span></div>
+            <div class="availability-bar__track"><div class="availability-bar__fill" style="width:75%"></div></div>
+          </div>
+          <a href="project-serenity-villas.html" class="btn btn--outline">View Details</a>
+        </div>
+      </div>
+
+      <div class="project-showcase reveal" data-project="serenity-estates" id="project-serenity-estates">
+        <a href="project-serenity-estates.html" class="project-showcase__image">
+          <img src="images/home/estates-birds-eye.webp" alt="Serenity Estates" loading="lazy" width="1920" height="1080">
+          <span class="project-showcase__badge project-showcase__badge--construction">Plots Up to 14 Are</span>
+        </a>
+        <div class="project-showcase__content">
+          <div class="project-showcase__tagline">
+            <span class="project-showcase__num">02</span>
+            <span class="project-showcase__positioning">Premium Space</span>
+          </div>
+          <h3>Serenity Estates</h3>
+          <p>4 villas for a family residence or second home near Ubud — on plots up to 1,400 m², each with a private pool. Land of this size is becoming scarce in this area, supporting projected ~10% annual value growth.</p>
+          <div class="project-showcase__meta">
+            <div><strong>4</strong> Villas</div>
+            <div><strong>2–5</strong> Bedrooms</div>
+            <div><strong>Q1 2027</strong> Handover</div>
+          </div>
+          <p class="project-showcase__price">Rp 5.34B – Rp 20.49B</p>
+          <div class="availability-bar" data-project="serenity-estates">
+            <div class="availability-bar__header"><span class="availability-bar__label">3 of 4 units available</span></div>
+            <div class="availability-bar__track"><div class="availability-bar__fill" style="width:25%"></div></div>
+          </div>
+          <a href="project-serenity-estates.html" class="btn btn--outline">View Details</a>
+        </div>
+      </div>
+
+      <div class="project-showcase reveal" data-project="serenity-village" id="project-serenity-village">
+        <a href="project-serenity-village.html" class="project-showcase__image">
+          <img src="images/serenity-village/6House_Max.0001.webp" alt="Serenity Village" loading="lazy" width="1920" height="1080">
+          <span class="project-showcase__badge project-showcase__badge--construction">Shared Pool &amp; Café</span>
+        </a>
+        <div class="project-showcase__content">
+          <div class="project-showcase__tagline">
+            <span class="project-showcase__num">03</span>
+            <span class="project-showcase__positioning">Entry-Level Cashflow</span>
+          </div>
+          <h3>Serenity Village</h3>
+          <p>25 villas from Rp 2.27B — the lowest entry into Bali yield-generating real estate. Same risk insurance and notarized 29-year leasehold (with extension rights) as our Rp 6B+ projects. Shared pool and onsite cafe included.</p>
+          <div class="project-showcase__meta">
+            <div><strong>25</strong> Villas</div>
+            <div><strong>1–2</strong> Bedrooms</div>
+            <div><strong>Q3 2027</strong> Handover</div>
+          </div>
+          <p class="project-showcase__price">from Rp 2.27B</p>
+          <div class="availability-bar" data-project="serenity-village">
+            <div class="availability-bar__header"><span class="availability-bar__label">6 of 25 units available</span></div>
+            <div class="availability-bar__track"><div class="availability-bar__fill" style="width:76%"></div></div>
+          </div>
+          <a href="project-serenity-village.html" class="btn btn--outline">View Details</a>
+        </div>
+      </div>
     </div>
   </section>
 

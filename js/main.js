@@ -182,23 +182,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- Apply stats from SITE_DATA ---
-  if (typeof SITE_DATA !== 'undefined' && SITE_DATA.stats) {
-    var st = SITE_DATA.stats;
-    document.querySelectorAll('[data-stat]').forEach(function(el) {
-      var key = el.dataset.stat;
-      if (st[key]) el.textContent = st[key];
-    });
-    // Localized stat labels
-    var statsLang = (document.documentElement.lang || 'en').slice(0, 2);
-    var labelMap = (st.labels && (st.labels[statsLang] || st.labels.en)) || null;
-    if (labelMap) {
-      document.querySelectorAll('[data-stat-label]').forEach(function(el) {
-        var key = el.dataset.statLabel;
-        if (labelMap[key]) el.innerHTML = labelMap[key];
-      });
-    }
-  }
+  // Stats are now hardcoded in HTML (no longer rendered from SITE_DATA.stats).
+  // Edit values directly in index.html / about.html / ru/index.html / ru/about.html.
 
   // --- Localisation ---
   const lang = document.documentElement.lang || 'en';
@@ -2196,18 +2181,8 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
     renderPriceDisclaimer();
   }
 
-  function renderPriceDisclaimer() {
-    var nodes = document.querySelectorAll('[data-price-disclaimer]');
-    if (!nodes.length || !xRate) return;
-    var pageLang = (document.documentElement.lang || 'en').split('-')[0];
-    var tpl = (typeof SITE_DATA !== 'undefined' && SITE_DATA.exchangeRate && SITE_DATA.exchangeRate.disclaimer)
-      ? (SITE_DATA.exchangeRate.disclaimer[pageLang] || SITE_DATA.exchangeRate.disclaimer.en)
-      : '';
-    if (!tpl) return;
-    var rateStr = xRate.toLocaleString('id-ID');
-    var text = tpl.replace('{rate}', rateStr);
-    nodes.forEach(function(el) { el.textContent = text; });
-  }
+  // Price disclaimer is now hardcoded in each project-*.html (no longer rendered).
+  function renderPriceDisclaimer() { /* no-op */ }
 
   if (xRateAuto) {
     fetch('https://open.er-api.com/v6/latest/USD').then(function(res) { return res.json(); }).then(function(data) {
@@ -2356,45 +2331,10 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       return obj[dataLang] || obj.en || '';
     }
 
-    // --- Hero Stats ---
-    document.querySelectorAll('.hero-stats[data-project]').forEach(el => {
-      const key = el.dataset.project;
-      const proj = PD[key];
-      if (!proj || !proj.heroStats) return;
-      const stats = proj.heroStats[lang] || proj.heroStats.en;
-      el.innerHTML = stats.map(s => {
-        let numberHtml = s.number;
-        if (typeof s.usd === 'number' && s.usd > 0) {
-          const idr = fmtIdr(s.usd, true);
-          if (idr) numberHtml = idr;
-        }
-        return '<div class="hero-stats__item"><div class="hero-stats__number">' + numberHtml + '</div><div class="hero-stats__label">' + s.label + '</div></div>';
-      }).join('');
-    });
+    // Hero Stats are now hardcoded in each project-*.html (no longer rendered from PROJECTS_DATA.heroStats).
 
-    // --- Availability Bar ---
-    // Uses "left" framing (stronger scarcity) across all projects — pulls the
-    // label text directly from proj.showcaseAvailability so there's a single
-    // source of truth. Admin auto-syncs that field when units change.
-    document.querySelectorAll('.availability-bar[data-project]').forEach(el => {
-      const key = el.dataset.project;
-      const proj = PD[key];
-      if (!proj || !proj.availability) return;
-      const av = proj.availability;
-      const labels = PD.availabilityLabels[lang] || PD.availabilityLabels.en;
-
-      if (proj.status === 'pre-sale') {
-        el.innerHTML =
-          '<div class="availability-bar__header"><span class="availability-bar__label availability-bar__label--presale"><span class="presale-dot"></span> ' + labels.preSale + '</span></div>';
-      } else {
-        const pct = Math.round((av.sold / av.total) * 100);
-        const labelText = (proj.showcaseAvailability && (proj.showcaseAvailability[lang] || proj.showcaseAvailability.en))
-          || ((av.total - av.sold) + ' ' + labels.of + ' ' + av.total + ' ' + labels.unitsLeft);
-        el.innerHTML =
-          '<div class="availability-bar__header"><span class="availability-bar__label">' + labelText + '</span></div>' +
-          '<div class="availability-bar__track"><div class="availability-bar__fill" style="width:' + pct + '%"></div></div>';
-      }
-    });
+    // Availability Bar is now hardcoded in showcase cards (index.html, projects.html).
+    // To update sold/total counts, edit the HTML directly.
 
     // --- Unit Table (Villas / Estates) ---
     document.querySelectorAll('.unit-table[data-project]').forEach(el => {
@@ -2521,91 +2461,8 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       return loc(proj.showcaseStatus) || '';
     }
 
-    // --- Generate Showcase Cards from data-projects-container ---
-    document.querySelectorAll('[data-projects-container]').forEach(function(container) {
-      var useShort = container.hasAttribute('data-projects-short');
-      var keys = getProjectKeys();
-      container.innerHTML = keys.map(function(key, i) {
-        var proj = PD[key];
-        var num = String(i + 1).padStart(2, '0');
-        var meta = proj.showcaseMeta ? (proj.showcaseMeta[dataLang] || proj.showcaseMeta.en) : [];
-        var text = useShort ? loc(proj.showcaseSubtitle) : loc(proj.showcaseDesc);
-        if (!text) text = loc(proj.showcaseSubtitle) || loc(proj.showcaseDesc);
-        var metaHtml = meta.map(function(m) { return '<div><strong>' + m.strong + '</strong> ' + m.label + '</div>'; }).join('');
-        var posText = loc(proj.positioning);
-        var taglineHtml = '<div class="project-showcase__tagline"><span class="project-showcase__num">' + num + '</span>' +
-          (posText ? '<span class="project-showcase__positioning">' + posText + '</span>' : '') + '</div>';
-        return '<div class="project-showcase reveal" data-project="' + key + '" id="project-' + key + '">' +
-          '<a href="' + proj.page + '" class="project-showcase__image">' +
-            '<img src="' + resolveAsset(proj.showcaseImage) + '" alt="' + proj.name + '" loading="lazy" width="1920" height="1080">' +
-            '<span class="project-showcase__badge ' + badgeClass(proj.status) + '">' + getShowcaseBadgeText(proj) + '</span>' +
-          '</a>' +
-          '<div class="project-showcase__content">' +
-            taglineHtml +
-            '<h3>' + proj.name + '</h3>' +
-            '<p>' + text + '</p>' +
-            '<div class="project-showcase__meta">' + metaHtml + '</div>' +
-            '<p class="project-showcase__price">' + fmtPriceRangeHtml(proj) + '</p>' +
-            buildAvailBar(proj) +
-            '<a href="' + proj.page + '" class="btn btn--outline">' + loc(proj.showcaseCta) + '</a>' +
-          '</div>' +
-        '</div>';
-      }).join('');
-      // Re-register dynamically created .reveal elements with IntersectionObserver
-      container.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
-    });
-
-    // --- Fallback: update existing showcase cards ---
-    document.querySelectorAll('.project-showcase[data-project]').forEach(function(el) {
-      var key = el.dataset.project;
-      var proj = PD[key];
-      if (!proj) return;
-
-      var price = el.querySelector('.project-showcase__price');
-      if (price) price.innerHTML = fmtPriceRangeHtml(proj);
-
-      var badge = el.querySelector('.project-showcase__badge');
-      if (badge) badge.textContent = getShowcaseBadgeText(proj);
-
-      var posText = loc(proj.positioning);
-      var content = el.querySelector('.project-showcase__content');
-      var oldPosOutside = el.querySelector('.project-showcase__content > .project-showcase__positioning');
-      if (oldPosOutside) oldPosOutside.remove();
-      var oldNum = el.querySelector('.project-showcase__content > .section-header__tag');
-      var tagline = el.querySelector('.project-showcase__tagline');
-      if (!tagline && content) {
-        tagline = document.createElement('div');
-        tagline.className = 'project-showcase__tagline';
-        var numText = oldNum ? oldNum.textContent : '';
-        var numSpan = document.createElement('span');
-        numSpan.className = 'project-showcase__num';
-        numSpan.textContent = numText;
-        tagline.appendChild(numSpan);
-        if (oldNum) oldNum.remove();
-        content.insertBefore(tagline, content.firstChild);
-      }
-      if (tagline) {
-        var posSpan = tagline.querySelector('.project-showcase__positioning');
-        if (posText) {
-          if (!posSpan) {
-            posSpan = document.createElement('span');
-            posSpan.className = 'project-showcase__positioning';
-            tagline.appendChild(posSpan);
-          }
-          posSpan.textContent = posText;
-        } else if (posSpan) {
-          posSpan.remove();
-        }
-      }
-
-      var cta = el.querySelector('.btn');
-      if (cta && proj.showcaseCta) cta.textContent = loc(proj.showcaseCta);
-
-      var bar = el.querySelector('.availability-bar');
-      if (bar && proj.availability) {
-        bar.outerHTML = buildAvailBar(proj);
-      }
-    });
+    // Project Showcase cards are now hardcoded in index.html / projects.html (EN + RU).
+    // To edit text, badges, images, price ranges, or availability — edit HTML directly.
 
     // --- Comparison Table on projects.html ---
     document.querySelectorAll('table[data-dynamic]').forEach(function(el) {
