@@ -6510,7 +6510,6 @@ a.testimonials__verified:hover {
   border: 1px solid rgba(255,255,255,0.1);
   width: 220px;
   max-width: calc(100vw - 32px);
-  min-height: 114px;
   box-sizing: border-box;
 }
 .master-plan__tooltip-price .price-idr {
