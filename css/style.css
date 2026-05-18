@@ -898,6 +898,11 @@ td .price-idr {
 .project-showcase__price {
   display: none !important;
 }
+
+/* Temporarily hide price in master-plan mobile bottom-sheet. */
+.master-plan__sheet-price {
+  display: none !important;
+}
 .price-aux {
   font-family: var(--font-body);
   font-size: 0.72em;

@@ -2673,16 +2673,23 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         btn.dataset.unitId = u.id;
         btn.setAttribute('aria-label', u.id + ' — ' + (sl[u.status] || u.status));
 
-        var priceLine = '<span class="master-plan__tooltip-price">'
-          + (u.price ? fmtDualPrice(u.price) : '—')
-          + '</span>';
+        var floorsLabel;
+        if (lang === 'ru') {
+          if (u.floors === 1) floorsLabel = u.floors + ' этаж';
+          else if (u.floors >= 2 && u.floors <= 4) floorsLabel = u.floors + ' этажа';
+          else floorsLabel = u.floors + ' этажей';
+        } else {
+          floorsLabel = u.floors + (u.floors === 1 ? ' floor' : ' floors');
+        }
+        var headerLine = u.id + ' · ' + u.type + (u.badge ? ' · ' + u.badge : '');
+        var landPart = u.land ? ' · ' + u.land : '';
 
         btn.innerHTML =
           '<span class="master-plan__hotspot-label">' + u.id + '</span>' +
           '<span class="master-plan__tooltip">' +
-            '<strong>' + u.id + ' · ' + u.type + '</strong>' +
-            '<span class="master-plan__tooltip-row">' + u.area + ' · ' + (sl[u.status] || u.status) + '</span>' +
-            priceLine +
+            '<strong>' + headerLine + '</strong>' +
+            '<span class="master-plan__tooltip-row">' + u.area + landPart + '</span>' +
+            '<span class="master-plan__tooltip-row">' + floorsLabel + ' · ' + (sl[u.status] || u.status) + '</span>' +
           '</span>';
 
         btn.addEventListener('click', function(e) {
