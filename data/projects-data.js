@@ -632,8 +632,8 @@ const PROJECTS_DATA = {
     },
     "totalUnits": 4,
     "positioning": {
-      "en": "Capital Appreciation",
-      "ru": "Рост капитала"
+      "en": "Premium Space",
+      "ru": "Премиум пространство"
     },
     "showcaseCta": {
       "en": "View Details",
