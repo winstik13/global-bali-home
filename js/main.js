@@ -273,22 +273,22 @@ document.addEventListener('DOMContentLoaded', () => {
       tourThankProject: 'Learn more about',
       descs: {
         village: {
-          'Rental income': 'Compact villas from Rp 2.27B — ideal for short-term rental with strong occupancy rates and low entry cost.',
-          'Personal residence': 'Cozy 1-2 bedroom villas from Rp 2.27B in a vibrant complex with shared pool and café.',
-          'Long-term investment': 'Our most accessible entry point from Rp 2.27B — high rental demand and strong capital growth potential.',
-          'default': 'Affordable 1-2 bedroom villas from Rp 2.27B in a vibrant complex with shared amenities.'
+          'Rental income': 'Compact villas — ideal for short-term rental with strong occupancy rates and low entry cost.',
+          'Personal residence': 'Cozy 1-2 bedroom villas in a vibrant complex with shared pool and café.',
+          'Long-term investment': 'Our most accessible entry point — high rental demand and strong capital growth potential.',
+          'default': 'Affordable 1-2 bedroom villas in a vibrant complex with shared amenities.'
         },
         villas: {
-          'Rental income': 'Premium 2-3 bedroom villas from Rp 5.77B — jungle views, private pools, and proven 12-15% rental yields.',
-          'Personal residence': 'Spacious 2-3 bedroom villas from Rp 5.77B surrounded by jungle and natural waterfalls — your Bali home.',
-          'Long-term investment': '2-3 bedroom villas from Rp 5.77B in Ubud — proven demand and projected 8–12% annual capital appreciation.',
-          'default': 'Premium 2-3 bedroom villas from Rp 5.77B with jungle views, private pools, and full management.'
+          'Rental income': 'Premium 2-3 bedroom villas — jungle views, private pools, and proven 12-15% rental yields.',
+          'Personal residence': 'Spacious 2-3 bedroom villas surrounded by jungle and natural waterfalls — your Bali home.',
+          'Long-term investment': '2-3 bedroom villas in Ubud — proven demand and projected 8–12% annual capital appreciation.',
+          'default': 'Premium 2-3 bedroom villas with jungle views, private pools, and full management.'
         },
         estates: {
-          'Rental income': 'Exclusive estates from Rp 5.34B with private pools and up to 250m² — premium nightly rates and high-end guests.',
-          'Personal residence': 'Spacious estates from Rp 5.34B with private pools, fish ponds, and panoramic rice terrace views — luxury living.',
-          'Long-term investment': '4 exclusive estates from Rp 5.34B on spacious plots up to 14 are — projected 10–15% annual capital appreciation.',
-          'default': 'Exclusive 2-5 bedroom estates from Rp 5.34B with private pools and panoramic views.'
+          'Rental income': 'Exclusive estates with private pools and up to 250m² — premium nightly rates and high-end guests.',
+          'Personal residence': 'Spacious estates with private pools, fish ponds, and panoramic rice terrace views — luxury living.',
+          'Long-term investment': '4 exclusive estates on spacious plots up to 14 are — projected 10–15% annual capital appreciation.',
+          'default': 'Exclusive 2-5 bedroom estates with private pools and panoramic views.'
         }
       }
     },
@@ -377,22 +377,22 @@ document.addEventListener('DOMContentLoaded', () => {
       tourThankProject: 'Подробнее о проекте',
       descs: {
         village: {
-          'Rental income': 'Компактные виллы от Rp 2.27B — идеально для краткосрочной аренды с высокой заполняемостью и низким порогом входа.',
-          'Personal residence': 'Уютные виллы 1–2 спальни от Rp 2.27B в живом комплексе с общим бассейном и кафе.',
-          'Long-term investment': 'Самый доступный вход от Rp 2.27B — высокий спрос на аренду и сильный потенциал роста капитала.',
-          'default': 'Доступные виллы 1–2 спальни от Rp 2.27B в комплексе с общими удобствами.'
+          'Rental income': 'Компактные виллы — идеально для краткосрочной аренды с высокой заполняемостью и низким порогом входа.',
+          'Personal residence': 'Уютные виллы 1–2 спальни в живом комплексе с общим бассейном и кафе.',
+          'Long-term investment': 'Самый доступный вход — высокий спрос на аренду и сильный потенциал роста капитала.',
+          'default': 'Доступные виллы 1–2 спальни в комплексе с общими удобствами.'
         },
         villas: {
-          'Rental income': 'Премиальные виллы 2–3 спальни от Rp 5.77B — вид на джунгли, приватные бассейны и подтверждённая доходность 12–15%.',
-          'Personal residence': 'Просторные виллы 2–3 спальни от Rp 5.77B в окружении джунглей и водопадов — ваш дом на Бали.',
-          'Long-term investment': 'Виллы 2–3 спальни от Rp 5.77B в Убуде — стабильный спрос и прогнозируемый рост стоимости 8–12% в год.',
-          'default': 'Премиальные виллы 2–3 спальни от Rp 5.77B с видом на джунгли, приватными бассейнами и полным управлением.'
+          'Rental income': 'Премиальные виллы 2–3 спальни — вид на джунгли, приватные бассейны и подтверждённая доходность 12–15%.',
+          'Personal residence': 'Просторные виллы 2–3 спальни в окружении джунглей и водопадов — ваш дом на Бали.',
+          'Long-term investment': 'Виллы 2–3 спальни в Убуде — стабильный спрос и прогнозируемый рост стоимости 8–12% в год.',
+          'default': 'Премиальные виллы 2–3 спальни с видом на джунгли, приватными бассейнами и полным управлением.'
         },
         estates: {
-          'Rental income': 'Эксклюзивные виллы от Rp 5.34B с приватными бассейнами и площадью до 250 м² — премиальные ставки аренды.',
-          'Personal residence': 'Просторные виллы от Rp 5.34B с приватными бассейнами, прудами и панорамным видом на рисовые террасы.',
-          'Long-term investment': '4 эксклюзивных виллы от Rp 5.34B на просторных участках до 14 соток — прогноз роста капитала 10–15% в год.',
-          'default': 'Эксклюзивные виллы 2–5 спален от Rp 5.34B с приватными бассейнами и панорамными видами.'
+          'Rental income': 'Эксклюзивные виллы с приватными бассейнами и площадью до 250 м² — премиальные ставки аренды.',
+          'Personal residence': 'Просторные виллы с приватными бассейнами, прудами и панорамным видом на рисовые террасы.',
+          'Long-term investment': '4 эксклюзивных виллы на просторных участках до 14 соток — прогноз роста капитала 10–15% в год.',
+          'default': 'Эксклюзивные виллы 2–5 спален с приватными бассейнами и панорамными видами.'
         }
       }
     }
@@ -1362,7 +1362,6 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <button type="submit" class="btn btn--primary" style="width:100%;">${t.quizSubmit}</button>
       </form>
-      <a href="${rec.url}" class="quiz__skip-link">${t.quizSkip} &rarr;</a>
       <button class="quiz__back">&larr; ${t.quizBack}</button>
     `;
     // Live clear errors on input
