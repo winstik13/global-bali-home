@@ -173,9 +173,9 @@ const SITE_DATA = {
         {
           "options": [
             "I'm already here",
-            "Within 2 weeks",
             "Within a month",
-            "Planning a trip"
+            "Within 3 months",
+            "Online tour"
           ],
           "question": "When are you in Bali?"
         },
@@ -204,9 +204,9 @@ const SITE_DATA = {
         {
           "options": [
             "Я уже здесь",
-            "В ближайшие 2 недели",
             "В ближайший месяц",
-            "Планирую поездку"
+            "В ближайшие 3 месяца",
+            "Хочу онлайн тур"
           ],
           "question": "Когда вы на Бали?"
         },
