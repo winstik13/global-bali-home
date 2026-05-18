@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
           question: 'What is your budget?',
-          options: ['Exploring Options', 'Rp 2.58B – Rp 6.03B ($150K – $350K)', 'Rp 6.03B – Rp 8.61B ($350K – $500K)', 'Rp 8.61B+ ($500K+)']
+          options: ['Up to $150K', 'Rp 2.58B – Rp 6.03B ($150K – $350K)', 'Rp 6.03B – Rp 8.61B ($350K – $500K)', 'Rp 8.61B+ ($500K+)']
         },
         {
           question: 'When are you planning to buy?',
@@ -300,7 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
           question: 'Какой у вас бюджет?',
-          options: ['Изучаю варианты', 'Rp 2,58 млрд – Rp 6,03 млрд ($150K – $350K)', 'Rp 6,03 млрд – Rp 8,61 млрд ($350K – $500K)', 'Rp 8,61 млрд+ ($500K+)']
+          options: ['До $150K', 'Rp 2,58 млрд – Rp 6,03 млрд ($150K – $350K)', 'Rp 6,03 млрд – Rp 8,61 млрд ($350K – $500K)', 'Rp 8,61 млрд+ ($500K+)']
         },
         {
           question: 'Когда планируете покупку?',
@@ -1255,7 +1255,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const scores = { village: 0, villas: 0, estates: 0 };
 
     // Budget (60% weight)
-    if (budget === 'Exploring Options' || budget === 'Изучаю варианты') { scores.village += 60; scores.villas += 15; scores.estates += 10; }
+    if (budget === 'Up to $150K' || budget === 'До $150K') { scores.village += 60; scores.villas += 15; scores.estates += 10; }
     else if (budget.indexOf('($150K') >= 0)   { scores.village += 30; scores.villas += 60; scores.estates += 35; }
     else if (budget.indexOf('($350K') >= 0)   { scores.village += 5;  scores.villas += 35; scores.estates += 60; }
     else /* $500K+ tier */                    { scores.village += 0;  scores.villas += 20; scores.estates += 60; }
