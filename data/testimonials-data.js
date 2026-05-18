@@ -44,8 +44,8 @@ const TESTIMONIALS_DATA = [
       "ru": "Инвесторы из Франции · Serenity Villas"
     },
     "text": {
-      "en": "\"We wanted a holiday home that doubles as an investment. Our 3-bedroom Serenity Villa earns $3,800/month in peak season through Airbnb — fully managed by the team. When we visit, we just block the dates. Best of both worlds.\"",
-      "ru": "«Мы хотели дом для отдыха, который одновременно был бы инвестицией. Наша вилла с 3 спальнями в Serenity приносит $3,800/месяц в пиковый сезон через Airbnb — полностью под управлением команды. Когда мы приезжаем, просто блокируем даты. Лучшее из двух миров.»"
+      "en": "\"We wanted a holiday home that doubles as an investment. Our 3-bedroom Serenity Villa earns ~Rp 65M/month in peak season through Airbnb — fully managed by the team. When we visit, we just block the dates. Best of both worlds.\"",
+      "ru": "«Мы хотели дом для отдыха, который одновременно был бы инвестицией. Наша вилла с 3 спальнями в Serenity приносит ~Rp 65 млн/месяц в пиковый сезон через Airbnb — полностью под управлением команды. Когда мы приезжаем, просто блокируем даты. Лучшее из двух миров.»"
     },
     "order": 3,
     "stars": 5

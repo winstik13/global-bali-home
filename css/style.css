@@ -879,9 +879,13 @@ td .price-idr {
   font-size: 0.82em;
 }
 
-/* USD auxiliary line — IDR is primary by law (UU 7/2011, PBI 17/3/PBI/2015) */
+/* USD auxiliary line — temporarily hidden site-wide (IDR-only mode).
+   Original sizing rules below preserved for easy re-enable: remove the display:none block. */
+.price-aux,
+.price-aux-inline {
+  display: none !important;
+}
 .price-aux {
-  display: block;
   font-family: var(--font-body);
   font-size: 0.72em;
   font-weight: 400;

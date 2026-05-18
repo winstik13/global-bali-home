@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
           question: 'What is your budget?',
-          options: ['Exploring Options', '$150K – $350K', '$350K – $500K', '$500K+']
+          options: ['Exploring Options', 'Rp 2.58B – Rp 6.03B', 'Rp 6.03B – Rp 8.61B', 'Rp 8.61B+']
         },
         {
           question: 'When are you planning to buy?',
@@ -288,22 +288,22 @@ document.addEventListener('DOMContentLoaded', () => {
       tourThankProject: 'Learn more about',
       descs: {
         village: {
-          'Rental income': 'Compact villas from $132K — ideal for short-term rental with strong occupancy rates and low entry cost.',
-          'Personal residence': 'Cozy 1-2 bedroom villas from $132K in a vibrant complex with shared pool and café.',
-          'Long-term investment': 'Our most accessible entry point from $132K — high rental demand and strong capital growth potential.',
-          'default': 'Affordable 1-2 bedroom villas from $132K in a vibrant complex with shared amenities.'
+          'Rental income': 'Compact villas from Rp 2.27B — ideal for short-term rental with strong occupancy rates and low entry cost.',
+          'Personal residence': 'Cozy 1-2 bedroom villas from Rp 2.27B in a vibrant complex with shared pool and café.',
+          'Long-term investment': 'Our most accessible entry point from Rp 2.27B — high rental demand and strong capital growth potential.',
+          'default': 'Affordable 1-2 bedroom villas from Rp 2.27B in a vibrant complex with shared amenities.'
         },
         villas: {
-          'Rental income': 'Premium 2-3 bedroom villas from $335K — jungle views, private pools, and proven 12-15% rental yields.',
-          'Personal residence': 'Spacious 2-3 bedroom villas from $335K surrounded by jungle and natural waterfalls — your Bali home.',
-          'Long-term investment': '2-3 bedroom villas from $335K in Ubud — proven demand and projected 8–12% annual capital appreciation.',
-          'default': 'Premium 2-3 bedroom villas from $335K with jungle views, private pools, and full management.'
+          'Rental income': 'Premium 2-3 bedroom villas from Rp 5.77B — jungle views, private pools, and proven 12-15% rental yields.',
+          'Personal residence': 'Spacious 2-3 bedroom villas from Rp 5.77B surrounded by jungle and natural waterfalls — your Bali home.',
+          'Long-term investment': '2-3 bedroom villas from Rp 5.77B in Ubud — proven demand and projected 8–12% annual capital appreciation.',
+          'default': 'Premium 2-3 bedroom villas from Rp 5.77B with jungle views, private pools, and full management.'
         },
         estates: {
-          'Rental income': 'Exclusive estates from $310K with private pools and up to 250m² — premium nightly rates and high-end guests.',
-          'Personal residence': 'Spacious estates from $310K with private pools, fish ponds, and panoramic rice terrace views — luxury living.',
-          'Long-term investment': '4 exclusive estates from $310K on spacious plots up to 14 are — projected 10–15% annual capital appreciation.',
-          'default': 'Exclusive 2-5 bedroom estates from $310K with private pools and panoramic views.'
+          'Rental income': 'Exclusive estates from Rp 5.34B with private pools and up to 250m² — premium nightly rates and high-end guests.',
+          'Personal residence': 'Spacious estates from Rp 5.34B with private pools, fish ponds, and panoramic rice terrace views — luxury living.',
+          'Long-term investment': '4 exclusive estates from Rp 5.34B on spacious plots up to 14 are — projected 10–15% annual capital appreciation.',
+          'default': 'Exclusive 2-5 bedroom estates from Rp 5.34B with private pools and panoramic views.'
         }
       }
     },
@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
           question: 'Какой у вас бюджет?',
-          options: ['Изучаю варианты', '$150K – $350K', '$350K – $500K', '$500K+']
+          options: ['Изучаю варианты', 'Rp 2.58B – Rp 6.03B', 'Rp 6.03B – Rp 8.61B', 'Rp 8.61B+']
         },
         {
           question: 'Когда планируете покупку?',
@@ -392,22 +392,22 @@ document.addEventListener('DOMContentLoaded', () => {
       tourThankProject: 'Подробнее о проекте',
       descs: {
         village: {
-          'Rental income': 'Компактные виллы от $132K — идеально для краткосрочной аренды с высокой заполняемостью и низким порогом входа.',
-          'Personal residence': 'Уютные виллы 1–2 спальни от $132K в живом комплексе с общим бассейном и кафе.',
-          'Long-term investment': 'Самый доступный вход от $132K — высокий спрос на аренду и сильный потенциал роста капитала.',
-          'default': 'Доступные виллы 1–2 спальни от $132K в комплексе с общими удобствами.'
+          'Rental income': 'Компактные виллы от Rp 2.27B — идеально для краткосрочной аренды с высокой заполняемостью и низким порогом входа.',
+          'Personal residence': 'Уютные виллы 1–2 спальни от Rp 2.27B в живом комплексе с общим бассейном и кафе.',
+          'Long-term investment': 'Самый доступный вход от Rp 2.27B — высокий спрос на аренду и сильный потенциал роста капитала.',
+          'default': 'Доступные виллы 1–2 спальни от Rp 2.27B в комплексе с общими удобствами.'
         },
         villas: {
-          'Rental income': 'Премиальные виллы 2–3 спальни от $335K — вид на джунгли, приватные бассейны и подтверждённая доходность 12–15%.',
-          'Personal residence': 'Просторные виллы 2–3 спальни от $335K в окружении джунглей и водопадов — ваш дом на Бали.',
-          'Long-term investment': 'Виллы 2–3 спальни от $335K в Убуде — стабильный спрос и прогнозируемый рост стоимости 8–12% в год.',
-          'default': 'Премиальные виллы 2–3 спальни от $335K с видом на джунгли, приватными бассейнами и полным управлением.'
+          'Rental income': 'Премиальные виллы 2–3 спальни от Rp 5.77B — вид на джунгли, приватные бассейны и подтверждённая доходность 12–15%.',
+          'Personal residence': 'Просторные виллы 2–3 спальни от Rp 5.77B в окружении джунглей и водопадов — ваш дом на Бали.',
+          'Long-term investment': 'Виллы 2–3 спальни от Rp 5.77B в Убуде — стабильный спрос и прогнозируемый рост стоимости 8–12% в год.',
+          'default': 'Премиальные виллы 2–3 спальни от Rp 5.77B с видом на джунгли, приватными бассейнами и полным управлением.'
         },
         estates: {
-          'Rental income': 'Эксклюзивные виллы от $310K с приватными бассейнами и площадью до 250 м² — премиальные ставки аренды.',
-          'Personal residence': 'Просторные виллы от $310K с приватными бассейнами, прудами и панорамным видом на рисовые террасы.',
-          'Long-term investment': '4 эксклюзивных виллы от $310K на просторных участках до 14 соток — прогноз роста капитала 10–15% в год.',
-          'default': 'Эксклюзивные виллы 2–5 спален от $310K с приватными бассейнами и панорамными видами.'
+          'Rental income': 'Эксклюзивные виллы от Rp 5.34B с приватными бассейнами и площадью до 250 м² — премиальные ставки аренды.',
+          'Personal residence': 'Просторные виллы от Rp 5.34B с приватными бассейнами, прудами и панорамным видом на рисовые террасы.',
+          'Long-term investment': '4 эксклюзивных виллы от Rp 5.34B на просторных участках до 14 соток — прогноз роста капитала 10–15% в год.',
+          'default': 'Эксклюзивные виллы 2–5 спален от Rp 5.34B с приватными бассейнами и панорамными видами.'
         }
       }
     }
@@ -1271,9 +1271,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Budget (60% weight)
     if (budget === 'Exploring Options')    { scores.village += 60; scores.villas += 15; scores.estates += 10; }
-    else if (budget === '$150K – $350K')   { scores.village += 30; scores.villas += 60; scores.estates += 35; }
-    else if (budget === '$350K – $500K')   { scores.village += 5;  scores.villas += 35; scores.estates += 60; }
-    else /* $500K+ */                      { scores.village += 0;  scores.villas += 20; scores.estates += 60; }
+    else if (budget === 'Rp 2.58B – Rp 6.03B')   { scores.village += 30; scores.villas += 60; scores.estates += 35; }
+    else if (budget === 'Rp 6.03B – Rp 8.61B')   { scores.village += 5;  scores.villas += 35; scores.estates += 60; }
+    else /* Rp 8.61B+ */                      { scores.village += 0;  scores.villas += 20; scores.estates += 60; }
 
     // Goal (25% weight)
     if (goal === 'Rental income')          { scores.village += 25; scores.villas += 20; scores.estates += 15; }
@@ -1812,25 +1812,15 @@ document.addEventListener('DOMContentLoaded', () => {
     return null;
   }
 
-  function fmtUsdShort(n) {
-    if (n >= 1e6) return '$' + (n / 1e6).toFixed(2).replace(/\.?0+$/, '') + 'M';
-    return '$' + Math.round(n / 1000) + 'K';
-  }
-  function fmtUsdFull(n) { return '$' + n.toLocaleString('en-US'); }
-
   function fmtPriceRangeHtml(proj, opts) {
     var r = getPriceRange(proj);
     if (!r) return '';
-    opts = opts || {};
-    var short = !!opts.short;
-    var usdFmt = short ? fmtUsdShort : fmtUsdFull;
-    var usd = (r.min === r.max) ? usdFmt(r.min) : usdFmt(r.min) + ' – ' + usdFmt(r.max);
-    var idr = '';
-    if (xRate) {
-      idr = (r.min === r.max) ? fmtIdr(r.min, true) : fmtIdr(r.min, true) + ' – ' + fmtIdr(r.max, true);
-    }
-    if (!idr) return usd;
-    return idr + '<span class="price-aux">≈ ' + usd + '</span>';
+    var rate = xRate || 17218;
+    function fallback(n) { return 'Rp ' + Math.round(n * rate).toLocaleString('id-ID'); }
+    var idr = (r.min === r.max)
+      ? (fmtIdr(r.min, true) || fallback(r.min))
+      : ((fmtIdr(r.min, true) || fallback(r.min)) + ' – ' + (fmtIdr(r.max, true) || fallback(r.max)));
+    return idr;
   }
 
   // --- ROI Calculator (auto-rendered into [data-roi-calc] placeholders) ---
@@ -1900,15 +1890,15 @@ document.addEventListener('DOMContentLoaded', () => {
           '<div class="roi-calculator__results">' +
             '<div class="roi-calculator__result">' +
               '<span class="roi-calculator__result-label">' + (T.annualIncome || '') + '</span>' +
-              '<span class="roi-calculator__result-value roi-calculator__annual">$0</span>' +
+              '<span class="roi-calculator__result-value roi-calculator__annual">Rp 0</span>' +
             '</div>' +
             '<div class="roi-calculator__result">' +
               '<span class="roi-calculator__result-label">' + (T.return5y || '') + '</span>' +
-              '<span class="roi-calculator__result-value roi-calculator__r5">$0</span>' +
+              '<span class="roi-calculator__result-value roi-calculator__r5">Rp 0</span>' +
             '</div>' +
             '<div class="roi-calculator__result roi-calculator__result--highlight">' +
               '<span class="roi-calculator__result-label">' + (T.return10y || '') + '</span>' +
-              '<span class="roi-calculator__result-value roi-calculator__r10">$0</span>' +
+              '<span class="roi-calculator__result-value roi-calculator__r10">Rp 0</span>' +
             '</div>' +
             '<p class="roi-calculator__disclaimer">' + (T.disclaimer || '') + '</p>' +
             '<button class="btn btn--primary roi-calculator__cta" ' + ctaAttr + '>' + (ctaText || '') + '</button>' +
@@ -1942,7 +1932,7 @@ document.addEventListener('DOMContentLoaded', () => {
       var total10 = rental10 + (pv - inv);
       function fmtCell(n) {
         var idr = fmtIdr(n);
-        return '$' + Math.round(n).toLocaleString() + (idr ? '<span class="price-idr">' + idr + '</span>' : '');
+        return idr || ('Rp ' + Math.round(n * (xRate || 17218)).toLocaleString('id-ID'));
       }
       amountEl.innerHTML = fmtCell(inv);
       annualEl.innerHTML = fmtCell(annualRental);
@@ -2201,8 +2191,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       if (!usd || !xRate) return;
       var idr = fmtIdr(usd, true);
       if (!idr) return;
-      var usdLabel = el.dataset.usdLabel || ('$' + usd.toLocaleString('en-US'));
-      el.innerHTML = idr + '<span class="price-aux">≈ ' + usdLabel + '</span>';
+      el.innerHTML = idr;
     });
     renderPriceDisclaimer();
   }
@@ -2238,16 +2227,14 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
   }
 
   // Auto-replace any element with data-usd="123000": IDR primary + USD aux.
-  // The element's original innerHTML (typically the USD label like "$335K")
+  // The element's original innerHTML (typically the USD label like "Rp 5.77B")
   // becomes the secondary line and is cached in data-usd-label for later refresh.
   document.querySelectorAll('[data-usd]').forEach(function(el) {
     var usd = parseFloat(el.dataset.usd);
     if (!usd) return;
     var idr = fmtIdr(usd, true);
     if (!idr) return;
-    var usdLabel = el.dataset.usdLabel || (el.textContent || '').trim() || ('$' + usd.toLocaleString('en-US'));
-    el.dataset.usdLabel = usdLabel;
-    el.innerHTML = idr + '<span class="price-aux">≈ ' + usdLabel + '</span>';
+    el.innerHTML = idr;
   });
 
   renderPriceDisclaimer();
@@ -2345,15 +2332,12 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
 
     function fmtPrice(p) {
       if (!p) return '\u2014';
-      return '$' + p.toLocaleString('en-US');
+      return fmtIdr(p, true) || ('Rp ' + Math.round(p * (xRate || 17218)).toLocaleString('id-ID'));
     }
 
     function fmtDualPrice(p) {
       if (!p) return '\u2014';
-      var usd = '$' + p.toLocaleString('en-US');
-      var idr = fmtIdr(p, true);
-      if (!idr) return usd;
-      return idr + '<span class="price-aux">\u2248 ' + usd + '</span>';
+      return fmtIdr(p, true) || ('Rp ' + Math.round(p * (xRate || 17218)).toLocaleString('id-ID'));
     }
 
     // Helper: get project keys sorted by order
@@ -2382,8 +2366,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
         let numberHtml = s.number;
         if (typeof s.usd === 'number' && s.usd > 0) {
           const idr = fmtIdr(s.usd, true);
-          const usd = '$' + s.usd.toLocaleString('en-US');
-          if (idr) numberHtml = idr + '<span class="price-aux">≈ ' + usd + '</span>';
+          if (idr) numberHtml = idr;
         }
         return '<div class="hero-stats__item"><div class="hero-stats__number">' + numberHtml + '</div><div class="hero-stats__label">' + s.label + '</div></div>';
       }).join('');

@@ -73,13 +73,13 @@ const SITE_DATA = {
       "en": {
         "occupancyRate": "Projected<br>Occupancy Rate",
         "villasDesigned": "Villas<br>in Portfolio",
-        "founderExperience": "Combined<br>Transaction Experience",
+        "founderExperience": "Years on<br>Wall Street",
         "investorsWorldwide": "Investors<br>Worldwide"
       },
       "ru": {
         "occupancyRate": "Прогнозируемая<br>заполняемость",
         "villasDesigned": "Виллы<br>в портфолио",
-        "founderExperience": "Совокупный опыт<br>транзакций",
+        "founderExperience": "Лет на<br>Уолл-стрит",
         "investorsWorldwide": "Инвесторов<br>по всему миру"
       }
     },
@@ -89,7 +89,7 @@ const SITE_DATA = {
     "propertyGrowth": "8-12%",
     "villasDesigned": "43",
     "touristArrivals": "16M+",
-    "founderExperience": "$1B+",
+    "founderExperience": "25+",
     "investorsWorldwide": "20+"
   },
   "colors": {

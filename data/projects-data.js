@@ -985,7 +985,7 @@ const PROJECTS_DATA = {
         },
         {
           "label": "Entry Price",
-          "number": "$132K",
+          "number": "Rp 2.27B",
           "usd": 132000
         }
       ],
@@ -1000,7 +1000,7 @@ const PROJECTS_DATA = {
         },
         {
           "label": "Точка входа",
-          "number": "$132K",
+          "number": "Rp 2.27B",
           "usd": 132000
         }
       ]
@@ -1068,8 +1068,8 @@ const PROJECTS_DATA = {
       "total": 25
     },
     "showcaseDesc": {
-      "en": "25 villas from $132K — the lowest entry into Bali yield-generating real estate. Same risk insurance and notarized 29-year leasehold (with extension rights) as our $350K+ projects. Shared pool and onsite cafe included.",
-      "ru": "25 вилл от $132K — самая низкая точка входа в доходную недвижимость Бали. То же страхование рисков и нотариальный leasehold на 29 лет с правом продления, что в проектах от $350K+. Общий бассейн и кафе на территории."
+      "en": "25 villas from Rp 2.27B — the lowest entry into Bali yield-generating real estate. Same risk insurance and notarized 29-year leasehold (with extension rights) as our Rp 6B+ projects. Shared pool and onsite cafe included.",
+      "ru": "25 вилл от Rp 2,27 млрд — самая низкая точка входа в доходную недвижимость Бали. То же страхование рисков и нотариальный leasehold на 29 лет с правом продления, что в проектах от Rp 6 млрд+. Общий бассейн и кафе на территории."
     },
     "showcaseMeta": {
       "en": [
@@ -1123,8 +1123,8 @@ const PROJECTS_DATA = {
       "ru": "Бассейн + кафе"
     },
     "showcaseSubtitle": {
-      "en": "Complex of 25 villas with shared pool and cafe — from $132K",
-      "ru": "Комплекс из 25 вилл с общим бассейном и кафе — от $132K"
+      "en": "Complex of 25 villas with shared pool and cafe — from Rp 2.27B",
+      "ru": "Комплекс из 25 вилл с общим бассейном и кафе — от Rp 2,27 млрд"
     },
     "showcaseAvailability": {
       "en": "6 of 25 units available",
