@@ -313,8 +313,8 @@ const PROJECTS_DATA = {
     },
     "totalUnits": 12,
     "positioning": {
-      "en": "Boutique Yield Play",
-      "ru": "Бутик-доходность"
+      "en": "Stable Yield",
+      "ru": "Стабильная доходность"
     },
     "showcaseCta": {
       "en": "View Details",
