@@ -6557,9 +6557,6 @@ a.testimonials__verified:hover {
   letter-spacing: 0.6px;
   text-transform: uppercase;
   color: var(--color-accent);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .master-plan__tooltip-row {
   display: block;
