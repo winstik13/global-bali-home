@@ -80,17 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
       ga4: /^G-[A-Z0-9]{4,10}$/,
       facebookPixel: /^\d{10,20}$/,
       yandexMetrika: /^\d{5,12}$/,
-      clarity: /^[a-z0-9]{8,12}$/i,
-      gscVerification: /^[A-Za-z0-9_-]{30,60}$/
+      clarity: /^[a-z0-9]{8,12}$/i
     };
-
-    // Google Search Console verification
-    if (an.gscVerification && idOk.gscVerification.test(an.gscVerification)) {
-      var gscMeta = document.createElement('meta');
-      gscMeta.name = 'google-site-verification';
-      gscMeta.content = an.gscVerification;
-      document.head.appendChild(gscMeta);
-    }
 
     // Google Analytics 4
     if (an.ga4 && idOk.ga4.test(an.ga4)) {
@@ -101,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.dataLayer = window.dataLayer || [];
       window.gtag = function() { dataLayer.push(arguments); };
       gtag('js', new Date());
-      gtag('config', an.ga4);
+      gtag('config', an.ga4, { anonymize_ip: true });
     }
 
     // Facebook Pixel

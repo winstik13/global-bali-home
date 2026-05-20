@@ -94,8 +94,7 @@ const SITE_DATA = {
     "ga4": "",
     "clarity": "",
     "facebookPixel": "",
-    "yandexMetrika": "",
-    "gscVerification": ""
+    "yandexMetrika": ""
   },
   "exitPopup": {
     "delay": 30,
