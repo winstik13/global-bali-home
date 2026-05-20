@@ -77,11 +77,20 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof SITE_DATA !== 'undefined' && SITE_DATA.analytics) {
     var an = SITE_DATA.analytics;
     var idOk = {
+      gtm: /^GTM-[A-Z0-9]{6,10}$/,
       ga4: /^G-[A-Z0-9]{4,10}$/,
       facebookPixel: /^\d{10,20}$/,
       yandexMetrika: /^\d{5,12}$/,
       clarity: /^[a-z0-9]{8,12}$/i
     };
+
+    // Google Tag Manager (loads GA4/FB/Ads/etc. configured inside the container)
+    if (an.gtm && idOk.gtm.test(an.gtm)) {
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
+      var f=d.getElementsByTagName(s)[0], j=d.createElement(s), dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true; j.src='https://www.googletagmanager.com/gtm.js?id='+encodeURIComponent(i)+dl;
+      f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',an.gtm);
+    }
 
     // Google Analytics 4
     if (an.ga4 && idOk.ga4.test(an.ga4)) {
@@ -124,8 +133,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Analytics event helper — sends to all active trackers
+  // Analytics event helper — sends to all active trackers + dataLayer (for GTM triggers)
   function trackEvent(action, category, label) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: action, event_category: category, event_label: label });
     if (typeof gtag === 'function') gtag('event', action, { event_category: category, event_label: label });
     if (typeof fbq === 'function') fbq('track', action === 'generate_lead' ? 'Lead' : (action === 'contact' ? 'Contact' : 'ViewContent'), { content_name: label });
     if (typeof ym === 'function' && typeof SITE_DATA !== 'undefined' && SITE_DATA.analytics && SITE_DATA.analytics.yandexMetrika) ym(Number(SITE_DATA.analytics.yandexMetrika), 'reachGoal', action, { category: category, label: label });

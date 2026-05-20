@@ -214,14 +214,27 @@
       <section id="tab-analytics" class="admin-tab" hidden>
         <h2 data-i18n="analytics.title">Analytics & Tracking</h2>
 
+        <div class="editor-section">
+          <h3 data-i18n="analytics.gtm.title">Google Tag Manager</h3>
+          <small class="field-hint" data-i18n="analytics.gtm.warning">⚠️ If GTM is used, leave the Tracking Services fields below EMPTY — duplicate trackers will inflate metrics.</small>
+          <div class="form-grid">
+            <div class="form-group">
+              <label data-i18n="analytics.gtm">GTM Container ID</label>
+              <input type="text" id="analytics-gtm" placeholder="GTM-XXXXXXXX">
+              <small class="field-hint" data-i18n="analytics.hint.gtm">Container ID from tagmanager.google.com</small>
+            </div>
+          </div>
+        </div>
+
         <div class="editor-section editor-section--has-help">
           <button class="editor-help-btn" data-help="analytics" aria-label="Help">?</button>
           <div class="editor-help-popup" id="help-analytics" hidden>
             <p data-i18n="help.analytics.intro"><strong>How it works:</strong> Paste your tracking IDs below. Scripts are injected automatically — no code changes needed.</p>
             <p data-i18n="help.analytics.empty"><strong>Empty field</strong> = tracker disabled. Fill in only the services you use.</p>
+            <p data-i18n="help.analytics.gtmConflict"><strong>If GTM is connected above</strong> — leave all these fields empty. GTM handles tracking on its own.</p>
             <p data-i18n="help.analytics.events"><strong>Auto-tracked events:</strong> form submissions (contact, quiz, lead magnet, exit popup), WhatsApp clicks, PDF downloads.</p>
           </div>
-          <h3 data-i18n="analytics.tracking">Tracking Services</h3>
+          <h3 data-i18n="analytics.tracking">Direct Tracking (no GTM)</h3>
 
           <div class="form-grid">
             <div class="form-group">

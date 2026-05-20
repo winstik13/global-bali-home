@@ -91,6 +91,7 @@ const SITE_DATA = {
     "whatsapp": "6281325143849"
   },
   "analytics": {
+    "gtm": "",
     "ga4": "",
     "clarity": "",
     "facebookPixel": "",
