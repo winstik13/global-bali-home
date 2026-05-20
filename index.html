@@ -374,26 +374,79 @@
   {
     "@context": "https://schema.org",
     "@type": "RealEstateAgent",
+    "@id": "https://globalbalihome.com/#organization",
     "name": "Global Bali Home",
+    "alternateName": "GBH",
     "url": "https://globalbalihome.com/",
     "logo": "https://globalbalihome.com/images/common/logo-transparent.png",
-    "description": "Real estate investment & development holding with premium projects in Bali.",
+    "image": "https://globalbalihome.com/images/home/hero-bg.webp",
+    "description": "Real estate investment and development holding with three active villa projects in Bali. 41 villas in portfolio, prices Rp 2.27B–20.49B, projected rental yield 10–15% annually, leasehold 29+30 years.",
     "email": "office@globalbalihome.com",
-    "telephone": "+6281325143849",
+    "telephone": "+62-813-251-438-49",
+    "priceRange": "Rp 2.27B - Rp 20.49B",
+    "currenciesAccepted": ["IDR", "USD"],
+    "paymentAccepted": "Bank Transfer",
+    "areaServed": {"@type": "Place", "name": "Bali, Indonesia"},
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Ubud",
       "addressRegion": "Bali",
       "addressCountry": "ID"
     },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "-8.5069",
+      "longitude": "115.2625"
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "opens": "09:00",
+      "closes": "18:00"
+    },
     "founder": {
       "@type": "Person",
+      "@id": "https://globalbalihome.com/about.html#mark-feldman",
       "name": "Mark Feldman",
-      "jobTitle": "Founder & Managing Director"
+      "jobTitle": "Founder & Managing Director",
+      "worksFor": {"@id": "https://globalbalihome.com/#organization"},
+      "description": "Wall Street veteran with 25+ years in finance. Founder and Managing Director of Global Bali Home."
     },
+    "knowsAbout": [
+      "Bali real estate investment",
+      "Villa development",
+      "Leasehold structuring",
+      "Indonesian property law",
+      "Short-term rental management"
+    ],
     "sameAs": [
       "https://www.facebook.com/serenityvillasbali",
       "https://www.instagram.com/serenity_villas_bali"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://globalbalihome.com/#website",
+    "url": "https://globalbalihome.com/",
+    "name": "Global Bali Home",
+    "description": "Premium villa development and investment in Bali. 3 active projects, 41 villas, 10–15% projected annual yield.",
+    "publisher": {"@id": "https://globalbalihome.com/#organization"},
+    "inLanguage": ["en", "ru"],
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": ["h1", ".hero__subtitle"]
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://globalbalihome.com/"}
     ]
   }
   </script>
