@@ -7041,3 +7041,20 @@ body.master-plan-sheet-open .whatsapp-float {
     padding-bottom: 0;
   }
 }
+
+/* Page meta (Last Updated indicator) — freshness signal for AI/search engines */
+.page-updated {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  margin-bottom: 32px;
+  display: inline-block;
+}
+.page-updated::before {
+  content: "↻ ";
+  color: var(--color-accent);
+  margin-right: 4px;
+}
+

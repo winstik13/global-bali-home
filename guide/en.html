@@ -79,6 +79,15 @@
       align-items: center;
       gap: 6px;
     }
+    .guide-hero__meta a {
+      color: var(--color-cream);
+      text-decoration: none;
+      border-bottom: 1px solid var(--color-accent);
+      transition: color 0.2s;
+    }
+    .guide-hero__meta a:hover {
+      color: var(--color-accent);
+    }
 
     .guide-toc {
       padding: 48px 0;
@@ -148,6 +157,15 @@
       color: var(--color-text);
       margin-bottom: 16px;
       max-width: 780px;
+    }
+    .guide-section a {
+      color: var(--color-cream);
+      text-decoration: none;
+      border-bottom: 1px solid var(--color-accent);
+      transition: color 0.2s;
+    }
+    .guide-section a:hover {
+      color: var(--color-accent);
     }
     .guide-section ul {
       list-style: none;
@@ -473,9 +491,9 @@
         <h1>Bali Real Estate<br>Investment Guide 2026</h1>
         <p class="guide-hero__subtitle">A comprehensive analysis of Bali's property market for international investors &mdash; covering market data, legal frameworks, projected returns, and risk assessment.</p>
         <div class="guide-hero__meta">
-          <span>Published: April 2026</span>
+          <span>By <a href="../about.html"><strong>Mark Feldman</strong></a>, Founder &amp; Managing Director</span>
+          <span>Updated: May 2026</span>
           <span>Reading time: 15 min</span>
-          <span>By Global Bali Home</span>
         </div>
         <div class="guide-actions">
           <div class="guide-lang">
@@ -696,7 +714,7 @@
             <tr><td>Annualized ROI</td><td>14 &ndash; 22%</td><td>15 &ndash; 24%</td></tr>
           </tbody>
         </table>
-        <p>This model represents the most accessible entry point into the Ubud/Gianyar market &mdash; compact 1&ndash;2 bedroom villas priced from Rp 2.05B to Rp 3.22B. The lower investment threshold combined with strong rental demand makes this an attractive option for first-time Bali investors seeking maximum yield percentage.</p>
+        <p>This model represents the most accessible entry point into the Ubud/Gianyar market &mdash; compact 1&ndash;2 bedroom villas priced from Rp 2.05B to Rp 3.22B. The lower investment threshold combined with strong rental demand makes this an attractive option for first-time Bali investors seeking maximum yield percentage. Our <a href="../project-serenity-village.html">Serenity Village</a> project is positioned exactly in this segment, with 1&ndash;2 bedroom villas from Rp 2.27B.</p>
 
         <h3>Model B: Premium &mdash; 2&ndash;3 Bedroom Villa, Rp 6.03B</h3>
         <table class="guide-table">
@@ -710,7 +728,7 @@
             <tr><td>Annualized ROI</td><td>14 &ndash; 20%</td><td>15 &ndash; 21%</td></tr>
           </tbody>
         </table>
-        <p>Premium 2&ndash;3 bedroom villas in the Rp 5.77B&ndash;Rp 6.87B range generate higher absolute returns and attract a quality-focused tenant profile willing to pay Rp 3.44M&ndash;Rp 4.82M per night. These properties also command stronger resale value due to their larger footprint and premium finishes.</p>
+        <p>Premium 2&ndash;3 bedroom villas in the Rp 5.77B&ndash;Rp 6.87B range generate higher absolute returns and attract a quality-focused tenant profile willing to pay Rp 3.44M&ndash;Rp 4.82M per night. These properties also command stronger resale value due to their larger footprint and premium finishes. <a href="../project-serenity-villas.html">Serenity Villas</a> (12 villas, 2&ndash;3 bedroom, from Rp 5.77B) fits this profile, and <a href="../project-serenity-estates.html">Serenity Estates</a> extends it to 2&ndash;5 bedroom single-family villas up to Rp 9.99B for buyers prioritizing capital appreciation over yield.</p>
 
         <h3>Exit Strategies</h3>
         <ul>
@@ -852,6 +870,21 @@
       </div>
     </section>
 
+    <!-- Next steps: link to projects -->
+    <section class="guide-section">
+      <div class="container">
+        <p class="guide-section__num">Next Steps</p>
+        <h2>Apply This Framework to Real Projects</h2>
+        <p>This guide gives you the framework. To see how it applies to actual villas you can buy today, explore our three active developments in the Ubud area:</p>
+        <ul>
+          <li><strong><a href="../project-serenity-village.html">Serenity Village</a></strong> &mdash; 25 villas, 1&ndash;2 bedrooms, from Rp 2.27B. Entry-level investment matching Model A in this guide.</li>
+          <li><strong><a href="../project-serenity-villas.html">Serenity Villas</a></strong> &mdash; 12 villas, 2&ndash;3 bedrooms, from Rp 5.77B. Premium yield-focused investment matching Model B.</li>
+          <li><strong><a href="../project-serenity-estates.html">Serenity Estates</a></strong> &mdash; 4 exclusive single-family villas, 2&ndash;5 bedrooms, Rp 5.34B&ndash;Rp 9.99B. Capital-growth focused on large 3.5&ndash;14 are plots.</li>
+        </ul>
+        <p>See the full <a href="../projects.html">project comparison</a> or <a href="../contacts.html">contact us</a> for a personalized investment breakdown.</p>
+      </div>
+    </section>
+
     <!-- Disclaimer -->
     <div class="guide-disclaimer">
       <div class="container">
@@ -881,9 +914,17 @@
     "dateModified": "2026-05-20",
     "inLanguage": "en",
     "author": {
-      "@type": "Organization",
-      "name": "Global Bali Home",
-      "url": "https://globalbalihome.com/"
+      "@type": "Person",
+      "@id": "https://globalbalihome.com/about.html#mark-feldman",
+      "name": "Mark Feldman",
+      "jobTitle": "Founder & Managing Director",
+      "url": "https://globalbalihome.com/about.html",
+      "description": "Wall Street veteran with 25+ years in finance. Founder and Managing Director of Global Bali Home.",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Global Bali Home",
+        "url": "https://globalbalihome.com/"
+      }
     },
     "publisher": {
       "@type": "Organization",
