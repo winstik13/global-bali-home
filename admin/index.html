@@ -777,147 +777,103 @@
         <!-- Colors -->
         <div id="bb-colors" class="editor-section">
           <h3 data-i18n="bb.colors.title">Color Palette</h3>
-          <p class="bb-text" data-i18n="bb.colors.desc">Palette is organised by <strong>role</strong>, not by «main / supporting». Following industry best practice (Apple, Stripe, Aman, IBM Carbon) we avoid pure black and pure white in main usage: our dark base <code>#1a1a14</code> and main text <code>#E1D9C9</code> are warm off-tones that reduce eye strain and give the brand its character. Pure White is kept as an escape hatch (icons on photos, print on coloured stock).</p>
+          <p class="bb-text" data-i18n="bb.colors.desc">Brand colors are essential to the overall identity and emotional expression of the brand. The approved palette should be used consistently across all brand assets, including the logo. Color examples shown here are for reference — when precise reproduction is not possible, the closest visual match should be used.</p>
 
-          <h4 class="bb-subhead" data-i18n="bb.colors.coreSurfaces">Core Surfaces &amp; Text</h4>
-          <div class="bb-swatch-stack">
-            <div class="bb-swatch">
-              <div class="bb-swatch__color" style="background:#1a1a14;"></div>
-              <div class="bb-swatch__body">
-                <span class="bb-swatch__name">Bg Primary</span>
-                <span class="bb-swatch__role" data-i18n="bb.colors.role.bgPrimary">Page background, hero, footer</span>
-                <button class="bb-swatch__value bb-copy" data-copy="#1a1a14"><span>HEX</span> #1a1a14</button>
-                <button class="bb-swatch__value bb-copy" data-copy="rgb(26, 26, 20)"><span>RGB</span> 26 · 26 · 20</button>
-                <span class="bb-swatch__value bb-swatch__value--static"><span>CMYK</span> 0 · 0 · 23 · 90</span>
+          <div class="bb-color-row">
+            <div class="bb-color-group">
+              <span class="bb-color-group__label" data-i18n="bb.colors.main">Main</span>
+              <div class="bb-color-group__items">
+                <div class="bb-swatch">
+                  <div class="bb-swatch__color" style="background:#2B3226;"></div>
+                  <div class="bb-swatch__body">
+                    <span class="bb-swatch__name" data-i18n="bb.colors.darkGreen">Dark Green</span>
+                    <button class="bb-swatch__value bb-copy" data-copy="#2B3226"><span>HEX</span> #2B3226</button>
+                    <button class="bb-swatch__value bb-copy" data-copy="rgb(43, 50, 38)"><span>RGB</span> 43 · 50 · 38</button>
+                    <span class="bb-swatch__value bb-swatch__value--static"><span>CMYK</span> 14 · 0 · 24 · 80</span>
+                  </div>
+                </div>
+                <div class="bb-swatch">
+                  <div class="bb-swatch__color" style="background:#E1D3BE;"></div>
+                  <div class="bb-swatch__body">
+                    <span class="bb-swatch__name" data-i18n="bb.colors.cream">Cream</span>
+                    <button class="bb-swatch__value bb-copy" data-copy="#E1D3BE"><span>HEX</span> #E1D3BE</button>
+                    <button class="bb-swatch__value bb-copy" data-copy="rgb(225, 211, 190)"><span>RGB</span> 225 · 211 · 190</button>
+                    <span class="bb-swatch__value bb-swatch__value--static"><span>CMYK</span> 0 · 6 · 16 · 12</span>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="bb-swatch">
-              <div class="bb-swatch__color" style="background:#2a2a20;"></div>
-              <div class="bb-swatch__body">
-                <span class="bb-swatch__name">Bg Surface</span>
-                <span class="bb-swatch__role" data-i18n="bb.colors.role.bgSurface">Cards, raised panels, hover</span>
-                <button class="bb-swatch__value bb-copy" data-copy="#2a2a20"><span>HEX</span> #2a2a20</button>
-                <button class="bb-swatch__value bb-copy" data-copy="rgb(42, 42, 32)"><span>RGB</span> 42 · 42 · 32</button>
-                <span class="bb-swatch__value bb-swatch__value--static"><span>CMYK</span> 0 · 0 · 24 · 84</span>
-              </div>
-            </div>
-            <div class="bb-swatch">
-              <div class="bb-swatch__color" style="background:#E1D9C9;"></div>
-              <div class="bb-swatch__body">
-                <span class="bb-swatch__name">Cream</span>
-                <span class="bb-swatch__role" data-i18n="bb.colors.role.cream">All body text, light surfaces — 90%</span>
-                <button class="bb-swatch__value bb-copy" data-copy="#E1D9C9"><span>HEX</span> #E1D9C9</button>
-                <button class="bb-swatch__value bb-copy" data-copy="rgb(225, 217, 201)"><span>RGB</span> 225 · 217 · 201</button>
-                <span class="bb-swatch__value bb-swatch__value--static"><span>CMYK</span> 0 · 4 · 11 · 12</span>
-              </div>
-            </div>
-            <div class="bb-swatch">
-              <div class="bb-swatch__color" style="background:#F5F2EB;"></div>
-              <div class="bb-swatch__body">
-                <span class="bb-swatch__name">Cream Light</span>
-                <span class="bb-swatch__role" data-i18n="bb.colors.role.creamLight">Inverted surfaces, forms — 9%</span>
-                <button class="bb-swatch__value bb-copy" data-copy="#F5F2EB"><span>HEX</span> #F5F2EB</button>
-                <button class="bb-swatch__value bb-copy" data-copy="rgb(245, 242, 235)"><span>RGB</span> 245 · 242 · 235</button>
-                <span class="bb-swatch__value bb-swatch__value--static"><span>CMYK</span> 0 · 1 · 4 · 4</span>
-              </div>
-            </div>
-            <div class="bb-swatch">
-              <div class="bb-swatch__color bb-swatch__color--bordered" style="background:#FFFFFF;"></div>
-              <div class="bb-swatch__body">
-                <span class="bb-swatch__name">Pure White</span>
-                <span class="bb-swatch__role" data-i18n="bb.colors.role.white">Escape hatch — icons, print — 1%</span>
-                <button class="bb-swatch__value bb-copy" data-copy="#FFFFFF"><span>HEX</span> #FFFFFF</button>
-                <button class="bb-swatch__value bb-copy" data-copy="rgb(255, 255, 255)"><span>RGB</span> 255 · 255 · 255</button>
-                <span class="bb-swatch__value bb-swatch__value--static"><span>CMYK</span> 0 · 0 · 0 · 0</span>
-              </div>
-            </div>
-            <div class="bb-swatch">
-              <div class="bb-swatch__color" style="background:#6B8F4E;"></div>
-              <div class="bb-swatch__body">
-                <span class="bb-swatch__name">Accent Green</span>
-                <span class="bb-swatch__role" data-i18n="bb.colors.role.accent">Eyebrows, progress, links, success</span>
-                <button class="bb-swatch__value bb-copy" data-copy="#6B8F4E"><span>HEX</span> #6B8F4E</button>
-                <button class="bb-swatch__value bb-copy" data-copy="rgb(107, 143, 78)"><span>RGB</span> 107 · 143 · 78</button>
-                <span class="bb-swatch__value bb-swatch__value--static"><span>CMYK</span> 25 · 0 · 45 · 44</span>
-              </div>
-            </div>
-          </div>
-
-          <h4 class="bb-subhead" data-i18n="bb.colors.functional">Functional / Status</h4>
-          <p class="bb-text" data-i18n="bb.colors.functionalDesc">Used for state communication, not for decoration. Success states reuse Accent Green to keep the palette tight. WhatsApp is a third-party brand colour — locked by Meta, never adjusted.</p>
-          <div class="bb-swatch-stack">
-            <div class="bb-swatch">
-              <div class="bb-swatch__color" style="background:#6B8F4E;"></div>
-              <div class="bb-swatch__body">
-                <span class="bb-swatch__name">Success / Available</span>
-                <span class="bb-swatch__role" data-i18n="bb.colors.role.success">= Accent Green. Availability bars, ✓ states</span>
-                <button class="bb-swatch__value bb-copy" data-copy="#6B8F4E"><span>HEX</span> #6B8F4E</button>
-                <span class="bb-swatch__value bb-swatch__value--static" data-i18n="bb.colors.alias">Alias of Accent Green</span>
-              </div>
-            </div>
-            <div class="bb-swatch">
-              <div class="bb-swatch__color" style="background:#d99331;"></div>
-              <div class="bb-swatch__body">
-                <span class="bb-swatch__name">Pre-sale / Warning</span>
-                <span class="bb-swatch__role" data-i18n="bb.colors.role.presale">Pre-launch tags, warning badges</span>
-                <button class="bb-swatch__value bb-copy" data-copy="#d99331"><span>HEX</span> #d99331</button>
-                <button class="bb-swatch__value bb-copy" data-copy="rgb(217, 147, 49)"><span>RGB</span> 217 · 147 · 49</button>
-                <span class="bb-swatch__value bb-swatch__value--static"><span>CMYK</span> 0 · 32 · 77 · 15</span>
-              </div>
-            </div>
-            <div class="bb-swatch">
-              <div class="bb-swatch__color" style="background:#e74c3c;"></div>
-              <div class="bb-swatch__body">
-                <span class="bb-swatch__name">Error</span>
-                <span class="bb-swatch__role" data-i18n="bb.colors.role.error">Form errors, destructive. Use Light (#e74c3c) on dark for body, Deep (#c0392b) only for headlines/large</span>
-                <button class="bb-swatch__value bb-copy" data-copy="#e74c3c"><span>HEX</span> #e74c3c</button>
-                <button class="bb-swatch__value bb-copy" data-copy="rgb(231, 76, 60)"><span>RGB</span> 231 · 76 · 60</button>
-                <span class="bb-swatch__value bb-swatch__value--static"><span>CMYK</span> 0 · 67 · 74 · 9</span>
-              </div>
-            </div>
-            <div class="bb-swatch">
-              <div class="bb-swatch__color" style="background:#25D366;"></div>
-              <div class="bb-swatch__body">
-                <span class="bb-swatch__name">WhatsApp <span class="bb-swatch__badge">vendor</span></span>
-                <span class="bb-swatch__role" data-i18n="bb.colors.role.whatsapp">External brand colour. WhatsApp buttons only — do not adjust</span>
-                <button class="bb-swatch__value bb-copy" data-copy="#25D366"><span>HEX</span> #25D366</button>
-                <button class="bb-swatch__value bb-copy" data-copy="rgb(37, 211, 102)"><span>RGB</span> 37 · 211 · 102</button>
-                <span class="bb-swatch__value bb-swatch__value--static"><span>CMYK</span> 82 · 0 · 52 · 17</span>
+            <div class="bb-color-group">
+              <span class="bb-color-group__label" data-i18n="bb.colors.supporting">Supporting</span>
+              <div class="bb-color-group__items">
+                <div class="bb-swatch">
+                  <div class="bb-swatch__color bb-swatch__color--bordered" style="background:#FFFFFF;"></div>
+                  <div class="bb-swatch__body">
+                    <span class="bb-swatch__name" data-i18n="bb.colors.white">White</span>
+                    <button class="bb-swatch__value bb-copy" data-copy="#FFFFFF"><span>HEX</span> #FFFFFF</button>
+                    <button class="bb-swatch__value bb-copy" data-copy="rgb(255, 255, 255)"><span>RGB</span> 255 · 255 · 255</button>
+                    <span class="bb-swatch__value bb-swatch__value--static"><span>CMYK</span> 0 · 0 · 0 · 0</span>
+                  </div>
+                </div>
+                <div class="bb-swatch">
+                  <div class="bb-swatch__color" style="background:#171F10;"></div>
+                  <div class="bb-swatch__body">
+                    <span class="bb-swatch__name" data-i18n="bb.colors.deepGreen">Deep Green</span>
+                    <button class="bb-swatch__value bb-copy" data-copy="#171F10"><span>HEX</span> #171F10</button>
+                    <button class="bb-swatch__value bb-copy" data-copy="rgb(23, 31, 16)"><span>RGB</span> 23 · 31 · 16</button>
+                    <span class="bb-swatch__value bb-swatch__value--static"><span>CMYK</span> 26 · 0 · 48 · 88</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
           <h4 class="bb-subhead" data-i18n="bb.colors.tints">Tints &amp; Shades</h4>
-          <p class="bb-text" data-i18n="bb.colors.tintsDesc">Two 10-stop scales cover all interface needs. <strong>Neutral</strong> goes from Cream Light to Bg Primary — use for text variants, borders, dividers, surface elevation, disabled states. <strong>Accent</strong> expands the brand green — use for hover/active states, focus rings, success variants. ◉ marks the base brand colour. Click any stop to copy.</p>
+          <p class="bb-text" data-i18n="bb.colors.tintsDesc">Each brand colour expanded into a 10-stop scale (50 lightest → 900 darkest). Use for hover states, borders, dividers, disabled UI, charts. The numbered base sits at 500–800 depending on the colour. Click any swatch to copy.</p>
 
           <div class="bb-tint-row">
-            <span class="bb-tint-row__label">Neutral</span>
+            <span class="bb-tint-row__label">Dark Green</span>
             <div class="bb-tint-row__strip">
-              <button class="bb-tint bb-copy bb-tint--base" data-copy="#F5F2EB" style="background:#F5F2EB; color:#1a1a14;" title="= Cream Light"><span class="bb-tint__n">50</span><span class="bb-tint__hex">F5F2EB</span></button>
-              <button class="bb-tint bb-copy" data-copy="#E3E1DA" style="background:#E3E1DA; color:#1a1a14;" title="~ Cream"><span class="bb-tint__n">100</span><span class="bb-tint__hex">E3E1DA</span></button>
-              <button class="bb-tint bb-copy" data-copy="#C9C7C0" style="background:#C9C7C0; color:#1a1a14;"><span class="bb-tint__n">200</span><span class="bb-tint__hex">C9C7C0</span></button>
-              <button class="bb-tint bb-copy" data-copy="#ABA9A2" style="background:#ABA9A2; color:#1a1a14;"><span class="bb-tint__n">300</span><span class="bb-tint__hex">ABA9A2</span></button>
-              <button class="bb-tint bb-copy" data-copy="#8C8A84" style="background:#8C8A84; color:#1a1a14;"><span class="bb-tint__n">400</span><span class="bb-tint__hex">8C8A84</span></button>
-              <button class="bb-tint bb-copy" data-copy="#72706A" style="background:#72706A; color:#fff;"><span class="bb-tint__n">500</span><span class="bb-tint__hex">72706A</span></button>
-              <button class="bb-tint bb-copy" data-copy="#575650" style="background:#575650; color:#fff;"><span class="bb-tint__n">600</span><span class="bb-tint__hex">575650</span></button>
-              <button class="bb-tint bb-copy" data-copy="#41413B" style="background:#41413B; color:#fff;"><span class="bb-tint__n">700</span><span class="bb-tint__hex">41413B</span></button>
-              <button class="bb-tint bb-copy" data-copy="#30302A" style="background:#30302A; color:#fff;" title="~ Bg Surface"><span class="bb-tint__n">800</span><span class="bb-tint__hex">30302A</span></button>
-              <button class="bb-tint bb-copy bb-tint--base" data-copy="#1A1A14" style="background:#1A1A14; color:#fff;" title="= Bg Primary"><span class="bb-tint__n">900</span><span class="bb-tint__hex">1A1A14</span></button>
+              <button class="bb-tint bb-copy" data-copy="#F2F4F1" style="background:#F2F4F1; color:#141712;"><span class="bb-tint__n">50</span><span class="bb-tint__hex">F2F4F1</span></button>
+              <button class="bb-tint bb-copy" data-copy="#E0E5DC" style="background:#E0E5DC; color:#141712;"><span class="bb-tint__n">100</span><span class="bb-tint__hex">E0E5DC</span></button>
+              <button class="bb-tint bb-copy" data-copy="#C6CFBF" style="background:#C6CFBF; color:#141712;"><span class="bb-tint__n">200</span><span class="bb-tint__hex">C6CFBF</span></button>
+              <button class="bb-tint bb-copy" data-copy="#A6B49C" style="background:#A6B49C; color:#141712;"><span class="bb-tint__n">300</span><span class="bb-tint__hex">A6B49C</span></button>
+              <button class="bb-tint bb-copy" data-copy="#879A7A" style="background:#879A7A; color:#141712;"><span class="bb-tint__n">400</span><span class="bb-tint__hex">879A7A</span></button>
+              <button class="bb-tint bb-copy" data-copy="#697A5C" style="background:#697A5C; color:#fff;"><span class="bb-tint__n">500</span><span class="bb-tint__hex">697A5C</span></button>
+              <button class="bb-tint bb-copy" data-copy="#505D46" style="background:#505D46; color:#fff;"><span class="bb-tint__n">600</span><span class="bb-tint__hex">505D46</span></button>
+              <button class="bb-tint bb-copy bb-tint--base" data-copy="#2B3226" style="background:#2B3226; color:#fff;"><span class="bb-tint__n">700</span><span class="bb-tint__hex">2B3226</span></button>
+              <button class="bb-tint bb-copy" data-copy="#23291F" style="background:#23291F; color:#fff;"><span class="bb-tint__n">800</span><span class="bb-tint__hex">23291F</span></button>
+              <button class="bb-tint bb-copy" data-copy="#141712" style="background:#141712; color:#fff;"><span class="bb-tint__n">900</span><span class="bb-tint__hex">141712</span></button>
             </div>
           </div>
           <div class="bb-tint-row">
-            <span class="bb-tint-row__label">Accent</span>
+            <span class="bb-tint-row__label">Cream</span>
             <div class="bb-tint-row__strip">
-              <button class="bb-tint bb-copy" data-copy="#F4F8F2" style="background:#F4F8F2; color:#1E2816;"><span class="bb-tint__n">50</span><span class="bb-tint__hex">F4F8F2</span></button>
-              <button class="bb-tint bb-copy" data-copy="#DFE9D7" style="background:#DFE9D7; color:#1E2816;"><span class="bb-tint__n">100</span><span class="bb-tint__hex">DFE9D7</span></button>
-              <button class="bb-tint bb-copy" data-copy="#C0D4B0" style="background:#C0D4B0; color:#1E2816;"><span class="bb-tint__n">200</span><span class="bb-tint__hex">C0D4B0</span></button>
-              <button class="bb-tint bb-copy" data-copy="#9BBB82" style="background:#9BBB82; color:#1E2816;"><span class="bb-tint__n">300</span><span class="bb-tint__hex">9BBB82</span></button>
-              <button class="bb-tint bb-copy" data-copy="#7BA55A" style="background:#7BA55A; color:#1a1a14;"><span class="bb-tint__n">400</span><span class="bb-tint__hex">7BA55A</span></button>
-              <button class="bb-tint bb-copy bb-tint--base" data-copy="#6B8F4E" style="background:#6B8F4E; color:#fff;" title="= Accent Green"><span class="bb-tint__n">500</span><span class="bb-tint__hex">6B8F4E</span></button>
-              <button class="bb-tint bb-copy" data-copy="#597741" style="background:#597741; color:#fff;"><span class="bb-tint__n">600</span><span class="bb-tint__hex">597741</span></button>
-              <button class="bb-tint bb-copy" data-copy="#455C32" style="background:#455C32; color:#fff;"><span class="bb-tint__n">700</span><span class="bb-tint__hex">455C32</span></button>
-              <button class="bb-tint bb-copy" data-copy="#314224" style="background:#314224; color:#fff;"><span class="bb-tint__n">800</span><span class="bb-tint__hex">314224</span></button>
-              <button class="bb-tint bb-copy" data-copy="#1E2816" style="background:#1E2816; color:#fff;"><span class="bb-tint__n">900</span><span class="bb-tint__hex">1E2816</span></button>
+              <button class="bb-tint bb-copy" data-copy="#F7F3EE" style="background:#F7F3EE; color:#1C160D;"><span class="bb-tint__n">50</span><span class="bb-tint__hex">F7F3EE</span></button>
+              <button class="bb-tint bb-copy" data-copy="#ECE3D5" style="background:#ECE3D5; color:#1C160D;"><span class="bb-tint__n">100</span><span class="bb-tint__hex">ECE3D5</span></button>
+              <button class="bb-tint bb-copy bb-tint--base" data-copy="#E1D3BE" style="background:#E1D3BE; color:#1C160D;"><span class="bb-tint__n">200</span><span class="bb-tint__hex">E1D3BE</span></button>
+              <button class="bb-tint bb-copy" data-copy="#C8AF88" style="background:#C8AF88; color:#1C160D;"><span class="bb-tint__n">300</span><span class="bb-tint__hex">C8AF88</span></button>
+              <button class="bb-tint bb-copy" data-copy="#B5925E" style="background:#B5925E; color:#1C160D;"><span class="bb-tint__n">400</span><span class="bb-tint__hex">B5925E</span></button>
+              <button class="bb-tint bb-copy" data-copy="#937344" style="background:#937344; color:#fff;"><span class="bb-tint__n">500</span><span class="bb-tint__hex">937344</span></button>
+              <button class="bb-tint bb-copy" data-copy="#705834" style="background:#705834; color:#fff;"><span class="bb-tint__n">600</span><span class="bb-tint__hex">705834</span></button>
+              <button class="bb-tint bb-copy" data-copy="#4D3C23" style="background:#4D3C23; color:#fff;"><span class="bb-tint__n">700</span><span class="bb-tint__hex">4D3C23</span></button>
+              <button class="bb-tint bb-copy" data-copy="#312617" style="background:#312617; color:#fff;"><span class="bb-tint__n">800</span><span class="bb-tint__hex">312617</span></button>
+              <button class="bb-tint bb-copy" data-copy="#1C160D" style="background:#1C160D; color:#fff;"><span class="bb-tint__n">900</span><span class="bb-tint__hex">1C160D</span></button>
+            </div>
+          </div>
+          <div class="bb-tint-row">
+            <span class="bb-tint-row__label">Deep Green</span>
+            <div class="bb-tint-row__strip">
+              <button class="bb-tint bb-copy" data-copy="#F2F6EE" style="background:#F2F6EE; color:#141B0E;"><span class="bb-tint__n">50</span><span class="bb-tint__hex">F2F6EE</span></button>
+              <button class="bb-tint bb-copy" data-copy="#E0EAD7" style="background:#E0EAD7; color:#141B0E;"><span class="bb-tint__n">100</span><span class="bb-tint__hex">E0EAD7</span></button>
+              <button class="bb-tint bb-copy" data-copy="#C6D9B5" style="background:#C6D9B5; color:#141B0E;"><span class="bb-tint__n">200</span><span class="bb-tint__hex">C6D9B5</span></button>
+              <button class="bb-tint bb-copy" data-copy="#A6C48D" style="background:#A6C48D; color:#141B0E;"><span class="bb-tint__n">300</span><span class="bb-tint__hex">A6C48D</span></button>
+              <button class="bb-tint bb-copy" data-copy="#87AF64" style="background:#87AF64; color:#141B0E;"><span class="bb-tint__n">400</span><span class="bb-tint__hex">87AF64</span></button>
+              <button class="bb-tint bb-copy" data-copy="#698D49" style="background:#698D49; color:#fff;"><span class="bb-tint__n">500</span><span class="bb-tint__hex">698D49</span></button>
+              <button class="bb-tint bb-copy" data-copy="#506C38" style="background:#506C38; color:#fff;"><span class="bb-tint__n">600</span><span class="bb-tint__hex">506C38</span></button>
+              <button class="bb-tint bb-copy" data-copy="#374A26" style="background:#374A26; color:#fff;"><span class="bb-tint__n">700</span><span class="bb-tint__hex">374A26</span></button>
+              <button class="bb-tint bb-copy bb-tint--base" data-copy="#171F10" style="background:#171F10; color:#fff;"><span class="bb-tint__n">800</span><span class="bb-tint__hex">171F10</span></button>
+              <button class="bb-tint bb-copy" data-copy="#141B0E" style="background:#141B0E; color:#fff;"><span class="bb-tint__n">900</span><span class="bb-tint__hex">141B0E</span></button>
             </div>
           </div>
 
@@ -925,49 +881,47 @@
           <p class="bb-text" data-i18n="bb.colors.combosDesc">Curated colour pairings for backgrounds, surfaces, and accent moments. Each combination has been tested for contrast. Apply the 60-30-10 rule: 60% main background, 30% secondary surface, 10% accent.</p>
           <div class="bb-combo-grid">
             <div class="bb-combo">
-              <div class="bb-combo__preview" style="background:#1a1a14; color:#E1D9C9;">
-                <span class="bb-combo__eyebrow" style="color:#6B8F4E;">Primary surface · 90%</span>
+              <div class="bb-combo__preview" style="background:#2B3226; color:#E1D3BE;">
+                <span class="bb-combo__eyebrow">Primary surface</span>
                 <strong>Where Serenity becomes lifestyle</strong>
-                <p>Cream text on Bg Primary — the signature combination. Used on most screens of the site.</p>
+                <p>Cream text on Dark Green background — the signature combination.</p>
               </div>
               <div class="bb-combo__meta">
-                <span><strong>60%</strong> #1a1a14</span>
-                <span><strong>30%</strong> #2a2a20</span>
-                <span><strong>10%</strong> #6B8F4E</span>
+                <span><strong>60%</strong> #2B3226</span>
+                <span><strong>40%</strong> #E1D3BE</span>
               </div>
             </div>
             <div class="bb-combo">
-              <div class="bb-combo__preview" style="background:#F5F2EB; color:#1a1a14;">
-                <span class="bb-combo__eyebrow" style="color:#6B8F4E;">Inverted surface</span>
-                <strong>Forms, lead capture, quiet sections</strong>
-                <p>Bg Primary text on Cream Light — for breathing space and contrast moments.</p>
+              <div class="bb-combo__preview" style="background:#E1D3BE; color:#171F10;">
+                <span class="bb-combo__eyebrow" style="color:#697A5C;">Inverted surface</span>
+                <strong>Quiet sections, lead capture forms</strong>
+                <p>Deep Green text on Cream background — for breathing space.</p>
               </div>
               <div class="bb-combo__meta">
-                <span><strong>60%</strong> #F5F2EB</span>
-                <span><strong>30%</strong> #E1D9C9</span>
-                <span><strong>10%</strong> #6B8F4E</span>
+                <span><strong>60%</strong> #E1D3BE</span>
+                <span><strong>40%</strong> #171F10</span>
               </div>
             </div>
             <div class="bb-combo">
-              <div class="bb-combo__preview" style="background:#2a2a20; color:#E1D9C9; border:1px solid #41413B;">
-                <span class="bb-combo__eyebrow" style="color:#6B8F4E;">Card / panel</span>
-                <strong>Serenity Villas · Q4 2026 handover</strong>
-                <p>Cream on Bg Surface — used for cards, modals, raised panels.</p>
+              <div class="bb-combo__preview" style="background:#171F10; color:#FFFFFF;">
+                <span class="bb-combo__eyebrow" style="color:#E1D3BE;">High contrast</span>
+                <strong>Hero overlays, footer, print</strong>
+                <p>White on Deep Green — maximum contrast for headlines.</p>
               </div>
               <div class="bb-combo__meta">
-                <span><strong>60%</strong> #2a2a20</span>
-                <span><strong>40%</strong> #E1D9C9</span>
+                <span><strong>60%</strong> #171F10</span>
+                <span><strong>40%</strong> #FFFFFF</span>
               </div>
             </div>
             <div class="bb-combo">
-              <div class="bb-combo__preview" style="background:#FFFFFF; color:#1a1a14; border:1px solid #E3E1DA;">
-                <span class="bb-combo__eyebrow" style="color:#6B8F4E;">Print · CMYK</span>
-                <strong>Brochures, business cards, contracts</strong>
-                <p>Bg Primary on Pure White — preferred for printed materials and PDF documents.</p>
+              <div class="bb-combo__preview" style="background:#FFFFFF; color:#2B3226; border:1px solid var(--color-border);">
+                <span class="bb-combo__eyebrow" style="color:#697A5C;">Print primary</span>
+                <strong>Brochures, documents, business cards</strong>
+                <p>Dark Green on White — preferred for printed materials.</p>
               </div>
               <div class="bb-combo__meta">
                 <span><strong>60%</strong> #FFFFFF</span>
-                <span><strong>40%</strong> #1a1a14</span>
+                <span><strong>40%</strong> #2B3226</span>
               </div>
             </div>
           </div>
@@ -982,58 +936,40 @@
               <span data-i18n="bb.colors.wcag.grade">Grade</span>
             </div>
             <div class="bb-wcag-row">
-              <span class="bb-wcag-row__pair">Cream / Bg Primary</span>
-              <span class="bb-wcag-row__preview" style="background:#1a1a14; color:#E1D9C9;">Aa · Тест</span>
-              <span class="bb-wcag-row__ratio">12.46 : 1</span>
+              <span class="bb-wcag-row__pair">Cream / Dark Green</span>
+              <span class="bb-wcag-row__preview" style="background:#2B3226; color:#E1D3BE;">Aa · Тест</span>
+              <span class="bb-wcag-row__ratio">8.99 : 1</span>
               <span class="bb-wcag-row__grade bb-wcag-row__grade--pass">AAA</span>
             </div>
             <div class="bb-wcag-row">
-              <span class="bb-wcag-row__pair">Cream / Bg Surface</span>
-              <span class="bb-wcag-row__preview" style="background:#2a2a20; color:#E1D9C9;">Aa · Тест</span>
-              <span class="bb-wcag-row__ratio">10.32 : 1</span>
+              <span class="bb-wcag-row__pair">White / Dark Green</span>
+              <span class="bb-wcag-row__preview" style="background:#2B3226; color:#FFFFFF;">Aa · Тест</span>
+              <span class="bb-wcag-row__ratio">13.23 : 1</span>
               <span class="bb-wcag-row__grade bb-wcag-row__grade--pass">AAA</span>
             </div>
             <div class="bb-wcag-row">
-              <span class="bb-wcag-row__pair">Cream Light / Bg Primary</span>
-              <span class="bb-wcag-row__preview" style="background:#1a1a14; color:#F5F2EB;">Aa · Тест</span>
-              <span class="bb-wcag-row__ratio">15.63 : 1</span>
+              <span class="bb-wcag-row__pair">Dark Green / Cream</span>
+              <span class="bb-wcag-row__preview" style="background:#E1D3BE; color:#2B3226;">Aa · Тест</span>
+              <span class="bb-wcag-row__ratio">8.99 : 1</span>
               <span class="bb-wcag-row__grade bb-wcag-row__grade--pass">AAA</span>
             </div>
             <div class="bb-wcag-row">
-              <span class="bb-wcag-row__pair">White / Bg Primary</span>
-              <span class="bb-wcag-row__preview" style="background:#1a1a14; color:#FFFFFF;">Aa · Тест</span>
-              <span class="bb-wcag-row__ratio">17.47 : 1</span>
+              <span class="bb-wcag-row__pair">Deep Green / Cream</span>
+              <span class="bb-wcag-row__preview" style="background:#E1D3BE; color:#171F10;">Aa · Тест</span>
+              <span class="bb-wcag-row__ratio">11.50 : 1</span>
               <span class="bb-wcag-row__grade bb-wcag-row__grade--pass">AAA</span>
             </div>
             <div class="bb-wcag-row">
-              <span class="bb-wcag-row__pair">Bg Primary / Cream Light</span>
-              <span class="bb-wcag-row__preview" style="background:#F5F2EB; color:#1a1a14;">Aa · Тест</span>
-              <span class="bb-wcag-row__ratio">15.63 : 1</span>
+              <span class="bb-wcag-row__pair">White / Deep Green</span>
+              <span class="bb-wcag-row__preview" style="background:#171F10; color:#FFFFFF;">Aa · Тест</span>
+              <span class="bb-wcag-row__ratio">16.94 : 1</span>
               <span class="bb-wcag-row__grade bb-wcag-row__grade--pass">AAA</span>
             </div>
             <div class="bb-wcag-row">
-              <span class="bb-wcag-row__pair">Bg Primary / White <span class="bb-wcag-row__note">print</span></span>
-              <span class="bb-wcag-row__preview" style="background:#FFFFFF; color:#1a1a14;">Aa · Тест</span>
-              <span class="bb-wcag-row__ratio">17.47 : 1</span>
+              <span class="bb-wcag-row__pair">Dark Green / White</span>
+              <span class="bb-wcag-row__preview" style="background:#FFFFFF; color:#2B3226;">Aa · Тест</span>
+              <span class="bb-wcag-row__ratio">13.23 : 1</span>
               <span class="bb-wcag-row__grade bb-wcag-row__grade--pass">AAA</span>
-            </div>
-            <div class="bb-wcag-row">
-              <span class="bb-wcag-row__pair">Accent Green / Bg Primary</span>
-              <span class="bb-wcag-row__preview" style="background:#1a1a14; color:#6B8F4E;">Aa · Тест</span>
-              <span class="bb-wcag-row__ratio">4.71 : 1</span>
-              <span class="bb-wcag-row__grade bb-wcag-row__grade--pass">AA</span>
-            </div>
-            <div class="bb-wcag-row">
-              <span class="bb-wcag-row__pair">Pre-sale / Bg Primary</span>
-              <span class="bb-wcag-row__preview" style="background:#1a1a14; color:#d99331;">Aa · Тест</span>
-              <span class="bb-wcag-row__ratio">6.80 : 1</span>
-              <span class="bb-wcag-row__grade bb-wcag-row__grade--pass">AA</span>
-            </div>
-            <div class="bb-wcag-row">
-              <span class="bb-wcag-row__pair">Error Light / Bg Primary</span>
-              <span class="bb-wcag-row__preview" style="background:#1a1a14; color:#e74c3c;">Aa · Тест</span>
-              <span class="bb-wcag-row__ratio">4.57 : 1</span>
-              <span class="bb-wcag-row__grade bb-wcag-row__grade--pass">AA</span>
             </div>
           </div>
         </div>
