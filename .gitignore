@@ -28,3 +28,13 @@ Client*.xlsx
 
 # Playwright MCP cache
 .playwright-mcp/
+
+# Brand Book heavy assets (PDF + print sources too big for git/GitHub)
+# Light assets (Logo, Icons, Fonts, Instagram previews) stay tracked.
+BB/Guideline.pdf
+BB/Print/
+BB/Guideline.txt
+
+# macOS metadata (junk)
+.DS_Store
+**/.DS_Store

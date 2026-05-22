@@ -339,6 +339,81 @@
       'users.toast.sent': 'Invitation sent to {email}.',
       'users.toast.roleUpdated': 'Role updated.',
       'users.toast.userDeleted': 'User deleted.',
+      // ── Brand Book ──
+      'nav.brandbook': 'Brand Book',
+      'bb.title': 'Brand Book',
+      'bb.intro': "Visual identity guidelines for Global Bali Home. Reference for designers, marketers and partners. Click any value to copy.",
+      'bb.nav.about': 'About',
+      'bb.nav.logo': 'Logo',
+      'bb.nav.rules': 'Logo Rules',
+      'bb.nav.colors': 'Colors',
+      'bb.nav.typography': 'Typography',
+      'bb.nav.icons': 'Icons',
+      'bb.nav.photography': 'Photography',
+      'bb.nav.margins': 'Margins',
+      'bb.nav.social': 'Social Media',
+      'bb.about.title': 'About the Brand',
+      'bb.about.p1': "Global Bali Home is an international real estate company focused on the development of high-quality projects in Bali — one of the world's most attractive property markets. Drawing on global expertise in architecture, construction, and investment, we create projects defined by strong concepts and long-term value.",
+      'bb.about.p2': 'Each development is delivered in line with international standards, combining solid investment potential with considered, refined design. Our approach goes beyond aesthetics: we create spaces designed for both comfortable living and sustainable income, with efficient layouts, high construction quality, and a long-term perspective.',
+      'bb.about.p3': 'Global Bali Home brings together the character of Bali and international expertise through a strategic, forward-looking approach to real estate.',
+      'bb.logo.title': 'Logo',
+      'bb.logo.desc': 'The brand mark combines a lotus symbol with the residential complex name, inspired by Balinese spiritual heritage. Two logo systems coexist: the GBH parent brand and individual project marks (e.g. Serenity).',
+      'bb.logo.primary': 'Primary — Global Bali Home',
+      'bb.logo.project': 'Project Marks — Serenity',
+      'bb.logo.onDark': 'On dark',
+      'bb.logo.onLight': 'On light',
+      'bb.logo.stamp': 'Stamp / favicon',
+      'bb.logo.lightVer': 'Light variant',
+      'bb.logo.clearspace': 'Clear Space',
+      'bb.logo.clearspaceDesc': "The minimum clear space around the logo equals 1.5× the height of the symbol's upper portion (y). This protected area must scale proportionally with the logo across all formats. No text or graphic elements may enter this zone.",
+      'bb.download.svg': 'SVG',
+      'bb.download.png': 'PNG',
+      'bb.rules.title': 'Incorrect Usage',
+      'bb.rules.desc': 'When using the logo, all applications must follow these guidelines:',
+      'bb.rules.r1': 'The logo must not be distorted or resized in a way that alters its proportions.',
+      'bb.rules.r2': 'Only the approved brand colors may be used.',
+      'bb.rules.r3': 'The structure and order of the logo elements must remain unchanged.',
+      'bb.rules.r4': 'The logo should only be placed on sufficiently contrasting brand backgrounds and must not be used on visually busy or highly detailed photographs.',
+      'bb.colors.title': 'Color Palette',
+      'bb.colors.desc': 'Brand colors are essential to the overall identity and emotional expression of the brand. The approved palette should be used consistently across all brand assets, including the logo. Color examples shown here are for reference — when precise reproduction is not possible, the closest visual match should be used.',
+      'bb.colors.main': 'Main',
+      'bb.colors.supporting': 'Supporting',
+      'bb.colors.darkGreen': 'Dark Green',
+      'bb.colors.white': 'White',
+      'bb.colors.cream': 'Cream',
+      'bb.colors.deepGreen': 'Deep Green',
+      'bb.typo.title': 'Typography',
+      'bb.typo.desc': 'Montserrat is the single typeface used across all brand communications. Variations in weight and spacing define hierarchy between headings and body copy.',
+      'bb.typo.headings': 'Headings',
+      'bb.typo.body': 'Body',
+      'bb.typo.family': 'Family',
+      'bb.typo.weight': 'Weight',
+      'bb.typo.spacing': 'Letter spacing',
+      'bb.typo.lineHeight': 'Line height',
+      'bb.typo.weights': 'Available Weights',
+      'bb.icons.title': 'Symbolic & Icons',
+      'bb.icons.desc': 'Icons form an integral part of the visual system. They support navigation and improve overall visual clarity. Use them on contrasting backgrounds at consistent sizes.',
+      'bb.photo.title': 'Photography & Imagery',
+      'bb.photo.intro': "The brand's photography conveys a calm, nature-driven Bali lifestyle, focusing on warmth, atmosphere, and way of life rather than overt luxury.",
+      'bb.photo.do': 'Do',
+      'bb.photo.dont': "Don't",
+      'bb.photo.do1': 'Use natural light, soft daylight, gentle diffused illumination.',
+      'bb.photo.do2': 'Keep compositions open and balanced with clear horizontals.',
+      'bb.photo.do3': 'Focus on architecture, nature, and surrounding environment.',
+      'bb.photo.do4': 'Maintain a consistent visual rhythm and high-quality standards.',
+      'bb.photo.do5': 'License all stock images legally before use.',
+      'bb.photo.dont1': 'Harsh shadows or high-contrast studio lighting.',
+      'bb.photo.dont2': 'Staged or exaggerated emotions in stock photos.',
+      'bb.photo.dont3': 'Heavy retouching or HDR effects.',
+      'bb.photo.dont4': 'Overly promotional or aggressive imagery.',
+      'bb.photo.dont5': 'Tight close-up details over wider environmental shots.',
+      'bb.margins.title': 'Margins',
+      'bb.margins.desc': 'A consistent margin of 80px is applied across all standard layout formats. For print, A4 (210×297mm) uses a 30mm margin. These provide breathing room and maintain visual rhythm across formats.',
+      'bb.margins.margin': 'Margin',
+      'bb.social.title': 'Social Media',
+      'bb.social.desc': 'Approved templates for Instagram posts and stories. Use brand colors, Montserrat typography, and consistent visual rhythm. Project name in lowercase, value proposition in elegant serif-style heading.',
+      'bb.social.posts': 'Posts',
+      'bb.social.stories': 'Stories',
     },
     ru: {
       'login.title': 'Панель управления',
@@ -669,6 +744,81 @@
       'users.toast.sent': 'Приглашение отправлено на {email}.',
       'users.toast.roleUpdated': 'Роль обновлена.',
       'users.toast.userDeleted': 'Пользователь удалён.',
+      // ── Brand Book ──
+      'nav.brandbook': 'Бренд-бук',
+      'bb.title': 'Бренд-бук',
+      'bb.intro': 'Визуальные стандарты Global Bali Home. Справочник для дизайнеров, маркетологов и партнёров. Клик по значению — копирование.',
+      'bb.nav.about': 'О бренде',
+      'bb.nav.logo': 'Логотип',
+      'bb.nav.rules': 'Правила лого',
+      'bb.nav.colors': 'Цвета',
+      'bb.nav.typography': 'Типографика',
+      'bb.nav.icons': 'Иконки',
+      'bb.nav.photography': 'Фотография',
+      'bb.nav.margins': 'Отступы',
+      'bb.nav.social': 'Соцсети',
+      'bb.about.title': 'О бренде',
+      'bb.about.p1': 'Global Bali Home — международная компания в сфере недвижимости, специализирующаяся на качественных проектах на Бали — одном из самых привлекательных рынков недвижимости в мире. Опираясь на международную экспертизу в архитектуре, строительстве и инвестициях, мы создаём проекты с сильной концепцией и долгосрочной ценностью.',
+      'bb.about.p2': 'Каждый проект соответствует международным стандартам, сочетая надёжный инвестиционный потенциал с продуманным, выверенным дизайном. Наш подход выходит за рамки эстетики: мы создаём пространства одновременно для комфортной жизни и устойчивого дохода — с эффективными планировками, высоким качеством строительства и долгосрочной перспективой.',
+      'bb.about.p3': 'Global Bali Home объединяет характер Бали и международную экспертизу через стратегический и перспективный подход к недвижимости.',
+      'bb.logo.title': 'Логотип',
+      'bb.logo.desc': 'Знак бренда сочетает символ лотоса с названием жилого комплекса, вдохновлённый балийским духовным наследием. В системе сосуществуют два логотипа: материнский бренд GBH и знаки отдельных проектов (например, Serenity).',
+      'bb.logo.primary': 'Основной — Global Bali Home',
+      'bb.logo.project': 'Знаки проектов — Serenity',
+      'bb.logo.onDark': 'На тёмном',
+      'bb.logo.onLight': 'На светлом',
+      'bb.logo.stamp': 'Печать / favicon',
+      'bb.logo.lightVer': 'Светлый вариант',
+      'bb.logo.clearspace': 'Защитное поле',
+      'bb.logo.clearspaceDesc': 'Минимальное защитное поле вокруг логотипа равно 1.5× высоты верхней части символа (y). Эта зона должна пропорционально масштабироваться с логотипом во всех форматах. Внутри неё не может находиться текст или графика.',
+      'bb.download.svg': 'SVG',
+      'bb.download.png': 'PNG',
+      'bb.rules.title': 'Неправильное использование',
+      'bb.rules.desc': 'При использовании логотипа соблюдайте следующие правила:',
+      'bb.rules.r1': 'Логотип нельзя искажать или менять его пропорции.',
+      'bb.rules.r2': 'Использовать только одобренные цвета бренда.',
+      'bb.rules.r3': 'Структура и порядок элементов логотипа должны оставаться неизменными.',
+      'bb.rules.r4': 'Логотип размещать только на контрастных фоновых заливках бренда, не использовать на детализированных или визуально насыщенных фотографиях.',
+      'bb.colors.title': 'Цветовая палитра',
+      'bb.colors.desc': 'Цвета — основа айдентики и эмоционального выражения бренда. Утверждённая палитра должна последовательно применяться во всех материалах, включая логотип. Образцы здесь даны для справки — при невозможности точного воспроизведения используйте ближайший визуальный аналог.',
+      'bb.colors.main': 'Основные',
+      'bb.colors.supporting': 'Дополнительные',
+      'bb.colors.darkGreen': 'Тёмно-зелёный',
+      'bb.colors.white': 'Белый',
+      'bb.colors.cream': 'Кремовый',
+      'bb.colors.deepGreen': 'Глубокий зелёный',
+      'bb.typo.title': 'Типографика',
+      'bb.typo.desc': 'Montserrat — единственный шрифт во всех коммуникациях бренда. Иерархию между заголовками и основным текстом задают вариации насыщенности и трекинга.',
+      'bb.typo.headings': 'Заголовки',
+      'bb.typo.body': 'Основной текст',
+      'bb.typo.family': 'Шрифт',
+      'bb.typo.weight': 'Насыщенность',
+      'bb.typo.spacing': 'Межбуквенный',
+      'bb.typo.lineHeight': 'Межстрочный',
+      'bb.typo.weights': 'Доступные насыщенности',
+      'bb.icons.title': 'Символика и иконки',
+      'bb.icons.desc': 'Иконки — неотъемлемая часть визуальной системы. Они поддерживают навигацию и улучшают визуальную ясность. Использовать на контрастных фонах, в одинаковых размерах.',
+      'bb.photo.title': 'Фотография',
+      'bb.photo.intro': 'Фотография бренда передаёт спокойный, природный балийский образ жизни — с фокусом на теплоте, атмосфере и укладе, а не на показной роскоши.',
+      'bb.photo.do': 'Делать',
+      'bb.photo.dont': 'Не делать',
+      'bb.photo.do1': 'Использовать естественный свет, мягкий дневной, рассеянное освещение.',
+      'bb.photo.do2': 'Композиции делать открытыми и сбалансированными, с чёткими горизонталями.',
+      'bb.photo.do3': 'Фокус на архитектуре, природе и окружающей среде.',
+      'bb.photo.do4': 'Поддерживать визуальный ритм и высокий стандарт качества.',
+      'bb.photo.do5': 'Все сток-фото покупать легально перед использованием.',
+      'bb.photo.dont1': 'Жёсткие тени или контрастное студийное освещение.',
+      'bb.photo.dont2': 'Постановочные или нарочитые эмоции на стоковых фото.',
+      'bb.photo.dont3': 'Тяжёлая ретушь или HDR-эффекты.',
+      'bb.photo.dont4': 'Излишне рекламные или агрессивные образы.',
+      'bb.photo.dont5': 'Узкие крупные планы вместо широких сценических кадров.',
+      'bb.margins.title': 'Отступы',
+      'bb.margins.desc': 'Единый отступ 80px применяется во всех стандартных макетах. Для печати на A4 (210×297мм) используется поле 30мм. Эти отступы обеспечивают «воздух» и сохраняют визуальный ритм во всех форматах.',
+      'bb.margins.margin': 'Отступ',
+      'bb.social.title': 'Социальные сети',
+      'bb.social.desc': 'Утверждённые шаблоны для постов и сторис Instagram. Использовать брендовые цвета, типографику Montserrat, единый визуальный ритм. Имя проекта — строчными, ценностное обещание — изящным заголовочным начертанием.',
+      'bb.social.posts': 'Посты',
+      'bb.social.stories': 'Сторис',
     }
   };
 
@@ -4332,6 +4482,43 @@
     });
 
     refresh();
+  }
+
+  // ─── Brand Book Tab ───
+  // Read-only витрина. Логика: delegate-click на .bb-copy[data-copy]
+  // — кладёт значение в clipboard, мигает «copied». Без рендера: всё статика в HTML.
+  const brandbookTab = document.getElementById('tab-brandbook');
+  if (brandbookTab) {
+    brandbookTab.addEventListener('click', async (e) => {
+      const btn = e.target.closest('.bb-copy[data-copy]');
+      if (!btn) return;
+      const value = btn.dataset.copy;
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(value);
+        } else {
+          // Fallback для http/local file (не secure context)
+          const ta = document.createElement('textarea');
+          ta.value = value;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+        }
+        btn.classList.add('bb-copy--copied');
+        const originalHtml = btn.innerHTML;
+        const label = (adminLang === 'ru') ? 'Скопировано' : 'Copied';
+        btn.innerHTML = '<span>✓</span> ' + label;
+        setTimeout(() => {
+          btn.classList.remove('bb-copy--copied');
+          btn.innerHTML = originalHtml;
+        }, 1400);
+      } catch (err) {
+        console.warn('Brand Book copy failed:', err);
+      }
+    });
   }
 
 })();

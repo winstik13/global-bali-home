@@ -115,6 +115,7 @@
       <button class="admin-nav__btn" data-tab="exitpopup" data-i18n="nav.exitpopup">Exit Popup</button>
       <button class="admin-nav__btn" data-tab="settings" data-i18n="nav.settings">Settings</button>
       <button class="admin-nav__btn" data-tab="users" data-i18n="nav.users" data-super-admin-only hidden>Users</button>
+      <button class="admin-nav__btn" data-tab="brandbook" data-i18n="nav.brandbook">Brand Book</button>
     </nav>
 
     <!-- Tab: Dashboard -->
@@ -558,6 +559,318 @@
           <h3 data-i18n="users.list">Active members</h3>
           <div id="users-table"></div>
         </div>
+      </section>
+
+      <!-- Tab: Brand Book -->
+      <section id="tab-brandbook" class="admin-tab" hidden>
+        <h2 data-i18n="bb.title">Brand Book</h2>
+        <p class="bb-intro" data-i18n="bb.intro">Visual identity guidelines for Global Bali Home. Reference for designers, marketers and partners. Click any value to copy.</p>
+
+        <nav class="settings-nav bb-nav">
+          <a href="#bb-about" data-i18n="bb.nav.about">About</a>
+          <a href="#bb-logo" data-i18n="bb.nav.logo">Logo</a>
+          <a href="#bb-logo-rules" data-i18n="bb.nav.rules">Logo Rules</a>
+          <a href="#bb-colors" data-i18n="bb.nav.colors">Colors</a>
+          <a href="#bb-typography" data-i18n="bb.nav.typography">Typography</a>
+          <a href="#bb-icons" data-i18n="bb.nav.icons">Icons</a>
+          <a href="#bb-photography" data-i18n="bb.nav.photography">Photography</a>
+          <a href="#bb-margins" data-i18n="bb.nav.margins">Margins</a>
+          <a href="#bb-social" data-i18n="bb.nav.social">Social Media</a>
+        </nav>
+
+        <!-- About -->
+        <div id="bb-about" class="editor-section">
+          <h3 data-i18n="bb.about.title">About the Brand</h3>
+          <p class="bb-text" data-i18n="bb.about.p1">Global Bali Home is an international real estate company focused on the development of high-quality projects in Bali — one of the world's most attractive property markets. Drawing on global expertise in architecture, construction, and investment, we create projects defined by strong concepts and long-term value.</p>
+          <p class="bb-text" data-i18n="bb.about.p2">Each development is delivered in line with international standards, combining solid investment potential with considered, refined design. Our approach goes beyond aesthetics: we create spaces designed for both comfortable living and sustainable income, with efficient layouts, high construction quality, and a long-term perspective.</p>
+          <p class="bb-text" data-i18n="bb.about.p3">Global Bali Home brings together the character of Bali and international expertise through a strategic, forward-looking approach to real estate.</p>
+        </div>
+
+        <!-- Logo -->
+        <div id="bb-logo" class="editor-section">
+          <h3 data-i18n="bb.logo.title">Logo</h3>
+          <p class="bb-text" data-i18n="bb.logo.desc">The brand mark combines a lotus symbol with the residential complex name, inspired by Balinese spiritual heritage. Two logo systems coexist: the GBH parent brand and individual project marks (e.g. Serenity).</p>
+
+          <h4 class="bb-subhead" data-i18n="bb.logo.primary">Primary — Global Bali Home</h4>
+          <div class="bb-logo-grid">
+            <div class="bb-logo-card bb-logo-card--dark">
+              <img src="../BB/Logo/LOGO GBH.svg" alt="GBH logo on dark">
+              <span class="bb-logo-card__label" data-i18n="bb.logo.onDark">On dark</span>
+            </div>
+            <div class="bb-logo-card bb-logo-card--light">
+              <img src="../BB/Logo/LOGO GBH.svg" alt="GBH logo on light">
+              <span class="bb-logo-card__label" data-i18n="bb.logo.onLight">On light</span>
+            </div>
+            <div class="bb-logo-card bb-logo-card--dark">
+              <img src="../BB/Logo/Stamp GBH.svg" alt="GBH stamp">
+              <span class="bb-logo-card__label" data-i18n="bb.logo.stamp">Stamp / favicon</span>
+            </div>
+          </div>
+          <div class="bb-download-row">
+            <a class="bb-download" href="../BB/Logo/LOGO GBH.svg" download><span data-i18n="bb.download.svg">SVG</span> · LOGO GBH</a>
+            <a class="bb-download" href="../BB/Logo/LOGO GBH.png" download><span data-i18n="bb.download.png">PNG</span> · LOGO GBH</a>
+            <a class="bb-download" href="../BB/Logo/Stamp GBH.svg" download><span data-i18n="bb.download.svg">SVG</span> · Stamp GBH</a>
+            <a class="bb-download" href="../BB/Logo/Stamp GBH.png" download><span data-i18n="bb.download.png">PNG</span> · Stamp GBH</a>
+          </div>
+
+          <h4 class="bb-subhead" data-i18n="bb.logo.project">Project Marks — Serenity</h4>
+          <div class="bb-logo-grid">
+            <div class="bb-logo-card bb-logo-card--dark">
+              <img src="../BB/Logo/Logo Serenity.svg" alt="Serenity on dark">
+              <span class="bb-logo-card__label" data-i18n="bb.logo.onDark">On dark</span>
+            </div>
+            <div class="bb-logo-card bb-logo-card--light">
+              <img src="../BB/Logo/Logo Serenity.svg" alt="Serenity on light">
+              <span class="bb-logo-card__label" data-i18n="bb.logo.onLight">On light</span>
+            </div>
+            <div class="bb-logo-card bb-logo-card--dark">
+              <img src="../BB/Logo/Serenity logo on black.png" alt="Serenity light version">
+              <span class="bb-logo-card__label" data-i18n="bb.logo.lightVer">Light variant</span>
+            </div>
+          </div>
+          <div class="bb-download-row">
+            <a class="bb-download" href="../BB/Logo/Logo Serenity.svg" download><span data-i18n="bb.download.svg">SVG</span> · Logo Serenity</a>
+            <a class="bb-download" href="../BB/Logo/Serenity logo on black.png" download><span data-i18n="bb.download.png">PNG</span> · Serenity on black</a>
+            <a class="bb-download" href="../BB/Logo/Serenity Colors.png" download><span data-i18n="bb.download.png">PNG</span> · Serenity Colors</a>
+          </div>
+
+          <h4 class="bb-subhead" data-i18n="bb.logo.clearspace">Clear Space</h4>
+          <p class="bb-text" data-i18n="bb.logo.clearspaceDesc">The minimum clear space around the logo equals 1.5× the height of the symbol's upper portion (y). This protected area must scale proportionally with the logo across all formats. No text or graphic elements may enter this zone.</p>
+          <div class="bb-clearspace-demo">
+            <div class="bb-clearspace-demo__inner">
+              <div class="bb-clearspace-demo__y bb-clearspace-demo__y--top"><span>1.5y</span></div>
+              <div class="bb-clearspace-demo__row">
+                <div class="bb-clearspace-demo__y bb-clearspace-demo__y--side"><span>1.5y</span></div>
+                <div class="bb-clearspace-demo__logo">
+                  <img src="../BB/Logo/LOGO GBH.svg" alt="">
+                </div>
+                <div class="bb-clearspace-demo__y bb-clearspace-demo__y--side"><span>1.5y</span></div>
+              </div>
+              <div class="bb-clearspace-demo__y bb-clearspace-demo__y--bottom"><span>1.5y</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Logo Rules -->
+        <div id="bb-logo-rules" class="editor-section">
+          <h3 data-i18n="bb.rules.title">Incorrect Usage</h3>
+          <p class="bb-text" data-i18n="bb.rules.desc">When using the logo, all applications must follow these guidelines:</p>
+          <ul class="bb-rule-list">
+            <li class="bb-rule bb-rule--no">
+              <span class="bb-rule__num">01</span>
+              <span class="bb-rule__text" data-i18n="bb.rules.r1">The logo must not be distorted or resized in a way that alters its proportions.</span>
+            </li>
+            <li class="bb-rule bb-rule--no">
+              <span class="bb-rule__num">02</span>
+              <span class="bb-rule__text" data-i18n="bb.rules.r2">Only the approved brand colors may be used.</span>
+            </li>
+            <li class="bb-rule bb-rule--no">
+              <span class="bb-rule__num">03</span>
+              <span class="bb-rule__text" data-i18n="bb.rules.r3">The structure and order of the logo elements must remain unchanged.</span>
+            </li>
+            <li class="bb-rule bb-rule--no">
+              <span class="bb-rule__num">04</span>
+              <span class="bb-rule__text" data-i18n="bb.rules.r4">The logo should only be placed on sufficiently contrasting brand backgrounds and must not be used on visually busy or highly detailed photographs.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Colors -->
+        <div id="bb-colors" class="editor-section">
+          <h3 data-i18n="bb.colors.title">Color Palette</h3>
+          <p class="bb-text" data-i18n="bb.colors.desc">Brand colors are essential to the overall identity and emotional expression of the brand. The approved palette should be used consistently across all brand assets, including the logo. Color examples shown here are for reference — when precise reproduction is not possible, the closest visual match should be used.</p>
+
+          <h4 class="bb-subhead" data-i18n="bb.colors.main">Main</h4>
+          <div class="bb-swatch-grid">
+            <div class="bb-swatch">
+              <div class="bb-swatch__color" style="background:#2B3226;"></div>
+              <div class="bb-swatch__body">
+                <span class="bb-swatch__name" data-i18n="bb.colors.darkGreen">Dark Green</span>
+                <button class="bb-swatch__value bb-copy" data-copy="#2B3226"><span>HEX</span> #2B3226</button>
+                <button class="bb-swatch__value bb-copy" data-copy="rgb(43, 50, 38)"><span>RGB</span> 43 · 50 · 38</button>
+                <span class="bb-swatch__value bb-swatch__value--static"><span>CMYK</span> 14 · 0 · 24 · 80</span>
+              </div>
+            </div>
+            <div class="bb-swatch">
+              <div class="bb-swatch__color bb-swatch__color--bordered" style="background:#FFFFFF;"></div>
+              <div class="bb-swatch__body">
+                <span class="bb-swatch__name" data-i18n="bb.colors.white">White</span>
+                <button class="bb-swatch__value bb-copy" data-copy="#FFFFFF"><span>HEX</span> #FFFFFF</button>
+                <button class="bb-swatch__value bb-copy" data-copy="rgb(255, 255, 255)"><span>RGB</span> 255 · 255 · 255</button>
+                <span class="bb-swatch__value bb-swatch__value--static"><span>CMYK</span> 0 · 0 · 0 · 0</span>
+              </div>
+            </div>
+          </div>
+
+          <h4 class="bb-subhead" data-i18n="bb.colors.supporting">Supporting</h4>
+          <div class="bb-swatch-grid">
+            <div class="bb-swatch">
+              <div class="bb-swatch__color" style="background:#E1D3BE;"></div>
+              <div class="bb-swatch__body">
+                <span class="bb-swatch__name" data-i18n="bb.colors.cream">Cream</span>
+                <button class="bb-swatch__value bb-copy" data-copy="#E1D3BE"><span>HEX</span> #E1D3BE</button>
+                <button class="bb-swatch__value bb-copy" data-copy="rgb(225, 211, 190)"><span>RGB</span> 225 · 211 · 190</button>
+                <span class="bb-swatch__value bb-swatch__value--static"><span>CMYK</span> 0 · 6 · 16 · 12</span>
+              </div>
+            </div>
+            <div class="bb-swatch">
+              <div class="bb-swatch__color" style="background:#171F10;"></div>
+              <div class="bb-swatch__body">
+                <span class="bb-swatch__name" data-i18n="bb.colors.deepGreen">Deep Green</span>
+                <button class="bb-swatch__value bb-copy" data-copy="#171F10"><span>HEX</span> #171F10</button>
+                <button class="bb-swatch__value bb-copy" data-copy="rgb(23, 31, 16)"><span>RGB</span> 23 · 31 · 16</button>
+                <span class="bb-swatch__value bb-swatch__value--static"><span>CMYK</span> 26 · 0 · 48 · 88</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Typography -->
+        <div id="bb-typography" class="editor-section">
+          <h3 data-i18n="bb.typo.title">Typography</h3>
+          <p class="bb-text" data-i18n="bb.typo.desc">Montserrat is the single typeface used across all brand communications. Variations in weight and spacing define hierarchy between headings and body copy.</p>
+
+          <div class="bb-typo-grid">
+            <div class="bb-typo-card">
+              <span class="bb-typo-card__label" data-i18n="bb.typo.headings">Headings</span>
+              <div class="bb-typo-card__sample bb-typo-card__sample--heading">Aa Bb Cc 123</div>
+              <dl class="bb-typo-card__specs">
+                <dt data-i18n="bb.typo.family">Family</dt><dd><button class="bb-copy bb-copy--inline" data-copy="Montserrat">Montserrat</button></dd>
+                <dt data-i18n="bb.typo.weight">Weight</dt><dd>Bold / SemiBold (600–700)</dd>
+                <dt data-i18n="bb.typo.spacing">Letter spacing</dt><dd><button class="bb-copy bb-copy--inline" data-copy="0.04em">4% · 0.04em</button></dd>
+                <dt data-i18n="bb.typo.lineHeight">Line height</dt><dd><button class="bb-copy bb-copy--inline" data-copy="1.3">130% · 1.3</button></dd>
+              </dl>
+            </div>
+            <div class="bb-typo-card">
+              <span class="bb-typo-card__label" data-i18n="bb.typo.body">Body</span>
+              <div class="bb-typo-card__sample bb-typo-card__sample--body">Aa Bb Cc 123</div>
+              <dl class="bb-typo-card__specs">
+                <dt data-i18n="bb.typo.family">Family</dt><dd><button class="bb-copy bb-copy--inline" data-copy="Montserrat">Montserrat</button></dd>
+                <dt data-i18n="bb.typo.weight">Weight</dt><dd>SemiBold / Regular / Light (300–600)</dd>
+                <dt data-i18n="bb.typo.spacing">Letter spacing</dt><dd><button class="bb-copy bb-copy--inline" data-copy="0">0% · 0</button></dd>
+                <dt data-i18n="bb.typo.lineHeight">Line height</dt><dd><button class="bb-copy bb-copy--inline" data-copy="1.3">130% · 1.3</button></dd>
+              </dl>
+            </div>
+          </div>
+
+          <h4 class="bb-subhead" data-i18n="bb.typo.weights">Available Weights</h4>
+          <div class="bb-weight-grid">
+            <div class="bb-weight"><span class="bb-weight__sample" style="font-weight:300">Montserrat Light</span><span class="bb-weight__val">300</span></div>
+            <div class="bb-weight"><span class="bb-weight__sample" style="font-weight:400">Montserrat Regular</span><span class="bb-weight__val">400</span></div>
+            <div class="bb-weight"><span class="bb-weight__sample" style="font-weight:600">Montserrat SemiBold</span><span class="bb-weight__val">600</span></div>
+            <div class="bb-weight"><span class="bb-weight__sample" style="font-weight:700">Montserrat Bold</span><span class="bb-weight__val">700</span></div>
+          </div>
+
+          <div class="bb-download-row">
+            <a class="bb-download" href="../BB/Fonts - Montserrat/Montserrat-Light.ttf" download>Light · TTF</a>
+            <a class="bb-download" href="../BB/Fonts - Montserrat/Montserrat-Regular.ttf" download>Regular · TTF</a>
+            <a class="bb-download" href="../BB/Fonts - Montserrat/Montserrat-SemiBold.ttf" download>SemiBold · TTF</a>
+            <a class="bb-download" href="../BB/Fonts - Montserrat/Montserrat-Bold.ttf" download>Bold · TTF</a>
+          </div>
+        </div>
+
+        <!-- Icons -->
+        <div id="bb-icons" class="editor-section">
+          <h3 data-i18n="bb.icons.title">Symbolic &amp; Icons</h3>
+          <p class="bb-text" data-i18n="bb.icons.desc">Icons form an integral part of the visual system. They support navigation and improve overall visual clarity. Use them on contrasting backgrounds at consistent sizes.</p>
+          <div class="bb-icon-grid">
+            <div class="bb-icon-card"><img src="../BB/Icons/Air Conditioner.svg" alt=""><span>Air Conditioner</span><a class="bb-icon-card__dl" href="../BB/Icons/Air Conditioner.svg" download title="Download SVG">↓</a></div>
+            <div class="bb-icon-card"><img src="../BB/Icons/Bedroom.svg" alt=""><span>Bedroom</span><a class="bb-icon-card__dl" href="../BB/Icons/Bedroom.svg" download title="Download SVG">↓</a></div>
+            <div class="bb-icon-card"><img src="../BB/Icons/Exterior.svg" alt=""><span>Exterior</span><a class="bb-icon-card__dl" href="../BB/Icons/Exterior.svg" download title="Download SVG">↓</a></div>
+            <div class="bb-icon-card"><img src="../BB/Icons/Hanger.svg" alt=""><span>Hanger</span><a class="bb-icon-card__dl" href="../BB/Icons/Hanger.svg" download title="Download SVG">↓</a></div>
+            <div class="bb-icon-card"><img src="../BB/Icons/Inland.svg" alt=""><span>Inland</span><a class="bb-icon-card__dl" href="../BB/Icons/Inland.svg" download title="Download SVG">↓</a></div>
+            <div class="bb-icon-card"><img src="../BB/Icons/Kitchen Room.svg" alt=""><span>Kitchen</span><a class="bb-icon-card__dl" href="../BB/Icons/Kitchen Room.svg" download title="Download SVG">↓</a></div>
+            <div class="bb-icon-card"><img src="../BB/Icons/Layers.svg" alt=""><span>Layers</span><a class="bb-icon-card__dl" href="../BB/Icons/Layers.svg" download title="Download SVG">↓</a></div>
+            <div class="bb-icon-card"><img src="../BB/Icons/Location.svg" alt=""><span>Location</span><a class="bb-icon-card__dl" href="../BB/Icons/Location.svg" download title="Download SVG">↓</a></div>
+            <div class="bb-icon-card"><img src="../BB/Icons/Palm Tree.svg" alt=""><span>Palm Tree</span><a class="bb-icon-card__dl" href="../BB/Icons/Palm Tree.svg" download title="Download SVG">↓</a></div>
+            <div class="bb-icon-card"><img src="../BB/Icons/Restaurant.svg" alt=""><span>Restaurant</span><a class="bb-icon-card__dl" href="../BB/Icons/Restaurant.svg" download title="Download SVG">↓</a></div>
+            <div class="bb-icon-card"><img src="../BB/Icons/Shower.svg" alt=""><span>Shower</span><a class="bb-icon-card__dl" href="../BB/Icons/Shower.svg" download title="Download SVG">↓</a></div>
+            <div class="bb-icon-card"><img src="../BB/Icons/Swimming Pool.svg" alt=""><span>Swimming Pool</span><a class="bb-icon-card__dl" href="../BB/Icons/Swimming Pool.svg" download title="Download SVG">↓</a></div>
+            <div class="bb-icon-card"><img src="../BB/Icons/Swing.svg" alt=""><span>Swing</span><a class="bb-icon-card__dl" href="../BB/Icons/Swing.svg" download title="Download SVG">↓</a></div>
+            <div class="bb-icon-card"><img src="../BB/Icons/TV.svg" alt=""><span>TV</span><a class="bb-icon-card__dl" href="../BB/Icons/TV.svg" download title="Download SVG">↓</a></div>
+            <div class="bb-icon-card"><img src="../BB/Icons/Washing Machine.svg" alt=""><span>Washing Machine</span><a class="bb-icon-card__dl" href="../BB/Icons/Washing Machine.svg" download title="Download SVG">↓</a></div>
+            <div class="bb-icon-card"><img src="../BB/Icons/Waterfall.svg" alt=""><span>Waterfall</span><a class="bb-icon-card__dl" href="../BB/Icons/Waterfall.svg" download title="Download SVG">↓</a></div>
+            <div class="bb-icon-card"><img src="../BB/Icons/Wifi.svg" alt=""><span>Wifi</span><a class="bb-icon-card__dl" href="../BB/Icons/Wifi.svg" download title="Download SVG">↓</a></div>
+            <div class="bb-icon-card"><img src="../BB/Icons/Wooden Floor.svg" alt=""><span>Wooden Floor</span><a class="bb-icon-card__dl" href="../BB/Icons/Wooden Floor.svg" download title="Download SVG">↓</a></div>
+          </div>
+        </div>
+
+        <!-- Photography & Imagery -->
+        <div id="bb-photography" class="editor-section">
+          <h3 data-i18n="bb.photo.title">Photography &amp; Imagery</h3>
+          <p class="bb-text" data-i18n="bb.photo.intro">The brand's photography conveys a calm, nature-driven Bali lifestyle, focusing on warmth, atmosphere, and way of life rather than overt luxury.</p>
+
+          <div class="bb-do-dont">
+            <div class="bb-do-dont__col bb-do-dont__col--do">
+              <h4 class="bb-subhead bb-subhead--inline" data-i18n="bb.photo.do">Do</h4>
+              <ul class="bb-rule-list bb-rule-list--inline">
+                <li class="bb-rule bb-rule--yes" data-i18n="bb.photo.do1">Use natural light, soft daylight, gentle diffused illumination.</li>
+                <li class="bb-rule bb-rule--yes" data-i18n="bb.photo.do2">Keep compositions open and balanced with clear horizontals.</li>
+                <li class="bb-rule bb-rule--yes" data-i18n="bb.photo.do3">Focus on architecture, nature, and surrounding environment.</li>
+                <li class="bb-rule bb-rule--yes" data-i18n="bb.photo.do4">Maintain a consistent visual rhythm and high-quality standards.</li>
+                <li class="bb-rule bb-rule--yes" data-i18n="bb.photo.do5">License all stock images legally before use.</li>
+              </ul>
+            </div>
+            <div class="bb-do-dont__col bb-do-dont__col--dont">
+              <h4 class="bb-subhead bb-subhead--inline" data-i18n="bb.photo.dont">Don't</h4>
+              <ul class="bb-rule-list bb-rule-list--inline">
+                <li class="bb-rule bb-rule--no" data-i18n="bb.photo.dont1">Harsh shadows or high-contrast studio lighting.</li>
+                <li class="bb-rule bb-rule--no" data-i18n="bb.photo.dont2">Staged or exaggerated emotions in stock photos.</li>
+                <li class="bb-rule bb-rule--no" data-i18n="bb.photo.dont3">Heavy retouching or HDR effects.</li>
+                <li class="bb-rule bb-rule--no" data-i18n="bb.photo.dont4">Overly promotional or aggressive imagery.</li>
+                <li class="bb-rule bb-rule--no" data-i18n="bb.photo.dont5">Tight close-up details over wider environmental shots.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Margins -->
+        <div id="bb-margins" class="editor-section">
+          <h3 data-i18n="bb.margins.title">Margins</h3>
+          <p class="bb-text" data-i18n="bb.margins.desc">A consistent margin of 80px is applied across all standard layout formats. For print, A4 (210×297mm) uses a 30mm margin. These provide breathing room and maintain visual rhythm across formats.</p>
+
+          <div class="bb-margins-grid">
+            <div class="bb-format-card">
+              <span class="bb-format-card__label">A4 · Print</span>
+              <span class="bb-format-card__value">210 × 297 mm</span>
+              <span class="bb-format-card__margin"><span data-i18n="bb.margins.margin">Margin</span>: 30 mm</span>
+            </div>
+            <div class="bb-format-card">
+              <span class="bb-format-card__label">Tablet · 1024 × 768</span>
+              <span class="bb-format-card__value">px</span>
+              <button class="bb-format-card__margin bb-copy" data-copy="80px"><span data-i18n="bb.margins.margin">Margin</span>: 80 px</button>
+            </div>
+            <div class="bb-format-card">
+              <span class="bb-format-card__label">Desktop · 1920 × 1080</span>
+              <span class="bb-format-card__value">px</span>
+              <button class="bb-format-card__margin bb-copy" data-copy="80px"><span data-i18n="bb.margins.margin">Margin</span>: 80 px</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Media -->
+        <div id="bb-social" class="editor-section">
+          <h3 data-i18n="bb.social.title">Social Media</h3>
+          <p class="bb-text" data-i18n="bb.social.desc">Approved templates for Instagram posts and stories. Use brand colors, Montserrat typography, and consistent visual rhythm. Project name in lowercase, value proposition in elegant serif-style heading.</p>
+
+          <h4 class="bb-subhead" data-i18n="bb.social.posts">Posts</h4>
+          <div class="bb-social-grid bb-social-grid--posts">
+            <div class="bb-social-tile"><img src="../BB/Instagram/Instagram post - 1.png" alt="Instagram post 1"></div>
+            <div class="bb-social-tile"><img src="../BB/Instagram/Instagram post - 2.png" alt="Instagram post 2"></div>
+            <div class="bb-social-tile"><img src="../BB/Instagram/Instagram post - 3.png" alt="Instagram post 3"></div>
+            <div class="bb-social-tile"><img src="../BB/Instagram/Instagram post - 4.png" alt="Instagram post 4"></div>
+            <div class="bb-social-tile"><img src="../BB/Instagram/Instagram post - 5.png" alt="Instagram post 5"></div>
+            <div class="bb-social-tile"><img src="../BB/Instagram/Instagram post - 6.png" alt="Instagram post 6"></div>
+          </div>
+
+          <h4 class="bb-subhead" data-i18n="bb.social.stories">Stories</h4>
+          <div class="bb-social-grid bb-social-grid--stories">
+            <div class="bb-social-tile bb-social-tile--story"><img src="../BB/Instagram/Instagram story - 1.png" alt="Instagram story 1"></div>
+            <div class="bb-social-tile bb-social-tile--story"><img src="../BB/Instagram/Instagram story - 2.png" alt="Instagram story 2"></div>
+            <div class="bb-social-tile bb-social-tile--story"><img src="../BB/Instagram/Instagram story - 3.png" alt="Instagram story 3"></div>
+          </div>
+        </div>
+
       </section>
     </main>
   </div>
