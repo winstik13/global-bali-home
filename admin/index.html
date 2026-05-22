@@ -977,102 +977,112 @@
         <!-- Typography -->
         <div id="bb-typography" class="editor-section">
           <h3 data-i18n="bb.typo.title">Typography</h3>
-          <p class="bb-text" data-i18n="bb.typo.desc">Montserrat is the single typeface used across all brand communications. Variations in weight and spacing define hierarchy between headings and body copy.</p>
+          <p class="bb-text" data-i18n="bb.typo.desc">Two-typeface system. <strong>Playfair Display</strong> — serif, classical, premium — used for display and all headings. <strong>Montserrat</strong> — geometric sans-serif — used for body copy, navigation, UI labels and metadata. The combination gives the brand its editorial-yet-modern voice.</p>
 
           <div class="bb-typo-grid">
             <div class="bb-typo-card">
-              <span class="bb-typo-card__label" data-i18n="bb.typo.headings">Headings</span>
-              <div class="bb-typo-card__sample bb-typo-card__sample--heading">Aa Bb Cc 123</div>
+              <span class="bb-typo-card__label" data-i18n="bb.typo.headings">Headings — Display</span>
+              <div class="bb-typo-card__sample bb-typo-card__sample--heading" style="font-family:'Playfair Display',Georgia,serif;font-weight:400;letter-spacing:-0.02em;line-height:1.2;">Aa Bb Cc 123</div>
               <dl class="bb-typo-card__specs">
-                <dt data-i18n="bb.typo.family">Family</dt><dd><button class="bb-copy bb-copy--inline" data-copy="Montserrat">Montserrat</button></dd>
-                <dt data-i18n="bb.typo.weight">Weight</dt><dd>Bold / SemiBold (600–700)</dd>
-                <dt data-i18n="bb.typo.spacing">Letter spacing</dt><dd><button class="bb-copy bb-copy--inline" data-copy="0.04em">4% · 0.04em</button></dd>
-                <dt data-i18n="bb.typo.lineHeight">Line height</dt><dd><button class="bb-copy bb-copy--inline" data-copy="1.3">130% · 1.3</button></dd>
+                <dt data-i18n="bb.typo.family">Family</dt><dd><button class="bb-copy bb-copy--inline" data-copy="'Playfair Display', Georgia, serif">Playfair Display</button></dd>
+                <dt data-i18n="bb.typo.weight">Weight</dt><dd>Regular 400 · SemiBold 600</dd>
+                <dt data-i18n="bb.typo.spacing">Letter spacing</dt><dd><button class="bb-copy bb-copy--inline" data-copy="-0.02em">−2% · −0.02em</button></dd>
+                <dt data-i18n="bb.typo.lineHeight">Line height</dt><dd><button class="bb-copy bb-copy--inline" data-copy="1.2">120% · 1.2</button></dd>
               </dl>
             </div>
             <div class="bb-typo-card">
-              <span class="bb-typo-card__label" data-i18n="bb.typo.body">Body</span>
+              <span class="bb-typo-card__label" data-i18n="bb.typo.body">Body — UI</span>
               <div class="bb-typo-card__sample bb-typo-card__sample--body">Aa Bb Cc 123</div>
               <dl class="bb-typo-card__specs">
-                <dt data-i18n="bb.typo.family">Family</dt><dd><button class="bb-copy bb-copy--inline" data-copy="Montserrat">Montserrat</button></dd>
-                <dt data-i18n="bb.typo.weight">Weight</dt><dd>SemiBold / Regular / Light (300–600)</dd>
+                <dt data-i18n="bb.typo.family">Family</dt><dd><button class="bb-copy bb-copy--inline" data-copy="'Montserrat', sans-serif">Montserrat</button></dd>
+                <dt data-i18n="bb.typo.weight">Weight</dt><dd>Regular 400 · Medium 500 · SemiBold 600</dd>
                 <dt data-i18n="bb.typo.spacing">Letter spacing</dt><dd><button class="bb-copy bb-copy--inline" data-copy="0">0% · 0</button></dd>
-                <dt data-i18n="bb.typo.lineHeight">Line height</dt><dd><button class="bb-copy bb-copy--inline" data-copy="1.3">130% · 1.3</button></dd>
+                <dt data-i18n="bb.typo.lineHeight">Line height</dt><dd><button class="bb-copy bb-copy--inline" data-copy="1.6">160% · 1.6</button></dd>
               </dl>
             </div>
           </div>
 
-          <h4 class="bb-subhead" data-i18n="bb.typo.weights">Available Weights</h4>
+          <h4 class="bb-subhead" data-i18n="bb.typo.weightsHead">Available Weights — Playfair Display</h4>
+          <div class="bb-weight-grid">
+            <div class="bb-weight"><span class="bb-weight__sample" style="font-family:'Playfair Display',serif;font-weight:400">Playfair Display Regular</span><span class="bb-weight__val">400</span></div>
+            <div class="bb-weight"><span class="bb-weight__sample" style="font-family:'Playfair Display',serif;font-style:italic;font-weight:400">Playfair Display Italic</span><span class="bb-weight__val">400i</span></div>
+            <div class="bb-weight"><span class="bb-weight__sample" style="font-family:'Playfair Display',serif;font-weight:600">Playfair Display SemiBold</span><span class="bb-weight__val">600</span></div>
+            <div class="bb-weight"><span class="bb-weight__sample" style="font-family:'Playfair Display',serif;font-weight:700">Playfair Display Bold</span><span class="bb-weight__val">700</span></div>
+          </div>
+
+          <h4 class="bb-subhead" data-i18n="bb.typo.weightsBody">Available Weights — Montserrat</h4>
           <div class="bb-weight-grid">
             <div class="bb-weight"><span class="bb-weight__sample" style="font-weight:300">Montserrat Light</span><span class="bb-weight__val">300</span></div>
             <div class="bb-weight"><span class="bb-weight__sample" style="font-weight:400">Montserrat Regular</span><span class="bb-weight__val">400</span></div>
+            <div class="bb-weight"><span class="bb-weight__sample" style="font-weight:500">Montserrat Medium</span><span class="bb-weight__val">500</span></div>
             <div class="bb-weight"><span class="bb-weight__sample" style="font-weight:600">Montserrat SemiBold</span><span class="bb-weight__val">600</span></div>
             <div class="bb-weight"><span class="bb-weight__sample" style="font-weight:700">Montserrat Bold</span><span class="bb-weight__val">700</span></div>
           </div>
 
           <div class="bb-download-row">
-            <a class="bb-download" href="../BB/Fonts - Montserrat/Montserrat-Light.ttf" download>Light · TTF</a>
+            <a class="bb-download" href="https://fonts.google.com/specimen/Playfair+Display" target="_blank" rel="noopener noreferrer">Playfair Display · Google Fonts ↗</a>
+            <a class="bb-download" href="../BB/Fonts - Montserrat/Montserrat-Light.ttf" download>Montserrat Light · TTF</a>
             <a class="bb-download" href="../BB/Fonts - Montserrat/Montserrat-Regular.ttf" download>Regular · TTF</a>
             <a class="bb-download" href="../BB/Fonts - Montserrat/Montserrat-SemiBold.ttf" download>SemiBold · TTF</a>
             <a class="bb-download" href="../BB/Fonts - Montserrat/Montserrat-Bold.ttf" download>Bold · TTF</a>
           </div>
 
           <h4 class="bb-subhead" data-i18n="bb.typo.scale">Type Scale</h4>
-          <p class="bb-text" data-i18n="bb.typo.scaleDesc">Modular scale based on 16px / 1rem with a ratio of 1.25 (major third). Headings use 4% letter-spacing and 130% line-height, weight 600–700. Body uses 0 letter-spacing and 130% line-height. Samples shown in Latin and Cyrillic.</p>
+          <p class="bb-text" data-i18n="bb.typo.scaleDesc">Modular scale based on 16px / 1rem. Headings — <strong>Playfair Display</strong> Regular, line-height 1.2, letter-spacing −2% (tight, premium feel). Body — <strong>Montserrat</strong>, line-height 1.6, neutral spacing. Eyebrow labels stay Montserrat SemiBold UPPER with wide spacing. H4–H6 use Montserrat SemiBold to keep small text legible. Samples shown in Latin and Cyrillic.</p>
           <div class="bb-scale-table">
             <div class="bb-scale-row">
               <div class="bb-scale-row__meta">
                 <span class="bb-scale-row__role">Display</span>
-                <button class="bb-copy bb-copy--inline" data-copy="4rem">64px · 4rem</button>
-                <span class="bb-scale-row__spec">700 · 1.2 · 4%</span>
+                <button class="bb-copy bb-copy--inline" data-copy="clamp(2rem, 6vw, 4.5rem)">clamp(2rem, 6vw, 4.5rem)</button>
+                <span class="bb-scale-row__spec">Playfair · 400 · 1.1 · −2%</span>
               </div>
-              <div class="bb-scale-row__sample" style="font-size:4rem; font-weight:700; line-height:1.2; letter-spacing:0.04em;">Where Serenity · Гармония</div>
+              <div class="bb-scale-row__sample" style="font-family:'Playfair Display',Georgia,serif; font-size:4rem; font-weight:400; line-height:1.1; letter-spacing:-0.02em;">Where Serenity · Гармония</div>
             </div>
             <div class="bb-scale-row">
               <div class="bb-scale-row__meta">
                 <span class="bb-scale-row__role">H1</span>
-                <button class="bb-copy bb-copy--inline" data-copy="3rem">48px · 3rem</button>
-                <span class="bb-scale-row__spec">700 · 1.25 · 4%</span>
+                <button class="bb-copy bb-copy--inline" data-copy="clamp(1.8rem, 4vw, 4.5rem)">clamp(1.8rem, 4vw, 4.5rem)</button>
+                <span class="bb-scale-row__spec">Playfair · 400 · 1.2 · −2%</span>
               </div>
-              <div class="bb-scale-row__sample" style="font-size:3rem; font-weight:700; line-height:1.25; letter-spacing:0.04em;">Bali Investment Real Estate</div>
+              <div class="bb-scale-row__sample" style="font-family:'Playfair Display',Georgia,serif; font-size:3rem; font-weight:400; line-height:1.2; letter-spacing:-0.02em;">Bali Investment Real Estate</div>
             </div>
             <div class="bb-scale-row">
               <div class="bb-scale-row__meta">
                 <span class="bb-scale-row__role">H2</span>
-                <button class="bb-copy bb-copy--inline" data-copy="2.25rem">36px · 2.25rem</button>
-                <span class="bb-scale-row__spec">600 · 1.3 · 4%</span>
+                <button class="bb-copy bb-copy--inline" data-copy="clamp(2rem, 4vw, 3.5rem)">clamp(2rem, 4vw, 3.5rem)</button>
+                <span class="bb-scale-row__spec">Playfair · 400 · 1.2 · −2%</span>
               </div>
-              <div class="bb-scale-row__sample" style="font-size:2.25rem; font-weight:600; line-height:1.3; letter-spacing:0.04em;">Projects on the island</div>
+              <div class="bb-scale-row__sample" style="font-family:'Playfair Display',Georgia,serif; font-size:2.25rem; font-weight:400; line-height:1.2; letter-spacing:-0.02em;">Projects on the island · Проекты</div>
             </div>
             <div class="bb-scale-row">
               <div class="bb-scale-row__meta">
                 <span class="bb-scale-row__role">H3</span>
-                <button class="bb-copy bb-copy--inline" data-copy="1.75rem">28px · 1.75rem</button>
-                <span class="bb-scale-row__spec">600 · 1.3 · 4%</span>
+                <button class="bb-copy bb-copy--inline" data-copy="clamp(1.5rem, 3vw, 2.25rem)">clamp(1.5rem, 3vw, 2.25rem)</button>
+                <span class="bb-scale-row__spec">Playfair · 400 · 1.2 · −2%</span>
               </div>
-              <div class="bb-scale-row__sample" style="font-size:1.75rem; font-weight:600; line-height:1.3; letter-spacing:0.04em;">Serenity Villas · Wanayu</div>
+              <div class="bb-scale-row__sample" style="font-family:'Playfair Display',Georgia,serif; font-size:1.75rem; font-weight:400; line-height:1.2; letter-spacing:-0.02em;">Serenity Villas · Wanayu</div>
             </div>
             <div class="bb-scale-row">
               <div class="bb-scale-row__meta">
                 <span class="bb-scale-row__role">H4</span>
-                <button class="bb-copy bb-copy--inline" data-copy="1.375rem">22px · 1.375rem</button>
-                <span class="bb-scale-row__spec">600 · 1.3 · 4%</span>
+                <button class="bb-copy bb-copy--inline" data-copy="1.2rem">19px · 1.2rem</button>
+                <span class="bb-scale-row__spec">Montserrat · 600 · 1.3 · −2%</span>
               </div>
-              <div class="bb-scale-row__sample" style="font-size:1.375rem; font-weight:600; line-height:1.3; letter-spacing:0.04em;">Подзаголовок · Subhead</div>
+              <div class="bb-scale-row__sample" style="font-size:1.2rem; font-weight:600; line-height:1.3; letter-spacing:-0.02em;">Подзаголовок · Subhead</div>
             </div>
             <div class="bb-scale-row">
               <div class="bb-scale-row__meta">
                 <span class="bb-scale-row__role">H5</span>
-                <button class="bb-copy bb-copy--inline" data-copy="1.125rem">18px · 1.125rem</button>
-                <span class="bb-scale-row__spec">600 · 1.4 · 4%</span>
+                <button class="bb-copy bb-copy--inline" data-copy="1.05rem">17px · 1.05rem</button>
+                <span class="bb-scale-row__spec">Montserrat · 600 · 1.4 · 0</span>
               </div>
-              <div class="bb-scale-row__sample" style="font-size:1.125rem; font-weight:600; line-height:1.4; letter-spacing:0.04em;">Section label · Section</div>
+              <div class="bb-scale-row__sample" style="font-size:1.05rem; font-weight:600; line-height:1.4; letter-spacing:0;">Section label · Section</div>
             </div>
             <div class="bb-scale-row">
               <div class="bb-scale-row__meta">
                 <span class="bb-scale-row__role">H6 / Eyebrow</span>
                 <button class="bb-copy bb-copy--inline" data-copy="0.75rem">12px · 0.75rem</button>
-                <span class="bb-scale-row__spec">600 · 1.5 · 10% · UPPER</span>
+                <span class="bb-scale-row__spec">Montserrat · 600 · 1.5 · 10% · UPPER</span>
               </div>
               <div class="bb-scale-row__sample" style="font-size:0.75rem; font-weight:600; line-height:1.5; letter-spacing:0.1em; text-transform:uppercase;">Brand tag · Тэг бренда</div>
             </div>
