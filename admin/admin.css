@@ -3360,47 +3360,17 @@ select option:disabled {
 .bb-do-dont__col { display: flex; flex-direction: column; }
 
 /* ── Color swatches ── */
-/* Compact 4-in-a-row layout: Main + Supporting groups side by side. */
-.bb-color-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--sp-lg);
-  margin-bottom: var(--sp-md);
-  position: relative;
-}
-.bb-color-row::before {
-  content: '';
-  position: absolute;
-  top: 28px;
-  bottom: 0;
-  left: 50%;
-  width: 1px;
-  background: var(--color-border);
-  transform: translateX(-50%);
-}
-.bb-color-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-sm);
-}
-.bb-color-group__label {
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-text-dim);
-  margin-bottom: 4px;
-}
-.bb-color-group__items {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--sp-sm);
-}
-
 .bb-swatch-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: var(--sp-md);
+  margin-bottom: var(--sp-md);
+}
+/* Stack: horizontal row of swatches, wraps. Used for role-based palette. */
+.bb-swatch-stack {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--sp-sm);
   margin-bottom: var(--sp-md);
 }
 .bb-swatch {
@@ -3426,11 +3396,33 @@ select option:disabled {
 }
 .bb-swatch__name {
   font-family: var(--font-body);
-  font-size: 0.74rem;
+  font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--color-text);
   margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.bb-swatch__badge {
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  padding: 2px 6px;
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+}
+.bb-swatch__role {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+  margin-bottom: 6px;
+  display: block;
+  font-style: italic;
 }
 .bb-swatch__value {
   display: inline-flex;
@@ -3993,6 +3985,17 @@ button.bb-format-card__margin.bb-copy--copied { color: var(--color-success); }
 }
 .bb-wcag-row__grade--pass { background: rgba(39, 174, 96, 0.18); color: #4cd987; }
 .bb-wcag-row__grade--fail { background: rgba(192, 57, 43, 0.18); color: #ff7066; }
+.bb-wcag-row__note {
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  padding: 2px 6px;
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  margin-left: 6px;
+}
 
 /* ── UI Components ── */
 .bb-ui-stage {
@@ -4201,8 +4204,6 @@ button.bb-format-card__margin.bb-copy--copied { color: var(--color-success); }
   .bb-clearspace-demo__y--side { min-width: 36px; font-size: 0.55rem; }
   .bb-typo-card__sample--heading { font-size: 1.6rem; }
   .bb-typo-card__sample--body { font-size: 1.15rem; }
-  .bb-color-row { grid-template-columns: 1fr; gap: var(--sp-md); }
-  .bb-color-row::before { display: none; }
   .bb-voice-row { grid-template-columns: 1fr; }
   .bb-scale-row { grid-template-columns: 1fr; gap: var(--sp-sm); }
   .bb-scale-row__sample { font-size: 1.2rem !important; }
