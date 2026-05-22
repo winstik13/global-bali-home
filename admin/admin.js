@@ -327,9 +327,9 @@
       'users.col.actions': 'Actions',
       'users.role.editor': 'Editor — gallery / FAQ / testimonials only',
       'users.role.admin': 'Admin — all content (no user management)',
-      'users.role.editor.short': 'editor',
-      'users.role.admin.short': 'admin',
-      'users.role.super_admin.short': 'super admin',
+      'users.role.editor.short': 'Editor',
+      'users.role.admin.short': 'Admin',
+      'users.role.super_admin.short': 'Super admin',
       'users.status.active': 'Active',
       'users.status.deactivated': 'Deactivated',
       'users.status.pending': 'Invited (pending)',
@@ -653,13 +653,13 @@
       'users.col.name': 'Имя',
       'users.col.role': 'Роль',
       'users.col.status': 'Статус',
-      'users.col.lastSignIn': 'Был(а) в системе',
+      'users.col.lastSignIn': 'Последний вход',
       'users.col.actions': 'Действия',
       'users.role.editor': 'Editor — только галерея / FAQ / отзывы',
       'users.role.admin': 'Admin — весь контент (без управления пользователями)',
-      'users.role.editor.short': 'editor',
-      'users.role.admin.short': 'admin',
-      'users.role.super_admin.short': 'super admin',
+      'users.role.editor.short': 'Editor',
+      'users.role.admin.short': 'Admin',
+      'users.role.super_admin.short': 'Super admin',
       'users.status.active': 'Активен',
       'users.status.deactivated': 'Отключён',
       'users.status.pending': 'Приглашён',
@@ -4239,12 +4239,15 @@
         return { text: t('users.status.active'), cls: 'is-active' };
       };
       const roleLabel = (role) => t('users.role.' + role + '.short') || role;
+      const dateLocale = adminLang === 'ru' ? 'ru-RU' : 'en-GB';
+      const formatLastSeen = (iso) => {
+        if (!iso) return '—';
+        return new Date(iso).toLocaleString(dateLocale, { dateStyle: 'short', timeStyle: 'short' });
+      };
       const rows = users.map(u => {
         const isSelf = currentUser && u.id === currentUser.id;
         const st = statusLabel(u);
-        const lastSeen = u.last_sign_in_at
-          ? new Date(u.last_sign_in_at).toLocaleString()
-          : '—';
+        const lastSeen = formatLastSeen(u.last_sign_in_at);
         const roleCell = (u.role === 'super_admin' || isSelf)
           ? `<span class="users-role-tag">${escapeHtml(roleLabel(u.role))}</span>`
           : `<select class="users-role-select" data-change-role="${u.id}">
@@ -4254,9 +4257,12 @@
         const deleteBtn = (u.role === 'super_admin' || isSelf)
           ? ''
           : `<button class="btn btn--outline btn--sm" data-delete-user="${u.id}" data-email="${escAttr(u.email)}">${t('users.action.delete')}</button>`;
+        const userCell = `<div class="users-user-cell">
+            <span class="users-user-cell__email">${escapeHtml(u.email)}${isSelf ? `<span class="users-self-marker">· ${t('users.you')}</span>` : ''}</span>
+            <span class="users-user-cell__name">${escapeHtml(u.full_name || '—')}</span>
+          </div>`;
         return `<tr>
-          <td data-label="${t('users.col.email')}">${escapeHtml(u.email)}${isSelf ? ` <span class="users-self-badge">${t('users.you')}</span>` : ''}</td>
-          <td data-label="${t('users.col.name')}">${escapeHtml(u.full_name || '—')}</td>
+          <td data-label="${t('users.col.email')}">${userCell}</td>
           <td data-label="${t('users.col.role')}">${roleCell}</td>
           <td data-label="${t('users.col.status')}"><span class="users-status ${st.cls}">${escapeHtml(st.text)}</span></td>
           <td data-label="${t('users.col.lastSignIn')}">${escapeHtml(lastSeen)}</td>
@@ -4266,7 +4272,6 @@
       return `<table class="users-table">
         <thead><tr>
           <th>${t('users.col.email')}</th>
-          <th>${t('users.col.name')}</th>
           <th>${t('users.col.role')}</th>
           <th>${t('users.col.status')}</th>
           <th>${t('users.col.lastSignIn')}</th>

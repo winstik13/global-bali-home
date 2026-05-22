@@ -2932,10 +2932,31 @@ select option:disabled {
 }
 
 /* ─── Users tab ─── */
+
+/* Invite form */
+.invite-form__fields {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.5fr;
+  gap: 20px 16px;
+  margin-bottom: var(--sp-lg);
+}
+.invite-form__fields .form-group { margin-bottom: 0; }
+.invite-form__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+}
+.invite-form__actions .publish-status { margin: 0; }
+
+@media (max-width: 768px) {
+  .invite-form__fields { grid-template-columns: 1fr; }
+}
+
+/* Users table */
 .users-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
 }
 .users-table th {
   text-align: left;
@@ -2949,21 +2970,46 @@ select option:disabled {
   white-space: nowrap;
 }
 .users-table td {
-  padding: 12px;
+  padding: 14px 12px;
   border-bottom: 1px solid var(--color-border);
-  color: var(--color-text-muted);
+  color: var(--color-text);
   vertical-align: middle;
+}
+.users-table td:first-child { padding-left: 0; }
+.users-table th:first-child { padding-left: 0; }
+.users-table td:last-child,
+.users-table th:last-child { padding-right: 0; }
+/* Compact right-side columns, email cell absorbs the rest */
+.users-table th:not(:first-child),
+.users-table td:not(:first-child) {
+  width: 1%;
+  white-space: nowrap;
 }
 .users-table tr:last-child td {
   border-bottom: none;
 }
-.users-table tr:hover td {
+.users-table tbody tr:hover td {
   background: var(--color-bg-card);
+}
+
+.users-user-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.3;
+}
+.users-user-cell__email {
+  color: var(--color-text);
+  font-weight: 500;
+}
+.users-user-cell__name {
+  color: var(--color-text-dim);
+  font-size: 0.8125rem;
 }
 
 .users-role-tag {
   display: inline-block;
-  padding: 2px 10px;
+  padding: 3px 10px;
   border-radius: 999px;
   background: var(--color-bg-card);
   color: var(--color-text);
@@ -2985,17 +3031,10 @@ select option:disabled {
   outline: none;
 }
 
-.users-self-badge {
-  display: inline-block;
-  margin-left: 6px;
-  padding: 1px 8px;
-  border-radius: 999px;
-  background: var(--color-accent);
-  color: var(--color-bg);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+.users-self-marker {
+  color: var(--color-text-dim);
+  font-weight: 400;
+  margin-left: 4px;
 }
 
 .users-status {
@@ -3051,7 +3090,10 @@ select option:disabled {
     gap: 6px;
     padding: 0;
     border: none;
+    width: auto !important;
+    white-space: normal;
   }
+  .users-table td:first-child { grid-column: 1 / -1; }
   .users-table td::before {
     content: attr(data-label);
     font-size: 0.7rem;
@@ -3061,6 +3103,7 @@ select option:disabled {
     color: var(--color-text-dim);
     min-width: 90px;
   }
-  .users-table tr:hover td { background: transparent; }
+  .users-table td:first-child::before { display: none; }
+  .users-table tbody tr:hover td { background: transparent; }
   .users-actions-cell { text-align: left; }
 }

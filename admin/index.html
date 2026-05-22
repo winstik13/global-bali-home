@@ -529,24 +529,26 @@
         <h2 data-i18n="users.title">Team Members</h2>
         <div class="editor-section">
           <h3 data-i18n="users.invite">Invite a new member</h3>
-          <form id="invite-form" class="form-grid form-grid--3">
-            <div class="form-group">
-              <label for="invite-email" data-i18n="users.email">Email</label>
-              <input type="email" id="invite-email" placeholder="name@example.com" required>
+          <form id="invite-form" class="invite-form">
+            <div class="invite-form__fields">
+              <div class="form-group">
+                <label for="invite-email" data-i18n="users.email">Email</label>
+                <input type="email" id="invite-email" placeholder="name@example.com" required>
+              </div>
+              <div class="form-group">
+                <label for="invite-name" data-i18n="users.fullName">Full name</label>
+                <input type="text" id="invite-name" placeholder="Jane Doe">
+              </div>
+              <div class="form-group">
+                <label for="invite-role" data-i18n="users.role">Role</label>
+                <select id="invite-role" required>
+                  <option value="editor" data-i18n="users.role.editor">Editor — gallery / FAQ / testimonials only</option>
+                  <option value="admin" data-i18n="users.role.admin">Admin — all content (no user management)</option>
+                </select>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="invite-name" data-i18n="users.fullName">Full name</label>
-              <input type="text" id="invite-name" placeholder="Jane Doe">
-            </div>
-            <div class="form-group">
-              <label for="invite-role" data-i18n="users.role">Role</label>
-              <select id="invite-role" required>
-                <option value="editor" data-i18n="users.role.editor">Editor — gallery / FAQ / testimonials only</option>
-                <option value="admin" data-i18n="users.role.admin">Admin — all content (no user management)</option>
-              </select>
-            </div>
-            <div class="form-group" style="grid-column: 1 / -1;">
-              <button type="submit" class="btn btn--primary" data-i18n="users.send">Send invitation</button>
+            <div class="invite-form__actions">
+              <button type="submit" class="btn btn--primary btn--sm" data-i18n="users.send">Send invitation</button>
               <span id="invite-status" class="publish-status"></span>
             </div>
           </form>
