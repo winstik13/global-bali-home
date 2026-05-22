@@ -3208,9 +3208,10 @@ select option:disabled {
   max-height: 90px;
   object-fit: contain;
 }
-.bb-logo-card--dark { background: #171F10; }
+/* Logo previews on actual brand colours: Dark Green + Cream. */
+.bb-logo-card--dark { background: #2B3226; }
 .bb-logo-card--dark img { filter: brightness(0) invert(1); }
-.bb-logo-card--light { background: #F7F7F0; }
+.bb-logo-card--light { background: #E1D3BE; }
 .bb-logo-card--light img { filter: brightness(0); }
 /* Готовая полноцветная плашка (PNG/JPG с уже встроенным фоном и цветом).
    Не применяем фильтры. Высота карточки — как у остальных. */
