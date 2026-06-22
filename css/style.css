@@ -4149,6 +4149,50 @@ td .price-aux { font-size: 0.78em; margin-top: 1px; }
   line-height: 1.8;
 }
 
+/* Rich content inside FAQ answers (lists, links) — reset.css strips list
+   markers and link styling, so restore them scoped to the answer body. */
+.faq-answer__inner p {
+  margin-bottom: 0.85em;
+}
+
+.faq-answer__inner ul,
+.faq-answer__inner ol {
+  padding-left: 1.4em;
+  margin: 0.5em 0 1em;
+}
+
+.faq-answer__inner ul {
+  list-style: disc;
+}
+
+.faq-answer__inner ol {
+  list-style: decimal;
+}
+
+.faq-answer__inner li {
+  margin-bottom: 0.4em;
+}
+
+.faq-answer__inner > *:last-child {
+  margin-bottom: 0;
+}
+
+.faq-answer__inner strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.faq-answer__inner a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: opacity var(--transition);
+}
+
+.faq-answer__inner a:hover {
+  opacity: 0.75;
+}
+
 /* --- Unit Table --- */
 .unit-table {
   width: 100%;
