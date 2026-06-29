@@ -1678,7 +1678,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Thank you screen
       tourBar.style.width = '100%';
       const projectUrl = tourProjectUrls[data.project] || '';
-      const waNum = (typeof SITE_DATA !== 'undefined' && SITE_DATA.contacts) ? SITE_DATA.contacts.whatsapp : '6281325143849';
+      const waNum = (typeof SITE_DATA !== 'undefined' && SITE_DATA.contacts) ? SITE_DATA.contacts.whatsapp : '6281959017052';
       tourBody.innerHTML = `
         <div class="tour__result">
           <svg class="tour__result-icon" viewBox="0 0 48 48" width="56" height="56"><circle cx="24" cy="24" r="22" stroke="var(--color-accent)" stroke-width="1.5" fill="none"/><path d="M15 24l7 7 11-11" stroke="var(--color-accent)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -2002,7 +2002,7 @@ document.querySelectorAll('.lead-magnet__form').forEach(form => {
       trackEvent('generate_lead', 'lead_magnet', 'investment_guide');
       sessionStorage.setItem('leadCaptured', 'true');
       var wrap = form.closest('.lead-magnet__form-wrap');
-      var waNum2 = (typeof SITE_DATA !== 'undefined' && SITE_DATA.contacts) ? SITE_DATA.contacts.whatsapp : '6281325143849';
+      var waNum2 = (typeof SITE_DATA !== 'undefined' && SITE_DATA.contacts) ? SITE_DATA.contacts.whatsapp : '6281959017052';
       // Manual delivery mode: thank-you only, no download/read buttons
       wrap.innerHTML = '<div class="lead-magnet__success"><h3>' + t.leadThankManualTitle + '</h3><p>' + t.leadThankManualText + '</p><div class="lead-magnet__divider"></div><p class="lead-magnet__sub">' + t.leadThankSub + '</p><a href="https://wa.me/' + waNum2 + '" target="_blank" rel="noopener noreferrer" class="btn lead-magnet__wa">' + t.leadThankWa + '</a></div>';
     });

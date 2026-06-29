@@ -32,7 +32,7 @@ if (!SUPABASE_URL || !SERVICE_ROLE) {
 // ─── Новый FAQ ───
 // HTML в ответах допустим: main.js рендерит answer как innerHTML.
 // project: 'all' — все пункты общие (привязка в админке = «Все проекты»).
-const WA = 'https://wa.me/6281325143849';
+const WA = 'https://wa.me/6281959017052';
 const FAQ_DATA = [
   {
     order: 1,

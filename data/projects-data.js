@@ -337,7 +337,7 @@ const PROJECTS_DATA = {
           }
         ],
         "floors": {
-          "Ground Floor": "https://ttmmremmgrsaazzyikph.supabase.co/storage/v1/object/public/images/plans/serenity-estates/a1-ground-floor.webp"
+          "Ground Floor": "images/serenity-estates/plans/a1-ground-floor.webp"
         }
       },
       "A2": {
@@ -364,7 +364,7 @@ const PROJECTS_DATA = {
           }
         ],
         "floors": {
-          "Ground Floor": "https://ttmmremmgrsaazzyikph.supabase.co/storage/v1/object/public/images/plans/serenity-estates/a2-ground-floor.webp"
+          "Ground Floor": "images/serenity-estates/plans/a2-ground-floor.webp"
         }
       },
       "B1": {
