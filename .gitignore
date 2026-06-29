@@ -26,6 +26,17 @@ admin/SETUP.md
 *.xls
 Client*.xlsx
 
+# Business/legal docs — served publicly if committed (outputDirectory="."), never commit
+*.docx
+Tender_Procedure_*.html
+admin/BRAND_BOOK_BRIEF.md
+memo_text.txt
+.tmp_memo/
+
+# Source photos (large originals → kept in D:\global-bali-docs\sources)
+Mark.jpg
+DSC*.jpg
+
 # Playwright MCP cache
 .playwright-mcp/
 
