@@ -4028,9 +4028,16 @@
     if (/^https?:\/\//i.test(pathOrUrl) || pathOrUrl.startsWith('data:') || pathOrUrl.startsWith('blob:')) {
       return pathOrUrl;
     }
-    const sp = pathToStoragePath(pathOrUrl);
+    const clean = pathOrUrl.replace(/^\/+/, '');
+    // images/… — self-hosted файлы, закоммиченные в репо и раздаваемые тем же
+    // origin, что и админка. Это источник правды для live-сайта. Часть старых
+    // планировок залита только в git, но НЕ в Supabase Storage → Storage-URL
+    // для них даёт 404. Поэтому резолвим на локальный root-absolute путь.
+    if (clean.startsWith('images/')) return '/' + clean;
+    // Остальное (assets/… — брендбук-PDF и т.п.) реально живёт в Storage.
+    const sp = pathToStoragePath(clean);
     if (sp && window.SupabaseAdmin) return SupabaseAdmin.getImageUrl(sp);
-    return pathOrUrl;
+    return '/' + clean;
   }
 
   function pathToStoragePath(path) {

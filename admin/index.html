@@ -53,14 +53,14 @@
     </div>
   </div>
 
-  <!-- Set Password Screen (Ð¿Ð¾ÑÐ»Ðµ ÐºÐ»Ð¸ÐºÐ° Ð¿Ð¾ invite/recovery email) -->
+  <!-- Set Password Screen (после клика по invite/recovery email) -->
   <div id="setpw-screen" class="login-screen" hidden>
     <div class="login-card">
       <div class="login-card__logo">
         <img src="../images/common/logo-transparent.png" alt="Global Bali Home" height="60">
       </div>
       <h1 class="login-card__title">Set your password</h1>
-      <p class="login-card__desc">Ð—Ð°Ð´Ð°Ð¹ Ð¿Ð°Ñ€Ð¾Ð»ÑŒ Ð´Ð»Ñ Ð²Ñ…Ð¾Ð´Ð° Ð² Ð°Ð´Ð¼Ð¸Ð½ÐºÑƒ. ÐœÐ¸Ð½Ð¸Ð¼ÑƒÐ¼ 8 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð¾Ð².</p>
+      <p class="login-card__desc">Задай пароль для входа в админку. Минимум 8 символов.</p>
       <form id="setpw-form" class="login-form">
         <div class="form-group">
           <label for="setpw-password">New password</label>
@@ -109,7 +109,7 @@
     <nav class="admin-nav">
       <button class="admin-nav__btn active" data-tab="dashboard" data-i18n="nav.dashboard">Dashboard</button>
       <button class="admin-nav__btn" data-tab="projects" data-i18n="nav.projects">Projects</button>
-      <button class="admin-nav__btn" data-tab="seo" data-i18n="nav.seo" hidden title="Ð’Ñ€ÐµÐ¼ÐµÐ½Ð½Ð¾ Ð½ÐµÐ´Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð¾ â€” Ð¿ÐµÑ€ÐµÐµÐ·Ð¶Ð°ÐµÑ‚ Ð² Supabase">SEO</button>
+      <button class="admin-nav__btn" data-tab="seo" data-i18n="nav.seo" hidden title="Временно недоступно — переезжает в Supabase">SEO</button>
       <button class="admin-nav__btn" data-tab="gallery" data-i18n="nav.gallery">Gallery</button>
       <button class="admin-nav__btn" data-tab="faq" data-i18n="nav.faq">FAQ</button>
       <button class="admin-nav__btn" data-tab="testimonials" data-i18n="nav.testimonials">Testimonials</button>
@@ -312,7 +312,7 @@
             </div>
             <div class="form-group">
               <label data-i18n="contacts.locationRu">Location (RU)</label>
-              <input type="text" id="contact-location-ru" placeholder="Ð£Ð±ÑƒÐ´, Ð‘Ð°Ð»Ð¸, Ð˜Ð½Ð´Ð¾Ð½ÐµÐ·Ð¸Ñ">
+              <input type="text" id="contact-location-ru" placeholder="Убуд, Бали, Индонезия">
             </div>
           </div>
           <div class="editor-actions editor-actions--inline">
