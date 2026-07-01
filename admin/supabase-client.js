@@ -50,6 +50,15 @@
     await client.auth.signOut();
   }
 
+  // Отправляет письмо со ссылкой для задания/сброса пароля.
+  // Работает и для приглашённых, но ещё не подтверждённых юзеров.
+  async function resetPassword(email) {
+    const { error } = await client.auth.resetPasswordForEmail(email, {
+      redirectTo: `${location.origin}/admin/`,
+    });
+    if (error) throw new Error(error.message);
+  }
+
   async function getSession() {
     const { data } = await client.auth.getSession();
     return data.session;
@@ -205,6 +214,7 @@
     // auth
     login,
     logout,
+    resetPassword,
     getSession,
     getCurrentUser,
     onAuthStateChange,

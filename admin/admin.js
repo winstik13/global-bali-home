@@ -16,6 +16,10 @@
       'login.password': 'Password',
       'login.submit': 'Sign In',
       'login.signingIn': 'Signing in...',
+      'login.forgot': 'Forgot password? Set a new one',
+      'login.resetSending': 'Sending link…',
+      'login.resetSent': 'Check your email — we sent a link to set your password.',
+      'login.resetNoEmail': 'Enter your email above first, then click here.',
       'header.title': 'Admin Panel',
       'header.rateLabel': 'USD / IDR',
       'header.signOut': 'Sign Out',
@@ -298,6 +302,7 @@
       'auth.invalidEmail': 'Invalid email address.',
       'auth.invalidCredential': 'Invalid email or password.',
       'auth.failed': 'Authentication failed. Please try again.',
+      'auth.linkExpired': 'The invite link expired or was already used. Request a new one below.',
       'validate.wa.required': 'Required',
       'validate.wa.digitsOnly': 'Digits only — no +, spaces or dashes',
       'validate.wa.tooShort': 'Too short — include country code (e.g. 62...)',
@@ -1092,6 +1097,10 @@
       'login.password': 'Пароль',
       'login.submit': 'Войти',
       'login.signingIn': 'Вход...',
+      'login.forgot': 'Забыли пароль? Задать новый',
+      'login.resetSending': 'Отправляем ссылку…',
+      'login.resetSent': 'Проверьте почту — мы отправили ссылку для задания пароля.',
+      'login.resetNoEmail': 'Сначала введите email выше, потом нажмите сюда.',
       'header.title': 'Панель управления',
       'header.rateLabel': 'USD / IDR',
       'header.signOut': 'Выйти',
@@ -1374,6 +1383,7 @@
       'auth.invalidEmail': 'Неверный email.',
       'auth.invalidCredential': 'Неверный email или пароль.',
       'auth.failed': 'Ошибка аутентификации.',
+      'auth.linkExpired': 'Ссылка из письма устарела или уже использована. Запросите новую ниже.',
       'validate.wa.required': 'Обязательное поле',
       'validate.wa.digitsOnly': 'Только цифры — без +, пробелов или дефисов',
       'validate.wa.tooShort': 'Слишком короткий — укажите код страны (напр. 62...)',
@@ -2337,6 +2347,28 @@
   // старых писем — verifyOtp вручную.
   let inRecoveryMode = false;
 
+  // Пришёл ли юзер по ссылке из письма (invite ИЛИ сброс пароля)?
+  // Считываем ДО того как SDK почистит hash. invite/signup → событие SIGNED_IN,
+  // recovery → PASSWORD_RECOVERY. Все ведут на экран задания пароля.
+  const _hashP = new URLSearchParams(location.hash.replace(/^#/, ''));
+  const _searchP = new URLSearchParams(location.search);
+  const emailLinkType = _hashP.get('type'); // 'invite' | 'recovery' | 'signup' | null
+  const emailLinkError = _hashP.get('error_description') || _hashP.get('error');
+  const isSetPasswordLink = emailLinkType === 'invite'
+    || emailLinkType === 'recovery'
+    || emailLinkType === 'signup'
+    || _searchP.get('invite') === '1';
+
+  function showSetPassword() {
+    inRecoveryMode = true;
+    history.replaceState({}, '', location.pathname); // чтобы F5 не повторял
+    const authLoading = $('#auth-loading');
+    if (authLoading) authLoading.remove();
+    loginScreen.hidden = true;
+    adminApp.hidden = true;
+    setpwScreen.hidden = false;
+  }
+
   async function maybeHandleLegacyToken() {
     const params = new URLSearchParams(location.search);
     const tokenHash = params.get('token_hash');
@@ -2401,15 +2433,11 @@
   // Поэтому слушатель ставим первым делом.
 
   SupabaseAdmin.onAuthStateChange(async (event, session) => {
-    if (event === 'PASSWORD_RECOVERY') {
-      inRecoveryMode = true;
-      // Очистим hash чтобы при F5 не повторять
-      history.replaceState({}, '', location.pathname);
-      const authLoading = $('#auth-loading');
-      if (authLoading) authLoading.remove();
-      loginScreen.hidden = true;
-      adminApp.hidden = true;
-      setpwScreen.hidden = false;
+    // recovery (сброс) шлёт PASSWORD_RECOVERY; invite/signup — SIGNED_IN.
+    // Оба ведут на экран задания пароля. currentUser отсекает обычный логин.
+    if (event === 'PASSWORD_RECOVERY' ||
+        (event === 'SIGNED_IN' && isSetPasswordLink && !currentUser)) {
+      showSetPassword();
       return;
     }
     if (event === 'SIGNED_OUT' || !session) {
@@ -2423,6 +2451,17 @@
   (async () => {
     const authLoading = $('#auth-loading');
 
+    // Ссылка из письма протухла/уже использована — hash содержит error.
+    if (emailLinkError) {
+      history.replaceState({}, '', location.pathname);
+      if (authLoading) authLoading.remove();
+      loginScreen.hidden = false;
+      adminApp.hidden = true;
+      loginError.textContent = t('auth.linkExpired');
+      loginError.hidden = false;
+      return;
+    }
+
     // Legacy PKCE flow (старые письма с ?token_hash=...) — обрабатываем сами
     const legacy = await maybeHandleLegacyToken();
     if (legacy) {
@@ -2430,7 +2469,7 @@
       return;
     }
 
-    // Маленькая задержка чтобы SDK успел обработать hash и стрельнуть PASSWORD_RECOVERY,
+    // Маленькая задержка чтобы SDK успел обработать hash и стрельнуть событием,
     // если есть. Иначе можем showAdmin() до того как поймаем event.
     await new Promise(r => setTimeout(r, 50));
     if (inRecoveryMode) {
@@ -2440,6 +2479,14 @@
 
     const ctx = await SupabaseAdmin.getCurrentUser();
     if (authLoading) authLoading.remove();
+
+    // Пришёл по invite-ссылке, сессия поднялась, но событие прозевали —
+    // всё равно ведём на задание пароля, а не сразу в админку.
+    if (isSetPasswordLink && ctx) {
+      showSetPassword();
+      return;
+    }
+
     if (ctx) {
       currentUser = ctx.profile;
       $('#admin-user').textContent = currentUser.email;
@@ -2485,6 +2532,35 @@
       btn.textContent = t('login.submit');
     }
   });
+
+  // ─── Forgot / set password ───
+  const forgotBtn = $('#forgot-password');
+  const loginInfo = $('#login-info');
+  if (forgotBtn && loginInfo) {
+    forgotBtn.addEventListener('click', async () => {
+      loginError.hidden = true;
+      loginInfo.hidden = true;
+      const email = $('#login-email').value.trim();
+      if (!email) {
+        loginError.textContent = t('login.resetNoEmail');
+        loginError.hidden = false;
+        return;
+      }
+      forgotBtn.disabled = true;
+      forgotBtn.textContent = t('login.resetSending');
+      try {
+        await SupabaseAdmin.resetPassword(email);
+        loginInfo.textContent = t('login.resetSent');
+        loginInfo.hidden = false;
+      } catch (err) {
+        loginError.textContent = err.message || t('auth.failed');
+        loginError.hidden = false;
+      } finally {
+        forgotBtn.disabled = false;
+        forgotBtn.textContent = t('login.forgot');
+      }
+    });
+  }
 
   // ─── Logout ───
   $('#btn-logout').addEventListener('click', async () => {

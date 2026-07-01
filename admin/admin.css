@@ -352,6 +352,28 @@ select option:disabled {
   font-size: 0.85rem;
 }
 
+.login-info {
+  background: rgba(39, 174, 96, 0.12);
+  border: 1px solid rgba(39, 174, 96, 0.3);
+  color: #2ecc71;
+  padding: 10px 14px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.login-link {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-align: center;
+  padding: 0;
+  transition: color 0.3s ease;
+}
+.login-link:hover { color: var(--color-accent); }
+
 .checkbox-row {
   display: flex;
   align-items: center;
